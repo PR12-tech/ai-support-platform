@@ -1,4 +1,3 @@
-from Tools.demo.mcast import sender
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
@@ -8,7 +7,8 @@ from app.models.user import User
 from app.models.ticket import Ticket
 from app.models.messages import Message
 from app.schemas.message import MessageCreate
-from app.services.ai_service import summarize_text
+from app.services.ai_service import summarize_text, classify_ticket, analyze_ticket
+
 
 router = APIRouter()
 
@@ -104,3 +104,63 @@ Ticket.id == ticket_id,
         "conversation": conversation,
         "summary": summary
     }
+
+@router.post("/tickets/{ticket_id}/classify")
+def classify_ticket_endpoint(
+        ticket_id: int,
+        current_user: User = Depends(get_current_user),
+        db: Session = Depends(get_db)
+):
+    ticket = db.query(Ticket).filter(
+        Ticket.id == ticket_id,
+        Ticket.owner_id == current_user.id
+    ).first()
+
+    if not ticket:
+        return {
+            "message": "Ticket not found"
+        }
+
+    messages = db.query(Message).filter(
+        Message.ticket_id == ticket_id
+    ).all()
+
+    conversation = "\n".join(
+        [message.content for message in messages]
+    )
+
+    category = classify_ticket(conversation)
+
+    return {
+        "ticket_id": ticket_id,
+        "category": category
+    }
+
+@router.post("/tickets/{ticket_id}/analyze")
+def analyze_ticket_endpoint(
+        ticket_id: int,
+        current_user: User = Depends(get_current_user),
+        db: Session = Depends(get_db)
+):
+
+    ticket = db.query(Ticket).filter(
+        Ticket.id == ticket_id,
+        Ticket.owner_id == current_user.id
+    ).first()
+
+    if not ticket:
+        return {
+            "message": "Ticket not found"
+        }
+
+    messages = db.query(Message).filter(
+        Message.ticket_id == ticket_id
+    ).all()
+
+    conversation = "\n".join(
+        [message.content for message in messages]
+    )
+
+    analysis = analyze_ticket(conversation)
+
+    return analysis
