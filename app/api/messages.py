@@ -8,6 +8,7 @@ from app.models.user import User
 from app.models.ticket import Ticket
 from app.models.messages import Message
 from app.schemas.message import MessageCreate
+from app.services.ai_service import summarize_text
 
 router = APIRouter()
 
@@ -54,9 +55,18 @@ def get_messages(
         db: Session = Depends(get_db)
 ):
 
+    ticket = db.query(Ticket).filter(
+        Ticket.id == ticket_id,
+        Ticket.owner_id == current_user.id
+    ).first()
+
+    if not ticket:
+        return{
+            "message": "Ticket not found"
+        }
+
     messages = db.query(Message).filter(
-Message.ticket_id == ticket_id,
-         Ticket.owner_id == current_user.id
+        Message.ticket_id == ticket_id,
     ).all()
 
     return messages
@@ -87,8 +97,10 @@ Ticket.id == ticket_id,
         [message.content for message in messages]
     )
 
+    summary = summarize_text(conversation)
+
     return {
         "ticket_id": ticket_id,
         "conversation": conversation,
-        "summary": "Fake AI summary for now"
+        "summary": summary
     }
