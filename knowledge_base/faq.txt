@@ -1,0 +1,7 @@
+FAQ
+
+Q: Can I change my address?
+A: Yes, before the order is shipped.
+
+Q: How do I cancel an order?
+A: Go to Orders and select Cancel.

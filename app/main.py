@@ -8,6 +8,7 @@ from app.models.ticket import Ticket
 from app.api.tickets import router as ticket_router
 from app.models.messages import Message
 from app.api.messages import router as message_router
+from app.api.rag import router as rag_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -18,6 +19,8 @@ app.include_router(auth_router)
 app.include_router(ticket_router)
 
 app.include_router(message_router)
+
+app.include_router(rag_router)
 
 @app.get("/")
 def home():
