@@ -28,10 +28,12 @@ def summarize_text(text: str):
     {text}
 """
 
-    response = model.generate_content(prompt)
+    try:
+        response = model.generate_content(prompt)
+        return response.text
 
-    return response.text
-
+    except Exception as e:
+        return f"AI service temporarily unavailable: {str(e)}"
 
 def classify_ticket(text: str):
 
