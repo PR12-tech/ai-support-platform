@@ -1,0 +1,11 @@
+Gift Cards
+
+Gift cards are available in denominations of $25, $50, $100, and $200.
+
+Gift cards never expire.
+
+Gift cards cannot be exchanged for cash.
+
+Lost or stolen gift cards cannot be replaced.
+
+Gift cards can be redeemed during checkout by entering the gift card code.

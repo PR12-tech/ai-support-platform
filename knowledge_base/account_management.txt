@@ -1,0 +1,11 @@
+Account Management
+
+Customers can update their profile information from the Account Settings page.
+
+Passwords can be changed after verifying the current password.
+
+Email addresses require verification after being updated.
+
+Customers can permanently delete their account by contacting customer support.
+
+Deleted accounts cannot be recovered after 30 days.

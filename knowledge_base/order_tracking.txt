@@ -1,0 +1,11 @@
+Order Tracking
+
+Tracking information becomes available once the order has been shipped.
+
+Customers receive a tracking number by email and SMS.
+
+Tracking updates may take up to 24 hours to appear.
+
+If tracking has not updated for more than 3 days, customers should contact support.
+
+International shipments may have delayed tracking updates depending on the courier.

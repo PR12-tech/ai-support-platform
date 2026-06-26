@@ -4,6 +4,12 @@ from http.client import responses
 
 import google.generativeai as genai
 from click import prompt
+import warnings
+
+warnings.filterwarnings(
+    "ignore",
+    category=FutureWarning
+)
 
 from dotenv import load_dotenv
 

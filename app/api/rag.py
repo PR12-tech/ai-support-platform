@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from fastapi.params import Depends
+from requests import session
 from sqlalchemy.orm import Session
 
 from app.database.db import get_db
@@ -14,6 +15,10 @@ from app.services.rag_service import (
     suggest_reply,
     get_knowledge
 )
+from app.services.memory_service import (
+    get_history,
+    clear_history
+)
 
 router = APIRouter()
 
@@ -23,12 +28,14 @@ def ask_question(
 ):
 
     answer = answer_question(
+        request.session_id,
         request.question
     )
 
     return {
+        "session_id": request.session_id,
         "question": request.question,
-        "answer": answer
+        **answer
     }
 
 @router.post("/tickets/{ticket_id}/suggest-reply")
@@ -70,4 +77,30 @@ def generate_reply(
         "reply": reply
     }
 
+@router.get("/history/{session_id}")
+def get_conversation_history(
+        session_id: str
+):
 
+    history = get_history(
+        session_id
+    )
+
+    return{
+        "session_id": session_id,
+        "history": history
+    }
+
+@router.delete("/history/{session_id}")
+def delete_conversation_history(
+        session_id: str
+):
+
+    clear_history(
+        session_id
+    )
+
+    return {
+        "message": "Conversation history cleared.",
+        "session_id": session_id
+    }

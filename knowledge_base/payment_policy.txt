@@ -1,0 +1,11 @@
+Payment Policy
+
+We accept Visa, Mastercard, American Express, UPI, Net Banking, and PayPal.
+
+Payments are processed securely using encrypted payment gateways.
+
+Orders are confirmed only after successful payment authorization.
+
+Failed payments do not reserve inventory for the customer.
+
+Customers receive an email confirmation immediately after successful payment.
