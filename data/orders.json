@@ -1,0 +1,23 @@
+[
+    {
+        "order_id": "ORD1001",
+        "customer": "Prasad",
+        "status": "Shipped",
+        "tracking_number": "TRK1001",
+        "estimated_delivery": "2026-06-30"
+    },
+    {
+        "order_id": "ORD1002",
+        "customer": "Rahul",
+        "status": "Delivered",
+        "tracking_number": "TRK1002",
+        "estimated_delivery": "Delivered"
+    },
+    {
+        "order_id": "ORD1003",
+        "customer": "Anjali",
+        "status": "Cancelled",
+        "tracking_number": null,
+        "estimated_delivery": null
+    }
+]
