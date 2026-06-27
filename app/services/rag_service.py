@@ -1,8 +1,4 @@
-from alembic.command import history
-from torch import unique
-
 from app.services.ai_service import model
-from sklearn.metrics.pairwise import cosine_similarity
 from pathlib import Path
 from app.services.embedding_service import model as embedding_model
 from app.services.memory_service import get_history, add_message
@@ -18,6 +14,8 @@ from app.services.bm25_service import (
     create_bm25_index,
     search_bm25
 )
+from app.services.query_rewriter import rewrite_query
+from app.services.multi_query import generate_queries
 
 DOCUMENT_CHUNKS = []
 
@@ -26,15 +24,16 @@ SIMILARITY_THRESHOLD = 0.60
 
 def get_knowledge(question: str):
 
-        return find_relevant_document(
-            question
-        )
+    return find_relevant_document(
+        question
+    )
 
 
 def answer_question(
         session_id: str,
         question: str
 ):
+
     add_message(
         session_id,
         "user",
@@ -45,8 +44,13 @@ def answer_question(
         session_id
     )
 
+    rewritten_query = rewrite_query(
+        question,
+        history
+    )
+
     knowledge = get_knowledge(
-        question
+        rewritten_query
     )
 
     knowledge_text = knowledge["knowledge"]
@@ -96,8 +100,12 @@ def answer_question(
 
 def find_relevant_document(question: str):
 
-    chunks = retrieve_chunks(
+    queries = generate_queries(
         question
+    )
+
+    chunks = retrieve_multi_query_chunks(
+        queries
     )
 
     chunks = rerank_chunks(
@@ -252,7 +260,7 @@ def load_documents():
     )
 
 
-def retrieve_chunks(question: str):
+def retrieve_chunks(question):
 
     question_embedding = embedding_model.encode(
         question
@@ -329,6 +337,40 @@ def retrieve_chunks(question: str):
 
     return retrieved_chunks
 
+
+def retrieve_multi_query_chunks(
+        queries: list[str]
+):
+
+    all_chunks = []
+
+    for query in queries:
+
+        chunks = retrieve_chunks(
+            query
+        )
+
+        all_chunks.extend(
+            chunks
+        )
+
+    seen = set()
+
+    unique_chunks = []
+
+    for chunk in all_chunks:
+
+        if chunk["content"] not in seen:
+
+            seen.add(
+                chunk["content"]
+            )
+
+            unique_chunks.append(
+                chunk
+            )
+
+    return unique_chunks
 
 def rerank_chunks(
         question: str,
