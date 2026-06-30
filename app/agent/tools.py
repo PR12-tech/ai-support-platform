@@ -1,7 +1,8 @@
 from app.services.rag_service import get_knowledge
 from app.agent.base import BaseTool
 from app.services.order_service import lookup_order
-from app.tests.test_querywriter import question
+from app.services.ticket_service import lookup_ticket
+from app.services.email_service import send_email
 
 
 class KnowledgeSearchTool(BaseTool):
@@ -15,8 +16,9 @@ class KnowledgeSearchTool(BaseTool):
     def description(self):
 
         return (
-            "Searches the customer support "
-            "knowledge base."
+            "Use for refund policies, shipping policies, "
+            "returns, cancellations, warranties, FAQs, "
+            "and other customer support documentation."
         )
 
     def execute(
@@ -26,9 +28,16 @@ class KnowledgeSearchTool(BaseTool):
 
         question = kwargs["question"]
 
-        return get_knowledge(
+        knowledge = get_knowledge(
             question
         )
+
+        return {
+            "success": knowledge is not None,
+            "type": "knowledge",
+            "data": knowledge
+        }
+
 
 class OrderLookupTool(BaseTool):
 
@@ -41,9 +50,9 @@ class OrderLookupTool(BaseTool):
     def description(self):
 
         return (
-            "Looks up an order using an order ID. "
-            "Use this tool whenever the user asks "
-            "about order status, tracking or delivery."
+            "Use ONLY when the user asks about a specific order, "
+            "mentions an order ID like ORD1001, "
+            "or asks for tracking or delivery status."
         )
 
     def execute(
@@ -53,6 +62,82 @@ class OrderLookupTool(BaseTool):
 
         order_id = kwargs["order_id"]
 
-        return lookup_order(
+        service_result = lookup_order(
             order_id
         )
+
+        return {
+            "success": service_result["success"],
+            "type": "order",
+            "data": service_result
+        }
+
+
+class TicketLookupTool(BaseTool):
+
+    @property
+    def name(self):
+
+        return "ticket_lookup"
+
+    @property
+    def description(self):
+
+        return (
+            "Use ONLY when the user asks about a support ticket, "
+            "mentions a ticket ID like TKT1001, "
+            "or asks for ticket status, priority, or assigned support agent."
+        )
+
+    def execute(
+            self,
+            **kwargs
+    ):
+
+        ticket_id = kwargs["ticket_id"]
+
+        service_result = lookup_ticket(
+            ticket_id
+        )
+
+        return {
+            "success": service_result["success"],
+            "type": "ticket",
+            "data": service_result
+        }
+
+
+class EmailTool(BaseTool):
+
+    @property
+    def name(self):
+
+        return "send_email"
+
+    @property
+    def description(self):
+
+        return (
+           "Use ONLY when the user explicitly asks to send an email. "
+           "Extract ONLY the recipient email address. "
+           "The email subject and body will be generated automatically from the current context."
+        )
+
+    def execute(
+            self,
+            **kwargs
+    ):
+        service_result = send_email(
+
+            kwargs["to"],
+
+            kwargs["subject"],
+
+            kwargs["body"]
+        )
+
+        return {
+            "success": service_result["success"],
+            "type": "email",
+            "data": service_result
+        }

@@ -1,4 +1,5 @@
 import json
+from app.logger import logger
 
 
 def parse_tool_response(
@@ -28,12 +29,21 @@ def parse_tool_response(
 
     response = response.strip()
 
-    data = json.loads(
-        response
-    )
+    try:
+        data = json.loads(
+            response
+        )
 
-    tool_name = data["tool"]
+    except json.JSONDecodeError:
 
-    arguments = data["arguments"]
+        logger.exception(
+            "Planner returned invalid JSON"
+        )
+
+        raise
+
+    tool_name = data.get("tool")
+
+    arguments = data.get("arguments", {})
 
     return tool_name, arguments

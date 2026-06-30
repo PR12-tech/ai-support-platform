@@ -1,9 +1,8 @@
 import os
 import json
-from http.client import responses
 
 import google.generativeai as genai
-from click import prompt
+
 import warnings
 
 warnings.filterwarnings(

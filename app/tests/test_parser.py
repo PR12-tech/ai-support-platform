@@ -1,4 +1,4 @@
-from app.agent.parser import parse_tool_response
+from app.agent.response_parser import parse_tool_response
 
 response = """
 ```json

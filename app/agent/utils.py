@@ -3,28 +3,30 @@ from app.agent.registry import TOOLS
 
 def list_tools():
 
-    text = ""
+    lines = []
 
-    for tool_data in TOOLS.values():
+    for tool_name, tool_data in TOOLS.items():
 
         tool = tool_data["tool"]
 
-        text += (
-            f"Tool: {tool.name}\n"
+        lines.append(
+            f"Tool: {tool.name}"
         )
 
-        text += (
-            f"Description: {tool.description}\n"
+        lines.append(
+            f"Description: {tool.description}"
         )
 
-        text += "Parameters:\n"
+        lines.append(
+            "Parameters:"
+        )
 
         for name, description in tool_data["parameters"].items():
 
-            text += (
-                f"- {name}: {description}\n"
+            lines.append(
+                f"- {name}: {description}"
             )
 
-        text += "\n"
+        lines.append("")
 
-    return text
+    return "\n".join(lines)

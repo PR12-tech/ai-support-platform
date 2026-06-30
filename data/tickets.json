@@ -1,0 +1,23 @@
+[
+    {
+        "ticket_id": "TKT1001",
+        "customer": "Prasad",
+        "status": "Open",
+        "priority": "High",
+        "assigned_to": "Support Team"
+    },
+    {
+        "ticket_id": "TKT1002",
+        "customer": "Rahul",
+        "status": "Resolved",
+        "priority": "Medium",
+        "assigned_to": "Amit"
+    },
+    {
+        "ticket_id": "TKT1003",
+        "customer": "Anjali",
+        "status": "In Progress",
+        "priority": "Low",
+        "assigned_to": "Priya"
+    }
+]

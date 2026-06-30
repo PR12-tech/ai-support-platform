@@ -19,10 +19,17 @@ def lookup_order(
 
         if order["order_id"] == order_id:
 
-            return order
+            return {
+
+                "success": True,
+
+                "order": order
+            }
 
     return {
 
-        "error": "Order not found."
+        "success": False,
+
+        "message": "Order Not Found."
 
     }
