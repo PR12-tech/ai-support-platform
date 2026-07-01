@@ -1,4 +1,4 @@
-from app.evaluation.evaluator import evaluate
+from evaluation.rag_evaluator import evaluate
 
 results = evaluate()
 

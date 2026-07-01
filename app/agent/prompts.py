@@ -48,6 +48,19 @@ Your task:
 - Select only the next best tool.
 16. Never select more than one tool.
 Only return the immediate next tool required to make progress toward answering the user's request.
+17. Use sql_search for analytical questions that require counting, listing, filtering, or aggregating orders or support tickets.
+
+18. Examples:
+- "How many shipped orders are there?"
+- "Show all cancelled orders."
+- "List high priority tickets."
+- "Show all open tickets."
+
+19. Do NOT use sql_search for questions about a specific order ID or ticket ID.
+
+20. Use order_lookup when the user mentions an order ID like ORD1001.
+
+21. Use ticket_lookup when the user mentions a ticket ID like TKT1001.
 
 Return ONLY valid JSON.
 

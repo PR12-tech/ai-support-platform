@@ -2,7 +2,8 @@ from app.agent.tools import (
     KnowledgeSearchTool,
     OrderLookupTool,
     TicketLookupTool,
-    EmailTool
+    EmailTool,
+    SQLTool
 )
 
 TOOLS = {
@@ -50,6 +51,20 @@ TOOLS = {
             "subject": "Subject of the email.",
 
             "body": "Email content."
+        }
+    },
+
+    "sql_search": {
+
+        "tool": SQLTool(),
+
+        "parameters": {
+
+            "question": (
+
+                "The user's analytical question "
+                "about orders or support tickets."
+            )
         }
     }
 

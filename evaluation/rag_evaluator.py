@@ -1,9 +1,9 @@
 from app.services.rag_service import get_knowledge
 
-from app.evaluation.metrics import (
-    hit_rate,
-    precision,
-    mrr
+from evaluation.metrics import (
+    calculate_average_precision,
+    calculate_hit_rate,
+    calculate_mrr
 )
 
 TEST_CASES = [
@@ -96,17 +96,17 @@ def evaluate():
 
     return {
 
-        "hit_rate": hit_rate(
+        "hit_rate": calculate_hit_rate(
             hits,
             len(TEST_CASES)
         ),
 
-        "precision": precision(
+        "precision": calculate_average_precision(
             total_precision,
             len(TEST_CASES)
         ),
 
-        "mrr": mrr(
+        "mrr": calculate_mrr(
             total_mrr,
             len(TEST_CASES)
         )

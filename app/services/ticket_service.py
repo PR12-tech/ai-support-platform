@@ -1,35 +1,55 @@
-import json
+from sqlalchemy import select
 
-
-with open(
-        "data/tickets.json",
-        "r"
-) as file:
-
-    TICKETS = json.load(
-        file
-    )
+from app.database.db import SessionLocal
+from app.models.support_ticket import SupportTicket
 
 
 def lookup_ticket(
         ticket_id: str
 ):
 
-    for ticket in TICKETS:
+    db = SessionLocal()
 
-        if ticket["ticket_id"] == ticket_id:
+    try:
+
+        ticket = db.execute(
+
+            select(SupportTicket).where(
+                SupportTicket.ticket_id == ticket_id
+            )
+
+        ).scalar_one_or_none()
+
+        if ticket:
 
             return {
 
                 "success": True,
 
-                "ticket": ticket
+                "ticket": {
+
+                    "ticket_id": ticket.ticket_id,
+
+                    "customer": ticket.customer,
+
+                    "status": ticket.status,
+
+                    "priority": ticket.priority,
+
+                    "assigned_to": ticket.assigned_to
+
+                }
+
             }
 
-    return {
+        return {
 
-        "success": False,
+            "success": False,
 
-        "message": "Ticket Not Found."
+            "message": "Ticket Not Found."
 
-    }
+        }
+
+    finally:
+
+        db.close()

@@ -3,7 +3,7 @@ from app.agent.orchestrator import run_agent
 
 def main():
 
-    question = "My order ORD1001 is delayed. Can I get a refund??"
+    question = "How many shipped orders are there?"
 
     response = run_agent(question)
 
