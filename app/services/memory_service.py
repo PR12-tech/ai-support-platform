@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 
 from app.database.db import SessionLocal
 from app.models.conversations import Conversation
-from app.models.messages import Message
+from app.models.conversation_message import ConversationMessage
 
 def add_message(
         session_id: str,
@@ -37,8 +37,8 @@ def add_message(
             )
 
 
-        message = Message(
-            sender=role,
+        message = ConversationMessage(
+            role=role,
             content=content,
             conversation_id=conversation.id
         )
@@ -73,16 +73,16 @@ def get_history(
             return []
 
         messages = db.query(
-            Message
+            ConversationMessage
         ).filter(
-            Message.conversation_id == conversation.id
+            ConversationMessage.conversation_id == conversation.id
         ).order_by(
-            Message.created_at
+            ConversationMessage.created_at
         ).all()
 
         return [
             {
-                "role": message.sender,
+                "role": message.role,
                 "content": message.content,
                 "created_at": message.created_at
             }
@@ -112,13 +112,10 @@ def clear_history(
 
             return None
 
-
-
-
         db.query(
-            Message
+            ConversationMessage
         ).filter(
-            Message.conversation_id == conversation.id
+            ConversationMessage.conversation_id == conversation.id
         ).delete()
 
         db.delete(

@@ -5,6 +5,10 @@ Available tools:
 
 {tools}
 
+Conversation History:
+
+{conversation_history}
+
 User Question:
 
 {question}
@@ -40,6 +44,10 @@ Your task:
 12. Before selecting another tool:
 - Check Current Context first.
 - Do not retrieve information already present.
+13. Use Conversation History to resolve follow-up questions.
+14. If the current question refers to previous information using words like
+"it", "that", "this", "they", or similar references, infer their meaning
+from the Conversation History before selecting a tool.
 - Use Current Context when preparing later tool calls such as send_email.
 15. If multiple tools are required:
 
@@ -107,6 +115,27 @@ Example 4:
     "tool": "send_email",
     "arguments": {{
         "to": "customer@example.com"
+    }}
+}}
+
+Example 5:
+
+Conversation History:
+
+user: Where is order ORD1001?
+
+assistant: Your order ORD1001 has been shipped.
+
+Current User Question:
+
+Can I cancel it?
+
+Return:
+
+{{
+    "tool": "order_lookup",
+    "arguments": {{
+        "order_id": "ORD1001"
     }}
 }}
 

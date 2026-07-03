@@ -40,9 +40,6 @@ def main():
 
     db.close()
 
-    print("Tickets imported successfully.")
-
-
 if __name__ == "__main__":
 
     main()

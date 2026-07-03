@@ -4,18 +4,24 @@ def update_context(
         result: dict
 ):
 
-    if tool_name == "order_lookup":
+    CONTEXT_KEYS = {
 
-        state.context["order"] = result
+        "order_lookup": "order",
 
-    elif tool_name == "ticket_lookup":
+        "ticket_lookup": "ticket",
 
-        state.context["ticket"] = result
+        "knowledge_search": "knowledge",
 
-    elif tool_name == "knowledge_search":
+        "send_email": "email",
 
-        state.context["knowledge"] = result
+        "sql_search": "sql"
 
-    elif tool_name == "send_email":
+    }
 
-        state.context["email"] = result
+    key = CONTEXT_KEYS.get(
+        tool_name
+    )
+
+    if key:
+
+        state.context[key] = result

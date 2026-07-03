@@ -24,6 +24,22 @@ model = genai.GenerativeModel(
 )
 
 
+def generate_content(prompt: str):
+
+    try:
+
+        response = model.generate_content(
+            prompt
+        )
+
+        return response.text
+
+    except Exception as e:
+
+        print(f"\nGemini Error: {e}\n")
+
+        return None
+
 def summarize_text(text: str):
 
     prompt = f"""
@@ -33,12 +49,14 @@ def summarize_text(text: str):
     {text}
 """
 
-    try:
-        response = model.generate_content(prompt)
-        return response.text
+    response = generate_content(prompt)
 
-    except Exception as e:
-        return f"AI service temporarily unavailable: {str(e)}"
+    if response is None:
+
+        return "AI service temporarily unavailable."
+
+    return response
+
 
 def classify_ticket(text: str):
 
@@ -102,17 +120,15 @@ def analyze_ticket(text: str):
         "sentiment": "...",
         "priority": "..."
     }}
-
 """
 
     response = model.generate_content(prompt)
 
     cleaned_response = (
-        response.text
-        .replace("```json", "")
-        .replace("```", "")
-        .strip()
+    response.text
+    .replace("```json", "")
+    .replace("```", "")
+    .strip()
     )
 
     return json.loads(cleaned_response)
-

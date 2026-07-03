@@ -6,6 +6,7 @@ from app.agent.context_manager import update_context
 from app.agent.observer import observe, add_observation
 from app.agent.history_manager import tool_already_used, add_tool_history
 from app.agent.constants import MAX_ITERATIONS
+from app.services.memory_service import add_message, get_history
 from app.logger import logger
 from app.agent.executor import (
     execute_tool
@@ -15,13 +16,26 @@ from app.agent.response_generator import (
 )
 
 
-
 def run_agent(
-        question: str
+        question: str,
+        session_id: str
 ):
 
     state = AgentState(
         question=question
+    )
+
+    state.conversation_history = get_history(
+        session_id
+    )
+
+    add_message(
+
+        session_id=session_id,
+
+        role="user",
+
+        content=question
     )
 
     while state.iteration < MAX_ITERATIONS:
@@ -34,7 +48,9 @@ def run_agent(
 
             state.tool_history,
 
-            state.context
+            state.context,
+
+            state.conversation_history
         )
 
         state.selected_tool = tool_name
@@ -138,6 +154,15 @@ def run_agent(
     )
 
     state.final_answer = answer
+
+    add_message(
+
+        session_id=session_id,
+
+        role="assistant",
+
+        content=state.final_answer
+    )
 
     return AgentResponse(
 

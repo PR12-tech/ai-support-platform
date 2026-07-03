@@ -230,7 +230,7 @@ ai-support-platform/
 ## 1. Clone the repository
 
 ```bash
-git clone https://github.com/<your-username>/ai-support-platform.git
+git clone https://github.com/PR12-tech/ai-support-platform.git
 
 cd ai-support-platform
 ```

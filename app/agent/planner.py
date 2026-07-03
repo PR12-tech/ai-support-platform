@@ -1,4 +1,4 @@
-from app.services.ai_service import model
+from app.services.ai_service import generate_content
 from app.logger import logger
 
 from app.agent.prompts import (
@@ -18,12 +18,22 @@ def choose_tool(
         question: str,
         observations: list,
         tool_history: list,
-        context: str
+        context: dict,
+        conversation_history: list
 ):
+
+    history_text = "\n".join(
+
+        f"{message['role']}: {message['content']}"
+
+        for message in conversation_history
+    )
 
     prompt = TOOL_SELECTION_PROMPT.format(
 
         tools=list_tools(),
+
+        conversation_history=history_text,
 
         question=question,
 
@@ -35,16 +45,22 @@ def choose_tool(
 
     )
 
-    response = model.generate_content(
-        prompt
-    )
+    response = generate_content(prompt)
+
+    if response is None:
+
+        logger.error(
+            "Planner failed because the AI service is unavailable."
+        )
+
+        return "NONE", {}
 
     logger.info("========== Gemini Raw Response ==========")
-    logger.info(response.text)
+    logger.info(response)
     logger.info("========================================")
 
     tool_name, arguments = parse_tool_response(
-        response.text
+        response
     )
 
     logger.info(

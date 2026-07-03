@@ -14,6 +14,10 @@ class AgentState:
         default_factory=dict
     )
 
+    conversation_history: list = field(
+        default_factory=list
+    )
+
     tool_history: list = field(
         default_factory=list
     )

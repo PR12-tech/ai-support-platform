@@ -40,9 +40,6 @@ def main():
 
     db.close()
 
-    print("Orders imported successfully.")
-
-
 if __name__ == "__main__":
 
     main()

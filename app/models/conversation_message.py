@@ -10,9 +10,10 @@ from sqlalchemy.sql import func
 
 from app.database.db import Base
 
-class Message(Base):
 
-    __tablename__ = "messages"
+class ConversationMessage(Base):
+
+    __tablename__ = "conversation_messages"
 
     id = Column(
         Integer,
@@ -20,26 +21,20 @@ class Message(Base):
         index=True
     )
 
-    content = Column(
-        String,
-        nullable=False
-    )
-
-    sender = Column(
-        String,
-        nullable=False
-    )
-
-    ticket_id = Column(
-        Integer,
-        ForeignKey("tickets.id"),
-        nullable=True
-    )
-
     conversation_id = Column(
         Integer,
         ForeignKey("conversations.id"),
-        nullable=True
+        nullable=False
+    )
+
+    role = Column(
+        String,
+        nullable=False
+    )
+
+    content = Column(
+        String,
+        nullable=False
     )
 
     created_at = Column(

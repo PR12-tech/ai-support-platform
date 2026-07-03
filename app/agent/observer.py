@@ -1,8 +1,7 @@
-from app.services.ai_service import model
 from app.agent.prompts import OBSERVATION_PROMPT
 from app.agent.utils import list_tools
 from app.logger import logger
-
+from app.services.ai_service import generate_content
 
 def observe(
         question: str,
@@ -25,11 +24,19 @@ def observe(
 
     )
 
-    response = model.generate_content(
+    response = generate_content(
         observation_prompt
     )
 
-    decision = response.text.strip()
+    if response is None:
+
+        logger.warning(
+            "Observer unavailable. Defaulting to FINISH."
+        )
+
+        return "FINISH"
+
+    decision = response.strip()
 
     logger.info(
         f"Observer decision: {decision}"
