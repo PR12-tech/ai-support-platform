@@ -1,44 +1,29 @@
-import os
+import logging
 import json
 
-import google.generativeai as genai
-
-import warnings
-
-warnings.filterwarnings(
-    "ignore",
-    category=FutureWarning
-)
-
-from dotenv import load_dotenv
-
-load_dotenv()
-
-genai.configure(
-    api_key = os.getenv("GEMINI_API_KEY")
-)
+from app.logger import logger
+from app.llm.provider_factory import get_provider
 
 
-model = genai.GenerativeModel(
-    "gemini-2.5-flash"
-)
+provider = get_provider()
+
+logger = logging.getLogger(__name__)
 
 
 def generate_content(prompt: str):
 
-    try:
+    response = provider.generate_content(
+        prompt
+    )
 
-        response = model.generate_content(
-            prompt
+    if response is None:
+        logger.error(
+            "LLM provider returned an empty response."
         )
 
-        return response.text
-
-    except Exception as e:
-
-        print(f"\nGemini Error: {e}\n")
-
         return None
+
+    return response
 
 def summarize_text(text: str):
 
@@ -78,9 +63,13 @@ def classify_ticket(text: str):
     Return only the category name.
 """
 
-    response = model.generate_content(prompt)
+    response = generate_content(prompt)
 
-    return response.text.strip()
+    if response is None:
+
+        return "Other"
+
+    return response.strip()
 
 
 def analyze_ticket(text: str):
@@ -122,13 +111,35 @@ def analyze_ticket(text: str):
     }}
 """
 
-    response = model.generate_content(prompt)
+    response = generate_content(prompt)
+
+    if response is None:
+
+        return {
+            "summary": "AI service temporarily unavailable.",
+            "category": "Other",
+            "sentiment": "Neutral",
+            "priority": "Low"
+        }
 
     cleaned_response = (
-    response.text
-    .replace("```json", "")
-    .replace("```", "")
-    .strip()
+        response
+        .replace("```json", "")
+        .replace("```", "")
+        .strip()
     )
 
-    return json.loads(cleaned_response)
+    try:
+
+        return json.loads(cleaned_response)
+
+    except json.JSONDecodeError:
+
+        logger.exception("Failed to parse LLM JSON response.")
+
+        return {
+            "summary": "AI returned an invalid response.",
+            "category": "Other",
+            "sentiment": "Neutral",
+            "priority": "Low"
+        }

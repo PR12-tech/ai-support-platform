@@ -57,7 +57,21 @@ def run_agent(
 
         if tool_name == "NONE":
 
-            break
+            state.final_answer = (
+                "I'm sorry, I couldn't process your request at the moment."
+            )
+
+            add_message(
+                session_id=session_id,
+                role="assistant",
+                content=state.final_answer
+            )
+
+            return AgentResponse(
+                tool="NONE",
+                result=None,
+                answer=state.final_answer
+            )
 
         if tool_already_used(
 
@@ -67,7 +81,10 @@ def run_agent(
 
         ):
 
-            print(f"{tool_name} was already used.")
+            logger.warning(
+                "%s was already used.",
+                tool_name
+            )
 
             break
 

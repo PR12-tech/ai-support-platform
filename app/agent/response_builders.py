@@ -19,9 +19,9 @@ def build_ticket_response(result: dict):
 
     if not result["success"]:
 
-        return ["message"]
+        return result["message"]
 
-    ticket = result["ticket"]
+    ticket = result["data"]["ticket"]
 
     return (
         f"Ticket ID: {ticket['ticket_id']}\n"

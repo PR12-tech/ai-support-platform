@@ -3,19 +3,17 @@ from app.services.query_rewriter import rewrite_query
 history = [
     {
         "role": "user",
-        "content": "I want a refund."
+        "content": "Where is my order?"
     },
     {
         "role": "assistant",
-        "content": "You can request a refund within 30 days."
+        "content": "Can you provide your order ID?"
     }
 ]
 
-question = "How long does it take?"
-
-rewritten_query = rewrite_query(
-    question,
+result = rewrite_query(
+    "What about the delivery date?",
     history
 )
 
-print(rewritten_query)
+print(result)

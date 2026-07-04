@@ -1,4 +1,4 @@
-from app.services.ai_service import model
+from app.services.ai_service import generate_content
 from pathlib import Path
 from app.services.embedding_service import model as embedding_model
 from app.services.memory_service import get_history, add_message
@@ -74,28 +74,24 @@ def answer_question(
     
 """
 
-    try:
+    response = generate_content(prompt)
 
-        response = model.generate_content(
-            prompt
-        )
-
-        add_message(
-            session_id,
-            "assistant",
-            response.text
-        )
-
+    if response is None:
         return {
-            "answer": response.text,
+            "answer": "AI service temporarily unavailable.",
             "sources": sources
         }
 
-    except Exception as e:
+    add_message(
+        session_id,
+        "assistant",
+        response
+    )
 
-        return (
-            f"AI service temporarily unavailable: {e}"
-        )
+    return {
+        "answer": response,
+        "sources": sources
+    }
 
 
 def find_relevant_document(question: str):
@@ -151,19 +147,12 @@ def suggest_reply(
         Write a helpful support response.
         """
 
-    try:
+    response = generate_content(prompt)
 
-        response = model.generate_content(
-            prompt
-        )
+    if response is None:
+        return "AI service temporarily unavailable."
 
-        return response.text
-
-    except Exception as e:
-
-        return (
-            f"AI service temporarily unavailable: {e}"
-        )
+    return response
 
 
 def create_chunks(text: str):

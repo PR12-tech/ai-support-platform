@@ -1,4 +1,4 @@
-from app.services.ai_service import model
+from app.services.ai_service import generate_content
 
 
 def generate_queries(
@@ -17,20 +17,15 @@ Question:
 {query}
 """
 
-    try:
+    response = generate_content(prompt)
 
-        response = model.generate_content(
-            prompt
-        )
-
-        queries = response.text.split("\n")
-
-        return [
-            query.strip("-•")
-            for query in queries
-            if query.strip()
-        ]
-
-    except Exception:
-
+    if response is None:
         return [query]
+
+    queries = response.split("\n")
+
+    return [
+        query.strip("-• ")
+        for query in queries
+        if query.strip()
+    ]

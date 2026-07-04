@@ -1,4 +1,4 @@
-from app.services.ai_service import model
+from app.services.ai_service import generate_content
 
 
 def compress_context(
@@ -26,27 +26,18 @@ Context:
 Relevant Context:
 """
 
-    try:
+    response = generate_content(prompt)
 
-        response = model.generate_content(
-            prompt
-        )
-
-        compressed = response.text
-
-        lines = []
-
-        for line in compressed.split("\n"):
-
-            cleaned = line.strip("*•- ")
-
-            if cleaned:
-
-                lines.append(cleaned)
-
-        return "\n".join(lines)
-
-
-    except Exception:
-
+    if response is None:
         return context
+
+    lines = []
+
+    for line in response.split("\n"):
+
+        cleaned = line.strip("*•- ")
+
+        if cleaned:
+            lines.append(cleaned)
+
+    return "\n".join(lines)

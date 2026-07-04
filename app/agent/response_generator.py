@@ -48,4 +48,7 @@ def generate_response(
         prompt
     )
 
+    if response is None:
+        return "AI service temporarily unavailable. Please try again in a few moments."
+
     return response

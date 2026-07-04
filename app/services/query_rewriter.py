@@ -1,4 +1,4 @@
-from app.services.ai_service import model
+from app.services.ai_service import generate_content
 
 def rewrite_query(
         question: str,
@@ -25,16 +25,10 @@ def rewrite_query(
     Standalone Search Query:
     """
 
+    response = generate_content(prompt)
 
-    try:
-
-        response = model.generate_content(
-            prompt
-        )
-
-        return response.text.strip()
-
-    except Exception:
-
+    if response is None:
         return question
+
+    return response
 
