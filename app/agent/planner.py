@@ -55,7 +55,7 @@ def choose_tool(
 
         return "NONE", {}
 
-    logger.info("========== Gemini Raw Response ==========")
+    logger.info("========== Planner Raw Response ==========")
     logger.info(response)
     logger.info("========================================")
 

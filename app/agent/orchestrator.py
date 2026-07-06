@@ -5,7 +5,6 @@ from app.agent.preprocessor import preprocess_arguments
 from app.agent.context_manager import update_context
 from app.agent.observer import observe, add_observation
 from app.agent.history_manager import tool_already_used, add_tool_history
-from app.agent.constants import MAX_ITERATIONS
 from app.services.memory_service import add_message, get_history
 from app.logger import logger
 from app.agent.executor import (
@@ -15,6 +14,7 @@ from app.agent.response_generator import (
     generate_response
 )
 
+MAX_ITERATIONS = 5
 
 def run_agent(
         question: str,

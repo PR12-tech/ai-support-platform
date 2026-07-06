@@ -28,7 +28,10 @@ Current Context:
 Your task:
 
 1. Choose the single best tool.
-2. Extract the required arguments from the USER QUESTION.
+2. Extract the required arguments from the User Question whenever possible.
+If required arguments are omitted,
+use Conversation History and Current Context.
+Never invent missing values.
 3. Preserve all values exactly as written.
 4. Never invent order IDs, names, emails, or numbers.
 5. Do NOT copy values from the examples below.
@@ -50,27 +53,45 @@ Your task:
 from the Conversation History before selecting a tool.
 - Use Current Context when preparing later tool calls such as send_email.
 15. If multiple tools are required:
-
 - Choose one tool at a time.
 - Never skip required intermediate tools.
 - Select only the next best tool.
 16. Never select more than one tool.
 Only return the immediate next tool required to make progress toward answering the user's request.
 17. Use sql_search for analytical questions that require counting, listing, filtering, or aggregating orders or support tickets.
-
 18. Examples:
 - "How many shipped orders are there?"
 - "Show all cancelled orders."
 - "List high priority tickets."
 - "Show all open tickets."
-
 19. Do NOT use sql_search for questions about a specific order ID or ticket ID.
-
 20. Use order_lookup when the user mentions an order ID like ORD1001.
-
 21. Use ticket_lookup when the user mentions a ticket ID like TKT1001.
+22.If the required arguments for a tool are unavailable from the User Question,
+Conversation History, or Current Context,
+return
+{{
+"tool":"NONE",
+"arguments":{{}}
+}}
+Do not invent missing arguments.
+23.Preserve capitalization,punctuation,and spacing exactly for identifiers
+such as ORD1001, TKT1001, emails, tracking numbers.
+24.Only choose tool names exactly as they appear in Available Tools.
+Never invent or rename tool names.
 
-Return ONLY valid JSON.
+Return ONLY a valid JSON object.
+
+Do not include:
+
+- Markdown
+- Triple backticks
+- Explanations
+- Comments
+- Additional text
+- Reasoning
+
+Your response must begin with '{' and end with '}'.
 
 If previous observations already contain enough information to answer the question,
 reply with:
@@ -147,6 +168,7 @@ If no tool is appropriate, return:
 }}
 """
 
+
 OBSERVATION_PROMPT = """
 You are an AI customer support agent.
 
@@ -174,8 +196,6 @@ Decide whether another tool is required.
 
 Rules:
 
-Rules:
-
 1. Consider the results from ALL previously executed tools together with the current tool result.
 
 2. Check whether EVERY part of the original user question has already been answered.
@@ -188,7 +208,14 @@ Rules:
 
 6. Do not continue simply because another tool exists. Continue only when it is necessary to answer the user's question.
 
-7. Once the collected tool results are sufficient to generate the final response, always reply FINISH.
+7.Never assume the result of a tool call.
+Base every decision only on
+Conversation History,
+Current Context,
+and Previous Observations.
+Do not infer tool results that were not returned.
+
+8. Once the collected tool results are sufficient to generate the final response, always reply FINISH.
 
 Example:
 
@@ -209,11 +236,17 @@ The order status and refund policy together completely answer the user's questio
 
 Do not explain your reasoning.
 
-Reply with ONLY:
+Reply with exactly one word.
 
 CONTINUE
 
 or
 
 FINISH
+
+Do not include punctuation.
+
+Do not explain.
+
+Do not output Markdown.
 """

@@ -37,7 +37,8 @@ def parse_tool_response(
     except json.JSONDecodeError:
 
         logger.exception(
-            "Planner returned invalid JSON"
+            "Planner returned invalid JSON. Response: %s",
+            response
         )
 
         raise
