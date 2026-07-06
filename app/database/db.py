@@ -1,9 +1,17 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
+from app.core.config import settings
 
-DATABASE_URL = "postgresql://postgres:prasad123@localhost:5432/ai_support_db"
+DATABASE_URL = settings.DATABASE_URL
 
-engine = create_engine(DATABASE_URL)
+
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True,
+    pool_recycle=3600,
+    pool_size=5,
+    max_overflow=10,
+)
 
 SessionLocal = sessionmaker(
     autocommit=False,

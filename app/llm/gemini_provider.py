@@ -4,6 +4,7 @@ from google import genai
 from dotenv import load_dotenv
 
 from app.llm.base_provider import BaseLLMProvider
+from app.logger import logger
 
 load_dotenv()
 
