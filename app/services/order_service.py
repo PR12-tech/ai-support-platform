@@ -1,35 +1,37 @@
-import json
+from sqlalchemy.orm import Session
+
+from app.database.db import SessionLocal
+from app.models.order import Order
 
 
-with open(
-        "data/orders.json",
-        "r"
-) as file:
+def lookup_order(order_id):
 
-    ORDERS = json.load(
-        file
-    )
+    db: Session = SessionLocal()
 
+    try:
+        order = (
+            db.query(Order)
+            .filter(Order.order_id == order_id)
+            .first()
+        )
 
-def lookup_order(
-        order_id: str
-):
-
-    for order in ORDERS:
-
-        if order["order_id"] == order_id:
-
+        if not order:
             return {
-
-                "success": True,
-
-                "order": order
+                "success": False,
+                "message": "Order not found."
             }
 
-    return {
+        return {
+            "success": True,
+            "order": {
+                "id": order.id,
+                "order_id": order.order_id,
+                "customer": order.customer,
+                "status": order.status,
+                "tracking_number": order.tracking_number,
+                "estimated_delivery": order.estimated_delivery
+            }
+        }
 
-        "success": False,
-
-        "message": "Order Not Found."
-
-    }
+    finally:
+        db.close()

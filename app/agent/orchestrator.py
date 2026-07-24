@@ -57,6 +57,9 @@ def run_agent(
 
         if tool_name == "NONE":
 
+            if state.tool_history:
+                break
+
             state.final_answer = (
                 "I'm sorry, I couldn't process your request at the moment."
             )
@@ -68,8 +71,7 @@ def run_agent(
             )
 
             return AgentResponse(
-                tool="NONE",
-                result=None,
+                tools_used=[],
                 answer=state.final_answer
             )
 
@@ -164,10 +166,7 @@ def run_agent(
 
         state.question,
 
-        state.selected_tool,
-
-        state.tool_result
-
+        state.context
     )
 
     state.final_answer = answer
@@ -182,11 +181,6 @@ def run_agent(
     )
 
     return AgentResponse(
-
-        tool=state.selected_tool,
-
-        result=state.tool_result,
-
-        answer=state.final_answer
-
+        tools_used=state.tool_history,
+        answer=answer
     )

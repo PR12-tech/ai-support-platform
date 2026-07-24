@@ -91,7 +91,7 @@ Do not include:
 - Additional text
 - Reasoning
 
-Your response must begin with '{' and end with '}'.
+Your response must begin with an opening curly brace and end with a closing curly brace.
 
 If previous observations already contain enough information to answer the question,
 reply with:

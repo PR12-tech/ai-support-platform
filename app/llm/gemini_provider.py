@@ -1,22 +1,19 @@
 import os
 
 from google import genai
-from dotenv import load_dotenv
-
+from app.core.config import settings
 from app.llm.base_provider import BaseLLMProvider
 from app.logger import logger
-
-load_dotenv()
 
 class GeminiProvider(BaseLLMProvider):
 
     def __init__(self):
 
         self.client = genai.Client(
-            api_key=os.getenv("GEMINI_API_KEY")
+            api_key=settings.GEMINI_API_KEY
         )
 
-        self.model = "gemini-2.5-flash"
+        self.model = settings.GEMINI_MODEL
 
 
     def generate_content(

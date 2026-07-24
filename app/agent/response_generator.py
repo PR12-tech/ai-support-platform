@@ -7,22 +7,8 @@ from app.agent.response_builders import (
 
 def generate_response(
         question: str,
-        tool_name: str,
-        tool_result: dict
+        context: dict
 ):
-
-    if tool_name == "order_lookup":
-
-        return build_order_response(tool_result)
-
-    if tool_name == "ticket_lookup":
-
-        return build_ticket_response(tool_result)
-
-    if tool_name == "sql_search":
-
-        return build_sql_response(tool_result)
-
 
     prompt = f"""
     You are a helpful AI customer support assistant.
@@ -31,18 +17,19 @@ def generate_response(
 
     {question}
 
-    The selected tool:
+    Collected Context:
 
-    {tool_name}
-
-    Tool result:
-
-    {tool_result}
-
-    Using ONLY the tool result, answer the user's question naturally.
-
-    If the tool returned an error, explain it politely.
-    """
+    {context}
+    
+    Using ONLY the collected context above, answer the user's question.
+    
+    Rules:
+    - Use all information present in the collected context
+    - If multiple tools contributed information, combine it into one natural answer.
+    - Do not say information is unavailable if it exists in the collected context.
+    - Do not invent information that is not present in the collected context.
+    - If the collected context contains an error, explain it politely.
+"""
 
     response = generate_content(
         prompt

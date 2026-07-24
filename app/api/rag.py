@@ -1,9 +1,9 @@
 from fastapi import APIRouter
 from fastapi.params import Depends
-from requests import session
 from sqlalchemy.orm import Session
 
 from app.database.db import get_db
+from app.agent.orchestrator import run_agent
 from app.auth.dependencies import get_current_user
 from app.models.user import User
 from app.models.ticket import Ticket
@@ -11,7 +11,6 @@ from app.models.messages import Message
 from app.schemas.rag import QuestionRequest
 
 from app.services.rag_service import (
-    answer_question,
     suggest_reply,
     get_knowledge
 )
@@ -27,15 +26,16 @@ def ask_question(
         request: QuestionRequest
 ):
 
-    answer = answer_question(
-        request.session_id,
-        request.question
+    agent_response = run_agent(
+        session_id=request.session_id,
+        question=request.question
     )
 
     return {
         "session_id": request.session_id,
         "question": request.question,
-        **answer
+        "tool_used": agent_response.tools_used,
+        "answer": agent_response.answer
     }
 
 @router.post("/tickets/{ticket_id}/suggest-reply")
@@ -73,7 +73,7 @@ def generate_reply(
 
     return {
         "ticket_id": ticket_id,
-        "retrieved_chunk": document,
+        "retrieved_chunk": knowledge,
         "reply": reply
     }
 
