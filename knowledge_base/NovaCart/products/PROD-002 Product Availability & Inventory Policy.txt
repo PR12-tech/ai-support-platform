@@ -1,0 +1,375 @@
+﻿PROD-002: Product Availability & Inventory Policy
+Document Header
+* Document Title: Product Availability & Inventory Policy
+* Document ID: PROD-002
+* Version: 1.0.0
+* Document Category: Products
+* Classification: Internal / Public Operational Standard
+* Department Owner: Inventory Control & Supply Chain Systems
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Inventory Control, Director of Supply Chain Systems, Chief Technology Officer
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Available-to-Promise, ATP, Stock Reservation, Soft Lock, Hard Lock, Safety Stock Buffer, Backorder, Pre-order, Inventory Synchronization, Reorder Point
+Purpose
+This document defines the official enterprise policy, inventory management principles, stock availability definitions, reservation rules, replenishment guidelines, and business rules governing product availability across all sales channels at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes standardized procedures to maintain high inventory accuracy, prevent unhandled overselling, enforce reservation timeout policies, and ensure seamless synchronization between physical stock allocations and customer-facing availability displays.
+As a core operational document (PROD-002) in the Products category of the NovaCart Enterprise Knowledge Base (NEKB), PROD-002 governs stock management within the central Inventory Management System (inventory.novacart.internal), operating in strict alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, REF-001 through REF-006, and PROD-001.
+Scope
+This policy applies universally across all product categories—Consumer Electronics (CAT-ELE), Mobile Devices (CAT-MOB), Gaming Hardware (CAT-GAM), Home Appliances (CAT-APP), Smart Home Hardware (CAT-SMT), Digital Software (CAT-SFT), Gift Cards (CAT-GFT), and Subscriptions (CAT-SUB)—managed across NovaCart’s operating regions (India, Singapore, UAE).
+Coverage Includes
+* Customer-facing product availability statuses, stock thresholds, and display rules.
+* Real-time Available-to-Promise (ATP) calculations and inventory state management.
+* Two-stage stock reservation workflows (checkout soft locks and order hard locks).
+* Omnichannel inventory synchronization frequencies, event streams, and channel webhooks.
+* Backorder and pre-order qualification parameters, stock allocation priority, and price guarantees.
+* Inventory replenishment triggers, safety stock buffer formulas, cycle counts, manual inventory corrections, and audit adjustments.
+Out of Scope
+* Physical warehouse picking, packing, linehaul routing, and dock departure execution (governed by SHIP-001 and SHIP-003).
+* Master catalog SKU creation, taxonomy mapping, and attribute enrichment (governed by PROD-001).
+Product Availability & Inventory Overview
+NovaCart operates a distributed fulfillment infrastructure comprising regional primary fulfillment centers (FCs)—Bangalore (BLR-01), Mumbai (BOM-01), Delhi (DEL-02), Singapore (SIN-01), and Dubai (DXB-01)—alongside urban dark store nodes and marketplace partner facilities. The Inventory Control Engine (inventory.novacart.internal) aggregates physical balances and calculates real-time customer availability.
+Core Operational Principles
+1. Zero Unhandled Overselling: Real-time event-driven stock reservation prevents order acceptance when sellable inventory is depleted, enforcing a maximum permissible oversell threshold of 0.00%.
+2. Single Sellable View: Aggregating Available-to-Promise (ATP) stock across all FCs, dark stores, and verified marketplace merchant nodes into a unified, location-aware customer stream.
+3. Deterministic State Locking: Explicit isolation between physical inventory on hand, soft-reserved cart stock, hard-reserved allocated order stock, damaged/quarantined stock, and in-transit replenishment stock.
+4. Continuous Multi-Node Synchronization: High-frequency event streaming ensuring inventory delta updates propagate across storefront channels in under 1 second.
+5. Inventory Ownership & Accountability: Physical and systemic inventory accountability rests strictly with the assigned Fulfillment Center Manager or Marketplace Merchant node until the physical dock departure scan transfers custody to logistics carriers.
+Inventory Lifecycle
+Physical and digital inventory progresses through distinct allocation states within inventory.novacart.internal from initial dock intake through fulfillment, quarantine, or retirement:
+Inventory Lifecycle Matrix
+
+
+Lifecycle Stage
+	System State Tag
+	Functional Description
+	Impact on Sellable ATP
+	Primary Source System
+	Inbound Transit
+	STG-ITR
+	Confirmed on inbound vendor Purchase Orders or inter-FC transfers.
+	Eligible for Backorders
+	scm.novacart.internal
+
+
+	Dock Intake
+	STG-INSPECT
+	Arrived at warehouse dock; undergoing receiving count and barcode audit.
+	Excluded from ATP
+	wms.novacart.internal
+
+
+	On Hand Sellable
+	STG-OH
+	Verified and stowed in pickable warehouse bins (On Hand).
+	Primary ATP Source
+	wms.novacart.internal
+
+
+	Soft Reserved
+	STG-SR
+	Temporarily locked in an active customer checkout session (15-min timer).
+	Decrements ATP
+	inventory.novacart.internal
+
+
+	Hard Allocated
+	STG-HR
+	Bound to a confirmed, paid order (PAYMENT_CONFIRMED) awaiting pick.
+	Excluded from ATP
+	api.novacart.internal/oms
+
+
+	Quarantined
+	STG-QDS
+	Isolated due to damage, customer return inspection (REF-004), or recall.
+	Excluded from ATP
+	wms.novacart.internal
+
+
+	Archived / Retired
+	STG-ARC
+	Permanently written off or discontinued SKU (PROD-001).
+	Excluded from ATP
+	catalog.novacart.internal
+
+
+	Master Available-to-Promise (ATP) Formula
+To maintain complete consistency across all sales channels, sellable inventory is computed continuously using the master availability formula:
+
+
+$$\text{ATP} = \text{On Hand Stock (OH)} - \text{Hard Reserved Stock (HR)} - \text{Soft Reserved Stock (SR)} - \text{Quarantined Stock (QDS)} - \text{Safety Stock Buffer (SSB)}$$
+
+
+Product Availability Status Definitions
+Product availability is categorized into six standardized operational states across customer interfaces and internal microservices:
+Product Availability Status Matrix
+
+
+Status Code
+	Availability Status Name
+	Customer-Facing Storefront Label
+	System Calculation Criteria
+	Order Placement Permitted?
+	ST-IN_STOCK
+	In Stock (Normal)
+	"In Stock" (Green Indicator)
+	$\text{ATP Stock} > \text{Low Stock Threshold } (> 10 \text{ units})$
+	Yes (Immediate Dispatch)
+	ST-LOW_STOCK
+	Low Inventory Alert
+	"Only [X] Left in Stock - Order Soon"
+	$1 \le \text{ATP Stock} \le \text{Low Stock Threshold } (\le 10 \text{ units})$
+	Yes (Immediate Dispatch)
+	ST-OUT_OF_STOCK
+	Out of Stock
+	"Out of Stock" (Notify Me Option)
+	$\text{ATP Stock} = 0$; No active replenishment PO
+	No (Stock Alert Allowed)
+	ST-BACKORDER
+	Backorder Available
+	"Backorder Now - Ships by [Date]"
+	$\text{ATP Stock} = 0$; Confirmed Vendor PO in transit
+	Yes (Deferred Dispatch)
+	ST-PREORDER
+	Pre-order Item
+	"Pre-Order Now - Released on [Date]"
+	New launch SKU; Factory allocation confirmed
+	Yes (Launch Day Dispatch)
+	ST-RESTRICTED
+	Quarantined / Suspended
+	"Currently Unavailable"
+	Safety recall, catalog audit hold, or quality quarantine
+	No (Checkout Blocked)
+	Inventory Reservation Process
+To prevent race conditions during high-concurrency shopping events or flash sales, NovaCart enforces a strict two-stage stock reservation workflow:
+1. Soft Reservation Workflow (Checkout Stage)
+When a customer initiates checkout by clicking "Proceed to Pay", api.novacart.internal/oms issues a soft reservation command to inventory.novacart.internal. The system decrements the ATP count and applies a 15-minute soft lock.
+* If payment authorization succeeds (AUTHORIZATION_SUCCESS) within 15 minutes, the soft lock converts automatically to a Hard Lock.
+* If payment fails or the session times out (15 minutes elapsed), the soft lock expires automatically, returning the reserved units to the active ATP pool (PAY-001, PAY-002).
+2. Hard Reservation Workflow (Order Execution Stage)
+Upon payment confirmation, the order transitions to PAYMENT_CONFIRMED, and the soft lock converts to an immutable Hard Lock. Stock remains hard-reserved until warehouse picking and FC dock departure scan (SHIPPED), at which point On Hand and Hard Reserved counts decrement simultaneously.
+Inventory Reservation Matrix
+
+
+Reservation Stage
+	Trigger Event
+	Reservation Lock Type
+	Maximum Lock Duration
+	Expiration / Timeout Action
+	Cart Add (General)
+	Item added to cart
+	None (Informational)
+	Unlimited
+	No lock; stock re-checked at checkout.
+	Checkout Initiated
+	Customer clicks "Proceed to Pay"
+	Soft Lock (Cart Reservation)
+	15 Minutes
+	Auto-released to ATP; order set to CANCELLED_TIMEOUT.
+	Payment Confirmed
+	Gateway authorization success
+	Hard Lock (Order Allocated)
+	Until FC Dock Scan
+	Bound to order; moves to SHIPPED upon FC scan (ORD-001).
+	Flash Sale / High Demand
+	Checkout initiated on Flash SKU
+	Soft Lock (Express Queue)
+	5 Minutes
+	Rapid expiration; strict 5-minute checkout window.
+	Inventory Synchronization Process
+To maintain absolute inventory accuracy across multiple storefronts, mobile applications, marketplace channels, and warehouse nodes, NovaCart operates an event-driven synchronization pipeline managed by api.novacart.internal/inventory/sync.
+Synchronization Frequencies & Telemetry Standards
+* Real-Time Event Streams: Every inventory state change publishes an immediate event payload to the central Apache Kafka message bus.
+* Storefront Cache Refresh: Storefront edge caches and Product Display Pages (PDP) update within $< 1\text{ second}$ of a Kafka inventory delta event.
+* 3P Marketplace Channel Sync: Inventory balances synced to external marketplace channels (e.g., Amazon, partner portals) execute via webhook updates every 5 minutes.
+* Full Reconciliation Audit: Batch reconciliation jobs audit physical WMS counts against ATP logs daily at 03:00 AM local time.
+Backorder Management
+Backorders allow customers to purchase out-of-stock products that have guaranteed inbound replenishment stock confirmed via an active Vendor Purchase Order (PO).
+Backorder & Pre-order Matrix
+
+
+Order Type
+	Eligibility Criteria
+	Allocation Cap
+	Target Shipping SLA
+	Cancellation / Refund Rights
+	Backorder
+	Out of stock; Vendor PO confirmed with FC delivery $\le 14\text{ days}$.
+	Max $80\%$ of confirmed inbound PO quantity.
+	Guaranteed dispatch within $2\text{ business days}$ of PO intake.
+	100% Full Refund anytime prior to FC dispatch (ORD-002).
+	Pre-order
+	New launch SKU; Factory allocation quota documented.
+	Max $100\%$ of documented factory quota allocation.
+	Dispatched on official manufacturer embargo launch date.
+	100% Full Refund + Automatic Price Protection Refund (PAY-003).
+	Backorder Execution Rules
+1. Inbound PO Verification: An item is eligible for backordering only if a confirmed Vendor PO is registered in inventory.novacart.internal with a guaranteed warehouse delivery date within 14 calendar days.
+2. Capped Backorder Quantity: Total backorder allocations cannot exceed 80% of the confirmed inbound PO quantity. The remaining 20% is reserved as a buffer for inbound transit discrepancies.
+3. Explicit Delivery SLA Display: The product page and checkout screen must display an explicit backorder shipping commitment (e.g., "Backorder Item - Ships by August 12, 2026").
+4. Auto-Fulfillment Priority: Arriving replenishment stock at the FC is hard-allocated automatically to backorders in strict chronological sequence (First-In, First-Out by order timestamp).
+Pre-order Management
+Pre-orders enable advance customer purchasing for newly announced or upcoming products prior to official commercial launch dates.
+Pre-order Execution Rules
+* Factory Allocation Guarantee: Pre-order listings require formal manufacturer allocation documentation confirming factory production quotas and guaranteed delivery dates to primary hubs.
+* Launch Date Binding: Pre-orders cannot be dispatched prior to the official manufacturer embargo launch date. Fulfillment centers stage packed pre-orders 24 hours prior to launch date for synchronized launch-day delivery (SHIP-001, SHIP-003).
+* Price Protection Guarantee: If the official retail price decreases between pre-order placement and launch dispatch, NovaCart automatically refunds the price difference to the customer's original payment method (PAY-003).
+Inventory Replenishment Guidelines
+Replenishment algorithms calculate safety stock levels and generate automated Purchase Requisitions to prevent stock-outs on core catalog items.
+
+
+$$\text{Reorder Point (ROP)} = (\text{Average Daily Sales Velocity} \times \text{Vendor Lead Time Days}) + \text{Safety Stock Buffer (SSB)}$$
+
+
+Stock Replenishment Matrix
+
+
+Catalog Category
+	Target Safety Stock Buffer (SSB)
+	Default Vendor Lead Time
+	Replenishment Trigger Threshold
+	Primary Sourcing Hub
+	CAT-MOB (Smartphones)
+	14 Days Sales Velocity
+	5 Business Days
+	$\text{Stock} \le (\text{Velocity} \times 5) + 14 \text{ Days}$
+	Regional Hub (BLR-01, DXB-01)
+	CAT-ELE (Laptops/Audio)
+	10 Days Sales Velocity
+	7 Business Days
+	$\text{Stock} \le (\text{Velocity} \times 7) + 10 \text{ Days}$
+	Primary Hub (BLR-01, SIN-01)
+	CAT-APP (Appliances)
+	7 Days Sales Velocity
+	10 Business Days
+	$\text{Stock} \le (\text{Velocity} \times 10) + 7 \text{ Days}$
+	Metro Hub (DEL-02, BOM-01)
+	CAT-GAM (Consoles)
+	21 Days Sales Velocity
+	14 Business Days
+	$\text{Stock} \le (\text{Velocity} \times 14) + 21 \text{ Days}$
+	Central Hub (SIN-01)
+	Customer Communication
+Automated notifications ensure complete transparency regarding stock availability, order allocations, and delays:
+* Low Stock Warning: Displayed on Product Display Pages when ATP stock falls to 10 units or below ("Only [X] left in stock").
+* Backorder Confirmation: Dispatched via Email and SMS immediately upon checkout, detailing expected inbound dates and dispatch timelines.
+* Backorder Delay Alert: If a vendor inbound PO is delayed past the estimated date, an automated alert dispatches to the customer within 2 hours, offering: [1] Continued wait with updated ETA, or [2] Immediate 100% full refund (ORD-002, PAY-003).
+* Stock Restoration Alert: "Notify Me" alerts dispatched via Push Notification and Email when an out-of-stock item is restocked.
+Department Responsibilities
+Cross-functional coordination ensures accurate inventory control and availability reporting:
+Department Responsibility Matrix
+
+
+Department Unit
+	Primary Inventory & Availability Responsibilities
+	Primary System Portal
+	Key Performance Indicator (KPI)
+	Inventory Control
+	Oversees ATP counts, calculates ROP thresholds, manages cycle counts, executes manual adjustments, and reconciles variances.
+	inventory.novacart.internal
+	Inventory Accuracy $\ge 99.8\%$
+
+
+	Warehouse Operations
+	Executes dock intake, bin transfers, physical picking, damage quarantines, and stock recounts.
+	wms.novacart.internal
+	Inbound Intake SLA $< 4 \text{ Hours}$
+
+
+	Supply Chain & Purchasing
+	Issues Vendor POs, tracks vendor inbound lead times, and manages factory pre-order quotas.
+	scm.novacart.internal
+	Vendor Lead Time SLA $\ge 95\%$
+
+
+	Software Engineering
+	Maintains real-time Kafka event streams, checkout reservation engines, and channel webhooks.
+	api.novacart.internal
+	Sync Telemetry Latency $< 1 \text{ Sec}$
+
+
+	Business Rules
+Rule 1: Hard Floor Safety Buffer Rule
+Every active product listing maintains a mandatory, system-enforced Hard Floor Safety Buffer ($\text{SSB} = 2 \text{ units}$ for standard products; $5 \text{ units}$ for high-velocity items). The central inventory engine sets $\text{ATP} = 0$ when physical On Hand stock reaches the SSB threshold, preventing final-unit overselling caused by concurrent local checkouts.
+Rule 2: Absolute 15-Minute Reservation Expiry
+Checkout soft locks expire strictly at 15 minutes (900 seconds) from initiation. No customer support agent or system routine may extend a soft reservation lock. Unpaid orders automatically transition to CANCELLED_TIMEOUT, and stock returns to the sellable ATP pool (ORD-001, PAY-002).
+Rule 3: Quarantined Return Inventory Isolation
+Items returned by customers (REF-002, REF-004) cannot be injected into active sellable ATP stock directly from FC intake docks. Returned items must enter the QUARANTINED state and pass a formal Quality Inspection (Grade A/B under REF-004) before WMS software transfers the units to pickable stock bins.
+Rule 4: Manual Inventory Adjustments & Recounts
+Manual inventory adjustments (e.g., correcting mislaid bin counts or recording warehouse damage) exceeding $5\text{ units}$ or $\text{INR } 10,000$ / $\text{SGD } 150$ / $\text{AED } 400$ require dual-control sign-off from the Inventory Control Manager in wms.novacart.internal. All physical recounts must update system ATP logs within 1 hour.
+Rule 5: Conditions for Product Discontinuation
+When a SKU is declared DISCONTINUED by Merchandising (PROD-001), replenishable PO creation is permanently disabled. Remaining stock is sold off until ATP $= 0$, at which point the status updates automatically to ARCHIVED.
+Exception Handling
+Inventory Exception Matrix
+
+
+Exception Code
+	Exception Scenario
+	Root Cause Description
+	System & Operational Resolution Workflow
+	EXC-INV-01
+	Oversold Order (Stock Mismatch)
+	System ATP error or simultaneous multi-channel checkout.
+	Auto-sourcing from secondary FC; if unavailable, auto-convert to priority backorder or issue 100% refund + ₹250 wallet credit (PAY-003, REF-006).
+	EXC-INV-02
+	Warehouse Physical Discrepancy
+	Mislaid bin item or unrecorded warehouse damage.
+	WMS locks affected bin; triggers immediate physical recount; updates ATP within 1 hour.
+	EXC-INV-03
+	Vendor Inbound PO Delay
+	Supply chain delay on backordered/pre-ordered items.
+	Auto-notify customer; extend ETA or offer immediate one-click refund (ORD-002).
+	EXC-INV-04
+	Inbound Damaged Shipment
+	Vendor delivery arrives damaged at FC intake dock.
+	FC logs intake rejection; locks units in QUARANTINED state; dispatches vendor RTV notice.
+	EXC-INV-05
+	Emergency Stock Allocation
+	Disaster response or VIP corporate order request.
+	L3 Inventory Manager executes manual stock override in inventory.novacart.internal.
+	Practical Examples
+Scenario 1: Concurrent Checkout during Flash Sale
+1. Customer A and Customer B initiate checkout simultaneously for the final smartphone unit ($\text{ATP} = 1$) at 10:00:00 AM.
+2. Customer A's checkout request reaches inventory.novacart.internal at 10:00:00.100 AM. System grants a 15-minute soft lock ($\text{Soft Reserved} = 1, \text{ATP} = 0$).
+3. Customer B's request reaches the engine at 10:00:00.150 AM. System detects $\text{ATP} = 0$ and rejects the cart reservation, displaying "Item Sold Out" to Customer B.
+4. Customer A completes payment authorization at 10:02:15 AM. Soft lock converts to Hard Allocated Stock, and order moves to PAYMENT_CONFIRMED (ORD-001).
+Scenario 2: Automated Re-Sourcing for Warehouse Stock Mismatch
+1. Order #NC-IN-88201 for a gaming laptop is placed and allocated to local hub BLR-01.
+2. FC picker arrives at bin location and discovers the physical box is damaged (liquid leak from adjacent bin). Picker logs BIN_DAMAGE_FLAG in WMS.
+3. WMS sets the local unit to QUARANTINED and triggers exception EXC-INV-01.
+4. The central Sourcing Engine (api.novacart.internal/oms/source) detects the mismatch and automatically re-routes the order allocation to secondary FC DEL-02 within 12 seconds. Order fulfills without customer delivery delay (ORD-005, SHIP-001).
+Frequently Asked Questions (FAQs)
+Q1: How long is an item held in my shopping cart during checkout?
+Answer: When you click "Proceed to Pay" and enter the checkout session, stock is soft-reserved for exactly 15 minutes. If payment is not completed within 15 minutes, the reservation expires automatically, the items return to active stock, and the unpaid checkout session cancels (Refer to ORD-001, PAY-002).
+Q2: What happens if an item I ordered becomes out of stock due to a warehouse error?
+Answer: If a physical stock discrepancy occurs at the assigned warehouse, our automated sourcing engine immediately attempts to fulfill your order from another regional fulfillment center at no extra charge. If stock is unavailable nationwide, you will receive an immediate notification, a 100% full refund to your original payment method, and a ₹250 goodwill store credit (Refer to PAY-003, REF-006).
+Q3: Can I cancel a backorder or pre-order if the estimated shipping date changes?
+Answer: Yes. You may cancel any backorder or pre-order penalty-free at any time prior to warehouse packaging dispatch by clicking "Cancel Order" under My Orders in the mobile app or website, triggering an immediate 100% full refund (Refer to ORD-002).
+Revision History
+
+
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of PROD-002. Established product availability statuses, ATP calculation formulas, 15-minute checkout soft-lock rules, synchronization SLAs, backorder/pre-order guidelines, and exception workflows.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* ORD-001: Order Lifecycle Management Policy
+* ORD-005: Split Order Management Policy
+* SHIP-001: Domestic Shipping Policy
+* SHIP-003: Express & Priority Shipping Policy
+* PAY-001: Payment Processing SOP
+* PAY-002: Payment Failure & Retry Policy
+* PAY-003: Refund Payment Processing Policy
+* REF-003: Replacement Policy
+* REF-004: Return Inspection & Quality Assessment Policy
+* REF-006: Store Credit & Promotional Refund Policy
+* PROD-001: Product Catalog Management Policy

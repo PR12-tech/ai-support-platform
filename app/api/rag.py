@@ -1,14 +1,21 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException, status
 from fastapi.params import Depends
 from sqlalchemy.orm import Session
 
 from app.database.db import get_db
 from app.agent.orchestrator import run_agent
 from app.auth.dependencies import get_current_user
+from app.models.conversations import Conversation
 from app.models.user import User
 from app.models.ticket import Ticket
 from app.models.messages import Message
-from app.schemas.rag import QuestionRequest
+from app.schemas.rag import (
+    QuestionRequest,
+    AskResponse,
+    SuggestReplyResponse,
+    ConversationHistoryResponse,
+    ClearHistoryResponse,
+)
 
 from app.services.rag_service import (
     suggest_reply,
@@ -21,7 +28,11 @@ from app.services.memory_service import (
 
 router = APIRouter()
 
-@router.post("/ask")
+@router.post(
+    "/ask",
+    response_model=AskResponse
+)
+
 def ask_question(
         request: QuestionRequest
 ):
@@ -34,11 +45,15 @@ def ask_question(
     return {
         "session_id": request.session_id,
         "question": request.question,
-        "tool_used": agent_response.tools_used,
+        "tools_used": agent_response.tools_used,
         "answer": agent_response.answer
     }
 
-@router.post("/tickets/{ticket_id}/suggest-reply")
+@router.post(
+    "/tickets/{ticket_id}/suggest-reply",
+    response_model=SuggestReplyResponse
+)
+
 def generate_reply(
         ticket_id: int,
         current_user: User = Depends(get_current_user),
@@ -50,9 +65,10 @@ def generate_reply(
     ).first()
 
     if not ticket:
-        return {
-            "message": "Ticket not found"
-        }
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Ticket not found."
+        )
 
     messages = db.query(Message).filter(
         Message.ticket_id == ticket_id
@@ -77,7 +93,11 @@ def generate_reply(
         "reply": reply
     }
 
-@router.get("/history/{session_id}")
+@router.get(
+    "/history/{session_id}",
+    response_model=ConversationHistoryResponse
+)
+
 def get_conversation_history(
         session_id: str
 ):
@@ -91,7 +111,11 @@ def get_conversation_history(
         "history": history
     }
 
-@router.delete("/history/{session_id}")
+@router.delete(
+    "/history/{session_id}",
+    response_model=ClearHistoryResponse
+)
+
 def delete_conversation_history(
         session_id: str
 ):

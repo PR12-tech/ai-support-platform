@@ -1,0 +1,314 @@
+﻿PROD-001: Product Catalog Management Policy
+Document Header
+* Document Title: Product Catalog Management Policy
+* Document ID: PROD-001
+* Version: 1.0.0
+* Document Category: Products
+* Classification: Internal / Public Operational Standard
+* Department Owner: Merchandising & Product Information Management (PIM)
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Catalog Management, Director of Supply Chain Systems, Chief Technology Officer
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Product Catalog, Product Information Management, PIM, Stock Keeping Unit, SKU, Harmonized System Code, Product Lifecycle, Product Taxonomy, Master Data Management
+Purpose
+This document establishes the official enterprise policy, governance standards, product information specifications, catalog data quality requirements, approval workflows, and business rules governing product catalog management at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It defines the operational framework for creating, updating, enriching, categorizing, maintaining, and retiring physical and digital products within the enterprise Product Information Management system (catalog.novacart.internal).
+As the foundational document (PROD-001) in the Products category of the NovaCart Enterprise Knowledge Base (NEKB), PROD-001 governs master catalog data integrity across e-commerce storefronts, mobile applications, warehouse management systems (wms.novacart.internal), order management systems (api.novacart.internal/oms), and third-party logistics integrations, maintaining complete consistency with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, and REF-001 through REF-006.
+Scope
+This policy applies universally to all physical merchandise categories (CAT-ELE, CAT-MOB, CAT-GAM, CAT-APP, CAT-SMT), digital software products (CAT-SFT), digital gift cards (CAT-GFT), and subscriptions (CAT-SUB) offered across NovaCart's operating territories: India (IN), Singapore (SG), and the United Arab Emirates (UAE).
+Coverage Includes
+* Master product structure, Stock Keeping Unit (SKU) assignment logic, and parent-child variant grouping rules.
+* Mandatory product attribute specifications, naming conventions, and 8-digit Harmonized System (HS) tariff code mappings.
+* Product information enrichment, digital asset management (DAM), and high-resolution imagery standards.
+* Catalog lifecycle transitions from initial vendor onboarding through active listing, seasonal suspension, and final product retirement.
+* Product taxonomy classification, category reassignment procedures, and duplicate listing prevention algorithms.
+Out of Scope
+* Real-time stock level synchronization, warehouse safety stock calculations, and reorder point thresholds (governed by PROD-002).
+* Final checkout pricing calculations, promotional coupon discounting, and regional tax Engine execution (governed by PAY-001 and COMP-001).
+Product Catalog Overview
+The enterprise product catalog serves as the single source of truth for all sellable items and bundle configurations within NovaCart. Product information governance ensures that product listings are legally compliant, taxonomically accurate, search-optimized, and free of misleading specifications, thereby minimizing customer return rates (REF-001, REF-002) and operational fulfillment errors.
+
+
+
+
+
+
+<ElicitationsGroup message="To explore related inventory management, order processing, or product return policies further:">
+{/* Reason: Offers structured navigational paths to related domain policies. */}
+ <Elicitation label="Review PROD-002 Inventory Policy" query="Show PROD-002 Product Availability & Inventory Policy detailing stock allocations." />
+ <Elicitation label="Review ORD-001 Order Lifecycle Policy" query="Show ORD-001 Order Lifecycle Management Policy detailing fulfillment flows." />
+ <Elicitation label="Examine REF-003 Replacement Policy" query="Show REF-003 Replacement Policy detailing DOA replacements." />
+</ElicitationsGroup>
+
+Core Operational Principles
+1. Single Source of Truth: All customer-facing and system-level product data must originate from catalog.novacart.internal. Ad-hoc modifications directly in storefront presentation layers are strictly prohibited.
+2. Deterministic SKU Uniqueness: Every sellable variant (combination of model, size, color, storage capacity, power plug type) must possess an immutable, unique Stock Keeping Unit (SKU) identifier.
+3. Mandatory Statutory Compliance: Product listings must include compulsory legal and regulatory metadata, including manufacturer details, country of origin, 8-digit HS Code, local tax classification, and safety compliance certifications prior to storefront publishing.
+4. Data Completeness Gatekeeping: A product listing cannot transition to ACTIVE status without satisfying $100\%$ of mandatory category attributes and digital asset requirements.
+Product Lifecycle
+Every product listed in the NovaCart master catalog progresses through a six-stage controlled lifecycle within catalog.novacart.internal:
+Product Lifecycle Matrix
+Lifecycle Stage
+	Stage Code
+	Description & Permissible Actions
+	Customer Storefront Visibility
+	Order Placement Allowed?
+	Draft / Pending
+	STAGE-DFT
+	Initial product record creation; attribute enrichment; vendor metadata input.
+	Hidden
+	No
+	In Review
+	STAGE-REV
+	Catalog QA and Legal Compliance review; attribute validation; image audit.
+	Hidden
+	No
+	Active / Published
+	STAGE-ACT
+	Fully enriched product; live on storefront; available for order fulfillment.
+	Visible
+	Yes (Subject to stock)
+	Suspended / Hold
+	STAGE-SPD
+	Temporarily hidden due to catalog error, safety recall, or regulatory review.
+	Hidden / Restricted
+	No
+	Discontinued
+	STAGE-DIS
+	Product no longer manufactured or restocked; remaining stock sold off.
+	Visible (Out of Stock mark)
+	No
+	Archived / Retired
+	STAGE-ARC
+	Product permanently retired; historical record locked for audit integrity.
+	Hidden
+	No
+	Product Creation Process
+New product listings—whether initiated by 1P Merchandising teams or 3P Marketplace Merchants—follow a strict, multi-tier onboarding workflow:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        PRODUCT CREATION & PUBLISHING WORKFLOW                      |
++-----------------------------------------------------------------------------------+
+| 1. DATA ENTRY     | Input parent/child attributes, EAN/UPC, brand, and HS code in PIM.   |
+| 2. ASSET UPLOAD   | Upload minimum 3 studio photos and user manual to DAM server.    |
+| 3. DUPLICATE CHECK| System scans GTIN/UPC and MPN for existing catalog matches.        |
+| 4. QA & COMPLIANCE| Catalog QA audits formatting, grammar, and legal safety claims.  |
+| 5. PUBLISH LOCK   | PIM transitions status to ACTIVE; pushes data to OMS and WMS.     |
++-----------------------------------------------------------------------------------+
+
+1. Vendor / Merchandising Draft Creation: The creator inputs core metadata into catalog.novacart.internal, specifying Global Trade Item Number (GTIN/UPC/EAN), Manufacturer Part Number (MPN), Brand Name, Product Title, Category ID, and Country of Origin.
+2. Taxonomy & Attribute Mapping: The system enforces category-specific mandatory fields (e.g., screen size and battery capacity for CAT-MOB; wattage and energy rating for CAT-APP).
+3. Automated Duplicate Screening: The PIM engine executes a real-time duplicate check matching GTIN, MPN, and standardized Title. If a duplicate match is identified ($> 95\%$ similarity score), the request is rejected, and the creator is instructed to link to the existing Master SKU.
+4. Digital Asset Attachment: High-resolution product images (minimum 3 angles) meeting enterprise photography guidelines are uploaded to the Digital Asset Management (DAM) repository.
+5. Quality Assurance & Regulatory Sign-Off: Catalog QA specialists review attribute completeness, text formatting, and regulatory disclosures. Upon sign-off, the record transitions to STAGE-ACT.
+Product Information Standards
+To maintain brand consistency and optimal customer experience, all catalog listings must adhere to explicit formatting and content rules:
+Product Information Requirements Matrix
+Attribute Domain
+	Formatting Standard / Requirement
+	Mandatory vs. Optional
+	Compliance Enforcement Mechanism
+	Product Title
+	Formula: [Brand] + [Model/Series] + [Primary Feature] + [Variant (Color/Size/Storage)]
+	Mandatory
+	Max 150 characters; PIM Title Validator script.
+	Stock Keeping Unit
+	Formula: NC-[CAT]-[BRAND_CODE]-[MODEL_CODE]-[VARIANT_CODE]
+	Mandatory
+	System auto-generated upon variant creation.
+	HS Tariff Code
+	Valid 8-digit international Harmonized System Code.
+	Mandatory
+	Customs API validation (api.novacart.internal/tms).
+	Description
+	Short Overview (max 250 chars) + Bulleted Key Features (min 4 points) + Full Spec Table.
+	Mandatory
+	PIM text parser blocks placeholder text ("TBD/N/A").
+	Product Imagery
+	Min 3 images; min $1500 \times 1500\text{ px}$; pure white background (#FFFFFF); PNG/JPEG format.
+	Mandatory
+	Automated DAM image dimension & background audit.
+	Physical Dimensions
+	Packaged and unpackaged Length, Width, Height ($\text{cm}$) and Gross Weight ($\text{kg}$).
+	Mandatory
+	Required for WMS cubic allocation & TMS freight calculation.
+	Warranty Terms
+	Manufacturer warranty duration, coverage type, and service contact URL.
+	Mandatory
+	Required for PROD-001 / PROD-004 warranty execution.
+	Product Category Management
+NovaCart structures its catalog using a hierarchical four-tier taxonomy structure managed within catalog.novacart.internal/taxonomy:
+
+
+$$\text{Level 1: Department} \longrightarrow \text{Level 2: Category} \longrightarrow \text{Level 3: Sub-Category} \longrightarrow \text{Level 4: Leaf Category}$$
+Product Category Matrix
+Department Level 1
+	Category Level 2
+	Sub-Category Level 3
+	Leaf Category Level 4 Code
+	Primary Category Owner
+	Electronics
+	Mobile Devices
+	Smartphones
+	CAT-MOB-SMART
+	Electronics Merchandising
+	Electronics
+	Mobile Devices
+	Wearable Tech
+	CAT-MOB-WEAR
+	Electronics Merchandising
+	Electronics
+	Computers & Gaming
+	Laptops
+	CAT-ELE-LPT
+	Computing Merchandising
+	Electronics
+	Computers & Gaming
+	Gaming Consoles
+	CAT-GAM-CNSL
+	Gaming Merchandising
+	Home Appliances
+	Large Appliances
+	Refrigerators
+	CAT-APP-REFR
+	Appliances Merchandising
+	Home Appliances
+	Smart Home
+	Security Cameras
+	CAT-SMT-CAM
+	Smart Home Merchandising
+	Category Reassignment Process
+Reassigning an existing active product to a new leaf category requires:
+1. Formal request in catalog.novacart.internal submitted by Category Lead.
+2. Automated check ensuring all mandatory target category attributes are fully populated.
+3. Approval by Merchandising Lead and Supply Chain Systems Admin.
+4. Background re-indexing of storefront search filters and WMS staging attributes within 2 business hours.
+Product Update Process
+Updates to active products are classified into two operational tiers:
+* Minor Updates (Instant Publish): Correcting spelling errors in descriptions, adding secondary marketing images, or adding supplementary attribute tags. These updates execute immediately in PIM and propagate to storefront feeds within 15 minutes.
+* Major Updates (Re-Review Required): Altering Product Title, GTIN/EAN, Brand, Physical Dimensions/Weight, Packaging Specifications, or HS Tariff Codes. Major updates trigger a temporary administrative hold on listing modifications, requiring Catalog QA sign-off within 12 business hours.
+Product Retirement Process
+A product is retired from active commercial listing when it reaches end-of-life (EOL), is permanently discontinued by the manufacturer, or fails statutory safety/regulatory standards.
+Product Status Matrix
+Operational Status Tag
+	Definition & Context
+	Inventory State
+	Permissible Action
+	ACTIVE
+	Normal commercial listing.
+	In Stock / Backorder
+	Purchasing & Selling active.
+	OUT_OF_STOCK
+	Temporarily unfulfillable; replenishment pending.
+	Zero Stock
+	Pre-orders / Backorders optional.
+	DISCONTINUED
+	EOL declared; no further factory production.
+	Depleting Remaining Stock
+	Selling allowed until stock $= 0$.
+	RECALLED
+	Safety or legal directive halts distribution.
+	Quarantine in WMS
+	Zero selling; immediate RTO (SHIP-001).
+	ARCHIVED
+	Permanently closed; zero physical inventory.
+	Zero Stock
+	Historical reporting only; SKU locked.
+	Retirement Execution Rules
+1. Inventory Exhaustion: A product declared DISCONTINUED remains visible on the storefront marked "Discontinued - Limited Stock" until total national physical inventory reaches zero ($0$ units across all FCs).
+2. Transition to Archived: Once physical inventory reaches zero and all outstanding customer returns/replacements are resolved (REF-001, REF-003), PIM automatically transitions status from DISCONTINUED to ARCHIVED.
+3. SKU Permanence: Retired SKU strings are permanently locked and never reused for future product introductions.
+Product Data Quality Standards
+Catalog integrity is audited continuously by the PIM Data Quality Engine (api.novacart.internal/pim/audit). Product listings must maintain a Minimum Data Quality Score of $95\%$ to retain ACTIVE status.
+Data Quality Scoring Dimensions
+* Completeness ($40\%$ Weight): All mandatory fields, dimensional attributes, and statutory metadata populated.
+* Asset Compliance ($30\%$ Weight): Primary image meets white-background, high-resolution specifications; no promotional watermarks or text overlays.
+* Taxonomic Accuracy ($15\%$ Weight): Item correctly placed in Level 4 Leaf Category with valid HS Code.
+* Text Standardization ($15\%$ Weight): Title adheres to corporate naming formulas; description free of HTML styling tags, competitor mentions, or phone numbers.
+Customer-Facing Product Information
+To protect consumers and prevent post-purchase disputes, customer-facing listings must provide complete operational clarity:
+* In-Box Contents List: Explicit enumeration of every item, cable, adapter, and manual included in the retail packaging.
+* Regional Compatibility Disclaimers: Clear labeling of regional electrical plug types (e.g., Type G for UK/UAE/SG, Type C/M for India), operating voltage ($110\text{V}$ vs. $220\text{--}240\text{V}$), and localized radio/telecom regulatory approvals.
+* Dimension and Space Requirements: Large appliances (CAT-APP) must display mandatory minimum doorway clearance dimensions to prevent installation access blocking (Refer to SHIP-004, PROD-004).
+Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Catalog Management Responsibilities
+	Primary System Portal
+	SLA Target
+	Merchandising & PIM
+	Onboards new products, enriches attributes, builds bundles, manages category taxonomies.
+	catalog.novacart.internal
+	New SKU creation $< 24\text{ Hours}$
+	Catalog Quality Assurance
+	Audits product data quality, verifies image specifications, approves major listing updates.
+	catalog.novacart.internal
+	QA Review $< 12\text{ Business Hours}$
+	Legal & Compliance
+	Reviews legal disclaimers, verifies 8-digit HS Codes, enforces regulatory product safety blocks.
+	compliance.novacart.internal
+	Legal review $< 24\text{ Hours}$
+	Warehouse Operations
+	Audits physical inbound dimensions/weights against catalog records during FC dock receiving.
+	wms.novacart.internal
+	Dimensional audit at dock intake
+	Business Rules
+Rule 1: Master GTIN / UPC Uniqueness Mandate
+No product listing may be published to ACTIVE status without a verified, valid GTIN, UPC, EAN, or ISBN barcode number registered with GS1. Custom internal GTIN ranges are permitted exclusively for private-label white-label items and custom multi-item bundles.
+Rule 2: Parent-Child Variant Integrity Rule
+Product variants (e.g., size, color, storage capacity) must be grouped under a single Parent Master Item record. Child variant SKUs must inherit core parent attributes (Brand, Category, Parent Description) while maintaining individual child attributes (Color Code, EAN, Individual Weight, Child SKU). Creating separate standalone product pages for simple color/size variants is strictly prohibited.
+Rule 3: Anti-Watermark Asset Policy
+Product images displaying promotional text overlays (e.g., "Best Seller", "Free Shipping"), third-party seller logos, phone numbers, or low-resolution pixelated graphics are auto-rejected by the DAM intake engine.
+Exception Handling
+* Emergency Product Safety Recall: Upon receiving a manufacturer or government regulatory safety recall notice, Legal & Compliance triggers an EMERGENCY_RECALL command in PIM. Within 15 minutes, affected SKUs transition to RECALLED status, storefront checkout is blocked, and WMS quarantines physical stock (Refer to ORD-002, SHIP-001).
+* Temporary Manufacturer Image Shortage: If a newly launched product lacks studio photography meeting pure white background standards, the Category Manager may apply for a temporary 14-day "Asset Waiver." The PIM Engine permits listing activation using high-resolution manufacturer render assets, provided compliant imagery is uploaded within 14 calendar days.
+Practical Examples
+Scenario 1: Onboarding a New Smartphone Variant (CAT-MOB)
+1. Merchandising receives onboarding files for a new smartphone in 2 colors (Black, Silver) and 2 storage tiers (128GB, 256GB).
+2. PIM specialist creates Parent Master Record NC-MOB-APL-IP15 and generates 4 child variant SKUs:
+   * NC-MOB-APL-IP15-128-BLK
+   * NC-MOB-APL-IP15-128-SLV
+   * NC-MOB-APL-IP15-256-BLK
+   * NC-MOB-APL-IP15-256-SLV
+3. Specialist inputs GTINs, HS Code 8517.13.00, dimensions, 5 white-background studio images, and in-box contents (USB-C cable).
+4. Catalog QA verifies data completeness score ($100\%$) and approves publication. Parent listing goes live with interactive color/storage selectors.
+Scenario 2: Handling Discontinued Electronics SKU
+1. Manufacturer issues EOL notice for a gaming laptop model (NC-ELE-ASU-G14-2024).
+2. Category Manager updates product status in PIM to DISCONTINUED.
+3. Storefront listing updates automatically to display "Discontinued Model - Limited Quantities Available."
+4. Once the final 3 units in FC BLR-01 are sold and delivered, PIM transitions SKU status to ARCHIVED, locking the catalog record permanently.
+Frequently Asked Questions (FAQs)
+Q1: Why was my product creation request rejected for "Duplicate GTIN"?
+Answer: NovaCart enforces strict GTIN/UPC uniqueness to prevent catalog fragmentation. If the GTIN you entered is already assigned to an existing Master SKU in catalog.novacart.internal, your request will be rejected. You must link your offer to the existing Master SKU instead of creating a duplicate listing.
+Q2: How long does it take for a new product listing to go live on the storefront?
+Answer: Once all mandatory attributes, HS codes, and compliant images are submitted, Catalog QA completes review within 12 business hours. Upon approval, the listing propagates to storefront search engines and mobile apps within 15 minutes.
+Q3: Can a retired or archived SKU string be reused for a newer model version?
+Answer: No. SKU identifiers are immutable historical records used across financial ledgers, logistics manifests, and customer order histories. Even when a product is permanently archived, its SKU string is locked and cannot be reassigned to any future product (Refer to COMP-004).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of PROD-001. Established product catalog governance standards, PIM lifecycle matrices, mandatory attribute guidelines, parent-child variant rules, taxonomy trees, and data quality scoring rules.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* ORD-001: Order Lifecycle Management Policy
+* SHIP-001: Domestic Shipping Policy
+* SHIP-004: Same-Day & Scheduled Delivery Policy
+* PAY-001: Payment Processing SOP
+* REF-001: Master Refund Eligibility Rules
+* REF-003: Replacement Policy
+* PROD-002: Product Availability & Inventory Policy
+* PROD-004: Product Installation SOP

@@ -1,0 +1,259 @@
+﻿PAY-003: Refund Payment Processing Policy
+Document Header
+* Document Title: Refund Payment Processing Policy
+* Document ID: PAY-003
+* Version: 1.0.0
+* Document Category: Payments
+* Classification: Internal / Public Operational Standard
+* Department Owner: Finance Operations
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Payment Operations, Chief Information Security Officer, Customer Experience Director
+* Approved By: Chief Financial Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Refund Processing, Payment Gateway Reversal, Financial Settlement, Original Payment Instrument, Unlinked Refund, Duplicate Refund Prevention, Store Credit, Ledger Reconciliation
+Purpose
+This document establishes the official enterprise policy, financial mechanics, payment gateway interaction protocols, settlement timelines, and technical control standards governing the execution of approved monetary refunds at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It defines the transaction lifecycle, payment instrument routing rules, settlement reconciliation pathways, banking SLA expectations, and exception controls for processing funds back to customers.
+As a core operational document (PAY-003) in the NovaCart Enterprise Knowledge Base (NEKB), PAY-003 governs the financial clearing pipeline managed within ledger.novacart.internal and api.novacart.internal/pay, operating in strict alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001, PAY-002, and REF-001.
+Scope
+This policy applies exclusively to the financial execution, banking communication, and payment gateway clearing of monetary refunds after a refund decision has been formally authorized and approved under REF-001 eligibility guidelines.
+Coverage Includes
+* Financial clearing across supported payment channels (Credit Cards, Debit Cards, UPI, Net Banking, Digital Wallets, BNPL, Store Credit/NovaCart Wallet).
+* Financial ledger state machine transitions within ledger.novacart.internal.
+* Interaction with certified acquiring banks, clearing houses, and Payment Gateways (PGs) (e.g., Razorpay, Stripe, PayU, Telr).
+* Pro-rated shipping/tax refund calculations, partial refunds, and split-order refund disbursements.
+* Controls preventing duplicate refund disbursements, handling failed refund transactions, and executing bank reconciliation traces.
+Out of Scope
+* Determining customer eligibility for refunds, return window validation, or physical product inspection workflows (governed exclusively by REF-001, REF-002, and REF-005).
+Refund Payment Processing Overview
+Once a customer refund is approved by authorized personnel or automated system routines, NovaCart's financial engine executes an electronic credit transaction. NovaCart operates under a strict Single Destination Rule: all monetary refunds must route directly back to the original payment instrument used during checkout, or convert to platform store credit upon explicit customer consent.
+Core Operational Principles
+1. Instrument Fidelity Mandate: Reversing funds strictly to the originating transaction payment token to maintain PCI-DSS compliance, anti-money laundering (AML) protocols, and card network rules.
+2. Deterministic Ledger Control: Enforcing two-phase financial commit protocols within ledger.novacart.internal to eliminate double-disbursements and duplicate refund execution.
+3. Transparent Financial Telemetry: Tracking refund transactions continuously across payment gateways and issuing banks, providing real-time Bank Reference Numbers (ARN/RRN) to customers.
+4. Pro-Rated Disbursement Precision: Automatically calculating exact line-item values, applicable regional taxes (GST/VAT), and allocated shipping fees for partial or split-order disbursements.
+Refund Transaction Lifecycle
+Every approved refund instruction triggers a financial state machine sequence within api.novacart.internal/pay:
+
+
+
+
+
+
+<ElicitationsGroup message="To explore related payment execution, refund eligibility, or customer support policies further:">
+{/* Reason: Offers direct navigational paths to related payment and refund policy documents. */}
+ <Elicitation label="Review PAY-001 Payment Processing SOP" query="Show PAY-001 Payment Processing SOP governing transaction clearing." />
+ <Elicitation label="Review PAY-002 Payment Failure & Retry Policy" query="Show PAY-002 Payment Failure & Retry Policy detailing unlinked debit recoveries." />
+ <Elicitation label="Examine REF-001 Master Refund Eligibility Rules" query="Show REF-001 Master Refund Eligibility Rules governing refund authorizations." />
+</ElicitationsGroup>
+
+Refund Transaction Status Matrix
+Refund Status Tag
+	Status Description
+	Primary System Action
+	Terminal State?
+	Customer Visible Label
+	REFUND_QUEUED
+	Refund instruction received from OMS/RMA portal; queued for financial clearing.
+	Ledger locks transaction ID to prevent duplicate requests.
+	No
+	Refund Initiated
+	REFUND_AUTHORIZED
+	Finance ledger validates original PG transaction ID and approves fund allocation.
+	System checks original payment instrument eligibility.
+	No
+	Processing Refund
+	REFUND_SUBMITTED
+	Refund payload successfully transmitted to Payment Gateway API.
+	PG returns Gateway Refund Reference ID (RF-XXXXX).
+	No
+	Refund Processed by NovaCart
+	SETTLED_BY_GATEWAY
+	Payment Gateway confirms fund credit to acquiring/clearing bank network.
+	Gateway returns Acquirer Reference Number (ARN/RRN).
+	No
+	Funds Sent to Bank
+	CREDITED_TO_USER
+	Customer issuing bank confirms credit reflection in customer account.
+	Final banking reconciliation confirmed in ledger.
+	Yes
+	Refund Completed
+	REFUND_FAILED
+	Payment Gateway or issuing bank rejects refund clearing payload.
+	Ledger alerts Finance Operations for exception routing.
+	No
+	Action Required
+	REFUND_REVERSED
+	Failed refund re-routed to alternative verified channel (Bank Transfer / Wallet).
+	Secondary clearing path executed.
+	Yes
+	Refund Completed via Alternate Channel
+	Refund Initiation Process
+1. Trigger Event Registration: Upon approval of an order cancellation (ORD-002), transit loss declaration (SHIP-006), or return inspection (REF-005), the Order Management System (OMS) or RMA portal emits an encrypted refund event payload (POST /v1/pay/refunds/initiate).
+2. Payload Verification: api.novacart.internal/pay validates the event payload against ledger.novacart.internal, verifying:
+   * Original Payment Gateway Transaction ID (PG-XXXXX).
+   * Original transaction capture status (CAPTURED or SETTLED).
+   * Cumulative prior refund amounts against the original capture value (preventing over-refunds).
+3. Queue Commitment: The system assigns a unique Refund Transaction ID (RFT-XXXXX) and sets status to REFUND_QUEUED.
+Refund Authorization
+Before transmitting a refund payload to an external gateway, the Finance Ledger executes mandatory authorization checks:
+* Duplicate Refund Prevention Check: ledger.novacart.internal performs an atomic database lock on the original Payment Gateway Transaction ID. If another active refund request exists for the same line item, the secondary request is rejected instantly with error code ERR_DUPLICATE_REFUND_REQUEST.
+* Amount Boundary Validation: The requested refund amount ($\sum RFT$) must be less than or equal to the un-refunded balance of the original captured charge ($\text{Captured Amount} - \text{Prior Refunds}$).
+* Instrument Expiry & Invalidation Check: The system verifies whether the original payment method remains capable of receiving electronic credits. If the original instrument is expired, closed, or invalid (e.g., closed bank account), the refund is flagged for manual bank transfer routing.
+Payment Gateway Processing
+Upon successful internal authorization, api.novacart.internal/pay executes API communication with the target Payment Gateway:
+1. API Payload Transmission: The system transmits a structured HTTPS payload to the designated Payment Gateway (Razorpay, Stripe, PayU, Telr) containing:
+   * Original Gateway Transaction ID (PG-XXXXX).
+   * Refund Transaction ID (RFT-XXXXX).
+   * Exact refund amount and currency code (INR, SGD, AED).
+   * Reason code string (CUSTOMER_CANCEL, ITEM_RETURN, TRANSIT_LOSS).
+2. Gateway Response Ingestion:
+   * Immediate Acceptance: PG returns REFUND_SUBMITTED status alongside a Gateway Refund ID (RF-XXXXX).
+   * Immediate Rejection: PG returns an error code (e.g., GATEWAY_REFUND_EXPIRED or INVALID_TRANSACTION_STATE). Status updates to REFUND_FAILED.
+Settlement to Original Payment Method
+Fund clearance timelines and settlement paths vary according to the original payment instrument used during order checkout.
+Payment Method Refund Matrix
+Payment Instrument Code
+	Instrument Name
+	Clearing Mechanism & Settlement Path
+	Expected Settlement Timeline
+	Primary Reference Number Issued
+	PAY-CARD
+	Credit / Debit Cards (Visa, MC, Amex)
+	Reversal pushed through card network (VisaNet / Mastercard Network) to issuing bank.
+	$3\text{ to }5\text{ Business Days}$
+	Acquirer Reference Number (ARN - 23 Digits)
+	PAY-UPI
+	UPI (Instant Bank Transfer)
+	Direct API credit instruction to National Payments Corporation / NPCI node.
+	Immediate to $24\text{ Hours}$
+	Retrieval Reference Number (RRN - 12 Digits)
+	PAY-NB
+	Net Banking
+	Direct credit batch transmission to issuing bank clearing network.
+	$2\text{ to }4\text{ Business Days}$
+	Bank Transaction ID / UTR Number
+	PAY-WAL
+	Digital Wallets (Paytm, GrabPay, Careem)
+	Direct API credit call to partner wallet provider balance server.
+	Immediate ($< 2\text{ Hours}$)
+	Wallet Refund Reference Code
+	PAY-BNPL
+	Buy Now Pay Later (Tabby, LazyPay)
+	Reversal API call to BNPL provider to adjust/cancel remaining customer installments.
+	$1\text{ to }3\text{ Business Days}$
+	BNPL Adjustment Reference ID
+	PAY-GFT
+	NovaCart Gift Cards / Wallet
+	Direct internal ledger credit transaction within ledger.novacart.internal.
+	Instant ($< 1\text{ Minute}$)
+	Wallet Credit Transaction ID
+	PAY-COD
+	Cash on Delivery (COD Orders)
+	Direct electronic bank transfer (NEFT/RTGS/IMPS) to customer verified bank account.
+	$24\text{ to }48\text{ Hours}$ post-account verification
+	Unique Transaction Reference (UTR) Number
+	Customer Notification Process
+Transparent financial messaging ensures customers can verify refund progress with their financial institutions.
+Customer Notification Matrix
+Refund Milestone
+	Notification Channel(s)
+	Trigger Condition
+	Notification Content Summary
+	Refund Initiated
+	Email + SMS + In-App Push
+	System status updates to REFUND_SUBMITTED.
+	"Refund of [Cur] [Amount] initiated for Order #[ID]. Processing via [Payment Method]. Ref: [RFT-ID]."
+	Gateway Settled (ARN Issued)
+	Email + SMS
+	Status updates to SETTLED_BY_GATEWAY.
+	"Refund sent to bank! Amount: [Cur] [Amount]. Bank Ref (ARN/RRN): [Ref-Code]. Expected reflection: 3–5 days."
+	Store Credit Credited
+	SMS + In-App Push
+	Status updates to CREDITED_TO_USER (Wallet).
+	"Instant Refund Credit! [Cur] [Amount] deposited to your NovaCart Wallet. Updated balance: [Cur] [Total]."
+	Refund Action Required (Failed)
+	Email + SMS
+	Status updates to REFUND_FAILED.
+	"Action Needed: We could not process your refund to your card. Please provide bank details for NEFT transfer: [Link]"
+	Refund Status Definitions
+To provide complete transparency across administrative dashboards and customer portals, refund status tags are defined as follows:
+* Refund Initiated (REFUND_SUBMITTED): NovaCart has validated the refund instruction and successfully submitted the credit request to the Payment Gateway.
+* Sent to Bank (SETTLED_BY_GATEWAY): The Payment Gateway has processed the credit and transmitted funds to the customer's acquiring/issuing bank network. The official banking reference number (ARN/RRN) is available.
+* Completed (CREDITED_TO_USER): The customer's financial institution or digital wallet server has confirmed final credit reflection.
+* Action Required (REFUND_FAILED): The electronic refund attempt was rejected by the gateway or issuing bank, requiring alternative bank account collection from the customer.
+Department Responsibilities
+Financial refund processing requires precise functional execution:
+Department Responsibility Matrix
+Department Unit
+	Primary Refund Processing Responsibilities
+	Primary System Portal
+	SLA / Performance Target
+	Finance Operations
+	Audits refund clearing queues, manages bank settlement reconciliations, handles manual NEFT transfers.
+	ledger.novacart.internal
+	Gateway submission $< 24\text{ Hours}$ from approval
+	Information Security
+	Audits refund tokenization compliance, inspects high-value refunds for fraud signals.
+	shield.novacart.internal
+	Real-time threat containment
+	Customer Support
+	Provides ARN/RRN numbers to customers, collects verified bank details for failed card refunds.
+	crm.novacart.internal
+	Priority Chat FRT $< 15\text{ Secs}$ (Refer to SUP-005)
+	Software Engineering
+	Maintains PG refund APIs, automated retry webhooks, and ledger reconciliation microservices.
+	api.novacart.internal
+	$99.99\%$ refund pipeline availability
+	Business Rules
+Rule 1: Master Payment Instrument Fidelity
+All monetary refunds must be cleared back to the exact payment instrument used during checkout. Cash on Delivery (COD) refunds must be issued via electronic bank transfer (NEFT/RTGS/IMPS) or platform store wallet. Physical cash refunds are strictly prohibited across all operational territories (Refer to PAY-001, REF-001).
+Rule 2: Absolute Duplicate Refund Prevention Controls
+ledger.novacart.internal enforces a strict database constraint: no single Master Order ID or Sub-Order ID may have active refund transactions exceeding the original captured transaction value. Any secondary refund attempt targeting an already-refunded line item is auto-blocked and logged as a security alert.
+Rule 3: Instant NovaCart Wallet Option
+Customers may opt at checkout or during return initiation to receive their refund as an instant credit to their NovaCart Wallet. Store wallet credits execute immediately ($< 1\text{ minute}$) upon refund approval and bypass banking clearance delays.
+Exception Handling
+* Expired or Closed Card Accounts: If a card refund is rejected by the issuing bank because the card account was closed or cancelled (REFUND_FAILED), the customer receives an automated secure link ([https://pay.novacart.com/bank-details/](https://pay.novacart.com/bank-details/){token}) to input their verified bank account details (IBAN/SWIFT/IFSC). Upon verification, Finance executes a direct electronic bank transfer within 24 hours.
+* Pro-Rated Partial & Split-Order Refunds: When a partial order cancellation (ORD-002) or split-order return (ORD-005) occurs, the system calculates line-item item costs, pro-rated regional taxes (GST/VAT), and allocated shipping fees. The refund payload clears the exact pro-rated sum while leaving the remaining captured balance active.
+Practical Examples
+Scenario 1: Credit Card Full Refund
+1. Order #NC-IN-88201 (Value: ₹14,999) is cancelled prior to dispatch (Refer to ORD-002).
+2. OMS sends a full refund event payload to api.novacart.internal/pay.
+3. Ledger verifies capture status, approves ₹14,999 refund, and submits API call to Razorpay PG (REFUND_SUBMITTED).
+4. Razorpay processes credit and issues ARN 23081599201882019928102. Status updates to SETTLED_BY_GATEWAY.
+5. Customer receives SMS/Email containing the 23-digit ARN to track reflection with their issuing bank.
+Scenario 2: UPI Partial Refund on Split Order
+1. Split Order #NC-IN-99302 contains a laptop (Sub-Order A: ₹55,000) and a mouse (Sub-Order B: ₹1,500) paid via UPI (PAY-UPI).
+2. Sub-Order B is returned and approved under REF-001.
+3. OMS submits a partial refund instruction for ₹1,500 to ledger.novacart.internal.
+4. System transmits UPI credit API call to NPCI node. UPI node processes credit within 4 hours and returns RRN 621088201992.
+5. Customer receives instant ₹1,500 credit in their linked UPI bank account.
+Frequently Asked Questions (FAQs)
+Q1: Where can I find my Acquirer Reference Number (ARN) or RRN to track my refund with my bank?
+Answer: Once your refund status updates to "Sent to Bank" (SETTLED_BY_GATEWAY), NovaCart dispatches an SMS and Email containing your official 23-digit ARN (for cards) or 12-digit RRN (for UPI). You can also view this reference number anytime under My Orders $\rightarrow$ Refund Details (Refer to ORD-004).
+Q2: What happens if my credit card was cancelled or replaced after I placed my order?
+Answer: Card networks automatically route refunds to your replacement card if the account remains open with the same issuing bank. If the account is completely closed, the bank will reject the refund (REFUND_FAILED). You will receive an automated notification to provide your bank account details for a direct bank transfer (Refer to PAY-001).
+Q3: Why is a refund to my NovaCart Wallet faster than a credit card refund?
+Answer: NovaCart Wallet credits execute directly within our internal financial ledger (ledger.novacart.internal) in under 1 minute. Credit or debit card refunds require processing through external acquiring banks, payment gateways, card networks (Visa/Mastercard), and your issuing bank, which takes 3 to 5 business days.
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of PAY-003. Established refund payment lifecycle, PG clearing workflows, instrument settlement matrices, duplicate refund controls, and banking reference tracking protocols.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* ORD-001: Order Lifecycle Management Policy
+* ORD-002: Order Cancellation Policy
+* ORD-005: Split Order Management Policy
+* PAY-001: Payment Processing SOP
+* PAY-002: Payment Failure & Retry Policy
+* REF-001: Master Refund Eligibility Rules
+* REF-002: Return & Exchange Policy
+* REF-005: Return Process Protocols

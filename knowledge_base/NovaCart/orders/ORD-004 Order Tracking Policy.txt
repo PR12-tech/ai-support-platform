@@ -1,0 +1,270 @@
+﻿ORD-004: Order Tracking Policy
+Document Header
+* Document Title: Order Tracking Policy
+* Document ID: ORD-004
+* Version: 1.0.0
+* Document Category: Orders
+* Classification: Internal
+* Department Owner: Logistics & Engineering
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Logistics, Operations Director, Customer Experience Director
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Order Tracking, Waybill Number, Tracking ID, Carrier Integration, Webhooks, Milestones, NDR, Real-Time Notifications
+Purpose
+This document defines the official enterprise policy, operational standards, technical integration specifications, and notification rules governing end-to-end shipment tracking across NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes tracking identifier generation formats, tracking status milestone definitions, update frequency SLAs, automated customer notification workflows, support responsibilities, and exception management for all in-transit parcels.
+As a core operational document (ORD-004) in the NovaCart Enterprise Knowledge Base (NEKB), ORD-004 enforces absolute transparency across customer-facing tracking portals, Customer Support Representative (CSR) dashboards, and backend Transportation Management System (api.novacart.internal/tms) engines, operating in strict alignment with ORD-001 through ORD-003, SHIP-001, SHIP-005, SHIP-006, and SUP-001.
+Scope
+This policy applies universally across all order fulfillment routes across NovaCart operating regions (India, Singapore, UAE), delivery speeds (Standard, Express, Same-Day), third-party logistics (3PL) carrier networks, and direct last-mile delivery fleets.
+Coverage Includes
+* Generation and assignment of Master Tracking IDs and Sub-Order Tracking IDs.
+* Carrier webhook API telemetry and milestone status mapping in tms.novacart.internal.
+* Real-time customer tracking interfaces across Web, Mobile Applications, SMS, WhatsApp, and Email channels.
+* Tracking exception management including delayed milestones, failed delivery attempts, unlinked tracking numbers, and Return to Origin (RTO) tracking sequences.
+Order Tracking Objectives
+NovaCart manages order tracking under four primary operational objectives:
+1. End-to-End Visibility: Provide clear, real-time tracking visibility from warehouse dispatch staging to physical doorstep delivery.
+2. Proactive Customer Transparency: Alert customers automatically regarding transit milestones or carrier delays before the customer initiates a support enquiry.
+3. Automated Status Mapping: Normalize disparate 3PL carrier status codes into standardized NovaCart tracking states within api.novacart.internal/tms.
+4. Early Interception of Exceptions: Identify stalled shipments or repeated delivery failures early to trigger automated logistics investigations and support interventions.
+Tracking Process Overview
+Shipment tracking operates as an event-driven data pipeline integrated across Warehouse Management Systems (WMS), Transportation Management Systems (TMS), 3PL carrier APIs, and customer-facing notification portals.
+
+
+
+
+
+
+<ElicitationsGroup message="To explore related shipping, delivery delay, or customer support policies further:">
+{/* Reason: Offers direct navigational paths to related shipping execution and delay management documents. */}
+ <Elicitation label="Review SHIP-001 Domestic Shipping Policy" query="Show SHIP-001 Domestic Shipping Policy detailing shipping SLAs and carrier handoffs." />
+ <Elicitation label="Review SHIP-005 Delayed Delivery Policy" query="Show SHIP-005 Delayed Delivery Policy detailing delay protocols and carrier trace rules." />
+ <Elicitation label="Examine SUP-001 Customer Support SOP" query="Show SUP-001 Customer Support SOP governing support inquiry handling." />
+</ElicitationsGroup>
+
+Primary Tracking Pipeline Phases
+1. Identifier Generation & Manifesting: Upon order packaging, WMS requests a carrier waybill number and generates a standardized NovaCart Tracking ID.
+2. Carrier Handoff & Activation: Physical parcel scan at warehouse loading docks triggers transit tracking initialization.
+3. In-Transit Telemetry Ingestion: 3PL carrier webhooks push real-time hub scan updates into tms.novacart.internal.
+4. Normalized Milestone Mapping: TMS maps carrier raw data to standardized NovaCart tracking statuses and publishes event payloads to notification services.
+5. Delivery Verification & Milestone Closure: Digital Proof of Delivery (POD) registration closes active tracking logs and archives the tracking record.
+Tracking Number Generation
+Tracking IDs are generated automatically by the OMS/TMS middleware during the warehouse PACKED state transition:
+* Format Architecture: Standard Tracking IDs follow a structured 14-character alphanumeric schema: NC + [Region Code 2-Char] + [Julian Date 5-Char] + [Unique Sequence 5-Char] (e.g., NCIN2621088201).
+* Sub-Order Mapping: In Split Order scenarios (ORD-005), each Sub-Order ID is assigned a distinct Tracking ID appended with sub-identifiers (e.g., NCIN2621088201-A and NCIN2621088201-B).
+* Carrier Waybill Linking: The internal NovaCart Tracking ID is permanently mapped in tms.novacart.internal to the primary 3PL carrier waybill or air waybill (AWB) number (e.g., DHL/FedEx/Delhivery tracking code), allowing dual-lookup capabilities across internal and external portals.
+Shipment Status Definitions
+Every active parcel record maintains an explicit tracking status tag normalized across all logistics carriers.
+Tracking Status Matrix
+Tracking Status Tag
+	Status Description
+	Primary Event Trigger
+	Carrier Mapping Example
+	Expected Milestone Frequency
+	LABEL_CREATED
+	Shipping label generated; AWB assigned; parcel awaiting physical warehouse pick.
+	WMS prints shipping label (PACKED state).
+	"Manifest Uploaded" / "Data Received"
+	Static until dock scan ($< 6\text{ Hours}$)
+	READY_FOR_DISPATCH
+	Parcel staged at FC loading bay; assigned to linehaul manifest.
+	FC dock staging complete.
+	"Staged at Origin Hub"
+	Static until driver handover ($< 4\text{ Hours}$)
+	PICKED_UP_BY_COURIER
+	Courier driver scanned parcel barcode at FC dock; physical custody transferred.
+	Driver handheld dock scan.
+	"Shipment Picked Up" / "Arrived Origin Facility"
+	Single transition event
+	IN_TRANSIT
+	Parcel moving on middle-mile transport vessel (Air Freight / Surface Linehaul).
+	Linehaul manifest dispatch scan.
+	"In Transit to Destination" / "Departed Facility"
+	Updated every $12\text{ Hours}$
+	ARRIVED_AT_SORTING_FACILITY
+	Parcel scanned at regional destination hub or local sorting facility.
+	Inbound scan at destination hub.
+	"Arrived at Processing Center"
+	Updated upon hub arrival
+	OUT_FOR_DELIVERY
+	Package loaded onto last-mile delivery rider vehicle; local route active.
+	Last-mile rider route scan.
+	"Out for Delivery" / "With Courier"
+	Updated morning of delivery ($08:00–09:00$)
+	DELIVERY_ATTEMPTED
+	Delivery attempted but uncompleted; Non-Delivery Report (NDR) logged by rider.
+	Rider logs NDR in TMS App.
+	"Customer Unreachable" / "Address Incomplete"
+	Real-time upon failed attempt
+	DELIVERED
+	Package handed to recipient; digital Proof of Delivery (OTP/Signature) captured.
+	OTP / Signature verified in app.
+	"Delivered" / "Signed by Recipient"
+	Real-time terminal state
+	DELIVERY_DELAYED
+	Transit milestone missed; ETA extended due to weather, customs, or hub backlogs.
+	Automated TMS SLA check ($> 24\text{ hrs}$ no scan).
+	"Transit Delay" / "Held at Customs"
+	Updated immediately upon exception detection
+	SHIPMENT_RETURNED_TO_ORIGIN
+	Undeliverable parcel or delivery refusal returning to origin fulfillment center.
+	RTO authorization scan at hub.
+	"Returning to Shipper" / "RTO In Transit"
+	Updated daily until FC receipt
+	Customer Tracking Methods
+NovaCart provides four primary self-service methods for customers to monitor active shipments:
+1. Integrated Web & App Tracking Dashboard: Authenticated users view interactive tracking timelines, real-time rider location maps (for express/same-day orders), and estimated delivery time windows under My Orders.
+2. Public Guest Tracking Portal: Unauthenticated users track shipments at [https://track.novacart.com](https://track.novacart.com) by entering their Master Order ID or Tracking ID combined with their registered phone number.
+3. Omni-Channel Notification Links: Direct deep-links embedded in SMS, WhatsApp, and Email alerts open instant tracking views without login prompts.
+4. Interactive Conversational AI Bot: Automated support bots across Web Chat and WhatsApp answer tracking inquiries instantly using api.novacart.internal/tms/track endpoints.
+Carrier Tracking Integration
+NovaCart integrates with 3PL carrier networks via an event-driven architecture managed by Engineering and Logistics:
+* Webhook Telemetry (Primary): 3PL carriers push tracking events to [https://api.novacart.internal/v1/telemetry/carrier-events](https://api.novacart.internal/v1/telemetry/carrier-events). Event payloads are processed in real-time, normalized to standard tracking statuses, and written to the database within 5 seconds of receipt.
+* API Polling Fallback (Secondary): For non-webhook carriers, TMS executes automated polling queries every 60 minutes to fetch active shipment statuses.
+* Data Normalization Engine: The TMS contains explicit translation rules converting carrier-specific status strings (e.g., "Arrived at Facility DXB-02" or "Departed Sorting Office") into standardized NovaCart status tags (ARRIVED_AT_SORTING_FACILITY / IN_TRANSIT).
+Customer Notifications
+Automated notifications are dispatched instantly upon milestone state changes in accordance with the matrix below:
+Customer Notification Matrix
+Milestone Event / Status Tag
+	Delivery Channel(s)
+	Trigger Condition
+	Notification Message Summary
+	SHIPPED / PICKED_UP
+	Email + SMS + Push
+	First courier scan at FC dock.
+	"Your NovaCart order #[ID] has been shipped via [Carrier]! Track here: [Link]"
+	IN_TRANSIT (Milestone)
+	Email
+	Arrival at major regional hub.
+	"Transit Update: Your parcel has arrived at regional processing hub [City]."
+	OUT_FOR_DELIVERY
+	SMS + WhatsApp + Push
+	Rider scans parcel for route.
+	"Your parcel is out for delivery today! Delivery agent: [Name]. OTP: [XXXX]."
+	DELIVERY_ATTEMPTED (NDR)
+	SMS + WhatsApp
+	Rider logs failed attempt.
+	"Delivery attempt failed: [Reason]. Click to confirm delivery address/slot: [Link]"
+	DELIVERY_DELAYED
+	Email + SMS
+	Milestone missed by $> 12\text{ hrs}$.
+	"Update on Order #[ID]: Your delivery ETA is updated to [New Date]. We apologize for the delay."
+	DELIVERED
+	Email + SMS + Push
+	OTP/POD verified in rider app.
+	"Delivered! Your parcel #[ID] was delivered at [Time]. View POD: [Link]"
+	Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Tracking Responsibilities
+	Primary Portal Used
+	Primary SLA Target
+	Logistics & Fleet
+	Oversees carrier integration; monitors transit SLA compliance; investigates stalled tracking IDs.
+	tms.novacart.internal
+	Continuous tracking monitoring
+	Warehouse Operations
+	Ensures 100% barcode scanning at dock dispatch; resolves un-manifested packaging errors.
+	wms.novacart.internal
+	$< 15\text{ Mins}$ dock scan execution
+	Customer Support
+	Assists customers with tracking inquiries; initiates carrier traces for delayed parcels.
+	crm.novacart.internal
+	$< 2\text{ Mins}$ (Chat) / $< 15\text{ Mins}$ (Email)
+	Software Engineering
+	Maintains carrier API integrations, webhook listeners, normalization rules, and tracking uptime.
+	api.novacart.internal
+	$99.99\%$ API gateway uptime
+	Security Operations
+	Investigates tracking anomalies indicating parcel theft, fake POD logs, or high-value losses.
+	shield.novacart.internal
+	Real-time incident response
+	Tracking Exceptions
+When transit irregularities occur, TMS automatically flags the tracking record for operational intervention.
+Tracking Exception Matrix
+Exception Condition
+	Detection Trigger
+	Automated System Action
+	Operational Resolution Workflow
+	Policy Reference
+	Stalled In-Transit
+	No carrier tracking scan for $> 24\text{ Hours}$ (Domestic) / $> 48\text{ Hours}$ (International).
+	Auto-assigns DELIVERY_DELAYED status; alerts Logistics Hub Squad.
+	Logistics initiates carrier trace. Customer notified of updated ETA within 4 hours.
+	SHIP-005
+	Failed Delivery Attempt
+	Rider logs Non-Delivery Report (NDR) in app.
+	Auto-assigns DELIVERY_ATTEMPTED; sends address/slot confirmation SMS.
+	Customer confirms details via SMS link. System schedules automatic re-attempt for next business day.
+	SHIP-001, SHIP-005
+	Unlinked / Missing Tracking ID
+	Order SHIPPED in OMS but no AWB record found in TMS.
+	System flags UNLINKED_TRACKING exception alert to IT/Logistics.
+	IT re-syncs carrier manifest API. FC manually re-scans physical parcel waybill if un-sent.
+	ORD-001
+	Fake / Disputed POD
+	Customer reports non-receipt for order marked DELIVERED.
+	Auto-creates high-priority P2 dispute ticket in Support CRM.
+	Support reviews GPS coordinates/OTP logs. If POD invalid, triggers loss investigation.
+	SHIP-006, SUP-001
+	Carrier Return (RTO)
+	Parcel un-delivered after 3 NDR attempts or delivery refused.
+	Auto-assigns SHIPMENT_RETURNED_TO_ORIGIN.
+	Reverse courier transports parcel to FC. FC receives item; Finance processes refund.
+	ORD-002, REF-001
+	Business Rules
+Rule 1: Mandatory Real-Time Scanning
+Every physical transfer of a parcel—warehouse dock handover, linehaul vessel loading, regional hub sorting, and last-mile rider pickup—must be accompanied by an immediate barcode scan. Manual status updates without barcode scan verification are strictly prohibited.
+Rule 2: Tracking Information Availability SLA
+Tracking information for every order in SHIPPED status must be accessible and active on public tracking portals within 15 minutes of courier dock pickup. If a tracking ID returns a "Not Found" error after 1 hour, TMS triggers an automated alert to Engineering.
+Rule 3: Dynamic Delivery Time Window (ETA) Accuracy
+Estimated Delivery Dates (ETAs) displayed on customer tracking dashboards must update dynamically based on live transit telemetry. If middle-mile transit delays occur, TMS must recalculate and update the customer-facing ETA automatically within 2 hours of detecting the delay.
+Exception Handling
+* Carrier Webhook Outage: If a 3PL carrier's webhook service experiences an outage, TMS automatically switches to high-frequency polling (api.novacart.internal/tms/poll) every 15 minutes until webhook service restoration is confirmed.
+* Disputed Proof of Delivery (Fake POD): If a customer claims non-delivery for a shipment marked DELIVERED, Customer Support verifies rider geo-location logs and OTP verification records in tms.novacart.internal. If geo-location data reveals the rider was $> 200\text{ meters}$ from the delivery address during scan, the POD is invalidated, and a loss investigation is opened under SHIP-006.
+Practical Examples
+Scenario 1: Normal In-Transit Tracking Flow
+1. Customer orders a laptop in Bangalore. FC packs item and generates Tracking ID NCIN2621088201. Status: LABEL_CREATED.
+2. Courier scans parcel at FC dock at 05:00 PM. Status updates to PICKED_UP_BY_COURIER. Customer receives SMS with tracking link.
+3. Parcel arrives at destination hub next morning at 06:00 AM. Status updates to ARRIVED_AT_SORTING_FACILITY.
+4. Last-mile rider loads parcel at 08:30 AM. Status updates to OUT_FOR_DELIVERY. SMS dispatched with rider name and delivery OTP.
+5. Customer provides OTP at doorstep at 11:15 AM. Rider verifies OTP in app. Status updates to DELIVERED (Terminal State).
+Scenario 2: Failed Delivery Attempt (NDR Handling)
+1. Rider attempts delivery for a package in Dubai at 02:00 PM; customer is at work. Rider logs NDR code CUSTOMER_UNREACHABLE in TMS App.
+2. Status updates to DELIVERY_ATTEMPTED. System sends instant WhatsApp alert to customer containing a link to select a new delivery slot or confirm an alternate gate drop instructions.
+3. Customer selects "Re-attempt Tomorrow After 05:00 PM" via WhatsApp link.
+4. TMS re-manifests parcel for next-day evening delivery. Rider completes delivery next day at 05:30 PM (DELIVERED).
+Scenario 3: Stalled In-Transit Shipment (Courier Delay)
+1. Parcel shipped from Mumbai to Delhi shows no carrier scans for 30 hours due to highway transit flooding.
+2. TMS automated SLA monitor detects missing milestone ($> 24\text{ hours}$). Status updates automatically to DELIVERY_DELAYED.
+3. System recalculates ETA (+24 hours) and dispatches automated proactive email to customer explaining transit delay.
+4. Logistics Hub Squad opens carrier trace request with 3PL. Carrier clears delay next day; tracking resumes normal milestones to delivery.
+Frequently Asked Questions (FAQs)
+Q1: Why does a tracking ID sometimes show "Label Created" for several hours without movement?
+Answer: LABEL_CREATED indicates that warehouse staff have packed the order and generated the shipping waybill, but the physical parcel is staged at the FC loading bay awaiting scheduled courier pickup. Courier pickup occurs multiple times daily, and tracking activates upon dock scan (Refer to SHIP-001).
+Q2: How can a customer track a Split Order with multiple items?
+Answer: When an order is split into multiple sub-orders, each sub-order receives a distinct Tracking ID (e.g., NCIN2621088201-A and NCIN2621088201-B). The customer tracking dashboard displays separate timeline cards for each package, allowing independent tracking (Refer to ORD-005).
+Q3: What should a customer do if their tracking status shows "Delivered" but they have not received the parcel?
+Answer: The customer should contact Customer Support immediately. CSRs check OTP verification and rider GPS logs in tms.novacart.internal. If an incorrect delivery occurred, Support initiates an urgent driver retrieval or authorizes a replacement order under SHIP-006 and SUP-001.
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of ORD-004. Established tracking ID generation standards, tracking status matrices, notification rules, carrier integration specs, and tracking exception workflows.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* ORD-001: Order Lifecycle Management Policy
+* ORD-002: Order Cancellation Policy
+* ORD-003: Order Modification Policy
+* ORD-005: Split Orders Procedure
+* SHIP-001: Domestic Shipping Policy
+* SHIP-005: Delayed Delivery Policy
+* SHIP-006: Lost Shipment Policy

@@ -1,0 +1,249 @@
+﻿PROD-005: Product Recall & Safety Policy
+Document Header
+* Document Title: Product Recall & Safety Policy
+* Document ID: PROD-005
+* Version: 1.0.0
+* Document Category: Products
+* Classification: Internal / Public Operational Standard
+* Department Owner: Legal, Compliance & Product Safety Governance
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Chief Legal Officer, Head of Quality Assurance, Director of Logistics, VP of Customer Experience
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Product Recall, Safety Hazard, Risk Assessment, Class I Recall, Product Quarantine, Regulatory Compliance, Customer Protection, Inventory Lock
+Purpose
+This document defines the official Product Recall & Safety Policy of NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes standardized enterprise procedures, governance structures, recall classification levels, risk assessment protocols, customer notification standards, inventory isolation controls, and regulatory compliance rules governing product safety incidents, manufacturer-initiated recalls, regulatory directives, and voluntary platform withdrawals.
+As a core governance document (PROD-005) in the Products module of the NovaCart Enterprise Knowledge Base (NEKB), PROD-005 coordinates crisis execution across Legal, Product Management (catalog.novacart.internal), Warehouse Operations (wms.novacart.internal), Logistics (tms.novacart.internal), and Customer Support (crm.novacart.internal), operating in strict operational alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, REF-001 through REF-006, PROD-001, PROD-002, PROD-003, and PROD-004.
+Scope
+This policy applies universally to all physical merchandise categories—Consumer Electronics (CAT-ELE), Mobile Devices (CAT-MOB), Gaming Hardware (CAT-GAM), Home Appliances (CAT-APP), and Smart Home Hardware (CAT-SMT)—offered across NovaCart's operating regions (India, Singapore, UAE) across all sales channels and fulfillment models (1P Direct Distribution and 3P Marketplace Merchants).
+Coverage Includes
+* Identification, triage, and risk assessment of product safety hazards, electrical risks, thermal/fire risks, battery defects, chemical contamination, choking hazards, software failures, and false product labeling.
+* Managing manufacturer-initiated recalls, regulatory authority mandates, and NovaCart voluntary safety withdrawals.
+* Real-time catalog delisting, checkout blocking, and warehouse inventory quarantine.
+* Customer identification, multi-channel direct communication, and public safety advisory publishing.
+* Product recovery, reverse logistics execution, customer remediation (full refund, free replacement, or certified repair), and regulatory audit logging.
+Out of Scope
+* Standard non-safety-related customer returns, exchanges, or size/color variant swaps (governed by REF-001 and REF-002).
+* Routine post-warranty component repairs or isolated manufacturing defects not posing systematic safety hazards (governed by PROD-003).
+Product Recall & Safety Overview
+NovaCart prioritizes absolute consumer safety, regulatory compliance, and brand integrity above commercial interest. When a product sold on the platform is identified as defective, unsafe, or non-compliant with statutory safety standards, NovaCart executes immediate, systematic containment to eliminate risk to life, health, and property.
+Core Operational Principles
+1. Precautionary Principle: In cases of severe suspected safety hazards, NovaCart executes immediate catalog holds and warehouse quarantine prior to formal risk assessment conclusion.
+2. Zero-Delay Isolation: Upon safety alert validation, checkout is blocked in catalog.novacart.internal within 15 minutes and warehouse picking is locked in wms.novacart.internal within 30 minutes.
+3. Comprehensive Customer Tracing: Utilizing immutable transaction logs in api.novacart.internal/oms and serial/IMEI tracking in wms.novacart.internal to identify 100% of affected end-users.
+4. Full Frictionless Remediation: Affected customers receive complete financial or operational resolution (100% monetary refund, free upgraded replacement, or certified technician repair) without bearing logistics or shipping costs.
+Recall Classification
+Safety hazards and product recalls are categorized into three standardized risk severity tiers based on international product safety standards (e.g., US CPSC, EU Safety Gate, BIS, Enterprise Singapore, UAE MoIAT):
+Recall Classification Matrix
+Recall Class
+	Hazard Severity Level
+	Health / Property Risk Profile
+	Example Safety Scenarios
+	Mandatory System Action SLA
+	Class I (Critical)
+	Extreme / Life-Threatening
+	High probability of severe injury, permanent disability, fire, explosion, or death.
+	Thermal runway in lithium-ion batteries (CAT-MOB), electrical shock in appliances (CAT-APP), severe fire risk.
+	Catalog block $\le 15\text{ Mins}$; User alert $\le 4\text{ Hours}$.
+	Class II (Major)
+	Moderate / Serious
+	Temporary or medically reversible adverse health consequences; risk of minor property damage.
+	Sharp casing edges, choking hazards in small accessories, minor chemical off-gassing, overheating charger bricks.
+	Catalog block $\le 30\text{ Mins}$; User alert $\le 12\text{ Hours}$.
+	Class III (Minor)
+	Low / Technical Non-Compliance
+	Unlikely to cause adverse health consequences; technical, labeling, or regulatory non-compliance.
+	Incorrect safety labeling, missing mandatory regulatory mark (BIS/CE/FCC), minor software bug causing reboot.
+	Catalog block $\le 2\text{ Hours}$; User alert $\le 24\text{ Hours}$.
+	Recall Initiation Process
+A safety event or recall procedure is initiated through one of four operational triggers:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        RECALL INITIATION & CONTAINMENT WORKFLOW                   |
++-----------------------------------------------------------------------------------+
+| 1. TRIGGER EVENT    | Safety alert received (OEM Notice, Regulatory Order, CS Audit)|
+| 2. EMERGENCY BLOCK  | PIM executes catalog block; WMS locks warehouse inventory.    |
+| 3. RISK ASSESSMENT  | Safety Committee assigns Recall Class (I, II, III) & SLA.     |
+| 4. USER TRACING     | OMS extracts customer list matching affected Serial/IMEIs.    |
+| 5. NOTIFICATION     | Multi-channel alert dispatched; reverse logistics initiated. |
+| 6. REMEDIATION      | Customer receives 100% refund, replacement, or repair.        |
++-----------------------------------------------------------------------------------+
+
+1. Trigger Event Registration:
+   * Trigger A (OEM Notice): Manufacturer formally notifies NovaCart Legal of a global or regional product recall.
+   * Trigger B (Regulatory Mandate): Government authority issues a mandatory recall directive or sales prohibition.
+   * Trigger C (Internal Quality Audit): FC Quality Inspection (REF-004) or Warranty Operations (PROD-003) detects a cluster of safety-related failures ($> 3\text{ reports}$ of fire, smoke, or shock within 7 days).
+   * Trigger D (Customer Incident Report): Customer Support (SUP-001) logs a severe product injury or property damage claim.
+2. Emergency Lock Execution: The Product Safety Response Team issues a system-wide safety freeze. catalog.novacart.internal transitions SKU status to RECALLED (PROD-001), blocking checkout instantly. wms.novacart.internal transfers all physical bin stock to QUARANTINED status (PROD-002), blocking warehouse picking.
+3. Safety Committee Triage: The Executive Product Safety Committee convenes within 2 hours to evaluate evidence and assign formal Recall Classification (Class I, II, or III).
+Risk Assessment Process
+The Product Safety Committee evaluates safety incidents using a quantitative Risk Assessment Matrix:
+Risk Severity Matrix
+Probability of Occurrence
+	Critical Injury / Fire Impact
+	Moderate Injury Impact
+	Minor Harm / Label Impact
+	High (Frequent Cluster)
+	Class I Recall (Critical)
+	Class I Recall (Critical)
+	Class II Recall (Major)
+	Medium (Occasional)
+	Class I Recall (Critical)
+	Class II Recall (Major)
+	Class III Recall (Minor)
+	Low (Isolated Event)
+	Class II Recall (Major)
+	Class III Recall (Minor)
+	Class III Recall (Minor)
+	Risk Assessment Methodology
+* Severity Score: Evaluates potential harm (e.g., burn radius, electrical shock voltage, structural collapse).
+* Probability Score: Evaluates failure rates based on customer incident logs, warranty claims (PROD-003), and FC return audits (REF-004).
+* Contagion Scope: Determines whether the defect impacts a specific batch/lot number, a specific manufacturing date range, or the entire SKU production run.
+Customer Identification & Notification
+Once a recall is classified, the system extracts end-user data and initiates targeted multi-channel communication:
+1. Transaction Tracing: api.novacart.internal/oms queries historical orders to extract customer names, delivery addresses, phone numbers, email addresses, and specific physical Serial Numbers / IMEIs registered during dispatch.
+2. Notification Channel Deployment: Communications deploy according to the mandatory Customer Notification Matrix:
+Customer Notification Matrix
+Recall Class
+	Mandatory Primary Channels
+	Mandatory Secondary Channels
+	Response SLA Requirement
+	Class I (Critical)
+	Priority SMS + WhatsApp + In-App Push + Direct Phone Call
+	Registered Email + Outbound IVR + Website Safety Banner
+	Customer ACK requested within $24\text{ Hours}$. Follow-up call every 24 hrs until ACK.
+	Class II (Major)
+	Priority SMS + Registered Email + In-App Push
+	WhatsApp + Account Portal Banner
+	Customer ACK requested within $48\text{ Hours}$. Follow-up email at Day 3.
+	Class III (Minor)
+	Registered Email + Account Portal Notice
+	In-App Push
+	Customer ACK requested within $7\text{ Days}$.
+	3. Advisory Content Standards: Notifications must state clearly:
+   * Specific product name, model number, brand, and affected batch/serial numbers.
+   * Explicit description of the safety hazard and potential consequences (e.g., "Risk of battery overheating leading to fire").
+   * Immediate instruction to CEASE USE IMMEDIATELY and disconnect the device from power.
+   * Step-by-step instructions to initiate free reverse collection or certified repair.
+Product Recovery Process
+NovaCart provides friction-free, zero-cost recovery options for affected products in customer possession:
+1. Prepaid Reverse Logistics: The customer clicks "Initiate Recall Return" in the alert notice. api.novacart.internal/tms generates a prepaid priority reverse waybill (SRV-EXP).
+2. Doorstep Courier Collection: Reverse couriers collect the recalled item within 24 to 48 hours. Couriers issue a digital Proof of Pickup (POP) confirming serial number collection (REF-002).
+3. Hazardous Cargo Handling: For Class I battery thermal risks (CAT-MOB/CAT-ELE), NovaCart dispatches specialized hazardous material packaging containers to the customer's residence to ensure safe transit.
+4. Warehouse Quarantine Isolation: Inbound recalled items bypass standard return staging and are received directly into the FC Safety Vault (STG-RECALL_VAULT), physically segregated from sellable stock (PROD-002).
+Corrective Actions
+Customer remediation is executed based on recall parameters and manufacturer alignment:
+Corrective Action Matrix
+Remediation Option
+	Applicability Criteria
+	Execution SLA
+	Financial & Operational Mechanics
+	100% Monetary Refund
+	Default option for Class I/II recalls or when stock is depleted.
+	Dispatched within $1\text{ Hour}$ of reverse courier pickup
+	Full monetary refund cleared via original payment method (PAY-003) or instant wallet deposit + 10% goodwill credit (REF-006).
+	Upgraded Replacement
+	Customer opts for replacement; safe upgraded SKU available.
+	Dispatched within $24\text{ Hours}$ of recall registration
+	Immediate dispatch of a safe, equal, or superior model free of charge (REF-003).
+	Certified Modification / Repair
+	Manufacturer provides certified safety fix (e.g., firmware patch / power cord swap).
+	Completed within $48\text{ Hours}$ of service intake
+	Authorized field technician visit (PROD-004) or remote firmware update pushed over-the-air.
+	Regulatory Compliance
+NovaCart maintains strict compliance with national product safety regulatory bodies across its operating regions:
+* India (Central Consumer Protection Authority - CCPA / BIS): Formal recall notice submitted to CCPA within 24 hours of Class I recall initiation under the Consumer Protection Act, 2019.
+* Singapore (Enterprise Singapore - ESG): Mandatory reporting of safety hazards and consumer injury incidents to Enterprise Singapore within 24 hours.
+* UAE (Ministry of Industry and Advanced Technology - MoIAT / CPSC): Immediate notification to MoIAT and local municipal consumer protection divisions.
+* Reporting Metrics: Weekly compliance status reports submitted to authorities detailing total units sold, total units recovered, customer notification reach percentages, and final disposal records.
+Department Responsibilities
+Accountability during a product recall is coordinated across executive and operational units:
+Department Responsibility Matrix
+Department Unit
+	Primary Safety & Recall Responsibilities
+	Primary System Portal
+	Action SLA Target
+	Legal & Compliance
+	Leads Crisis Committee, liaises with regulatory bodies, approves customer advisory texts, oversees legal liability.
+	compliance.novacart.internal
+	Regulatory filing $\le 24\text{ Hours}$
+	Product Merchandising
+	Executes catalog delisting, blocks seller accounts, manages OEM financial chargebacks.
+	catalog.novacart.internal
+	Delist SKU $\le 15\text{ Mins}$
+	Warehouse Operations
+	Locks bin inventory, receives recalled stock into Quarantine Vault, oversees scrap/RTV shipping.
+	wms.novacart.internal
+	Quarantine inventory $\le 30\text{ Mins}$
+	Logistics & Fleet
+	Executes priority reverse pickups, dispatches hazmat containers, manages RTV transit.
+	tms.novacart.internal
+	Reverse pickup $\le 24\text{ Hours}$
+	Customer Support
+	Operates dedicated recall hotline, makes outbound ACK follow-up calls, manages customer appeals.
+	crm.novacart.internal
+	Dedicated hotline FRT $< 10\text{ Secs}$ (SUP-005)
+	Business Rules
+Rule 1: Instant Precautionary Delisting Rule
+Any product listing associated with a verified Class I safety hazard report involving fire, smoke, explosion, or physical injury must be delisted instantly (STAGE-SPD / RECALLED in PROD-001) prior to formal committee review. Re-activation requires written sign-off from the Chief Legal Officer.
+Rule 2: Zero-Cost Recovery Mandate
+Customers shall never incur shipping, pickup, restocking, or administrative fees for participating in a product recall. All logistics and return costs are borne by NovaCart and subsequently billed to the manufacturer or 3P merchant (PAY-003).
+Rule 3: Permanent Serial Number Blacklisting
+Serial numbers, IMEIs, and MAC addresses associated with recalled units are permanently blacklisted in wms.novacart.internal. Blacklisted serial numbers can never be re-injected into sellable inventory, re-sold, or re-registered for warranty service (PROD-001, PROD-003).
+Exception Handling
+* Customer Refuses Recall Participation: If a customer declines to return a Class I recalled product after multiple contact attempts, NovaCart sends a final registered Legal Notice advising of severe safety risks, remotely deactivates digital/smart features where technically feasible (CAT-SMT/CAT-ELE), and logs the refusal for regulatory liability exemption.
+* 3P Merchant Unresponsiveness: If a 3P marketplace merchant fails to cooperate during a manufacturer recall for products sold on NovaCart, NovaCart executes customer remediation directly, debiting the merchant's escrow payout balance and suspending merchant platform selling privileges (COMP-001, PAY-003).
+Practical Examples
+Scenario 1: Class I Recall for Thermal Battery Overheating (CAT-MOB)
+1. Manufacturer notifies NovaCart Legal of a thermal runaway defect in a smartphone model battery (CAT-MOB).
+2. Merchandising executes Rule 1: SKU delisted in PIM within 10 minutes (STAGE-SPD).
+3. WMS locks 120 units in FC BLR-01 into STG-RECALL_VAULT within 20 minutes.
+4. OMS extracts purchase records for 450 delivered units. Priority SMS, WhatsApp, and Email alerts dispatch within 2 hours.
+5. Reverse couriers collect devices using specialized fire-retardant containers.
+6. Customers receive an automated 100% monetary refund plus a 10% goodwill wallet credit (CRD-GDW) within 1 hour of courier pickup (REF-006, PAY-003).
+Scenario 2: Regulatory Direct Recall for Uncertified Power Adapter (CAT-ELE)
+1. BIS authority issues a sales prohibition notice for an uncertified laptop charger brick exhibiting electric shock risks.
+2. Safety Committee classifies event as Class II Recall.
+3. System alerts 1,200 affected customers via Email and In-App Portal.
+4. Customers are provided prepaid return labels or the option to receive a certified, fully compliant replacement charger brick dispatched within 24 hours (REF-003).
+Frequently Asked Questions (FAQs)
+Q1: How will I know if a product I bought on NovaCart has been recalled?
+Answer: If a product you purchased is subject to a recall, NovaCart will contact you directly via SMS, Email, WhatsApp, and In-App Push Notifications using the contact details on your account. For critical Class I recalls, our customer safety team will also attempt direct phone outreach (Refer to SUP-001).
+Q2: Do I have to pay for shipping when returning a recalled item?
+Answer: No. All recall returns and reverse courier pickups are 100% free of charge. NovaCart provides prepaid reverse shipping labels or schedules doorstep courier collection at zero cost to you (Refer to SHIP-001, REF-002).
+Q3: What if I no longer have the original box for a recalled product?
+Answer: Original packaging is not required to return a recalled item. You only need to hand over the physical product and its primary power components to our reverse courier (Refer to REF-004).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of PROD-005. Established recall severity classifications (Class I–III), emergency inventory quarantine rules, multi-channel customer notification SLAs, risk assessment matrices, and regulatory compliance standards.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* SUP-005: Customer Support SLA Policy
+* ORD-001: Order Lifecycle Management Policy
+* SHIP-001: Domestic Shipping Policy
+* PAY-003: Refund Payment Processing Policy
+* REF-001: Master Refund Eligibility Rules
+* REF-003: Replacement Policy
+* REF-004: Return Inspection & Quality Assessment Policy
+* REF-005: Refund Approval & Exception Handling Policy
+* REF-006: Store Credit & Promotional Refund Policy
+* PROD-001: Product Catalog Management Policy
+* PROD-002: Product Availability & Inventory Policy
+* PROD-003: Product Warranty Policy
+* PROD-004: Product Installation & Setup Policy

@@ -76,6 +76,13 @@ def answer_question(
 
     response = generate_content(prompt)
 
+    if response:
+        print("\nMODEL RESPONSE")
+
+        print(
+            f"Response words : {len(response.split())}"
+        )
+
     if response is None:
         return {
             "answer": "AI service temporarily unavailable.",
@@ -104,10 +111,42 @@ def find_relevant_document(question: str):
         queries
     )
 
+    logger.debug(
+        f"Retrieved {len(chunks)} chunks before reranking."
+    )
+
+    for i, chunk in enumerate(chunks, 1):
+        print(
+            f"{i}. {chunk['source_document']} "
+            f"| Score={chunk['score']:.3f} "
+            f"| Words={len(chunk['content'].split())}"
+        )
+
     chunks = rerank_chunks(
         question,
         chunks
     )
+
+    logger.debug(
+        f"Top retrieved sources: {extract_sources(chunks)}"
+    )
+
+    for i, chunk in enumerate(chunks, 1):
+        print(
+            f"{i}. {chunk['source_document']}"
+        )
+
+        print(
+            f"   Rerank : {chunk['rerank_score']:.3f}"
+        )
+
+        print(
+            f"   Words  : {len(chunk['content'].split())}"
+        )
+
+        print(
+            f"   Preview: {chunk['content'][:120]}..."
+        )
 
     if not chunks:
         return {
@@ -157,40 +196,42 @@ def suggest_reply(
 
 def create_chunks(text: str):
 
-    chunks = text.split("\n\n")
+    words = text.split()
 
-    return [
-        chunk.strip()
-        for chunk in chunks
-        if chunk.strip()
-    ]
+    chunk_size = 350
+    overlap = 50
+
+    chunks = []
+
+    start = 0
+
+    while start < len(words):
+
+        end = start + chunk_size
+
+        chunk = " ".join(
+            words[start:end]
+        )
+
+        chunks.append(chunk)
+
+        start += chunk_size - overlap
+
+    return chunks
 
 
 def load_documents():
 
     DOCUMENT_CHUNKS.clear()
 
-    documents = [
-        "refund_policy.txt",
-        "shipping_policy.txt",
-         "faq.txt",
-        "warranty_policy.txt",
-        "return_policy.txt",
-        "payment_policy.txt",
-        "order_tracking.txt",
-        "account_management.txt",
-        "delivery_delays.txt",
-        "cancellations.txt",
-        "international_shipping.txt",
-        "gift_cards.txt"
-    ]
+    knowledge_base_path = Path("knowledge_base")
 
-    for document in documents:
+    documents = list(knowledge_base_path.rglob("*.md"))
+    documents.extend(
+        knowledge_base_path.rglob("*.txt")
+    )
 
-        file_path = (
-            Path("knowledge_base")
-            / document
-        )
+    for file_path in documents:
 
         with open(
             file_path,
@@ -204,6 +245,8 @@ def load_documents():
                 content
             )
 
+            print(f"{file_path.name:<50} -> {len(chunks)} chunks")
+
             for chunk in chunks:
 
                 embedding = embedding_model.encode(
@@ -212,7 +255,11 @@ def load_documents():
 
                 DOCUMENT_CHUNKS.append(
                     {
-                        "document": document,
+                        "document": str(
+                            file_path.relative_to(
+                                knowledge_base_path
+                            )
+                        ),
                         "content": chunk,
                         "embedding": embedding
                     }
@@ -239,13 +286,13 @@ def load_documents():
 
         save_index()
 
-    documents = [
+    bm25_documents = [
         chunk["content"]
         for chunk in DOCUMENT_CHUNKS
     ]
 
     create_bm25_index(
-        documents
+        bm25_documents
     )
 
 
@@ -361,6 +408,7 @@ def retrieve_multi_query_chunks(
 
     return unique_chunks
 
+
 def rerank_chunks(
         question: str,
         chunks: list
@@ -390,6 +438,7 @@ def rerank_chunks(
     )
 
     return chunks[:3]
+
 
 def extract_sources(
         chunks: list

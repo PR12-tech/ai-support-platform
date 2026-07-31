@@ -1,0 +1,258 @@
+﻿SHIP-006: Lost Shipment Investigation Policy
+Document Header
+* Document Title: Lost Shipment Investigation Policy
+* Document ID: SHIP-006
+* Version: 1.0.0
+* Document Category: Shipping
+* Classification: Internal / Public Operational Standard
+* Department Owner: Logistics & Supply Chain
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Logistics, Operations Director, Customer Experience Director
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Lost Shipment, Carrier Trace, Disputed Delivery, Missing Parcel, Investigation Workflow, Replacement Dispatch, Insurance Claim, Proof of Delivery Audit
+Purpose
+This document establishes the official enterprise policy, operational criteria, carrier trace workflows, warehouse verification protocols, resolution parameters, and customer communication standards governing lost shipments within NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It defines the conditions under which a parcel is formally declared lost, the multi-stage investigation process, carrier financial liability models, customer remediation options, and case closure requirements.
+As a core operational document (SHIP-006) in the NovaCart Enterprise Knowledge Base (NEKB), SHIP-006 enforces rigorous accountability across fulfillment centers (FCs), third-party logistics (3PL) partners, Security Operations, Customer Support, and the Transportation Management System (api.novacart.internal/tms), maintaining complete consistency with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, and SHIP-001 through SHIP-005.
+Scope
+This policy applies to all active domestic and international shipments managed by NovaCart across India (IN), Singapore (SG), and the United Arab Emirates (UAE) across all service tiers (Standard, Express, Same-Day, Scheduled) and fulfillment models (1P Direct Distribution and 3P Marketplace Merchants).
+Coverage Includes
+* Identification and automated flagging of missing or stalled parcels in tms.novacart.internal.
+* Multi-departmental physical and digital investigations involving Logistics, Warehouse Operations, Security, and 3PL carriers.
+* Resolution workflows for lost parcels, including automated replacement dispatches, full order refunds, and goodwill credits.
+* Claims processing, carrier liability billing, and insurance recovery logging.
+Lost Shipment Overview
+NovaCart prioritizes customer certainty and fulfillment integrity. When an in-transit parcel experiences an uncharacteristic gap in tracking telemetry or is reported missing post-dispatch, NovaCart initiates a time-bound investigation to locate the physical package or declare a formal loss.
+Core Operational Principles
+1. Customer-Centric Remediation: Customer resolution (replacement or refund) must be executed promptly upon reaching maximum investigation SLA thresholds, regardless of pending 3PL carrier insurance claims.
+2. Multi-Point Verification: Parallel audit of warehouse dispatch manifests, linehaul transit logs, destination hub scans, and doorstep Proof of Delivery (POD) data.
+3. Automated Loss Detection: Dynamic system algorithms in tms.novacart.internal that flag stalled tracking IDs and initiate carrier trace commands automatically.
+4. Carrier Liability Enforcement: Contractual recovery of lost merchandise value, shipping costs, and administrative processing fees from negligent 3PL carriers.
+Definition of a Lost Shipment
+A shipment is officially classified and logged as a Lost Shipment (CANCELLED_LOST_IN_TRANSIT) when it satisfies any of the following deterministic criteria:
+1. Extended Telemetry Inactivity: No physical scan update recorded in tms.novacart.internal for $> 96\text{ consecutive hours}$ (Domestic) or $> 144\text{ consecutive hours}$ (International), and a formal carrier trace fails to locate the parcel.
+2. Carrier Formal Declaration: The 3PL carrier issues a written or system-generated declaration confirming the parcel is lost, stolen, or unrecoverably destroyed in transit.
+3. Invalidated / Disputed POD: A parcel is marked DELIVERED, but the customer files a non-receipt claim within 48 hours, and a Security POD audit reveals invalid GPS coordinates ($> 200\text{ meters}$ from address) or unverified One-Time Password (OTP) data.
+4. Physical Inspection Failure: Warehouse or hub transit audits confirm the outer packaging arrived damaged, empty, or missing its internal contents due to theft.
+Investigation Initiation Criteria
+Lost shipment investigations are triggered through two primary mechanisms:
+* Automated System Detection: The TMS Exception Tracking Module (api.novacart.internal/tms/exceptions) scans active waybills every 60 minutes. If milestone scan timers breach threshold limits, TMS generates an automated carrier trace ticket (TR-XXXXX).
+* Customer Non-Receipt Escalation: A customer contacts Support reporting an overdue parcel or disputing a DELIVERED status tag. Support creates a P2 High Priority investigation ticket in crm.novacart.internal (Refer to SUP-001, SUP-004).
+Investigation Timeline Matrix
+Investigation Stage
+	Action / Milestone
+	Domestic SLA Target
+	International SLA Target
+	Owning Department
+	Stage 1: System Flagging
+	Exception auto-detected or customer dispute logged.
+	Immediate ($< 1\text{ Hour}$)
+	Immediate ($< 1\text{ Hour}$)
+	TMS / Support
+	Stage 2: Warehouse Verification
+	FC dock manifest & video audit completed.
+	$< 12\text{ Hours}$
+	$< 24\text{ Hours}$
+	Warehouse Operations
+	Stage 3: Carrier Trace Audit
+	Physical hub & vehicle scan audit by 3PL carrier.
+	$< 48\text{ Hours}$
+	$< 72\text{ Hours}$
+	Logistics & Supply Chain
+	Stage 4: Security & POD Audit
+	GPS, OTP, and driver interview (disputed POD).
+	$< 24\text{ Hours}$
+	$< 48\text{ Hours}$
+	Security Operations
+	Stage 5: Final Declaration
+	Parcel declared lost or located.
+	Max $72\text{ Hours}$ from flag
+	Max $120\text{ Hours}$ from flag
+	Head of Logistics
+	Stage 6: Customer Remediation
+	Replacement dispatched or full refund processed.
+	$< 2\text{ Hours}$ post-declaration
+	$< 2\text{ Hours}$ post-declaration
+	Customer Support / Finance
+	Investigation Workflow
+Every lost shipment investigation follows a rigorous six-stage workflow within tms.novacart.internal:
+
+
+
+
+
+
+<ElicitationsGroup message="To examine related shipping, delay, or refund policies further:">
+{/* Reason: Offers structured paths to navigate deeper into related domain policies. */}
+ <Elicitation label="Review SHIP-005 Delivery Delay Policy" query="Show SHIP-005 Delivery Delay Policy governing initial delay alerts." />
+ <Elicitation label="Review REF-001 Refund Eligibility Policy" query="Show REF-001 Refund Eligibility Policy governing loss refunds." />
+ <Elicitation label="Examine SUP-003 Escalation Matrix" query="Show SUP-003 Escalation Matrix governing investigation escalations." />
+</ElicitationsGroup>
+
+1. Intake & Ticket Activation: TMS or CSR activates a trace ticket (TR-XXXXX), binding the Master Order ID, Sub-Order ID, carrier AWB, and item details.
+2. Warehouse Dispatch Audit: Warehouse Operations verifies that the parcel was physically packed, weight-audited, serial-scanned (CAT-ELE/CAT-MOB), and handed to the courier at the FC dock.
+3. Carrier Linehaul & Hub Trace: Logistics issues a formal trace command to the 3PL carrier. The carrier must physically audit the last known sorting hub, linehaul vessel, and last-mile delivery depot.
+4. Security & GPS Analysis (Disputed Deliveries): For parcels marked DELIVERED but claimed missing, Security compares rider handheld GPS data against the delivery address geofence and audits OTP verification logs.
+5. Loss Determination: If the parcel is located, it is fast-tracked to the delivery hub. If unlocated upon SLA expiration, Logistics updates parcel status to CANCELLED_LOST_IN_TRANSIT.
+6. Customer Remediation & Recovery: Support contacts the customer to execute their chosen resolution (Replacement or 100% Refund). Finance files an insurance claim against the negligent carrier.
+Carrier Coordination Process
+Contracted 3PL carriers must adhere to strict contractual investigation obligations:
+* Carrier Response SLA: Carriers must provide written update logs in tms.novacart.internal within 24 hours for domestic traces and 48 hours for international traces.
+* Financial Liability Assignment: When a shipment is declared lost while in carrier custody, the carrier is billed for:
+   * 100% of the item declared value (GMV).
+   * Outbound shipping and handling charges.
+   * An administrative loss processing fee of ₹500 / $10 / AED 30 per parcel.
+* Carrier Performance Auditing: Carriers maintaining a monthly loss rate exceeding 0.1% of total shipped volume are subject to lane volume reductions and contractual penalties.
+Warehouse Verification Process
+Before attributing a loss to a logistics carrier, FC staff must rule out origin warehouse fulfillment errors:
+1. Manifest & Dock Scan Audit: FC supervisors review dock departure scan logs in wms.novacart.internal to confirm the package was scanned onto the courier trailer.
+2. Over-Stock & Mis-Bin Search: FC staff conduct a physical search of staging racks, packing stations, and problem-resolution bins for mislaid packages.
+3. Video Surveillance Audit: For high-value shipments (CAT-ELE, CAT-MOB) exceeding ₹25,000 / $400 / AED 1,100, Security reviews packing station CCTV footage to verify the correct item was enclosed, security-taped, and handed over.
+Customer Communication Process
+Transparency is mandatory throughout the investigation lifecycle. CSRs must follow strict communication schedules:
+Customer Communication Matrix
+Investigation Phase
+	Notification Channel
+	Timing / Schedule
+	Message Content & Focus
+	Investigation Initiation
+	Email + SMS + Push
+	Immediate ($< 1\text{ Hour}$ from flag)
+	"We have initiated an urgent trace (Ref: TR-XXXXX) for your shipment #[ID]. We will provide an update within [SLA Time]."
+	Mid-Investigation Update
+	Email + WhatsApp
+	Every 24 Hours during active trace
+	"Investigation Update: Our logistics team is auditing the regional hub. Next update: [Time]. Thank you for your patience."
+	Loss Declaration & Options
+	Email + Phone Call (CSR)
+	Immediate upon Loss Declaration
+	"Investigation Complete: We regret your parcel is confirmed lost. Please select: [1] Immediate Free Priority Replacement or [2] 100% Full Refund."
+	Remediation Confirmation
+	Email + SMS
+	Immediate upon execution
+	"Your replacement order #[New ID] has been dispatched via Express / Your 100% refund of [Amount] has been processed."
+	Resolution Options
+When a shipment is officially declared lost, the customer is presented with two immediate remediation pathways:
+Resolution Matrix
+Resolution Option
+	Customer Choice Details
+	Operational Execution Workflow
+	Financial Handling
+	Option 1: Priority Replacement
+	Customer requests the same item(s) be re-shipped immediately.
+	OMS auto-generates a priority replacement Sub-Order ID fulfilled from the nearest FC via Express Shipping (SRV-EXP).
+	Zero cost to customer. Replacement cost billed to carrier liability account.
+	Option 2: 100% Full Refund
+	Customer requests complete financial cancellation of the transaction.
+	OMS transitions order state to REFUNDED. Ledger processes 100% reversal including item price, taxes, and shipping fees.
+	Reversal processed to original payment instrument within 24 hours (3–5 days bank reflection).
+	Escalation Process
+If an investigation encounters operational resistance or involves exceptional financial risk, it escalates according to the matrix below:
+Escalation Matrix
+Escalation Level
+	Trigger Condition
+	Escalation Target
+	Required Action / Authority
+	Level 1 (Standard)
+	Carrier trace exceeds 24 hours without update.
+	Logistics Trace Lead
+	Direct phone callout to 3PL hub manager.
+	Level 2 (High Value)
+	Lost shipment value $> \text{INR } 50,000$ / $\text{SGD } 800$ / $\text{AED } 2,200$.
+	Security Operations Manager
+	CCTV packing audit; formal carrier theft report.
+	Level 3 (Systemic)
+	Multiple parcels ($> 5$) lost on a single linehaul route.
+	Head of Global Logistics
+	Immediate lane suspension; carrier executive review.
+	Level 4 (Executive)
+	Legal threat or NovaCart Prime VIP severe loss.
+	Customer Support Operations Manager
+	Immediate customer refund + ₹1,000 goodwill credit.
+	Documentation Requirements
+Every lost shipment investigation file must contain an immutable audit record in tms.novacart.internal/traces:
+1. System Case File: Linked Master Order ID, Sub-Order ID, Tracking ID, and Item Serial Numbers.
+2. Verification Evidence: FC dock departure scan logs, weight audit logs, and CCTV packaging review notes.
+3. Carrier Communications: Written carrier trace logs, formal loss declaration emails, and AWB waybill copies.
+4. Security Audit Summary: GPS coordinate map overlays, OTP timestamp logs, and driver statement transcripts (for disputed POD cases).
+5. Remediation Record: Customer choice documentation, new replacement Order ID, or financial refund reference number.
+Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Lost Shipment Responsibilities
+	Primary Portal Used
+	SLA Target
+	Logistics & Supply Chain
+	Manages carrier trace tickets; declares formal losses; recovers carrier liability costs.
+	tms.novacart.internal
+	Trace resolution $< 72\text{ Hours}$
+	Warehouse Operations
+	Performs FC over-stock searches; audits dock handover manifests and weight logs.
+	wms.novacart.internal
+	FC verification $< 12\text{ Hours}$
+	Security Operations
+	Audits CCTV footage; verifies GPS/OTP logs for disputed PODs; files police theft reports.
+	shield.novacart.internal
+	Security audit $< 24\text{ Hours}$
+	Customer Support
+	Communicates with customer; presents resolution options; dispatches replacements or refunds.
+	crm.novacart.internal
+	Customer update SLA 100% met
+	Finance Operations
+	Processes 100% loss refunds; issues goodwill wallet credits; bills 3PL carrier claims.
+	ledger.novacart.internal
+	Financial execution $< 24\text{ Hours}$
+	Business Rules
+Rule 1: Customer Remediation SLA Guarantee
+NovaCart guarantees that customer remediation (replacement dispatch or full refund) will be executed within a maximum of 72 hours from the initial loss flag for domestic orders, and 120 hours for international orders. Customer resolution will never be delayed pending carrier insurance claims or vendor disputes.
+Rule 2: Split Order Isolation for Partial Loss
+In a Split Order scenario containing multiple Sub-Order IDs (e.g., NC-IN-88201-A and NC-IN-88201-B), if Sub-Order A is lost in transit while Sub-Order B is delivered successfully, the lost shipment investigation and remediation apply strictly to Sub-Order A. The delivered sub-order remains active (Refer to ORD-005).
+Rule 3: Goodwill Credit for Lost Shipments
+In addition to a full refund or free priority replacement, any customer impacted by a confirmed lost shipment receives an automatic ₹500 / $10 / AED 30 goodwill credit deposited to their NovaCart Wallet upon case closure (Refer to SUP-005).
+Exception Handling
+* Parcel Located After Replacement Dispatched: If a lost parcel is located by a carrier after a replacement order has already been dispatched to the customer, TMS auto-routes the original parcel back to the nearest FC as Return to Origin (RTO). If delivered accidentally, Support provides a free reverse pickup label.
+* Cross-Border Customs Seizure: If an international shipment is seized or destroyed by destination customs due to regulatory non-compliance (and not customer document refusal), Logistics treats the event as a cross-border loss, issuing a full refund to the customer and filing a claim against the customs broker (Refer to SHIP-002).
+Practical Examples
+Scenario 1: Domestic In-Transit Loss Investigation
+1. A gaming laptop (₹75,000) shipped from Bangalore to Delhi shows no carrier scans for 96 hours.
+2. TMS Exception Module auto-assigns status DELIVERY_DELAYED and logs trace ticket TR-88201.
+3. FC BLR-01 confirms dock scan and CCTV packaging completion. Carrier trace fails to locate parcel in Delhi sorting hub.
+4. On hour 48 of investigation, 3PL carrier issues formal loss declaration.
+5. Support contacts customer, who selects Priority Replacement. OMS auto-dispatches new laptop from DEL-02 via Express Shipping (SRV-EXP). Finance bills 3PL carrier for ₹75,000 + freight fees + admin fee.
+Scenario 2: Disputed Proof of Delivery (Fake POD)
+1. Customer in Dubai reports non-receipt of a smartphone marked DELIVERED 2 hours prior.
+2. Support opens P2 investigation ticket. Security audits rider handheld logs in tms.novacart.internal.
+3. GPS analysis reveals rider completed the scan $1.2\text{ km}$ away from customer address, and OTP verification was bypassed using a rider master override code.
+4. Security invalidates POD. Logistics logs rider fraud.
+5. Support issues immediate 100% refund (AED 2,500) to customer's card plus AED 30 wallet credit. Carrier is billed for fraudulent delivery.
+Frequently Asked Questions (FAQs)
+Q1: How long does NovaCart investigate before declaring a shipment lost and refunding my money?
+Answer: Domestic investigations are capped at a maximum of 72 hours (3 business days), and international investigations at 120 hours (5 business days). If the parcel is not located within this window, you receive an immediate full refund or free replacement (Refer to SUP-005).
+Q2: What happens if only one item from my multi-item order is lost?
+Answer: If your order was split into multiple packages (ORD-005), the lost shipment investigation applies exclusively to the specific sub-order containing the missing item. You receive a replacement or pro-rated refund for the lost item, while delivered items remain unaffected.
+Q3: Am I required to pay shipping fees for a replacement order?
+Answer: No. All replacement orders for lost shipments are dispatched free of charge via Express Shipping (SRV-EXP), with all delivery and handling expenses covered by NovaCart (Refer to SHIP-003).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of SHIP-006. Established lost shipment criteria, investigation workflows, CCTV/GPS POD audits, carrier liability rules, and customer remediation SLA guarantees.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* SUP-005: Customer Support SLA Policy
+* ORD-001: Order Lifecycle Management Policy
+* ORD-004: Order Tracking Policy
+* ORD-005: Split Order Management Policy
+* SHIP-001: Domestic Shipping Policy
+* SHIP-002: International Shipping Policy
+* SHIP-005: Delivery Delay Management Policy
+* REF-001: Master Refund Eligibility Rules

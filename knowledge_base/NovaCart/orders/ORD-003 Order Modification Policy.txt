@@ -1,0 +1,222 @@
+﻿ORD-003: Order Modification Policy
+Document Header
+* Document Title: Order Modification Policy
+* Document ID: ORD-003
+* Version: 1.0.0
+* Document Category: Orders
+* Classification: Internal
+* Department Owner: Operations & Customer Support
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Logistics, VP of Finance Operations, Customer Experience Director
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Order Modification, Address Change, Variant Swap, Delivery Slot, Quantity Modification, Post-Order Adjustments, System Validations, Audit Logs
+Purpose
+This document defines the official enterprise policy, operational rules, system validations, and approval hierarchies governing post-placement modifications to active orders at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It specifies permissible order alterations, status-based eligibility parameters, customer self-service capabilities, support agent execution thresholds, and backend system constraints.
+As an essential governance document (ORD-003) in the NovaCart Enterprise Knowledge Base (NEKB), ORD-003 ensures deterministic processing across customer web/mobile interfaces, Customer Support Representative (CSR) workstations, and the automated Order Management System (api.novacart.internal/oms), maintaining full compatibility with ORD-001, ORD-002, SHIP-001, PAY-001, and SUP-001.
+Scope
+This policy applies to all post-checkout modification requests across NovaCart operating regions (India, Singapore, UAE), customer segments (B2C Retail, B2B SMB, Corporate Enterprise Accounts, NovaCart Prime Memberships), and physical/digital product categories.
+Coverage Includes
+* Modifiable order fields: Shipping/billing address, primary contact phone number, delivery instructions, scheduled delivery slots, product variants, item quantities, invoice tax details, and gift options.
+* Non-modifiable fields and lifecycle lock phases.
+* Self-service modification pathways versus agent-assisted workflows.
+* System validation checks, price difference recalculations, and payment gateway interactions.
+* Audit logging and multi-channel customer notification protocols.
+Order Modification Objectives
+NovaCart manages order modifications under four core operational objectives:
+1. Customer Flexibility: Provide friction-free self-service capabilities for customers to correct delivery details or preference choices without cancelling the entire transaction.
+2. Fulfillment Continuity: Prevent unnecessary order cancellations and inventory re-processing through rapid pre-dispatch order updates.
+3. Delivery Precision: Ensure accurate shipping address and contact data reach logistics dispatch engines (tms.novacart.internal) prior to last-mile routing.
+4. Data Integrity & Auditability: Record an immutable audit log of all order modifications, system authorizations, and user actions to maintain accounting and security compliance.
+Eligible Order Modifications
+Subject to order status constraints, the following specific order attributes may be modified:
+* Delivery Address Details: Corrections to street address, landmark, building/suite number, or postal code within the same regional fulfillment zone.
+* Contact Details: Updates to primary recipient mobile phone number, secondary contact number, or notification email address.
+* Delivery Instructions & Slot: Addition of gate entry notes, access codes, or selection of specific delivery time windows (where supported by SHIP-001/SHIP-004).
+* Product Variant (Pre-Fulfillment): Color, size, or minor technical sub-variant swaps for the exact same parent SKU, provided item unit pricing is identical and stock exists in the assigned Fulfillment Center (FC).
+* Item Quantity Reductions: Reducing ordered item quantities prior to warehouse picking.
+* Invoice & Tax Data (B2B/SMB): Updates to Tax Registration Numbers (GSTIN in India, VAT in UAE), corporate billing addresses, or purchase order (PO) references prior to tax invoice generation.
+* Gift Messaging & Packaging Options: Adjustments to gift card notes or requests for tamper-evident gift wrapping prior to packing.
+Non-Permitted Modifications
+To prevent financial fraud, inventory skew, and tax non-compliance, the following alterations are strictly prohibited across all channels:
+* Cross-Country / Cross-Region Address Changes: Modifying destination country, state, or regional tax jurisdiction (e.g., changing a delivery address from Singapore to Dubai, or from Karnataka to Maharashtra).
+* Product Category / Model Upgrades or Swaps: Exchanging an item for a completely different product model or vertical (e.g., swapping a smartphone for a laptop, or swapping a 128GB model for a 256GB model with higher pricing).
+* Item Quantity Increases: Adding new items or increasing quantities on an existing order. Additional items require creating a new transaction.
+* Modifications on Terminal / Shipped Orders: Any alterations to orders in SHIPPED, OUT_FOR_DELIVERY, DELIVERED, CANCELLED, RETURNED, REFUNDED, or COMPLETED status.
+* Digital Software & Gift Card Modifying: Altering revealed digital license keys (CAT-SFT) or generated gift card codes (CAT-GFT) (Refer to REF-006).
+Modification Eligibility by Order Status
+Order modifiability is controlled deterministically by the active status tag in api.novacart.internal/oms.
+Modification Eligibility Matrix
+Order Attribute ↓ / Active Order Status →
+	PENDING_PAYMENT / PAYMENT_CONFIRMED
+	INVENTORY_RESERVED / PROCESSING
+	PACKED / READY_FOR_DISPATCH
+	SHIPPED / OUT_FOR_DELIVERY
+	DELIVERED / COMPLETED (Terminal)
+	Shipping Address (Same Zone)
+	Allowed (Self-Service)
+	Allowed (CSR Only)
+	Allowed (L2 Logistics Only)
+	Blocked (Refer to SHIP-007)
+	Blocked
+	Contact Phone Number
+	Allowed (Self-Service)
+	Allowed (Self-Service)
+	Allowed (CSR Only)
+	Allowed (L2 Logistics Only)
+	Blocked
+	Delivery Instructions / Slot
+	Allowed (Self-Service)
+	Allowed (Self-Service)
+	Allowed (CSR Only)
+	Allowed (L2 Logistics Only)
+	Blocked
+	Product Variant Swap
+	Allowed (CSR Only)
+	Allowed (CSR Only)
+	Blocked
+	Blocked
+	Blocked
+	Quantity Reduction
+	Allowed (CSR Only)
+	Allowed (CSR Only)
+	Blocked (Must cancel or return)
+	Blocked
+	Blocked
+	B2B Tax / GSTIN / Invoice
+	Allowed (CSR Only)
+	Allowed (CSR Only)
+	Blocked (Invoice Generated)
+	Blocked
+	Blocked
+	Gift Message / Options
+	Allowed (Self-Service)
+	Allowed (CSR Only)
+	Blocked
+	Blocked
+	Blocked
+	Customer-Initiated Modification Process
+Customers can execute permitted pre-dispatch modifications directly through web or mobile application account portals without contacting support:
+1. Authentication: The customer logs into their verified NovaCart account and navigates to My Orders.
+2. Eligibility Evaluation: The OMS evaluates the active order status. If the order is in PENDING_PAYMENT, PAYMENT_CONFIRMED, INVENTORY_RESERVED, or PROCESSING, modifiable fields display an active Edit control.
+3. Modification Input: The customer submits new address details, contact numbers, or delivery notes.
+4. System Validation: The OMS executes automated system validation rules (address deliverability, postal zone matching, format validation).
+5. Confirmation & Sync: Upon validation pass, the OMS updates the database record, sends real-time API sync commands to WMS/TMS, and dispatches an updated order summary email/SMS to the customer.
+Support Agent Modification Process
+When a modification requires agent assistance or operational overrides (e.g., variant swaps, address adjustments during PACKED status, B2B invoice updates):
+1. Customer Identity Verification: The agent performs mandatory identity verification in accordance with SUP-001 and SEC-001 protocols.
+2. OMS Record Lookup: The agent locates the Master Order ID in crm.novacart.internal.
+3. Modification Validation: The agent inputs requested changes. The system checks FC stock availability (for variant swaps) and regional tax boundary rules.
+4. Authority Check & Co-Signoff:
+   * Standard address or contact updates: Executed directly by L1 CSRs.
+   * Address updates for orders in PACKED or READY_FOR_DISPATCH status: Requires L2 Logistics Specialist authorization in tms.novacart.internal.
+   * B2B Tax / GSTIN invoice adjustments: Requires L2 Finance Specialist digital approval.
+5. Execution & Log Entry: The agent submits the change, selecting a mandatory operational reason code. The system writes an indelible audit log entry containing agent ID, timestamp, old field values, and new field values.
+System Validation Rules
+Every modification attempt undergoes strict, automated validation checks before the OMS commits changes to the primary database.
+Validation Rule Matrix
+Field Being Modified
+	System Validation Rule Executed
+	Failure Outcome / Action
+	Delivery Address
+	Postal Code Geofence Match: New postal code must belong to the same regional FC fulfillment zone and tax jurisdiction.
+	Rejected if postal code alters regional FC routing or tax rates. Customer advised to cancel and re-order (ORD-002).
+	Phone Number
+	Format & Telecom Check: Validates regional number length and format (10 digits for IN; 8 digits for SG; 9 digits for UAE).
+	Rejected if string contains invalid characters or incorrect length.
+	Product Variant
+	Price & Inventory Check: New variant SKU must match the exact unit price of the original SKU and possess live stock at the assigned FC.
+	Rejected if new variant price differs or stock is zero. Customer advised to cancel and re-order.
+	Quantity Reduction
+	Minimum Order Constraint: Quantity cannot be reduced below 1. Quantity reductions adjust total order value and trigger pro-rated refunds.
+	System issues pro-rated refund to original payment source for removed units.
+	B2B Tax Invoice
+	Tax Authority API Verification: Validates GSTIN (India) or VAT (UAE) format and active registration status via tax gateway API.
+	Rejected if tax authority API returns invalid or inactive registration status.
+	Department Responsibilities
+Coordinated execution across functional units ensures order modifications process seamlessly without delaying fulfillment:
+Department Responsibility Matrix
+Department Unit
+	Primary Modification Responsibilities
+	Primary Portal Used
+	Primary SLA / Target
+	Customer Support
+	Assists customers with complex modifications; verifies identity; logs reason codes.
+	crm.novacart.internal
+	$< 5\text{ Mins}$ (Chat) / $< 1\text{ Hr}$ (Email)
+	Logistics & Fleet
+	Authorizes address / slot updates for staged/packed parcels; updates rider dispatch manifests.
+	tms.novacart.internal
+	Real-time dock sync ($< 15\text{ Mins}$)
+	Warehouse Operations
+	Re-labels packed parcels when addresses update in PACKED status; swaps items for variant changes.
+	wms.novacart.internal
+	Real-time picking station sync
+	Finance Operations
+	Approves B2B tax invoice modifications; processes pro-rated refunds for quantity reductions.
+	ledger.novacart.internal
+	$< 24\text{ Hours}$ for invoice adjustments
+	Engineering / IT
+	Maintains OMS API validation rules, database constraints, and audit log security.
+	api.novacart.internal
+	$99.99\%$ API availability
+	Customer Notification Process
+1. System Event Trigger: Upon successful commit of any order modification in OMS, an event payload is published to api.novacart.internal/notify.
+2. Notification Content: The system generates multi-channel updates detailing:
+   * Master Order ID and Sub-Order ID(s).
+   * Specific attributes modified (e.g., "Shipping address updated from X to Y").
+   * Updated estimated delivery dates (if affected by delivery slot change).
+   * Pro-rated refund confirmation (if quantity was reduced).
+3. Delivery Channels: Notification is dispatched instantly via Email (with updated PDF order summary attached), SMS, and In-App Push Notification.
+Business Rules
+Rule 1: Self-Service Pre-Dispatch Privilege
+Customers maintain the right to modify delivery addresses, contact numbers, delivery instructions, and gift notes self-service via web/app portals without CSR intervention while the order remains in PENDING_PAYMENT, PAYMENT_CONFIRMED, INVENTORY_RESERVED, or PROCESSING status.
+Rule 2: Absolute Lock Post-Shipment
+Once an order state transitions to SHIPPED or OUT_FOR_DELIVERY, address, item, or quantity modifications are strictly locked in OMS. Mid-transit address re-routing requires specialized L2 Logistics intervention under SHIP-007 and is subject to carrier re-consignment fees.
+Rule 3: Mandatory Audit Logging
+Every order attribute modification—whether executed by customer self-service, L1 CSR, L2 Specialist, or automated system script—must generate an indelible, time-stamped audit log record in api.novacart.internal/oms/audit. Logs must record: Modifying User ID, IP address, timestamp, field modified, pre-modification value, post-modification value, and authorization reason code.
+Exception Handling
+* FC Picking Race Condition: If a customer submits an address modification at the exact moment warehouse staff completes packing (PROCESSING $\rightarrow$ PACKED), WMS flags a label mismatch at the shipping dock scan. The parcel is pulled to the FC re-labeling station, a new shipping label is affixed, and dispatch proceeds without order cancellation.
+* Variant Swap Stock Depletion: If stock of a requested replacement variant depletes between customer request and agent execution, OMS blocks the swap. The CSR must inform the customer and offer either the original variant or full order cancellation under ORD-002.
+Practical Examples
+Example 1: Pre-Dispatch Address Update via Self-Service
+* Details: Customer places an order for a smartphone (CAT-MOB) at 09:00 AM. At 09:15 AM, while the order is in INVENTORY_RESERVED status, the customer notices a typo in their street address.
+* Workflow: Customer opens mobile app, selects Edit Address, updates house number, and submits. OMS validates postal code match within the same FC zone, updates the shipping record, and syncs new details to WMS. Updated order confirmation email is dispatched automatically.
+Example 2: Pre-Fulfillment Product Variant Swap via Customer Support
+* Details: Customer purchases a black wireless headphone (CAT-ELE) for ₹4,999. Before fulfillment (PAYMENT_CONFIRMED status), the customer contacts Live Chat requesting to swap for the white variant of the same model (also ₹4,999).
+* Workflow: CSR verifies identity per SUP-001. CSR checks FC stock in wms.novacart.internal; white variant is in stock. CSR executes SKU swap in crm.novacart.internal. OMS updates order line item, logs agent ID and reason code CUSTOMER_PREFERENCE_SWAP, and sends updated confirmation to customer.
+Example 3: Quantity Reduction and Pro-Rated Refund
+* Details: Small business customer places an order for 5 office monitors (₹12,000 each; Total: ₹60,000). Prior to warehouse packing, the customer contacts support to reduce the quantity to 3 monitors.
+* Workflow: CSR verifies order is in INVENTORY_RESERVED status. CSR reduces line item quantity to 3 in OMS. OMS releases 2 reserved monitors back to live catalog stock. OMS recalculates total order value to ₹36,000 and issues an automated pro-rated refund of ₹24,000 back to the customer's corporate credit card (Refer to PAY-001, REF-001).
+Example 4: Address Update Attempt Post-Shipment (SHIPPED)
+* Details: Customer contacts support requesting to change their delivery address for an order that entered SHIPPED status 4 hours prior and is in transit via air freight.
+* Workflow: CSR informs customer that direct order modifications are locked once shipped (Refer to SUP-002). CSR transfers ticket to L2 Logistics (QUEUE_LOGISTICS_HUB). L2 Logistics Specialist evaluates carrier re-routing feasibility under SHIP-007. If carrier re-routing is impossible, customer is instructed to accept delivery at original address or request doorstep refusal/RTO (Refer to ORD-002).
+Frequently Asked Questions (FAQs)
+Q1: Can a customer change their delivery address to a different city or state after placing an order?
+Answer: No. Delivery addresses can only be modified within the same postal code geofence and regional FC fulfillment zone. If a new address falls into a different tax jurisdiction or requires sourcing from a different FC, the customer must cancel the existing order under ORD-002 and place a new order.
+Q2: Is there any fee for updating an address or contact number prior to shipment?
+Answer: No. Pre-dispatch modifications executed self-service or via Customer Support prior to SHIPPED status are completely free of charge.
+Q3: How are B2B tax invoice adjustments handled if a corporate client forgot to enter their GSTIN during checkout?
+Answer: The corporate client must contact Customer Support before the order reaches PACKED status. An L2 Finance Specialist validates the GSTIN/VAT registration via tax authority API and updates the order billing profile before tax invoice generation (Refer to PAY-001).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of ORD-003. Established modification eligibility matrices, status-based rules, validation matrices, audit logging requirements, and scenario workflows.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* ORD-001: Order Lifecycle Management Policy
+* ORD-002: Order Cancellation Policy
+* ORD-005: Split Orders Procedure
+* SHIP-001: Domestic Shipping Policy
+* SHIP-007: Address Changes Policy
+* PAY-001: Payment Processing SOP
+* REF-001: Master Refund Eligibility Rules

@@ -1,0 +1,339 @@
+﻿KNOW-005: Knowledge Article Lifecycle Management Policy
+Document Header
+* Document Title: Knowledge Article Lifecycle Management Policy
+* Document ID: KNOW-005
+* Version: 1.0.0
+* Document Category: Knowledge Management
+* Classification: Internal Operational Standard
+* Department Owner: Knowledge Management & Content Operations
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Knowledge Management, Director of Customer Experience, VP of Quality Assurance, General Counsel
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Article Lifecycle, Knowledge Management, Version Control, Content Governance, Quality Assurance, Article Retirement, Continuous Improvement, Content Maintenance
+Purpose
+This document defines the official Knowledge Article Lifecycle Management Policy of NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes standardized operational procedures, governance principles, asset ownership responsibilities, quality controls, version control standards, review workflows, approval matrices, and business rules governing the complete lifecycle of knowledge articles from initial creation through review, approval, publication, maintenance, revision, archival, and retirement across NovaCart's enterprise ecosystem.
+As a core operational document (KNOW-005) in the Knowledge Management category of the NovaCart Enterprise Knowledge Base (NEKB), KNOW-005 unifies the article lifecycle controls across know.novacart.internal, faq.novacart.internal, and sop.novacart.internal, operating in strict operational alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, REF-001 through REF-006, PROD-001 through PROD-006, SEC-001 through SEC-006, LEG-001 through LEG-006, and KNOW-001 through KNOW-004.
+Scope
+This policy applies universally across all customer support articles, FAQ entries, operational Standard Operating Procedures (SOPs), product documentation notes, and internal reference guides generated, hosted, or utilized by NovaCart across India, Singapore, and the United Arab Emirates.
+Coverage Includes
+* Complete end-to-end lifecycle stages for knowledge articles: Ideation, Drafting, Review, Approval, Publication, Maintenance, Archival, and Retirement.
+* Classification framework defining internal agent guides versus public customer-facing content.
+* Explicit roles, permissions, and accountability frameworks for article authors, cross-functional reviewers, and approvers.
+* Semantic version numbering standards distinguishing minor administrative updates from major structural revisions.
+* Scheduled review frequencies, drift detection, temporary withdrawal protocols, and permanent archival criteria.
+* Quality assurance checklists, audit sampling methodologies, and feedback loop integration for continuous improvement.
+Out of Scope
+* Technical database architecture, vector search indexing configuration, and knowledge management platform software engineering.
+* Broad corporate communications, public relations announcements, and external press collateral.
+Knowledge Article Lifecycle Management Overview
+A structured lifecycle management framework ensures that knowledge articles remain accurate, reliable, compliant, and accessible throughout their operational existence. Without disciplined lifecycle governance, knowledge repositories suffer from information drift, contradictory guidance, and obsolete instructions that compromise customer support execution (SUP-001) and regulatory compliance (LEG-005).
+
+
+
+
+
+
+<ElicitationsGroup message="To explore related knowledge management policies further:">
+ <Elicitation label="Review KNOW-001 Customer Support KB Governance Policy" query="Show KNOW-001 Customer Support Knowledge Base Governance Policy detailing support knowledge standards." />
+ <Elicitation label="Review KNOW-003 SOP Knowledge Repository Policy" query="Show KNOW-003 Standard Operating Procedures Knowledge Repository Policy detailing SOP lifecycle rules." />
+ <Elicitation label="Examine KNOW-004 FAQ Management Policy" query="Show KNOW-004 Frequently Asked Questions Management Policy detailing FAQ lifecycles." />
+</ElicitationsGroup>
+
+Core Lifecycle Management Principles
+1. End-to-End Accountability: Every knowledge article is managed under a strict chain of custody, linking a designated Author, Department Reviewer, and Executive Approver to its operational state.
+2. Immutable Version Control: All modifications, corrections, and structural rewrites are captured through semantic versioning and logged permanently in audit.novacart.internal (SEC-006).
+3. Proactive Maintenance & Drift Control: Articles are subjected to mandatory scheduled review intervals and automated feedback triggers to catch and correct inaccuracies before they impact operations.
+4. Controlled Archival & Retention: Obsolete documentation is systematically retired from active search and transferred to secure WORM storage, satisfying 7-year audit retention requirements (SEC-003, SEC-006).
+Knowledge Article Lifecycle Stages
+Every knowledge article transitions through eight distinct operational stages governed within the enterprise knowledge administration portals:
+Knowledge Article Lifecycle Matrix
+Lifecycle Stage
+	Stage Code
+	Operational State Description
+	Authorized User Roles
+	Primary Portal / System
+	1. Ideation & Drafting
+	STAGE-DFT
+	Initial authoring, outline creation, and structural content development.
+	ROLE_KNOW_AUTHOR
+	Departmental Authoring Vault
+	2. Cross-Functional Review
+	STAGE-REV
+	Technical, legal, and operational audit of draft accuracy and compliance.
+	ROLE_KNOW_REVIEWER
+	Reviewer Collaboration Queue
+	3. Executive Approval
+	STAGE-APP
+	Final verification and formal authorization sign-off prior to release.
+	ROLE_KNOW_APPROVER
+	Approver Sign-Off Console
+	4. Active Publication
+	STAGE-ACT
+	Live operational state; fully searchable across agent CRM and public Help Center.
+	All Enterprise Users / Public
+	Live Knowledge Repository
+	5. Scheduled Maintenance
+	STAGE-MNT
+	Periodic review state triggered by calendar schedule or feedback threshold.
+	ROLE_KNOW_AUTHOR
+	Maintenance Tracking Dashboard
+	6. Deprecation Hold
+	STAGE-SPD
+	Temporarily hidden from active search due to reported drift or policy change.
+	ROLE_KNOW_APPROVER
+	Restricted Staging Vault
+	7. Major Revision
+	STAGE-UPD
+	Active re-drafting phase following policy or product modifications.
+	ROLE_KNOW_AUTHOR
+	Revision Workflow Console
+	8. Archived / Retired
+	STAGE-ARC
+	Read-only permanent state; removed from active search; retained for audit.
+	ROLE_AUDIT_ENGINEER
+	WORM Compliance Archive
+	Knowledge Article Classification
+Articles are categorized into two primary visibility tiers:
+1. Internal Agent Articles (KNOW-INT)
+Restricted to authenticated NovaCart staff and tier-assigned support representatives (crm.novacart.internal). Contains detailed operational SOPs (KNOW-003), step-up verification protocols (SEC-001), override rules (REF-005), and internal troubleshooting trees.
+2. Public Customer Articles (KNOW-PUB)
+Publicly accessible self-service articles written in accessible, plain language. Contains shipping guides (SHIP-001), return eligibility rules (REF-001), product setup manuals (PROD-004), and FAQ entries (KNOW-004).
+Article Creation Process
+The creation of a new knowledge article follows a structured 4-step workflow:
+1. Identification & Scoping: A need for a new article is identified through support ticket volume trends, product launches (PROD-001), or master policy updates (LEG-005).
+2. Template Selection: The author selects the appropriate NEKB template matching the asset type (Support SOP, Product Guide, FAQ, or Operational SOP).
+3. Metadata Binding: The draft is bound to a unique Document ID (NEKB-XXX-000), Category Code, Department Owner, and Target Audience.
+4. Draft Submission: The author completes the draft, incorporating mandatory NEKB cross-references, and submits the file to STAGE-REV.
+Content Review & Approval Workflow
+All new articles and material revisions must complete a rigorous cross-functional review prior to publication:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        ARTICLE APPROVAL WORKFLOW                                  |
++-----------------------------------------------------------------------------------+
+| 1. DRAFT SUBMISSION | Author submits completed draft into the review queue.        |
+| 2. SUBJECT MATTER AUDIT| Technical SME and Legal verify factual accuracy & compliance.|
+| 3. EDITORIAL REVIEW | Knowledge Manager checks tone, scannability, and taxonomy.  |
+| 4. PUBLICATION      | Approver grants sign-off; system transitions to STAGE-ACT.    |
++-----------------------------------------------------------------------------------+
+
+Approval Responsibility Matrix
+Article Classification
+	Technical / Operational Reviewer
+	Legal / Compliance Reviewer
+	Final Approval Authority
+	Target Approval SLA
+	Standard Support Article
+	Support Team Lead
+	Not Required
+	Knowledge Manager
+	$\le 24$ Hours
+	Policy / Legal Summary
+	Operations Lead
+	Mandatory (Legal / LEG-005)
+	General Counsel / KB Manager
+	$\le 48$ Hours
+	Security / Account Guide
+	Information Security Lead
+	Mandatory (Security / SEC-001)
+	CISO / KB Manager
+	$\le 24$ Hours
+	Emergency Incident Alert
+	CSIRT Lead (SEC-005)
+	Not Required
+	On-Call KB Manager
+	$\le 15$ Minutes
+	Publication & Distribution
+Upon receiving final approval, the system executes automated publication workflows:
+1. Visibility Assignment: The article is assigned either internal (KNOW-INT) or public (KNOW-PUB) visibility permissions based on its classification.
+2. Search Indexing: Content indexes immediately across agent desktop search bars (crm.novacart.internal) and public storefront help center search engines.
+3. Audit Log Recording: Publication metadata, author signatures, and approval sign-offs commit permanently to audit.novacart.internal (SEC-006).
+Version Control & Change Management
+To maintain consistency and traceability across operational teams, articles maintain strict semantic versioning:
+Version Numbering Standards
+* Major Revision (vX.0.0): Advanced when a structural rewrite, complete workflow redesign, or major master policy replacement occurs (e.g., updating an article from v1.2.0 to v2.0.0). Major revisions require full cross-functional review and executive re-approval.
+* Minor Revision (v1.X.0): Advanced when adding new troubleshooting steps, expanding FAQ categories, or updating operational tips that do not alter core procedural intent. Minor revisions require SME review.
+* Patch Revision (v1.0.X): Advanced upon minor administrative corrections, typographical fixes, or dead link updates. Patch revisions may be published directly by authors following Knowledge Manager notification.
+Version Control Matrix
+Revision Type
+	Triggering Condition
+	Required Review Level
+	Version Increment
+	Target Implementation SLA
+	Major Revision
+	Master policy update (LEG-005) or product redesign.
+	Full Cross-Functional + Legal
+	vX.0.0
+	$\le 48$ Hours
+	Minor Revision
+	Workflow adjustment or expanded edge cases.
+	Subject Matter Expert
+	v1.X.0
+	$\le 24$ Hours
+	Patch Revision
+	Typo correction or broken hyperlink fix.
+	Author + Knowledge Manager
+	v1.0.X
+	$\le 4$ Hours
+	Periodic Review & Maintenance
+Knowledge articles undergo scheduled periodic audits based on risk profiles to prevent information drift:
+Review Frequency Matrix
+Article Category / Risk Profile
+	Scheduled Review Frequency
+	Review Trigger Conditions
+	Responsible Audit Unit
+	Security & Compliance (SEC)
+	Quarterly (90 Days)
+	Security policy revision or ATO threat alert (SEC-001).
+	Security Audit Lead
+	Payment & Refunds (PAY/REF)
+	Quarterly (90 Days)
+	Financial policy update or payment gateway change.
+	Finance Operations Lead
+	General Support & FAQs
+	Semi-Annual (180 Days)
+	Support workflow change or low helpfulness rating.
+	Customer Experience Lead
+	Product Manuals & SOPs (PROD/SOP)
+	Annual (365 Days)
+	SKU discontinuation or operational process redesign.
+	Catalog / Operations Lead
+	Article Retirement & Archiving
+Content that becomes obsolete, superseded, or inaccurate is systematically removed from active view:
+Article Status Matrix
+Article Status Tag
+	System Access State
+	Operational Action Required
+	STAGE-ACT
+	Full Live Visibility
+	Fully searchable and operational across agent CRM and Help Center.
+	STAGE-SPD
+	Deprecation Hold
+	Temporarily hidden due to reported drift or policy change pending review.
+	STAGE-UPD
+	Major Revision State
+	Undergoing active re-drafting; prior active version remains visible until replacement publishes.
+	STAGE-ARC
+	Archived / Retired
+	Removed from active search; retained in WORM storage for 7-year audit compliance.
+	Retirement Criteria & Restoration
+* Retirement Criteria: An article is permanently archived (STAGE-ARC) when the underlying product is discontinued (PROD-001), the governing policy is retired, or duplicate articles are consolidated.
+* Restoration Workflow: Archived articles may be restored to active status (STAGE-ARC) by submitting a formal revision request, updating technical references, and re-completing the full review and approval pipeline.
+Quality Assurance Standards
+Knowledge quality is audited continuously using quantitative sampling and qualitative evaluation metrics:
+Quality Assurance Checklist
+Quality Assessment Dimension
+	Verification Standard / Goal
+	Audit Failure Indicator
+	Factual Accuracy
+	$100\%$ alignment with published NEKB master policies.
+	Outdated policy references, incorrect operational limits.
+	Clarity & Readability
+	Scannable structure; Flesch-Kincaid Readability Score $\ge 60$.
+	Dense prose, confusing step sequences.
+	Policy Cross-Referencing
+	Explicit cross-references to foundational master policies.
+	Missing document ID links (e.g., missing REF-001 link).
+	Feedback Integration
+	Resolution of all flagged customer/agent feedback items.
+	Unaddressed low helpfulness ratings ($< 80\%$).
+	Quality Audit Process
+1. Bi-Weekly Article Sampling: Quality Assurance specialists randomly audit $5\%$ of active knowledge articles against the Quality Assurance Checklist.
+2. Feedback Loop Integration: Articles receiving low helpfulness ratings or flagged by CSRs as inaccurate automatically trigger a STAGE-SPD deprecation hold and route to the author for immediate revision.
+Department Responsibilities
+Accountability for knowledge article lifecycle management is distributed across enterprise operational units:
+Department Responsibility Matrix
+Department Unit
+	Primary Lifecycle Responsibilities
+	Primary System Portal
+	Target Performance KPI
+	Knowledge Management
+	Governs KNOW-005 policy, manages approval workflows, manages QA audits.
+	know.novacart.internal
+	KB Quality Index $\ge 95\%$
+	Customer Support
+	Authors frontline guides, flags outdated content, utilizes articles during live inquiries.
+	crm.novacart.internal
+	FCR improvement $\ge 15\%$
+	Legal & Compliance
+	Reviews policy-related articles, audits regulatory accuracy, approves disclosures.
+	compliance.novacart.internal
+	Review SLA $\le 48\text{ Hours}$
+	Information Security
+	Reviews security guides, verifies PII masking guidelines, audits access controls (SEC-002).
+	shield.novacart.internal
+	Review SLA $\le 24\text{ Hours}$
+	Business Rules
+Rule 1: Mandatory Policy Alignment Rule
+No knowledge article may contradict, expand, or restrict the provisions of a published NEKB master policy. In the event of a conflict between an article and a master policy document (e.g., KNOW-005 vs. REF-001), the master policy document takes absolute precedence.
+Rule 2: Single Active Article Rule for Operational Topics
+The knowledge repository must maintain exactly one (1) active master article per distinct operational topic. Creating duplicate, overlapping, or conflicting article variants for the same core process is strictly prohibited.
+Rule 3: Immediate Deprecation upon Policy Update
+When a foundational enterprise policy is revised (e.g., an update to REF-001 or PAY-003), the Knowledge Manager must place all associated knowledge articles on temporary deprecation hold (STAGE-SPD) within 2 hours of policy publication until updated drafts are approved and published.
+Rule 4: Mandatory 7-Year Archive Retention
+All retired articles (STAGE-ARC), semantic version histories, review sign-off logs, and QA evaluation records must be retained in immutable WORM storage for a mandatory period of 7 years (SEC-003, SEC-006).
+Exception Handling
+* Emergency Publication Protocol: During critical platform outages, active security incidents (SEC-005), or urgent product recall announcements (PROD-005), the On-Call Knowledge Manager is authorized to bypass standard SME review and publish an Emergency Article instantly. The emergency article holds an expiration timer of 72 hours, during which formal retrospective review and approval must be completed.
+* Rejection of Sub-Standard Submissions: Submissions failing the Quality Assurance Checklist or exhibiting incomplete cross-references are rejected with detailed reviewer notes. The author has 3 business days to resubmit corrected drafts.
+Practical Examples
+Scenario 1: Major Article Revision Following a Policy Change
+1. Executive Committee updates the Master Replacement Policy (REF-003).
+2. Executing Rule 3, the Knowledge Manager places associated knowledge articles on temporary deprecation hold (STAGE-SPD) within 2 hours.
+3. Assigned author drafts a major revision (v2.0.0), updating return shipping fee rules and NEKB cross-references.
+4. Legal Reviewer and Knowledge Manager approve the major revision within 48 hours, publishing the updated article to live agent desktops and Help Center channels.
+Scenario 2: Merging Duplicate Knowledge Articles
+1. Quality Assurance audit identifies two separate articles in know.novacart.internal covering address modification procedures during transit, causing agent confusion.
+2. Knowledge Manager initiates a consolidation workflow: designates one master article, integrates unique edge cases from the secondary article, and updates the version to v1.2.0.
+3. The secondary duplicate article is transitioned to STAGE-ARC (Archived Vault) and cross-links redirect to the master article.
+Frequently Asked Questions (FAQs)
+Q1: What is the difference between a major revision (v2.0.0) and a minor revision (v1.1.0)?
+Q1 Answer:
+A major revision involves a structural rewrite, workflow redesign, or major master policy replacement (LEG-005), requiring full cross-functional review and executive re-approval. A minor revision involves adding new troubleshooting steps or expanding edge cases that do not alter core procedural intent, requiring SME review only (Refer to Version Control Matrix).
+Q2: What happens to an article when it is placed on a deprecation hold (STAGE-SPD)?
+Q2 Answer:
+When an article is placed on a deprecation hold due to reported drift or an underlying policy update, it is temporarily hidden from active search and agent CRM views to prevent the execution of outdated instructions. The article undergoes rapid revision and re-approval before being restored to active status (STAGE-ACT) (Refer to Article Status Matrix).
+Q3: How long are retired knowledge articles retained in the system?
+Q3 Answer:
+When an article is permanently retired, it transitions to STAGE-ARC (Archived Vault). In accordance with our enterprise governance standards, all retired article version histories, review sign-off logs, and QA evaluations are retained securely in immutable WORM storage for 7 years to support operational audits and legal compliance (Refer to SEC-003, SEC-006).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of KNOW-005. Established knowledge article lifecycle stages (STAGE-DFT through STAGE-ARC), semantic version standards (vX.Y.Z), review frequency matrices, QA audit checklists, emergency publication protocols, and 7-year WORM retention standards.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* SUP-005: Customer Support SLA Policy
+* ORD-001: Order Lifecycle Management Policy
+* SHIP-001: Domestic Shipping Policy
+* PAY-001: Payment Processing SOP
+* PAY-003: Refund Payment Processing Policy
+* REF-001: Master Refund Eligibility Rules
+* REF-003: Replacement Policy
+* PROD-001: Product Catalog Management Policy
+* PROD-003: Product Warranty Policy
+* PROD-005: Product Recall & Safety Policy
+* SEC-001: Account Security Policy
+* SEC-002: Authentication & Access Control Policy
+* SEC-003: Data Protection & Privacy Policy
+* SEC-005: Incident Response & Security Breach Policy
+* SEC-006: Security Monitoring & Audit Logging Policy
+* LEG-001: Terms & Conditions Policy
+* LEG-005: Compliance & Regulatory Governance Policy
+* KNOW-001: Customer Support Knowledge Base Governance Policy
+* KNOW-002: Product & Service Knowledge Management Policy
+* KNOW-003: Standard Operating Procedures (SOP) Knowledge Repository Policy
+* KNOW-004: Frequently Asked Questions (FAQ) Management Policy

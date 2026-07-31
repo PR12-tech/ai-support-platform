@@ -1,0 +1,226 @@
+﻿PAY-005: Payment Reconciliation Policy
+Document Header
+* Document Title: Payment Reconciliation Policy
+* Document ID: PAY-005
+* Version: 1.0.0
+* Document Category: Payments
+* Classification: Internal / Public Operational Standard
+* Department Owner: Finance Operations
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Payment Operations, Chief Information Security Officer, Corporate Audit Lead
+* Approved By: Chief Financial Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Payment Reconciliation, Settlement Verification, Daily Reconciliation, Gateway Mismatch, Bank Statement Matching, Variance Resolution, Audit Trail, Ledger Balancing
+Purpose
+This document establishes the official enterprise policy, operational standards, data ingestion criteria, settlement verification workflows, variance resolution protocols, and financial reporting standards governing payment reconciliation at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It defines the multi-tier matching processes required to reconcile order ledgers, payment gateway settlement files, acquiring bank statements, refund debits, and chargeback adjustments.
+As a core financial governance document (PAY-005) in the NovaCart Enterprise Knowledge Base (NEKB), PAY-005 ensures zero financial variance across ledger.novacart.internal, merchant escrow accounts, and corporate bank accounts, operating in strict alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, and PAY-001 through PAY-004.
+Scope
+This policy applies universally to all post-transaction financial reconciliation activities conducted across NovaCart’s operating regions (India, Singapore, UAE), supported payment channels (PAY-CARD, PAY-UPI, PAY-NB, PAY-WAL, PAY-BNPL, PAY-GFT, PAY-COD), and commercial models (1P Direct Sales and 3P Marketplace Merchants).
+Coverage Includes
+* Automated daily automated reconciliation ($T+1 / T+2$) between Order Management System (api.novacart.internal/oms) records, Payment Gateway (PG) settlement reports, and corporate bank statements.
+* Settlement verification, fee deduction audits, and cross-currency exchange variance checks.
+* Matching refund debits (PAY-003) and chargeback provisional adjustments (PAY-004) against acquiring settlement files.
+* Variance identification, exception classification, manual ledger adjustments, and audit logging.
+* Financial month-end close procedures, merchant escrow split verification, and executive reporting.
+Payment Reconciliation Overview
+Payment reconciliation is the post-transaction accounting process that verifies whether every customer payment authorized on the platform successfully completes its financial journey through payment gateways, acquiring networks, and corporate bank accounts.
+
+
+
+
+
+
+<ElicitationsGroup message="To explore related payment execution, refund clearing, or dispute management policies further:">
+{/* Reason: Offers structured paths to navigate deeper into related financial policies. */}
+ <Elicitation label="Review PAY-001 Payment Processing SOP" query="Show PAY-001 Payment Processing SOP detailing transaction authorization and capture." />
+ <Elicitation label="Review PAY-003 Refund Payment Processing Policy" query="Show PAY-003 Refund Payment Processing Policy governing internal merchant refunds." />
+ <Elicitation label="Examine PAY-004 Chargeback & Payment Dispute Policy" query="Show PAY-004 Chargeback & Payment Dispute Policy detailing bank chargeback defenses." />
+</ElicitationsGroup>
+
+Core Operational Principles
+1. Three-Way Matching Architecture: Continuous verification matching Order Records (OMS) $\longleftrightarrow$ Gateway Settlement Logs (PG) $\longleftrightarrow$ Bank Account Deposits (Bank Statements).
+2. Zero Unreconciled Variance Standard: Every monetary discrepancy, unlinked credit, or fee mismatch must be classified, investigated, and cleared within mandatory SLA targets.
+3. Automated Ingestion First: Utilizing automated batch processing scripts in ledger.novacart.internal to execute 99%+ of routine daily transaction matching without manual intervention.
+4. Immutable Audit Trails: Systematically logging all manual ledger adjustments, reason codes, and supervisory approvals for internal and statutory financial audits.
+Reconciliation Objectives
+NovaCart enforces daily payment reconciliation to achieve four strategic financial objectives:
+1. Financial Integrity & Loss Prevention: Detect uncaptured transactions, unlinked debits, duplicate payouts, and unauthorized fee deductions before they impact financial statements.
+2. Accurate Merchant Settlements: Ensure 3P marketplace sellers receive precise net payouts after deducting correct platform commissions and processing fees (Refer to COMP-001).
+3. Statutory Tax Compliance: Reconcile gross order values against regional tax collection accounts (GST in IN, VAT in UAE) to guarantee accurate statutory tax filings.
+4. Rapid Customer Issue Resolution: Identify failed refunds (PAY-003) or pending payment drops (PAY-002) proactively to enable immediate support remediation.
+Reconciliation Workflow
+The payment reconciliation lifecycle executes automatically every 24 hours within ledger.novacart.internal:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        DAILY THREE-WAY RECONCILIATION WORKFLOW                    |
++-----------------------------------------------------------------------------------+
+| 1. DATA INGESTION  | Ingest OMS order logs, PG settlement CSV/APIs, Bank Statements.|
+| 2. AUTOMATED MATCH | Match Order ID = PG Transaction ID = Bank Deposit Amount.      |
+| 3. VARIANCE CHECK  | Flag amount mismatches, fee variances, or missing records.    |
+| 4. EXCEPTION LOG   | Route discrepancies to Finance Ops for manual resolution.      |
+| 5. LEDGER COMMIT   | Commit balanced transactions; queue verified merchant payouts. |
++-----------------------------------------------------------------------------------+
+
+Daily Processing Schedule
+* 01:00 AM Local Time: Automated API ingestion of trailing day ($T-1$) PG settlement files from Razorpay, Stripe, PayU, Telr, and Tabby.
+* 02:00 AM Local Time: Automated batch execution of the Three-Way Matching Engine (api.novacart.internal/pay/reconcile).
+* 04:00 AM Local Time: System generates the Daily Exception Summary Report and populates manual review queues in ledger.novacart.internal.
+* 09:00 AM Local Time: Finance Operations specialists begin manual investigation of open reconciliation exceptions.
+Data Sources for Reconciliation
+Reconciliation algorithms consume structured financial feeds from three independent operational data sources:
+1. Order Management System (OMS) Records: Primary transactional record generated at checkout (api.novacart.internal/oms), containing Master Order ID, Sub-Order IDs, Gross Order Value, Tax Breakdown, Shipping Fees, and Payment Method Token (Refer to ORD-001).
+2. Payment Gateway (PG) Settlement Files: Electronic settlement reports provided by payment processors, detailing Gateway Transaction ID, Authorized Amount, Captured Amount, Processing Fee Charged, Tax Deducted at Source (TDS/TCS), Net Settlement Amount, and Settlement Batch ID.
+3. Acquiring Bank Statement Feeds: Direct MT940 / CAMT.053 electronic bank feeds or daily statement downloads from corporate acquiring banks (e.g., HDFC, ICICI, DBS, FAB), detailing actual net credit deposits received in NovaCart accounts.
+Settlement Verification Process
+Settlement verification ensures that funds authorized by customers are properly captured and remitted to NovaCart's bank accounts after deducting contractually agreed processing fees.
+Settlement Verification Matrix
+Verification Dimension
+	Expected Parameter / Constraint
+	Variance Threshold
+	Action Upon Out-of-Bound Variance
+	Gross Capture Value
+	PG Captured Amount = OMS Order Authorized Value
+	Zero ($\pm \text{0.00}$)
+	Flag MISMATCH_GROSS_VALUE; halt merchant payout.
+	Gateway Processing Fee
+	Contracted PG Fee Rate ($\%$ + Fixed per transaction)
+	$> \text{0.1\%}$ fee deviation
+	Flag FEE_DISCREPANCY; log PG dispute ticket.
+	Net Bank Deposit
+	Bank Credit = PG Net Settlement Amount
+	Zero ($\pm \text{0.00}$)
+	Flag UNLINKED_BANK_DEPOSIT; initiate bank trace.
+	Settlement Timing SLA
+	$T+1$ Business Days (Domestic) / $T+2$ (International)
+	$> 24\text{ Hours}$ delay
+	Flag SETTLEMENT_DELAYED; alert Treasury Lead.
+	Cross-Currency Forex
+	Base Currency Equivalent = Settlement Value
+	$> 0.5\%$ FX variance
+	Flag FX_VARIANCE; reconcile via Treasury log.
+	Refund Reconciliation
+Refund reconciliation verifies that every internal refund instruction authorized under REF-001 and processed under PAY-003 successfully debits the original payment gateway account and adjusts corporate accounting ledgers:
+* Matching Logic: RFT-ID (Internal Refund ID) $\longleftrightarrow$ RF-ID (PG Refund ID) $\longleftrightarrow$ PG Settlement Debit.
+* Partial & Split Refund Verification: Reconciles pro-rated refund debits generated by split-order returns (ORD-005) or item cancellations (ORD-002) against remaining original order capture balances.
+* Failed Refund Interception: Detects cases where a refund was marked REFUND_SUBMITTED in OMS, but the payment gateway returned a REFUND_FAILED settlement debit status, triggering automated re-routing to NEFT bank transfer (Refer to PAY-003).
+Chargeback Reconciliation
+Chargeback reconciliation tracks provisional financial debits and representment credits resulting from bank payment disputes managed under PAY-004:
+* Provisional Debit Matching: Reconciles provisional chargeback debits and non-refundable dispute processing fees ($\text{INR } 500$ / $\text{SGD } 25$ / $\text{AED } 50$) imposed by acquiring banks against chargeback.novacart.internal case files.
+* Representment Win Reversal Matching: Matches dispute reversal credits (DISPUTE_WON) received from acquiring banks, restoring provisionally debited funds to active corporate ledgers.
+* Dispute Loss Write-Off: Formally registers permanent financial losses (DISPUTE_LOST) into corporate bad debt accounts (Refer to PAY-004).
+Exception Identification & Resolution
+Discrepancies identified during automated three-way matching are assigned standardized exception codes and routed to Finance Operations specialists.
+Exception Classification Matrix
+Exception Code
+	Exception Name
+	Root Cause Description
+	Resolution Workflow & Operational Action
+	Target SLA
+	EXC-001
+	Unlinked PG Credit
+	PG reports a captured payment, but no matching order exists in OMS.
+	Check for payment latency/unlinked debit; trigger auto-refund or manual order creation.
+	$< 12\text{ Hours}$ (PAY-002)
+	EXC-002
+	Settlement Mismatch
+	PG net bank deposit does not match PG settlement statement value.
+	Initiate bank trace; verify pending bank clearing batches or unposted bank fees.
+	$< 24\text{ Hours}$
+	EXC-003
+	Fee Overcharge
+	PG deducted processing fees higher than contractual rate.
+	Finance files formal fee dispute ticket with Payment Gateway account manager.
+	$< 48\text{ Hours}$
+	EXC-004
+	Unlinked Refund Debit
+	PG settlement shows a refund debit without matching internal RFT-ID.
+	Investigate PG portal for unauthorized manual refunds; alert Security Operations.
+	$< 12\text{ Hours}$ (SEC-004)
+	EXC-005
+	Delayed Settlement
+	PG settlement funds not received within contractual $T+1 / T+2$ SLA.
+	Issue formal SLA breach notice to PG; hold PG commission payouts.
+	$< 24\text{ Hours}$
+	Financial Reporting
+Finance Operations generates structured reconciliation outputs to support corporate accounting and statutory audits:
+1. Daily Balanced Reconciliation Statement: Confirms total gross sales, total PG fees, net bank deposits, total refunds processed, and chargeback provisions for the trailing $T-1$ period.
+2. Monthly Settlement & Tax Summary: Detailed breakdown of collected regional taxes (GST/VAT), TCS/TDS withholdings, and net merchant escrow payouts.
+3. Quarterly Audit Variance Report: Comprehensive analysis of all manual ledger adjustments, unresolvable write-offs, and PG fee dispute recoveries submitted to corporate audit.
+Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Reconciliation Responsibilities
+	Primary System Portal
+	SLA / Performance Target
+	Finance Operations
+	Conducts daily 3-way matching, investigates exceptions, approves manual adjustments, manages PG fee disputes.
+	ledger.novacart.internal
+	$100\%$ daily exception clearance $< 24\text{ Hours}$
+	Information Security
+	Audits unauthorized refund debits, investigates suspicious gateway report anomalies, enforces RBAC.
+	shield.novacart.internal
+	Real-time threat response
+	Software Engineering
+	Maintains automated ingestion pipelines, 3-way matching scripts, and bank API connections.
+	api.novacart.internal
+	$99.99\%$ reconciliation engine uptime
+	Customer Support
+	Provides customer context for unlinked debits; assists with manual bank detail collection.
+	crm.novacart.internal
+	Response SLA per SUP-005
+	Business Rules
+Rule 1: Daily Three-Way Matching Mandate
+All transaction records generated on day $T$ must undergo three-way matching by 04:00 AM on day $T+1$. Un-reconciled transactions older than 48 hours trigger an automated alert to the Head of Payment Operations.
+Rule 2: Dual-Control Manual Ledger Adjustment Rule
+No single Finance Specialist may manually adjust a reconciliation ledger entry or create a manual balancing credit exceeding ₹10,000 / $150 / AED 400 without digital co-signoff from the Head of Payment Operations in ledger.novacart.internal.
+Rule 3: Merchant Payout Hold Condition
+If an order record exhibits an open reconciliation exception (EXC-001 through EXC-005), the associated merchant net payout is automatically placed on PAYOUT_HOLD status until the exception is resolved and closed by Finance Operations.
+Exception Handling
+* Unresolvable Bank Discrepancies ($> 30\text{ Days}$): If a bank or gateway settlement discrepancy remains unresolved after 30 days of active investigation and formal PG dispute lodging, the variance is escalated to the Chief Financial Officer for write-off authorization to corporate loss accounts.
+* Gateway Systemic API Failures: If a payment gateway's reporting API experiences an outage, ledger.novacart.internal falls back to automated parsing of daily SFTP settlement CSV files, ensuring reconciliation processing continues without operational interruption.
+Practical Examples
+Scenario 1: Successful Three-Way Payment Reconciliation
+1. Order #NC-IN-88201 (Value: ₹10,000) is placed at 10:00 AM. OMS records gross charge ₹10,000.
+2. Razorpay PG captures ₹10,000, applies $1.5\%$ contracted processing fee (₹150) plus GST on fee (₹27), and generates net settlement value ₹9,823.
+3. Next morning at 01:00 AM, Razorpay settles ₹9,823 into NovaCart’s HDFC corporate bank account.
+4. At 02:00 AM, ledger.novacart.internal matches OMS Order ID NC-IN-88201 = PG Ref PG-99201 = HDFC Bank Credit ₹9,823.
+5. System status updates to RECONCILED_SUCCESSFULLY. Merchant payout queue is approved for processing.
+Scenario 2: Gateway Fee Discrepancy Resolution (EXC-003)
+1. Order #NC-SG-40012 (Value: SGD $500) is processed via Stripe PG. Contracted fee rate is $1.8\%$.
+2. Stripe settlement report lists fee deducted as $2.5\%$ (SGD $12.50$) instead of $1.8\%$ (SGD $9.00$), resulting in an SGD $3.50$ fee overcharge.
+3. Automated matching engine flags variance and creates exception EXC-003 (Fee Overcharge).
+4. Finance Specialist reviews contracted rate matrix, confirms overcharge, and submits an automated dispute ticket to Stripe account management. Stripe credits SGD $3.50$ back on the next settlement batch.
+Frequently Asked Questions (FAQs)
+Q1: Why does NovaCart perform daily payment reconciliation?
+Answer: Daily reconciliation ensures that every customer payment is accurately captured, PG fees are billed correctly, bank deposits match accounting records, and marketplace sellers receive exact payouts without financial drift or loss (Refer to PAY-001).
+Q2: What happens if my bank account was debited, but NovaCart's system initially showed no order?
+Answer: Our automated 3-way reconciliation engine detects unlinked debits (EXC-001) during daily processing. If a valid payment is confirmed, the system either automatically confirms your order or initiates an immediate full refund back to your bank account (Refer to PAY-002, PAY-003).
+Q3: Who audits NovaCart's payment reconciliation records?
+Answer: Reconciliation records, manual ledger adjustments, and variance logs are audited continuously by internal risk teams, external financial auditors during annual audits, and regulatory tax compliance authorities (Refer to COMP-001).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of PAY-005. Established 3-way matching architecture, settlement verification matrices, exception classification codes (EXC-001–EXC-005), dual-control adjustment rules, and financial reporting standards.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* SUP-005: Customer Support SLA Policy
+* ORD-001: Order Lifecycle Management Policy
+* PAY-001: Payment Processing SOP
+* PAY-002: Payment Failure & Retry Policy
+* PAY-003: Refund Payment Processing Policy
+* PAY-004: Chargeback & Payment Dispute Policy

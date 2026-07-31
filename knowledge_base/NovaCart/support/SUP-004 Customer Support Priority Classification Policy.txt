@@ -1,0 +1,257 @@
+﻿SUP-004: Customer Support Priority Classification Policy
+Document Header
+* Document Title: Customer Support Priority Classification Policy
+* Document ID: SUP-004
+* Version: 1.0.0
+* Document Category: Customer Support
+* Classification: Internal
+* Department Owner: Customer Support
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Operations Manager, Customer Support Director, Quality Assurance Lead
+* Approved By: VP of Customer Experience, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Priority Classification, P1, P2, P3, P4, Severity Assessment, Business Impact, Ticket Triage, Queue Routing, Escalation Priority
+Purpose
+This document establishes the official priority classification framework for NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It defines how customer support requests, operational incidents, and platform disputes are triaged, categorized, and prioritized based on business impact, customer impact, financial risk, and service level commitments.
+As a core governance document (SUP-004) in the NovaCart Enterprise Knowledge Base (NEKB), SUP-004 provides deterministic rules for ticket prioritization across all customer interaction channels, ensuring equitable resource allocation, rapid containment of high-risk incidents, and precise alignment with SUP-001, SUP-003, and SUP-005.
+Scope
+This policy applies universally to:
+* All Customer Support Representatives (CSRs) operating across Level 1 (L1), Level 2 (L2), and Level 3 (L3) support tiers globally (India, Singapore, UAE).
+* Automated triage algorithms and AI conversational engines integrated within the Omni-Channel Support Portal (crm.novacart.internal).
+* Cross-functional resolution squads in Logistics, Warehouse Operations, Returns & Refunds, Finance, Information Security, Product Management, Legal & Compliance, and Engineering.
+Priority Classification Objectives
+The NovaCart priority classification framework enforces four operational objectives:
+1. Objective Triage Standard: Replace subjective agent assessment with standardized, rule-based priority matrix criteria.
+2. Risk & Impact Alignment: Ensure high-risk operational events (e.g., account compromise, systemic payment failures) receive immediate queue precedence over routine queries.
+3. Dynamic Queue Routing: Feed prioritized tickets directly into specialized resolution queues to meet mandatory response and resolution SLAs (Refer to SUP-005).
+4. Auditability & Integrity: Prevent manual priority downgrades or unauthorized queue jumps through strict privilege controls and system logging.
+Priority Levels (P1, P2, P3, P4)
+All customer interactions and platform tickets must be assigned exactly one of four standardized Priority Levels upon creation or triage.
+
+
+
+
+
+
+<ElicitationsGroup message="To explore related support governance policies and SLA structures:">
+{/* Reason: Offers direct navigational paths to related support execution and SLA documents. */}
+ <Elicitation label="Review SUP-003 Escalation Matrix" query="Show SUP-003 Escalation Matrix detailing functional escalation paths." />
+ <Elicitation label="Review SUP-005 SLA Policy" query="Show SUP-005 SLA Policy detailing response and resolution time targets." />
+ <Elicitation label="Examine SUP-001 Customer Support SOP" query="Show SUP-001 Customer Support SOP governing support interaction lifecycles." />
+</ElicitationsGroup>
+
+Priority Classification Matrix
+Priority Code
+	Priority Name
+	Operational Description
+	Typical Ingress Channels
+	Targeted Queue Behavior
+	P1
+	Urgent
+	Critical security threat, systemic platform block, active account compromise, or severe financial exposure affecting users.
+	Voice Telephony, Priority In-App Chat, Automated SIEM/API Alert
+	Immediate queue interrupt; top-of-queue assignment across all available L1/L2/L3 agents.
+	P2
+	High
+	Significant operational disruption, high-value order failure, delayed shipment past SLA window, or damaged high-value merchandise delivery.
+	Live Chat, Voice Telephony, Priority Web Form
+	High-priority routing; placed ahead of standard tickets in domain-specialized queues.
+	P3
+	Standard
+	Standard transactional query, routine return request, address update pre-dispatch, order status inquiry within normal SLA windows.
+	Web Ticket, Email, In-App Chat, Messaging
+	Standard First-In, First-Out (FIFO) queue processing within domain queues.
+	P4
+	Low
+	Non-urgent general inquiry, catalog question, feedback submission, feature request, or general policy clarification.
+	Asynchronous Web Form, Email, Chatbot Form
+	Low-priority background queue processing during low-volume operational shifts.
+	Classification Criteria
+Priority assignment is determined by evaluating two distinct dimensions: Business Impact and Customer Impact.
+Severity vs. Priority Matrix
+To eliminate ambiguity, agents and automated triage engines must intersect Business Impact against Customer Impact to derive the mandatory Priority Code:
+Business Impact ↓ / Customer Impact →
+	High (Extensive)
+	Medium (Moderate)
+	Low (Localized)
+	Critical (Systemic / High Financial Risk)
+	P1 - Urgent
+	P1 - Urgent
+	P2 - High
+	Major (Localized / Medium Risk)
+	P1 - Urgent
+	P2 - High
+	P3 - Standard
+	Minor (Individual / Low Risk)
+	P2 - High
+	P3 - Standard
+	P4 - Low
+	Business Impact Assessment
+Business Impact measures the operational, financial, legal, and security risk imposed on NovaCart as an enterprise.
+Business Impact Matrix
+Impact Rating
+	Criteria / Operational Conditions
+	Financial / Platform Thresholds
+	Critical
+	Systemic platform outage, payment gateway breakdown, active security breach, widespread promo abuse, high-volume chargeback event, legal notice.
+	Affected transaction value $> \text{INR } 100,000$ / $\text{SGD } 1,500$ / $\text{AED } 4,000$ OR platform-wide service block.
+	Major
+	Localized hub delivery stoppage, fulfillment bottleneck, merchant account freeze, high-value individual transaction failure, VIP client dispute.
+	Affected transaction value $> \text{INR } 25,000$ / $\text{SGD } 400$ / $\text{AED } 1,100$.
+	Minor
+	Single consumer order delay, localized catalog error, routine return processing, individual refund query, general website inquiry.
+	Individual order value $\le \text{INR } 25,000$ / $\text{SGD } 400$ / $\text{AED } 1,100$.
+	Customer Impact Assessment
+Customer Impact measures the degree of friction, financial loss, or operational disruption experienced by the customer.
+Customer Impact Matrix
+Impact Rating
+	Customer Experience Condition
+	Affected Customer Scope
+	High (Extensive)
+	Account takeover, total loss of funds, delivery failure of high-value essential item, unaddressed safety hazard, NovaCart Prime VIP severe disruption.
+	Multiple customers OR high-value enterprise B2B account / NovaCart Prime VIP member.
+	Medium (Moderate)
+	Delayed delivery past ETA window, wrong item delivered, physical package damage, double debit on payment instrument, broken promo code.
+	Individual retail customer experiencing active operational friction.
+	Low (Localized)
+	General informational inquiry, minor packaging scuff without product damage, general feedback, website UX suggestion, pre-purchase query.
+	Individual retail customer with no active order block or financial loss.
+	Ticket Severity Guidelines
+To maintain alignment between technical system logging and support triage, software incidents logged in jira.novacart.internal map directly to support priority codes:
+* SEV-1 (Critical System Failure): Maps directly to P1 - Urgent support tickets.
+* SEV-2 (Major Feature Failure): Maps directly to P2 - High support tickets.
+* SEV-3 (Minor Feature Failure): Maps directly to P3 - Standard support tickets.
+* SEV-4 (Cosmetic / Informational Bug): Maps directly to P4 - Low support tickets.
+Priority Assignment Process
+Priority assignment follows a three-stage automated and manual workflow upon interaction ingress:
+1. Automated Triage Ingress: The Omni-Channel Portal (crm.novacart.internal) evaluates incoming ticket metadata (customer account tier, category selection, transaction value, payment status, keywords) and assigns an initial priority tag.
+2. Agent Review & Verification: During the initial customer contact stage, the receiving L1 CSR verifies identity and confirms that the assigned priority tag accurately reflects the Business and Customer Impact matrices.
+3. Queue Placement: The ticket is committed to the corresponding priority queue, triggering SLA response and resolution countdown timers (Refer to SUP-005).
+Priority Review Process
+To ensure priority tags remain accurate throughout the ticket lifecycle:
+* Continuous Queue Auditing: L2 Floor Supervisors and Quality Assurance Auditors conduct real-time queue reviews to identify misclassified tickets.
+* Aging Ticket Re-Evaluation: Any P3 or P4 ticket that reaches $75\%$ of its allowable SLA resolution window without agent action is automatically flagged for priority re-evaluation.
+Priority Change Rules
+Unauthorized priority manipulation disrupts operational queues and is strictly prohibited.
+Permissible Priority Modification Rules
+* Upgrade Authority: L1 CSRs, L2 Specialists, and L3 Managers may upgrade a ticket priority (e.g., P3 $\rightarrow$ P2) if new evidence demonstrates increased business impact or financial loss (e.g., customer provides proof of unlinked duplicate card debit).
+* Downgrade Authority: Priority downgrades (e.g., P1 $\rightarrow$ P2) may be executed only by L2 Team Leads or L3 Managers. L1 CSRs are strictly prohibited from downgrading ticket priorities.
+* Mandatory Change Audit: Every priority modification requires a mandatory text reason code logged in crm.novacart.internal. The system records the modifying user ID, timestamp, original priority, and new priority.
+Department Responsibilities
+Accountability for managing prioritized queues is distributed across enterprise departments:
+Department
+	Priority Classification Responsibility
+	Primary Focus Areas
+	Customer Support
+	Front-line triage, accuracy verification, and SLA escalation tracking.
+	P1 through P4 customer tickets across all ingress channels.
+	Information Security
+	Mandatory sign-off on P1 account compromise and fraud security overrides.
+	P1 fraud alerts, account takeover, security data breaches (Refer to SEC-001, SEC-004).
+	Logistics & Warehousing
+	Priority fulfillment execution for P1/P2 lost parcels and transit holds.
+	P2 lost shipments, severe carrier delays, delivery re-routes (Refer to SHIP-005, SHIP-006).
+	Finance Operations
+	Expedited handling of P1/P2 payment failures and duplicate debits.
+	P1 payment gateway outages, P2 duplicate debit reconciliations (Refer to PAY-002, PAY-003).
+	Engineering
+	Immediate SEV-1/SEV-2 hotfix deployment for P1 platform bugs.
+	P1 checkout API failures, database locks, app crashes.
+	Business Rules
+Rule 1: Master VIP Elevation
+All support inquiries initiated by verified NovaCart Prime VIP members or B2B Enterprise Account managers automatically elevate by one priority level (e.g., a standard P3 inquiry is automatically assigned P2 queue placement).
+Rule 2: Automatic P1 Override for Security Threats
+Any interaction containing verified evidence of unauthorized account login, password reset lockout, or suspected fraudulent activity must be assigned P1 - Urgent status immediately. L1 agents may not keep security threats at P2 or P3 levels (Refer to SEC-001, SEC-005).
+Rule 3: Single-Incident Consolidation
+When a platform defect (e.g., payment gateway failure) generates multiple customer tickets, support leads must link child tickets to a master P1 incident ticket. Resolving the master ticket automatically updates and closes associated child tickets.
+Exception Handling
+* False P1 Escalation Flooding: If a customer intentionally misrepresents a routine query as an emergency to bypass queues, the handling agent may reclassify the ticket to P3 or P4 after obtaining L2 Team Lead digital approval.
+* Unresolved Aging Tickets: If a P2 ticket breaches $100\%$ of its resolution SLA without closure, the system automatically elevates its priority to P1 and alerts the L3 Operations Manager (Refer to SUP-003, SUP-005).
+Example Classification Scenarios
+The following scenarios illustrate standard application of the priority classification framework:
+Scenario 1: Account Compromise
+* Details: Customer reports unauthorized order placement and altered shipping address on their stored card.
+* Impact Assessment: Critical Business Risk (Security breach) + High Customer Impact (Financial loss/unauthorized access).
+* Assigned Priority: P1 - Urgent
+* Action: Account frozen immediately; routed to QUEUE_SECURITY_SOC (Refer to SEC-001, SEC-005).
+Scenario 2: Systemic Payment Failure
+* Details: Multiple customers report credit card debits without order generation during a festive sale event.
+* Impact Assessment: Critical Business Risk (Platform-wide checkout block) + High Customer Impact (Widespread financial debit).
+* Assigned Priority: P1 - Urgent
+* Action: Emergency incident bridge established; routed to QUEUE_FINANCE_PAYMENTS and Engineering (Refer to PAY-002).
+Scenario 3: Duplicate Payment
+* Details: An individual customer was charged twice (₹12,000 each) for a single confirmed smartphone purchase.
+* Impact Assessment: Major Business Risk (Financial reconciliation needed) + Medium Customer Impact (Localized excess debit).
+* Assigned Priority: P2 - High
+* Action: Fast-tracked reconciliation routed to QUEUE_FINANCE_PAYMENTS for 12-hour resolution (Refer to PAY-003).
+Scenario 4: Delivery Delay
+* Details: A package containing office supplies is 48 hours past its projected ETA window.
+* Impact Assessment: Minor Business Risk + Medium Customer Impact (Transit delay).
+* Assigned Priority: P2 - High
+* Action: Priority carrier trace initiated in tms.novacart.internal via QUEUE_LOGISTICS_HUB (Refer to SHIP-005).
+Scenario 5: Lost Shipment
+* Scenario: A high-value laptop (CAT-ELE) shipped to Dubai shows no carrier tracking scans for 96 hours.
+* Impact Assessment: Major Business Risk (High item value) + Medium Customer Impact (Missing shipment).
+* Assigned Priority: P2 - High
+* Action: Escalated to Logistics for carrier trace and priority replacement authorization (Refer to SHIP-006).
+Scenario 6: Wrong Product Delivered
+* Details: Customer received a blender instead of the ordered coffee maker.
+* Impact Assessment: Minor Business Risk + Medium Customer Impact (Incorrect item received).
+* Assigned Priority: P2 - High
+* Action: Immediate reverse pickup RMA generated; replacement dispatched via QUEUE_RETURNS_INSPECT (Refer to REF-005).
+Scenario 7: Damaged Product
+* Details: Customer receives a monitor with a cracked display panel upon unboxing.
+* Impact Assessment: Minor Business Risk + Medium Customer Impact (Unusable damaged product).
+* Assigned Priority: P2 - High
+* Action: High-value RMA approved upon photo verification; expedited replacement authorized (Refer to REF-003).
+Scenario 8: Warranty Request
+* Details: Customer inquires how to claim warranty coverage for a 4-month-old smartwatch experiencing battery drainage.
+* Impact Assessment: Minor Business Risk + Low Customer Impact (Non-urgent standard service request).
+* Assigned Priority: P3 - Standard
+* Action: Agent provides authorized brand service center details and digital warranty invoice (Refer to PROD-001).
+Scenario 9: General Product Enquiry
+* Details: Prospective buyer asks whether a smart TV model supports specific third-party casting applications.
+* Impact Assessment: Minor Business Risk + Low Customer Impact (Pre-purchase informational query).
+* Assigned Priority: P4 - Low
+* Action: Answered by L1 CSR using catalog technical specifications; processed in standard queue.
+Scenario 10: Feature Request
+* Details: Customer submits feedback requesting dark mode support in the mobile shopping application.
+* Impact Assessment: Minor Business Risk + Low Customer Impact (General user suggestion).
+* Assigned Priority: P4 - Low
+* Action: Feedback logged and routed to QUEUE_PRODUCT_MANAGEMENT for future roadmap evaluation.
+Frequently Asked Questions (FAQs)
+Q1: Can a customer request a priority upgrade for their support ticket?
+Answer: Customers may request expedited handling. However, priority upgrades are granted only if the case meets the objective criteria defined in the Business or Customer Impact matrices. CSRs must explain priority guidelines politely using SUP-002 communication scripts.
+Q2: Why are all security-related account issues assigned P1 status automatically?
+Answer: Unauthorized account access poses immediate legal, financial, and regulatory risks (DPDP, PDPA) to both the customer and NovaCart. Mandatory P1 assignment ensures immediate account containment within minutes (Refer to SEC-001, SEC-005).
+Q3: What happens if an agent consistently misclassifies ticket priority levels?
+Answer: Ticket classification accuracy is audited continuously by Quality Assurance. Persistent misclassifications result in mandatory retraining and operational performance reviews under HR guidelines.
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial operational baseline release of SUP-004. Established standardized priority classification matrix, business/customer impact matrices, priority change rules, and 10 scenario workflows.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-002: Customer Communication Guidelines
+* SUP-003: Escalation Matrix
+* SUP-005: SLA Policy
+* ORD-001: Order Lifecycle Framework
+* SHIP-001: Domestic Shipping Policy
+* SHIP-005: Delayed Deliveries Protocol
+* SHIP-006: Lost Shipments Protocol
+* PAY-001: Payment Processing SOP
+* PAY-002: Payment Failure Handling
+* PAY-003: Duplicate Payment Procedures
+* REF-001: Master Refund Eligibility Rules
+* SEC-001: Account Security & Access Control
+* SEC-004: Fraud Detection Framework
+* PROD-001: Warranty Validation Policy

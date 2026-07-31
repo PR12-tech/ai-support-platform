@@ -1,0 +1,240 @@
+﻿SUP-003: Customer Support Escalation Matrix
+Document Header
+* Document Title: Customer Support Escalation Matrix
+* Document ID: SUP-003
+* Version: 1.0.0
+* Document Category: Customer Support
+* Classification: Internal
+* Department Owner: Customer Support
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Operations Manager, Customer Support Director, Quality Assurance Lead
+* Approved By: VP of Customer Experience, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Escalation Matrix, Escalation Levels, L1, L2, L3, Department Ownership, Authority Thresholds, Functional Escalations, High-Priority Incidents
+Purpose
+This document establishes the official enterprise escalation framework for NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It defines the conditions, pathways, ownership hierarchies, approval thresholds, and operational workflows for transferring customer issues between support tiers, functional departments, and executive leadership.
+As a core operational document (SUP-003) in the NovaCart Enterprise Knowledge Base (NEKB), SUP-003 ensures that non-standard customer disputes, high-value claims, cross-departmental failures, and technical incidents are resolved with speed, accountability, and complete policy alignment.
+Scope
+This matrix applies universally to:
+* All Level 1 (L1), Level 2 (L2), and Level 3 (L3) Customer Support Representatives (CSRs) operating across India (IN), Singapore (SG), and the United Arab Emirates (UAE).
+* Functional escalation leads across Logistics, Warehouse Operations, Returns & Refunds, Finance, Information Security, Product Management, Legal & Compliance, and Engineering.
+* Automated system triggers within the Omni-Channel Support Portal (crm.novacart.internal) that force programmatic ticket transfers.
+Escalation Objectives
+The NovaCart escalation framework is built upon four operational objectives:
+1. Clear Ownership Transfer: Eliminate unowned tickets by enforcing explicit single-department accountability at every escalation stage.
+2. Authority-Based Resolution: Empower front-line and specialized agents to resolve issues within defined financial and operational boundaries without unnecessary managerial overhead.
+3. SLA Breach Prevention: Intercept aging tickets dynamically using automated time-based triggers before Service Level Agreements (SLAs) are breached (Refer to SUP-005).
+4. Data-Driven Feedback: Capture root-cause failure patterns from L2/L3 escalations to drive continuous improvements in platform software, supplier management, and logistics workflows.
+Support Levels (L1, L2, L3)
+Operational support execution follows a strict three-tier hierarchy as defined in COMP-002, COMP-003, and SUP-001.
+Escalation Level Matrix
+Support Level
+	Primary Role / Squad
+	Primary Function & Scope
+	Financial Authority Limit (INR / SGD / AED)
+	Level 1 (L1)
+	Front-line CSRs & AI Conversational Agents
+	Initial ticket intake, identity verification, standard order tracking, basic policy guidance, simple pre-warehouse cancellations.
+	Up to ₹1,000 / $15 / AED 45 (Goodwill credits / shipping fee waivers)
+	Level 2 (L2)
+	Domain Specialized Squads (Payments, Logistics, Returns)
+	Complex order modifications, carrier transit traces, damaged item RMA approvals, duplicate debits, partial refund processing.
+	Up to ₹5,000 / $80 / AED 220 (Discretionary credits / fee overrides)
+	Level 3 (L3)
+	Operations Managers, Department Leads, Legal/Security
+	Systemic platform outages, legal threats, active fraud, high-value claims, executive complaints, out-of-policy exceptions.
+	Above ₹25,000 / $400 / AED 1,100 (Requires Manager & Director co-signoff)
+	Escalation Categories
+Tickets must be escalated strictly along functional domain channels based on the root cause of the inquiry:
+1. Transactional / Financial Escalations: Payment debits without order generation, failed gateway settlements, duplicate charges, chargebacks, EMI cancellation issues.
+2. Logistical / Fulfillment Escalations: Package lost in transit, carrier delay exceeding ETA windows, non-delivery report (NDR) disputes, incorrect delivery address updates post-dispatch.
+3. Physical / Product Condition Escalations: Damaged items received, incorrect item delivered, missing accessories, serialized hardware defect validation, warranty claims.
+4. Security / Account Protection Escalations: Suspected account compromise, unverified password resets, 2FA locks, fraudulent transactions, promotion abuse.
+5. Technical / Infrastructure Escalations: Checkout API failures, web/mobile app display bugs, promo code application failures, system-wide ordering blocks.
+Functional Escalations
+A functional escalation occurs when an L1 agent cannot resolve a ticket because the required operational action lies outside their administrative software privileges or expertise.
+Trigger Conditions for Functional Escalation
+* The issue requires specialized software portal permissions (e.g., executing manual ledger adjustments in ledger.novacart.internal or issuing direct carrier trace commands in tms.novacart.internal).
+* The financial value of the requested claim exceeds the L1 agent's authorized limit.
+* The investigation requires physical inspection logs or warehouse video footage (e.g., empty package claims).
+* The customer threatens legal action, regulatory complaints, or public media exposure.
+Department-wise Escalation Ownership
+Once an escalation is initiated, accountability shifts strictly to the designated functional department lead.
+Department Ownership Matrix
+Escalation Domain
+	Assigned Owning Department
+	Primary Escalation Target System
+	Designated Departmental Reviewer
+	Payment & Gateway Disputes
+	Finance
+	ledger.novacart.internal
+	Payment Operations Lead
+	Transit Delays & Lost Parcels
+	Logistics
+	tms.novacart.internal
+	Logistics Hub Supervisor
+	Inbound Returns & RMA Defect
+	Returns & Refunds
+	rma.novacart.internal
+	Reverse Operations Manager
+	Account Compromise & Fraud
+	Information Security
+	shield.novacart.internal
+	Fraud Prevention Analyst
+	Warranty & Product Quality
+	Product Management
+	catalog.novacart.internal
+	Product Quality Lead
+	Software Bugs & Outages
+	Engineering
+	jira.novacart.internal
+	On-Call DevOps / L3 Engineering
+	Legal Notices & Threat Claims
+	Legal & Compliance
+	contracts.novacart.internal
+	Corporate Legal Counsel
+	Escalation Approval Authority
+Financial adjustments, goodwill compensations, and policy overrides must receive formal system authorization in accordance with defined financial limits.
+Approval Authority Matrix
+Action / Policy Override
+	Level 1 (L1) CSR
+	Level 2 (L2) Specialist
+	Level 3 (L3) Manager
+	Executive Director
+	Standard Policy Refund (In-Policy)
+	Authorized
+	Authorized
+	Authorized
+	Authorized
+	Shipping Fee Waiver / Credit
+	Authorized (Up to ₹1k)
+	Authorized (Up to ₹5k)
+	Authorized (Up to ₹25k)
+	Authorized (> ₹25k)
+	Out-of-Policy Return Approval
+	Prohibited
+	Authorized (Up to ₹5k)
+	Authorized (Up to ₹25k)
+	Authorized (> ₹25k)
+	Lost Transit Claim Auto-Refund
+	Prohibited
+	Authorized (Up to ₹10k)
+	Authorized (Up to ₹25k)
+	Authorized (> ₹25k)
+	Immediate Replacement Dispatch
+	Prohibited
+	Authorized (Up to ₹25k)
+	Authorized (> ₹25k)
+	Authorized (> ₹25k)
+	Legal Dispute Financial Settlement
+	Prohibited
+	Prohibited
+	Prohibited
+	Mandated
+	Escalation Time Targets
+Escalated tickets inherit strict resolution SLAs to prevent operational stagnation.
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                           ESCALATION RESOLUTION TIMELINES                         |
++-----------------------------------------------------------------------------------+
+| Severity Level | Target L1 -> L2 Handoff | Target L2 Resolution | Target L3 Resolution |
++----------------+-------------------------+----------------------+----------------------+
+| P1 - Urgent    | < 5 Minutes             | < 1 Hour             | < 2 Hours            |
+| P2 - High      | < 15 Minutes            | < 4 Hours            | < 12 Hours           |
+| P3 - Standard  | < 1 Hour                | < 12 Hours           | < 24 Hours           |
+| P4 - Low       | < 4 Hours               | < 24 Hours           | < 48 Hours           |
++-----------------------------------------------------------------------------------+
+
+Escalation Workflow
+Every escalated case must progress through a six-stage operational workflow within crm.novacart.internal:
+1. Identification & Initial Assessment: The L1 agent identifies that the issue exceeds their functional authority or handling capability.
+2. Case Documentation & Tagging: The L1 agent logs complete investigation details, verification results, customer claims, and root-cause tags in the ticket file (Refer to SUP-001).
+3. Target Queue Transfer: The agent selects the appropriate functional queue (e.g., QUEUE_FINANCE_PAYMENTS or QUEUE_LOGISTICS_DISPATCH). The system reassigns ticket custody immediately.
+4. Specialist Investigation: The assigned L2/L3 specialist reviews backend systems, performs necessary cross-system checks, and executes required actions.
+5. Customer Update: The specialist updates the customer via email or voice regarding the investigation status and resolution timeline (Refer to SUP-002).
+6. Case Closure & Root-Cause Logging: Upon resolution, the specialist updates ticket status to RESOLVED, logs the secondary root-cause code, and closes the escalation loop.
+High-Priority Incident Handling
+Incidents classified as P1 - Urgent (e.g., active platform-wide payment gateway failures, security data breaches, VIP account compromises) trigger an immediate, high-priority emergency protocol:
+1. System Alert Blast: The incident triggers an automated PagerDuty/SMS alert to the On-Call Incident Commander, CISO, and VP of Customer Experience.
+2. Incident Command Formation: A dedicated virtual bridge is established within 10 minutes involving L3 Engineering, Security, Support Management, and Corporate Communications.
+3. Macro Communication Deployment: Front-line L1 messaging is updated automatically across chat and telephony channels to inform incoming callers of the active issue and estimated recovery time, reducing ticket volume spikes.
+Customer Communication During Escalation
+When transferring a case, the handling agent must provide clear, reassuring expectations to the customer without transferring internal operational blame.
+Standard Escalation Communication Script
+"To ensure your case receives the required technical review, I have transferred your file to our specialized [Department Name] team under Reference Ticket ID [XXXXX]. A senior specialist is actively reviewing your transaction logs and will update you directly via email within [SLA Window, e.g., 4 hours]."
+Business Rules
+Rule 1: No Unowned Ticket Handoffs
+A ticket may not be reassigned to a functional queue without a complete case summary, verified customer contact details, and a clear statement explaining why the handoff is required. Incomplete handoffs are automatically rejected back to the originating agent by crm.novacart.internal.
+Rule 2: Single Escalation Point
+A ticket may exist in only one active functional escalation queue at any given time. If an issue involves multiple departments (e.g., a payment failure combined with a delivery delay), the primary domain (Payment) must resolve its phase before transferring the ticket to the secondary domain (Logistics).
+Rule 3: Executive Escalation Override
+Any complaint received through the Executive Office, Board of Directors, or regulatory bodies automatically bypasses L1/L2 queues and routes directly to the L3 Escalation Management Desk with an immediate P1 priority classification.
+Exception Handling
+* Queue Timeout Auto-Escalation: If an escalated L2 ticket remains unassigned for more than 50% of its target SLA window, crm.novacart.internal automatically escalates the ticket to the L3 Department Manager and sends a priority alert.
+* Unresponsive Functional Teams: If a functional department fails to act on a P1/P2 ticket within the mandated SLA target, the Customer Support Operations Manager possesses emergency override authority to issue customer compensation up to ₹10,000 / $150 / AED 400 to resolve customer friction.
+Escalation Examples
+Example 1: Payment Dispute (Duplicate Payment)
+* Scenario: Customer's account was debited twice (₹24,999 each) for a single TV purchase (CAT-APP). OMS generated only one order ID.
+* Escalation Path: L1 CSR verifies duplicate debit claim $\rightarrow$ Escalates to QUEUE_FINANCE_PAYMENTS $\rightarrow$ L2 Finance Specialist checks ledger.novacart.internal $\rightarrow$ Confirms unlinked second debit $\rightarrow$ Executes direct gateway refund $\rightarrow$ Updates customer with transaction reference within 4 hours (Refer to PAY-003).
+Example 2: Lost Shipment
+* Scenario: A gaming laptop (CAT-GAM) shipped to Singapore has missed its ETA by 5 days; tracking shows no carrier scans for 96 hours.
+* Escalation Path: L1 CSR identifies delay $\rightarrow$ Escalates to QUEUE_LOGISTICS_HUB $\rightarrow$ L2 Logistics Supervisor initiates carrier trace in tms.novacart.internal $\rightarrow$ Carrier confirms parcel lost $\rightarrow$ Logistics approves transit-loss claim $\rightarrow$ System generates automated priority replacement order dispatching new laptop from hub SIN-01 (Refer to SHIP-006).
+Example 3: Damaged Product
+* Scenario: Customer receives a refrigerator with severe structural cabinet denting.
+* Escalation Path: L1 CSR reviews uploaded damage photos $\rightarrow$ Escalates to QUEUE_RETURNS_INSPECT $\rightarrow$ L2 Returns Manager verifies packaging damage tags $\rightarrow$ Approves immediate high-value RMA $\rightarrow$ Dispatches reverse pickup and triggers priority replacement authorization (Refer to REF-003).
+Example 4: Fraud / Account Compromise
+* Scenario: Customer reports unauthorized logins and an altered shipping address on an active order.
+* Escalation Path: L1 CSR immediately places temporary delivery hold on OMS $\rightarrow$ Escalates ticket to QUEUE_SECURITY_SOC $\rightarrow$ L2 Security Analyst reviews IP access logs in shield.novacart.internal $\rightarrow$ Freezes account, revokes active session tokens, cancels fraudulent shipment, and issues password reset to verified user email (Refer to SEC-001, SEC-004, SEC-005).
+Example 5: Warranty Dispute
+* Scenario: Brand service center refuses to repair a 5-month-old smartphone, claiming liquid damage, which the customer denies.
+* Escalation Path: L1 CSR logs complaint $\rightarrow$ Escalates to QUEUE_PRODUCT_QUALITY $\rightarrow$ L2 Product Specialist requests technical diagnostic report from service center $\rightarrow$ Identifies center error $\rightarrow$ Overrides rejection and authorizes free replacement unit under NovaCart Extended Care (Refer to PROD-001, PROD-002).
+Example 6: High-Value Refund Approval
+* Scenario: Enterprise B2B client requests cancellation and out-of-policy refund for a bulk order of 20 monitors (Value: ₹350,000) delayed by customs.
+* Escalation Path: L1 CSR escalates to QUEUE_CUSTOMER_SUPPORT_L3 $\rightarrow$ L3 Operations Manager reviews custom B2B agreement $\rightarrow$ Obtains Director of Operations and Legal co-signoff $\rightarrow$ Authorizes full bank transfer refund in ledger.novacart.internal (Refer to REF-001, LGL-001).
+Example 7: VIP Customer Case
+* Scenario: A NovaCart Prime VIP member experiences a 2-hour delay on a same-day delivery order.
+* Escalation Path: System flags Prime status $\rightarrow$ Direct routing to QUEUE_VIP_SPECIALIST $\rightarrow$ L2 VIP Agent contacts Logistics Hub Supervisor $\rightarrow$ Re-routes parcel to dedicated express courier rider $\rightarrow$ Issues ₹1,000 goodwill wallet credit to customer account (Refer to SHIP-004).
+Example 8: Technical Platform Issue
+* Scenario: Multiple customers report that a promo code (FESTIVE2026) is calculating incorrect 90% discounts on premium smartphones.
+* Escalation Path: L1 CSR flags ticket cluster $\rightarrow$ Escalates to QUEUE_ENGINEERING_DEVOPS $\rightarrow$ L3 Engineering Lead verifies promo engine configuration bug $\rightarrow$ Deploys hotfix in jira.novacart.internal within 30 minutes $\rightarrow$ Updates support messaging.
+Frequently Asked Questions (FAQs)
+Q1: How does an agent know which functional queue to select when escalating a ticket?
+Answer: Agents must consult the Department Ownership Matrix in SUP-003. crm.novacart.internal provides category dropdowns that automatically route tickets to the correct functional squad based on the selected primary root-cause code.
+Q2: Can a customer request an immediate escalation to a manager during a call?
+Answer: Yes. If a customer requests managerial escalation, the L1 CSR must attempt to de-escalate using approved SUP-002 scripts. If the customer insists, the CSR must transfer the call to the L2 Floor Supervisor or schedule a guaranteed manager callback within 2 hours.
+Q3: What happens if an escalated issue requires approval above an L2 Specialist's financial limit?
+Answer: The L2 Specialist completes the initial investigation, attaches their recommendation to the case file, and routes the ticket within crm.novacart.internal to the L3 Operations Manager for digital co-signature approval.
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of SUP-003. Established functional escalation paths, approval authority matrices, escalation SLAs, high-priority incident protocols, and scenario workflows.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-002: Organization Structure
+* COMP-003: Department Directory
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-002: Customer Communication Guidelines
+* SUP-004: Priority Matrix
+* SUP-005: SLA Policy
+* ORD-001: Order Lifecycle Framework
+* SHIP-001: Domestic Shipping Policy
+* SHIP-005: Delayed Deliveries Protocol
+* SHIP-006: Lost Shipments Protocol
+* PAY-001: Payment Processing SOP
+* PAY-003: Duplicate Payment Procedures
+* REF-001: Master Refund Eligibility Rules
+* SEC-001: Account Security & Access Control
+* SEC-004: Fraud Detection Framework

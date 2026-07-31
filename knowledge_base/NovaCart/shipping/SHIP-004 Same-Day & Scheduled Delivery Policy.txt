@@ -1,0 +1,219 @@
+﻿SHIP-004: Same-Day & Scheduled Delivery Policy
+Document Header
+* Document Title: Same-Day & Scheduled Delivery Policy
+* Document ID: SHIP-004
+* Version: 1.0.0
+* Document Category: Shipping
+* Classification: Internal / Public Operational Standard
+* Department Owner: Logistics & Supply Chain
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Logistics, Operations Director, Customer Experience Director
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Same-Day Delivery, Scheduled Delivery, Delivery Time Slots, Cut-off Times, Hyper-Local Fulfillment, Slot Rescheduling, Dark Stores, Failed Delivery Slot
+Purpose
+This document defines the official enterprise policy, operational workflows, customer scheduling standards, and business rules governing Same-Day Delivery (SRV-SDY) and Scheduled Time-Slot Delivery (SRV-SCH) services at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes eligibility thresholds, order cut-off times, delivery window allocations, customer presence requirements, rescheduling protocols, and failure management for premium time-bound fulfillments.
+As a core operational document (SHIP-004) in the NovaCart Enterprise Knowledge Base (NEKB), SHIP-004 enforces hyper-local fulfillment standards across urban dark store nodes, local last-mile courier fleets, and the Transportation Management System (api.novacart.internal/tms), maintaining complete consistency with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, and SHIP-001 through SHIP-003.
+Scope
+This policy applies exclusively to premium time-bound domestic delivery orders placed within designated metropolitan and high-density urban coverage zones across India (IN), Singapore (SG), and the United Arab Emirates (UAE).
+Coverage Includes
+* Same-Day Delivery (SRV-SDY): Direct hyper-local dispatch for orders placed before daily morning cut-off deadlines.
+* Scheduled Delivery (SRV-SCH): Customer-selected 2-hour or 4-hour delivery time windows across a 7-day rolling calendar.
+* Heavy & High-Value Fulfillment: Scheduled delivery and installation coordination for Home Appliances (CAT-APP) and Consumer Electronics (CAT-ELE).
+* Urban dark store networks, local point-to-point courier fleets, and real-time slot allocation engines.
+Service Overview
+NovaCart’s premium delivery portfolio caters to customers requiring immediate delivery or precise time-window coordination:
+* Same-Day Delivery (SRV-SDY): Designed for urgent consumer technology, accessories, and smart home hardware fulfilled from urban dark stores and delivered within 4 to 12 hours on the same calendar day.
+* Scheduled Delivery (SRV-SCH): Designed for customer convenience, enabling buyers to select specific delivery time windows (e.g., Morning 08:00–10:00 or Evening 18:00–20:00) up to 7 days in advance. This service is mandatory for large home appliances (CAT-APP) requiring synchronized installation services (Refer to PROD-004).
+Same-Day Delivery Eligibility
+Eligibility for Same-Day Delivery is evaluated dynamically during checkout by the Sourcing Engine (api.novacart.internal/oms/source):
+1. Geographic Proximity: The destination delivery postal code must fall within a 25 km radius of an active urban dark store or city fulfillment center (BLR-01, BOM-01, DEL-02, SIN-01, DXB-01).
+2. Inventory Placement: 100% of the line items within the shopping cart must be physically available in stock at the local urban fulfillment node. Split orders originating from non-local hubs are ineligible for SRV-SDY (Refer to ORD-005).
+3. Package Dimensions & Weight: Total order cubic volume must not exceed $0.12\text{ m}^3$, and total aggregate weight must not exceed 8 kg (suitable for motorcycle or light courier dispatch).
+4. Order Cut-off Adherence: Order placement and payment authorization (PAYMENT_CONFIRMED) must conclude prior to the 11:00 AM Local Time cut-off window.
+Scheduled Delivery Eligibility
+Scheduled Delivery is available for a broader range of products and geographic zones:
+1. Geographic Coverage: Available across all Tier 1 Metropolitan and Tier 2 Urban postal sectors.
+2. Product Categories: Mandatory for Large Appliances (CAT-APP) and optional for Consumer Electronics (CAT-ELE), Mobile Devices (CAT-MOB), and Gaming Hardware (CAT-GAM).
+3. Weight & Size Allowance: Accommodates packages up to 100 kg aggregate weight (utilizing specialized two-person lift vehicles).
+4. Calendar Horizon: Delivery slots may be booked up to 7 calendar days in advance from the date of order placement.
+Supported Cities and Regions
+Service Availability Matrix
+Country
+	Supported Metropolitan Regions
+	Same-Day (SRV-SDY) Coverage
+	Scheduled (SRV-SCH) Coverage
+	Dark Store Sourcing Nodes
+	India (IN)
+	Bangalore, Mumbai, Delhi/NCR, Kolkata, Chennai, Hyderabad
+	Metro Tier 1 ($< 25\text{ km}$)
+	Metro Tier 1 & Tier 2 Zones
+	BLR-01, BOM-01, DEL-02, CCU-01
+	Singapore (SG)
+	Singapore Mainland (All Postal Districts)
+	Island-wide Mainland
+	Island-wide Mainland
+	SIN-01
+	UAE
+	Dubai Urban, Abu Dhabi City, Sharjah Urban
+	Urban Metropolitan Limits
+	Urban Metropolitan Limits
+	DXB-01, AUH-01
+	Order Cut-off Times
+Time-bound delivery commitments depend strictly on order placement timestamps in api.novacart.internal/oms.
+Order Cut-off Time Matrix
+Service Type
+	Order Placement Window
+	Order Cut-off Deadline
+	Warehouse Fulfillment SLA
+	Target Delivery Execution
+	Same-Day (SRV-SDY)
+	Morning Window
+	11:00 AM Local Time
+	Dispatch by 13:00
+	Same Day between 14:00 and 21:00
+	Same-Day (SRV-SDY)
+	Post Cut-off (After 11:00 AM)
+	Automatic Roll-over
+	Dispatch next day by 10:00
+	Next Calendar Day by 14:00
+	Scheduled (SRV-SCH)
+	Morning Slot (08:00–12:00)
+	18:00 Previous Day
+	Staged by 06:00
+	Guaranteed within 2-Hour Sub-Slot
+	Scheduled (SRV-SCH)
+	Afternoon Slot (12:00–16:00)
+	22:00 Previous Day
+	Staged by 10:00
+	Guaranteed within 2-Hour Sub-Slot
+	Scheduled (SRV-SCH)
+	Evening Slot (16:00–20:00)
+	10:00 Same Day
+	Staged by 14:00
+	Guaranteed within 2-Hour Sub-Slot
+	Delivery Time Slot Selection
+1. Slot Capacity Engine: During checkout, the TMS Slot Management Module (api.novacart.internal/tms/slots) queries real-time fleet capacity, traffic models, and warehouse staging limits to display available delivery windows.
+2. 2-Hour Slot Granularity: Scheduled delivery slots are presented in 2-hour increments (e.g., 08:00–10:00, 10:00–12:00, 14:00–16:00, 18:00–20:00).
+3. Slot Reservation Lock: Selected slots are soft-locked for 10 minutes during checkout. Upon payment confirmation (PAYMENT_CONFIRMED), the slot is permanently booked in TMS.
+4. Capacity Exhaustion: Once a specific 2-hour slot reaches its maximum delivery density capacity, the slot is automatically greyed out and closed to further bookings.
+Delivery Window Matrix
+Time Slot Code
+	Operating Window
+	Service Types Supported
+	Target Customer Presence Requirement
+	SLT-MOR-1
+	08:00 – 10:00 Local Time
+	Scheduled (SRV-SCH)
+	Mandatory Adult Presence (OTP Verification)
+	SLT-MOR-2
+	10:00 – 12:00 Local Time
+	Scheduled (SRV-SCH)
+	Mandatory Adult Presence (OTP Verification)
+	SLT-AFT-1
+	12:00 – 14:00 Local Time
+	Scheduled (SRV-SCH)
+	Mandatory Adult Presence (OTP Verification)
+	SLT-AFT-2
+	14:00 – 16:00 Local Time
+	Same-Day (SRV-SDY) / Scheduled
+	Mandatory Adult Presence (OTP Verification)
+	SLT-EVE-1
+	16:00 – 18:00 Local Time
+	Same-Day (SRV-SDY) / Scheduled
+	Mandatory Adult Presence (OTP Verification)
+	SLT-EVE-2
+	18:00 – 20:00 Local Time
+	Same-Day (SRV-SDY) / Scheduled
+	Mandatory Adult Presence (OTP Verification)
+	Customer Responsibilities
+To ensure successful time-bound delivery, customers must adhere to specific operational requirements:
+1. Mandatory Presence: An authorized adult (age 18 or older) must be present at the delivery address throughout the selected 2-hour delivery window.
+2. Valid Contact Information: The customer must provide an active mobile phone number capable of receiving SMS/WhatsApp notifications and direct voice calls from the delivery rider.
+3. Premises Access Clearance: The customer must secure necessary building entry permissions, security gate passes, or elevator access for delivery personnel prior to the arrival window (especially critical for large appliances CAT-APP).
+4. OTP Provision: The recipient must provide the 4-digit mobile One-Time Password (OTP) to the delivery agent upon doorstep arrival to complete the digital Proof of Delivery (POD) (Refer to SHIP-001).
+Delivery Attempt Process
+Delivery personnel follow a strict time-bound protocol upon arrival at the customer location:
+1. Pre-Arrival Contact: The TMS driver app initiates an automated SMS alert and rider phone call 30 minutes prior to arriving at the delivery address.
+2. Doorstep Waiting Window: Upon arrival within the booked time slot, the delivery rider must wait a minimum of 10 minutes at the doorstep while attempting phone contact twice.
+3. Failed Attempt Logging: If the customer is unreachable after 10 minutes, the rider logs Non-Delivery Report (NDR) code SCHEDULED_CUSTOMER_ABSENT in the TMS app.
+4. Notification & Unloading Cancellation: The rider is instructed to depart to prevent cascading delays for subsequent slot bookings. An automated SMS/WhatsApp notification informs the customer of the missed slot.
+Department Responsibilities
+Coordinated execution across functional units ensures premium delivery windows are met reliably:
+Department Responsibility Matrix
+Department Unit
+	Primary Same-Day / Scheduled Responsibilities
+	Primary Portal Used
+	Primary SLA Target
+	Logistics & Fleet
+	Manages hyper-local courier fleets; optimizes 2-hour slot route density; monitors rider GPS.
+	tms.novacart.internal
+	Slot On-Time Delivery $\ge 98.5\%$
+	Warehouse Operations
+	Fast-tracks dark store picks; stages scheduled appliance orders 2 hours prior to slot window.
+	wms.novacart.internal
+	Dark store pick SLA $< 30\text{ Mins}$
+	Customer Support
+	Assists customers with urgent slot rescheduling; processes slot failure goodwill credits.
+	crm.novacart.internal
+	Priority Chat FRT $< 15\text{ Secs}$
+	Software Engineering
+	Maintains slot capacity engines, real-time rider tracking APIs, and OMS cut-off algorithms.
+	api.novacart.internal
+	$99.99\%$ API Uptime
+	Business Rules
+Rule 1: Guaranteed Time-Slot Commitment & Late Compensation
+If a Scheduled (SRV-SCH) or Same-Day (SRV-SDY) delivery fails to arrive within the confirmed time window due to an internal logistics or rider delay (and not customer absence or invalid address), NovaCart automatically:
+* Refunds the premium delivery fee in full.
+* Deposits a ₹250 / $5 / AED 15 goodwill credit into the customer's NovaCart Wallet.
+* Re-schedules the delivery for the customer's choice of next available slot free of charge (Refer to SUP-005).
+Rule 2: Free Rescheduling Window
+Customers may reschedule a booked delivery slot free of charge via self-service web/mobile portals up to 2 hours prior to the start of the delivery window. Rescheduling requests made within 2 hours of the slot window require Customer Support intervention and are subject to a re-routing fee of ₹150 / $3 / AED 10.
+Rule 3: Re-Delivery Fee for Missed Slots
+If a delivery attempt fails due to customer absence (SCHEDULED_CUSTOMER_ABSENT), the original premium delivery fee is non-refundable. A secondary delivery attempt requires booking a new slot and paying a standard re-delivery fee of ₹150 / $3 / AED 10.
+Rule 4: Holiday & Weekend Operations
+Same-Day and Scheduled Delivery services operate 7 days a week (including Saturdays and Sundays) in Tier 1 metropolitan zones. Service is suspended only on major statutory national holidays (e.g., Republic Day/Diwali in India, National Day in Singapore/UAE), with restricted slot availability displayed 14 days in advance at checkout.
+Exception Handling
+* Severe Urban Traffic Disruptions: If extreme weather or major traffic gridlock threatens slot SLAs, the TMS Slot Management module automatically re-routes nearby standby riders. If a delay exceeds 15 minutes past the slot window, TMS dispatches an automated SMS alert to the customer with updated rider ETA and applies Rule 1 compensation.
+* Large Appliance Access Blocking: If a delivery team arrives with a large appliance (CAT-APP) during a scheduled slot, but building elevators or doorways are too narrow, the team logs ACCESS_BLOCKED. The appliance returns to the hub, and Support contacts the customer to arrange specialized hoisting equipment or order cancellation under ORD-002.
+Practical Examples
+Scenario 1: Successful Same-Day Delivery Execution
+1. Customer in Dubai orders a replacement smart home hub (CAT-SMT) at 09:15 AM selecting Same-Day Delivery (SRV-SDY).
+2. Order is assigned to urban dark store DXB-01. WMS emits a high-priority pick alert at 09:16 AM.
+3. Item is packed by 09:40 AM (READY_FOR_DISPATCH). TMS assigns a hyper-local point-to-point courier rider.
+4. Rider collects parcel at 10:15 AM (SHIPPED). Customer receives WhatsApp message with live GPS map link.
+5. Rider completes delivery at 02:30 PM (DELIVERED) after verifying customer OTP. Total fulfillment time: 5 hours 15 minutes.
+Scenario 2: Scheduled Delivery Rescheduling
+1. Customer in Singapore books a Scheduled Delivery (SRV-SCH) for a gaming monitor on Friday, 18:00–20:00 slot.
+2. At 15:00 on Friday (3 hours prior to slot window), the customer receives a work conflict and opens the NovaCart mobile app.
+3. Customer selects Reschedule Delivery and picks Saturday morning slot (10:00–12:00).
+4. OMS validates the request is $> 2\text{ hours}$ prior to slot, updates TMS route logs without penalty, and dispatches an updated slot confirmation email.
+Frequently Asked Questions (FAQs)
+Q1: What happens if I am not at home during my selected scheduled delivery slot?
+Answer: The rider waits 10 minutes and attempts to phone you twice. If you are unreachable, the rider logs a missed delivery attempt. You will receive an SMS link to book a new delivery slot, subject to a standard re-delivery fee of ₹150 / $3 / AED 10 (Refer to SHIP-001).
+Q2: Can I change my delivery address for a Same-Day order after placing it?
+Answer: Delivery addresses for Same-Day orders can only be modified within the first 15 minutes of order placement, provided the new address falls within the same dark store's 25 km fulfillment radius. After 15 minutes, address modifications are locked to preserve rider route dispatch (Refer to ORD-003, SHIP-007).
+Q3: Is Scheduled Delivery available for all items on NovaCart?
+Answer: Scheduled Delivery is available for all items fulfilled directly from local urban fulfillment hubs, and is mandatory for large home appliances (CAT-APP). Items fulfilled via third-party cross-border freight or remote FCs display Standard or Express delivery options instead (Refer to ORD-005, SHIP-002).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of SHIP-004. Established same-day eligibility limits, scheduled time-slot matrices, cut-off deadlines, customer presence rules, and slot failure compensation policies.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-005: Customer Support SLA Policy
+* ORD-001: Order Lifecycle Management Policy
+* ORD-004: Order Tracking Policy
+* SHIP-001: Domestic Shipping Policy
+* SHIP-003: Express & Priority Shipping Policy
+* SHIP-005: Delayed Deliveries Protocol
+* PROD-004: Product Installation SOP

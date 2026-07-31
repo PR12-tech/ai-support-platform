@@ -1,0 +1,302 @@
+﻿COMP-004: Enterprise Terminology & Glossary
+Document Header
+* Document Title: Enterprise Terminology & Glossary
+* Document ID: COMP-004
+* Version: 1.0.0
+* Document Category: Company
+* Classification: Internal
+* Department Owner: Enterprise Knowledge Architecture
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: VP of Customer Experience, Technical Documentation Manager, Legal & Compliance Director
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 25, 2026
+* Next Review Date: July 25, 2027
+* Keywords: Glossary, Terminology, Acronyms, Lexicon, Definitions, Business Terms, RAG Indexing, Standardization
+Purpose
+This document establishes the official, enterprise-wide glossary and dictionary of standard terminology, acronyms, system codes, and operational concepts used across NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart").
+As a primary core document (COMP-004) in the NovaCart Enterprise Knowledge Base (NEKB), COMP-004 provides the definitive lexicon required to eliminate semantic ambiguity across human communication, software engineering microservices, customer support workflows, and automated Retrieval-Augmented Generation (RAG) vector indexing engines.
+Scope
+This lexicon applies universally across all operational regions (India, Singapore, UAE), corporate offices, fulfillment centers, digital platforms, internal software repositories, and official enterprise documentation modules (COMP, SUP, ORD, SHIP, PAY, REF, SEC, PROD, KB).
+Business Terms
+Average Order Value (AOV)
+* Definition: The mean monetary value derived from each completed customer order over a specified time period, calculated as total revenue divided by total order volume.
+* Context of Use: Financial forecasting, customer segment analysis, and promotional campaign evaluations.
+* Related Terms: Gross Merchandise Value (GMV), Unit Economics.
+Business-to-Business (B2B)
+* Definition: Commercial transactions, procurement workflows, and platform features tailored for corporate accounts, small-to-medium businesses (SMBs), and institutional buyers operating under tax-compliant invoicing.
+* Context of Use: Corporate account management, bulk purchasing, and GST/VAT tax registration.
+* Related Terms: Business-to-Consumer (B2C), Merchant of Record (MoR).
+Business-to-Consumer (B2C)
+* Definition: Direct commercial transactions conducted between NovaCart and individual retail consumers.
+* Context of Use: Standard marketplace operations, consumer promotions, and retail customer support.
+* Related Terms: Retail Customer, NovaCart Prime.
+Gross Merchandise Value (GMV)
+* Definition: The cumulative monetary value of all merchandise sold through the NovaCart marketplace platform within a defined timeframe, inclusive of taxes and fees, prior to deducting refunds or discounts.
+* Context of Use: Executive performance metrics, investor reporting, and category sales evaluation.
+* Related Terms: Average Order Value (AOV), Revenue.
+Merchant of Record (MoR)
+* Definition: The legal entity authorized and held contractually liable for processing end-customer financial payments, issuing invoices, and managing tax compliance for platform transactions.
+* Context of Use: Legal liability, payment gateway processing, and regional tax administration.
+* Related Terms: Payment Gateway, Tax Invoice.
+Customer Support Terms
+Average Handling Time (AHT)
+* Definition: The total duration spent by a Customer Support Representative (CSR) resolving a single customer interaction, including initial contact, active chat/voice time, and post-interaction administrative logging.
+* Context of Use: Customer support workforce planning, productivity auditing, and SLA tracking.
+* Related Terms: First Contact Resolution (FCR), Service Level Agreement (SLA).
+Customer Support Representative (CSR)
+* Definition: An authorized front-line operational agent or specialist tasked with investigating, responding to, and resolving customer inquiries, disputes, and service requests.
+* Context of Use: Support ticketing workflows, escalation matrices, and agent performance monitoring.
+* Related Terms: L1 Support, L2 Support, L3 Support.
+First Contact Resolution (FCR)
+* Definition: The percentage of customer support inquiries successfully and completely resolved during the initial point of interaction, without requiring secondary follow-up or operational escalation.
+* Context of Use: Support quality auditing, customer satisfaction metrics, and KBA utility assessment.
+* Related Terms: Net Promoter Score (NPS), Average Handling Time (AHT).
+Level 1 (L1) Support
+* Definition: The primary layer of support comprising automated self-service conversational agents and general CSRs responsible for handling basic inquiries, order tracking, and standardized policy questions.
+* Context of Use: Initial ticket intake, automated chatbot routing, and basic query resolution.
+* Related Terms: Level 2 (L2) Support, Level 3 (L3) Support, KB-001.
+Level 2 (L2) Support
+* Definition: Specialized support queues staffed by domain-focused specialists authorized to handle complex payment disputes, carrier transit delays, technical troubleshooting, and discretionary goodwill waivers up to threshold limits.
+* Context of Use: Ticket escalation, financial adjustments, and specialized domain resolution.
+* Related Terms: Level 1 (L1) Support, Level 3 (L3) Support, SUP-003.
+Level 3 (L3) Support
+* Definition: The highest tier of operational support consisting of domain leads, engineering leads, legal counsel, and senior operations managers responsible for resolving systemic failures, legal threats, high-value claims, and executive complaints.
+* Context of Use: High-priority escalations, systemic incident response, and emergency policy waivers.
+* Related Terms: Level 2 (L2) Support, SUP-003, SUP-004.
+Order Management Terms
+Order Management System (OMS)
+* Definition: The core software backend microservice that governs order creation, inventory allocation, payment state validation, fulfillment routing, and state transition updates across the enterprise.
+* Context of Use: Technical software architecture, order processing pipelines, and inventory sync.
+* Related Terms: Enterprise Resource Planning (ERP), Warehouse Management System (WMS).
+Order State
+* Definition: The current system status tag assigned to a customer transaction within the OMS lifecycle (e.g., PENDING_PAYMENT, CONFIRMED, PROCESSING, DISPATCHED, DELIVERED, CANCELLED, RETURNED).
+* Context of Use: Customer order tracking, automated event notifications, and backend logic triggers.
+* Related Terms: Order Lifecycle, ORD-001.
+Split Order
+* Definition: A single customer transaction containing multiple purchase items that are automatically partitioned by the OMS into independent sub-orders due to inventory sourcing from separate fulfillment centers or vendors.
+* Context of Use: Fulfillment routing, multi-package tracking, and partial order modifications.
+* Related Terms: Sub-Order ID, ORD-005.
+Sub-Order ID
+* Definition: An alphanumeric identifier assigned to a specific child package created during a Split Order event, allowing independent shipping, tracking, and return processing.
+* Context of Use: Courier tracking manifests, package-level cancellations, and partial returns.
+* Related Terms: Split Order, Master Order ID, ORD-005.
+Shipping & Logistics Terms
+Non-Delivery Report (NDR)
+* Definition: An operational record generated by a courier carrier when a physical delivery attempt fails due to reasons such as customer unreachability, incomplete address details, or delivery refusal.
+* Context of Use: Last-mile delivery tracking, automated customer address verification, and re-attempt routing.
+* Related Terms: Proof of Delivery (POD), Last-Mile Delivery, SHIP-005.
+Proof of Delivery (POD)
+* Definition: Verifiable digital evidence—such as a time-stamped One-Time Password (OTP) validation, recipient digital signature, or geo-tagged photograph—confirming physical handover of a parcel to the recipient.
+* Context of Use: Delivery dispute resolution, non-receipt claim investigations, and carrier billing clearance.
+* Related Terms: Non-Delivery Report (NDR), Last-Mile Delivery, SHIP-001, SHIP-006.
+Transportation Management System (TMS)
+* Definition: The software platform used by Logistics to optimize route planning, carrier dispatch, middle-mile transit tracking, and last-mile fleet management.
+* Context of Use: Fleet dispatch, shipping fee calculations, and courier performance tracking.
+* Related Terms: Warehouse Management System (WMS), Logistics.
+Third-Party Logistics (3PL)
+* Definition: External commercial carrier partners (e.g., DHL, FedEx, Aramex, Delhivery) contracted by NovaCart to perform regional or cross-border line-haul transportation and last-mile package delivery.
+* Context of Use: Carrier performance auditing, shipping SLA enforcement, and international freight.
+* Related Terms: Transportation Management System (TMS), SHIP-001, SHIP-002.
+Payment Terms
+Chargeback
+* Definition: A formal reversal of funds enforced by a payment card issuing bank or payment gateway following a disputed transaction initiated by the customer.
+* Context of Use: Payment dispute defense, fraud loss accounting, and bank reconciliation.
+* Related Terms: Payment Gateway, Fraud Detection, PAY-001, SEC-004.
+Cash on Delivery (COD)
+* Definition: A payment fulfillment method wherein the customer settles order payment via physical cash or digital point-of-sale transfer at the time of package delivery.
+* Context of Use: Checkout options, last-mile cash reconciliation, and electronic refund processing.
+* Related Terms: Proof of Delivery (POD), Bank Transfer Refund, PAY-001, REF-001.
+Equated Monthly Installment (EMI)
+* Definition: A financing structure enabling customers to pay for high-value purchases through recurring monthly installments charged via credit cards, debit cards, or financial partners.
+* Context of Use: Payment checkout methods, loan interest calculations, and cancellation reversals.
+* Related Terms: Payment Processing, PAY-004.
+Payment Gateway
+* Definition: The encrypted technical service layer that validates, authorizes, and processes electronic payment transactions between NovaCart, acquiring banks, and customer payment instruments.
+* Context of Use: Transaction processing, payment failure investigations, and security compliance.
+* Related Terms: Tokenization, PCI-DSS, PAY-001, PAY-002.
+Refund & Return Terms
+Dispositioning
+* Definition: The operational process conducted during reverse logistics inspection wherein a returned product is evaluated and categorized into a final inventory path (e.g., active restock, return-to-vendor, refurbishment, or liquidation).
+* Context of Use: Reverse logistics processing, warehouse inventory management, and loss recovery.
+* Related Terms: Return Merchandise Authorization (RMA), REF-005.
+Non-Refundable Category
+* Definition: Product classifications (e.g., revealed digital software keys, digital gift cards, personalized items) that are contractually exempt from return or monetary refund upon purchase or activation.
+* Context of Use: Return eligibility validation, checkout terms disclosure, and support dispute handling.
+* Related Terms: Digital Software (CAT-SFT), Gift Cards (CAT-GFT), REF-006.
+Return Merchandise Authorization (RMA)
+* Definition: A mandatory, system-generated tracking code required before any physical product can be accepted for return, reverse transit, warehouse inspection, and refund authorization.
+* Context of Use: Return request initiation, package tracking, and reverse receiving.
+* Related Terms: Reverse Logistics, Dispositioning, REF-001, REF-005.
+Security Terms
+Multi-Factor Authentication (MFA)
+* Definition: A security mechanism requiring users or administrators to present two or more distinct credential factors (e.g., password plus time-based OTP) before accessing systems or sensitive data.
+* Context of Use: Administrative account access, customer login security, and system compliance.
+* Related Terms: Role-Based Access Control (RBAC), SEC-001, SEC-003.
+Payment Card Industry Data Security Standard (PCI-DSS)
+* Definition: The global information security standard mandated for entities that store, process, or transmit payment cardholder data.
+* Context of Use: Security compliance auditing, payment gateway architecture, and data tokenization.
+* Related Terms: Payment Gateway, Tokenization, SEC-001.
+Role-Based Access Control (RBAC)
+* Definition: An access restriction model that restricts system administrative privileges based on an individual employee's verified job role and functional responsibilities.
+* Context of Use: User access management, data privacy enforcement, and security auditing.
+* Related Terms: Multi-Factor Authentication (MFA), Zero Trust Architecture, SEC-001.
+Zero Trust Architecture
+* Definition: An enterprise cybersecurity framework operating on the premise that no user, device, or network connection is inherently trusted, requiring continuous authentication and verification for all system requests.
+* Context of Use: Cloud infrastructure engineering, access logging, and network security.
+* Related Terms: Role-Based Access Control (RBAC), SEC-001.
+Product Terms
+Stock Keeping Unit (SKU)
+* Definition: A unique, alphanumeric code assigned to a specific product variant (differing by size, color, model, or technical specification) to track inventory across catalogs and warehouses.
+* Context of Use: Catalog taxonomy, inventory counts, and order fulfillment.
+* Related Terms: Catalog Management, Warehouse Management System (WMS).
+Tamper-Evident Packaging
+* Definition: Specialized shipping containers, seals, or tape designed to provide clear, irreversible visual evidence if a parcel has been opened or altered during transit.
+* Context of Use: High-value electronics dispatch, transit loss prevention, and delivery handoffs.
+* Related Terms: High-Value Category, Proof of Delivery (POD), SHIP-003.
+AI & Knowledge Base Terms
+Knowledge Base Article (KBA)
+* Definition: A modular, structured documentation artifact assigned a unique document ID within the NEKB, used for human operational guidance and vector database indexing.
+* Context of Use: Operational procedure lookup, employee training, and AI knowledge retrieval.
+* Related Terms: Retrieval-Augmented Generation (RAG), NEKB, KB-001.
+Retrieval-Augmented Generation (RAG)
+* Definition: An AI architecture framework that retrieves factual text chunks from an indexed vector database of enterprise documentation (NEKB) to supply contextually accurate answers to user queries.
+* Context of Use: Automated customer support bots, internal search engines, and KBA optimization.
+* Related Terms: Vector Embedding, Knowledge Base Article (KBA), KB-001, KB-003.
+Vector Embedding
+* Definition: A mathematical, high-dimensional numerical representation of text content used by vector search engines to analyze semantic similarity and retrieve relevant policy chunks.
+* Context of Use: RAG database indexing, search optimization, and AI retrieval maintenance.
+* Related Terms: Retrieval-Augmented Generation (RAG), NEKB.
+Common Abbreviations
+The following table summarizes standard enterprise acronyms utilized across all documentation and software systems:
+Acronym
+	Expanded Term
+	Owning / Primary Domain
+	Primary Document Reference
+	AOV
+	Average Order Value
+	Finance / Strategy
+	COMP-001
+	B2B
+	Business-to-Business
+	Sales / Commercial
+	COMP-001
+	B2C
+	Business-to-Consumer
+	Sales / Commercial
+	COMP-001
+	COD
+	Cash on Delivery
+	Payments / Logistics
+	PAY-001
+	CSR
+	Customer Support Representative
+	Customer Support
+	SUP-001
+	EMI
+	Equated Monthly Installment
+	Payments
+	PAY-004
+	FCR
+	First Contact Resolution
+	Customer Support
+	SUP-005
+	GMV
+	Gross Merchandise Value
+	Finance / Strategy
+	COMP-001
+	KBA
+	Knowledge Base Article
+	Knowledge Management
+	KB-001
+	MFA
+	Multi-Factor Authentication
+	Information Security
+	SEC-003
+	MoR
+	Merchant of Record
+	Legal / Finance
+	COMP-001
+	NDR
+	Non-Delivery Report
+	Logistics
+	SHIP-005
+	NEKB
+	NovaCart Enterprise Knowledge Base
+	Knowledge Management
+	COMP-001
+	OMS
+	Order Management System
+	Engineering / Operations
+	ORD-001
+	PCI-DSS
+	Payment Card Industry Data Security Std.
+	Security / Payments
+	SEC-001
+	POD
+	Proof of Delivery
+	Logistics
+	SHIP-001
+	RAG
+	Retrieval-Augmented Generation
+	AI / Engineering
+	KB-001, KB-003
+	RBAC
+	Role-Based Access Control
+	Information Security
+	SEC-001
+	RMA
+	Return Merchandise Authorization
+	Returns & Refunds
+	REF-005
+	SKU
+	Stock Keeping Unit
+	Catalog / Warehouse
+	PROD-001
+	SLA
+	Service Level Agreement
+	Operations / Support
+	SUP-005
+	TMS
+	Transportation Management System
+	Logistics
+	SHIP-001
+	WMS
+	Warehouse Management System
+	Warehouse Management
+	COMP-003
+	Business Rules for Terminology Usage
+Rule 1: Master Terminology Authority
+All internal enterprise systems, customer support scripts, software variable names, and documentation drafts must adhere strictly to the definitions, capitalization, and acronym expansions defined in COMP-004. Deprecated terms or colloquial jargon are forbidden in formal communications.
+Rule 2: Non-Contradiction Principle
+Subordinate policies (SUP, ORD, SHIP, PAY, REF, SEC, PROD) must not define terms in a manner that contradicts COMP-004. If an operational domain requires a new term, it must be submitted to Enterprise Knowledge Management for formal incorporation into COMP-004.
+Rule 3: RAG Semantic Protection
+Acronyms and key terms must maintain consistent spelling across all KBAs to prevent vector space skew and preserve semantic accuracy in RAG database search retrievals.
+Frequently Asked Questions (FAQs)
+Q1: What should I do if I encounter a business term or acronym not listed in COMP-004?
+Answer: Submit a terminology addition request to the Enterprise Knowledge Management team via knowledge.novacart.internal. New terms are evaluated for enterprise utility and incorporated during quarterly document reviews.
+Q2: Why is strict terminology standardization required for AI support platforms?
+Answer: NovaCart's AI support platform utilizes Retrieval-Augmented Generation (RAG) to scan vector embeddings of enterprise documentation. Standardized terminology ensures search queries map accurately to relevant policy chunks without semantic confusion.
+Q3: Are regional language variations or local terms permitted in customer-facing support chats?
+Answer: While CSRs may use friendly regional phrasing for customer comfort, all formal system logs, ticket tags, escalation notes, and policy disclosures must strictly utilize standard terms defined in COMP-004.
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial release of the master NovaCart Terminology & Glossary framework. Established standard definitions for core business, support, logistics, payment, security, and RAG terminology.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-002: Organization Structure
+* COMP-003: Department Directory
+* SUP-001: Support Standard Operating Procedures
+* ORD-001: Order Lifecycle Framework
+* SHIP-001: Domestic Shipping Policy
+* PAY-001: Payment Processing SOP
+* REF-001: Master Refund Eligibility Rules
+* SEC-001: Account Security & Access Control
+* PROD-001: Warranty Validation Policy
+* KB-001: Knowledge Base Usage & RAG Guidelines

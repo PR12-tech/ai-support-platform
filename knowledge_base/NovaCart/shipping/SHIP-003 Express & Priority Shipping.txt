@@ -1,0 +1,208 @@
+﻿SHIP-003: Express & Priority Shipping Policy
+Document Header
+* Document Title: Express & Priority Shipping Policy
+* Document ID: SHIP-003
+* Version: 1.0.0
+* Document Category: Shipping
+* Classification: Internal / Public Operational Standard
+* Department Owner: Logistics & Supply Chain
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Logistics, Operations Director, Customer Experience Director
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Express Shipping, Priority Shipping, Expedited Fulfillment, Cut-Off Times, Same-Day Dispatch, Tamper-Evident Packaging, NovaCart Prime, High-Value Cargo
+Purpose
+This document defines the official enterprise policy, operational standards, fulfillment acceleration workflows, and business rules governing expedited shipping services at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes eligibility criteria, order processing cut-off deadlines, priority warehouse picking/packing protocols, dedicated courier selection, delivery time commitments, and exception handling for Express and Priority shipments.
+As a core operational document (SHIP-003) in the NovaCart Enterprise Knowledge Base (NEKB), SHIP-003 enforces fast-track execution across fulfillment centers (FCs), local dark store networks, contracted express courier fleets, and the Transportation Management System (api.novacart.internal/tms), maintaining complete consistency with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001, and SHIP-002.
+Scope
+This policy applies to all expedited domestic and regional cross-border order shipments originating from or delivered to designated metropolitan and high-density operating zones across India (IN), Singapore (SG), and the United Arab Emirates (UAE).
+Coverage Includes
+* Accelerated fulfillment across Service Tiers: Express Delivery (SRV-EXP), Priority Same-Day Delivery (SRV-SDY), and Scheduled Time-Slot Delivery (SRV-SCH).
+* High-priority processing for high-value merchandise (CAT-ELE, CAT-MOB, CAT-GAM) and time-sensitive commercial orders.
+* Expedited member benefits for NovaCart Prime subscription tiers and Corporate Enterprise Accounts.
+* Warehouse fast-track picking queues, dedicated courier air/surface linehaul allocations, and expedited last-mile fleet routing.
+Express Shipping Overview
+Express Shipping (SRV-EXP) is NovaCart's primary accelerated transit service designed for customers seeking rapid $24\text{-to-}48\text{ hour}$ door-to-door delivery across metropolitan and regional Tier 1/Tier 2 urban hubs.
+Core Operational Principles
+1. Accelerated Warehouse Processing: Orders placed prior to daily cutoff times bypass standard picking queues and are allocated to dedicated fast-track packing lines in local FCs.
+2. Dedicated Courier Linehaul: Express parcels are assigned to premium express courier networks utilizing direct point-to-point air freight or priority surface express routes.
+3. Proactive Progress Tracking: Automated real-time milestone telemetry with dynamic delivery window predictions updated every 2 hours in tms.novacart.internal.
+Priority Shipping Overview
+Priority Shipping (SRV-SDY / SRV-SCH) represents NovaCart's ultra-fast, premium fulfillment tier. It utilizes localized hyper-local dark store nodes and dedicated point-to-point last-mile courier riders to achieve same-day delivery within 4 to 12 hours or guaranteed customer-selected time-slots.
+Core Operational Principles
+1. Hyper-Local Inventory Sourcing: Sourced exclusively from local urban fulfillment nodes (BLR-01, BOM-01, SIN-01, DXB-01) located within a $25\text{ km}$ radius of the delivery location.
+2. Immediate Lock & Pick: Warehouse workstations receive instant audio/visual pick alerts upon payment authorization, requiring item packaging within 30 minutes.
+3. Dedicated Rider Allocation: Last-mile dispatch engines allocate single-parcel point-to-point delivery riders to eliminate transit consolidation delays.
+Eligibility Criteria
+Expedited shipping availability is calculated dynamically at checkout based on geographic proximity, inventory location, package weight, and customer account tier.
+Eligibility Matrix
+Parameter / Dimension
+	Express Shipping (SRV-EXP) Eligibility
+	Priority Same-Day (SRV-SDY) Eligibility
+	Scheduled Delivery (SRV-SCH) Eligibility
+	Geographic Coverage
+	Metro Tier 1 & Regional Tier 2 Cities
+	Metro Tier 1 Urban Zones Only ($< 25\text{ km}$ from FC)
+	Metro Tier 1 & Tier 2 Urban Zones
+	Maximum Package Weight
+	Up to $15\text{ kg}$ per sub-order parcel
+	Up to $8\text{ kg}$ per sub-order parcel
+	Up to $100\text{ kg}$ (Includes large appliances CAT-APP)
+	Product Category Scope
+	CAT-ELE, CAT-MOB, CAT-GAM, CAT-SMT
+	CAT-MOB, CAT-GAM, CAT-SMT, Small Accessories
+	CAT-APP, CAT-ELE, High-Value Electronics
+	Inventory Sourcing
+	Any Regional FC in the same country
+	Local Urban Dark Store or City Hub Only
+	Local or Regional FC with slot reservation
+	NovaCart Prime Benefits
+	Free on all qualifying items
+	Discounted Flat Rate / Free for VIP Corporate
+	Free time-slot selection
+	Supported Regions
+Expedited shipping services are available across primary metropolitan clusters:
+* India (IN): Bangalore Metropolitan Region, Mumbai Metropolitan Region (BOM/NNM), National Capital Region (Delhi/NCR), Kolkata, Chennai, Hyderabad.
+* Singapore (SG): All mainland postal sectors (Excluding offshore islands and restricted military zones).
+* United Arab Emirates (UAE): Dubai Urban Limits, Abu Dhabi City, Sharjah Urban, Ajman.
+Order Processing Standards
+To meet binding delivery commitments, warehouse operations and courier networks execute under strict, time-bound fulfillment windows.
+Shipping Service Comparison Matrix
+Service Dimension
+	Standard Shipping (SRV-STD)
+	Express Shipping (SRV-EXP)
+	Priority Same-Day (SRV-SDY)
+	Scheduled Delivery (SRV-SCH)
+	Daily Order Cutoff Time
+	23:59 Local Time
+	14:00 Local Time
+	11:00 Local Time
+	18:00 Previous Day
+	FC Pick & Pack SLA
+	$< 6\text{ Hours}$ from order
+	$< 1\text{ Hour}$ from order
+	$< 30\text{ Minutes}$ from order
+	$< 2\text{ Hours}$ prior to slot
+	Dock Dispatch SLA
+	Next daily courier run
+	Immediate next express run
+	Immediate rider handover
+	Staged for slot vehicle
+	Transit Commitment
+	$2\text{ to }5\text{ Business Days}$
+	$24\text{ to }48\text{ Hours}$
+	Same Day ($< 12\text{ Hours}$)
+	Selected 2-Hour Slot Window
+	Weekend Processing
+	Monday – Saturday
+	Monday – Saturday
+	7 Days a Week (Mon – Sun)
+	7 Days a Week (Mon – Sun)
+	Carrier Selection Guidelines
+Carrier assignment for expedited orders is controlled by the automated TMS Carrier Selection Engine (api.novacart.internal/tms/select-express-carrier):
+1. Express Carrier Tiering: Assigned exclusively to Tier-1 air express or direct surface express carriers (e.g., DHL Express, FedEx Priority, BlueDart Apex, or NovaCart Express Direct).
+2. Real-Time Carrier Performance Scoring: Carriers must maintain an active trailing 30-day On-Time Delivery (OTD) rating of $\ge 98.5\%$ on the target route to remain eligible for express order allocation.
+3. Direct Point-to-Point Rider Dispatch: For Priority Same-Day (SRV-SDY), the system assigns the closest available internal or dedicated partner courier rider using real-time GPS proximity algorithms.
+Delivery Time Commitments
+Delivery time commitments represent binding operational targets calculated from the moment payment confirmation (PAYMENT_CONFIRMED) is registered in OMS.
+Delivery Commitment Matrix
+Service Tier & Order Placement Window
+	Target Dispatch Time
+	Target Doorstep Delivery Commitment
+	Guarantee Status / Late Compensation
+	Express (SRV-EXP): Placed Before 14:00
+	Same Day by 16:00
+	Next Business Day by 18:00
+	On-time Guarantee (Shipping Fee Refund if late)
+	Express (SRV-EXP): Placed After 14:00
+	Next Day by 11:00
+	2nd Business Day by 18:00
+	On-time Guarantee (Shipping Fee Refund if late)
+	Priority (SRV-SDY): Placed Before 11:00
+	Same Day by 12:00
+	Same Calendar Day by 21:00
+	On-time Guarantee (Full Fee Refund + ₹250 Credit)
+	Scheduled (SRV-SCH): Slot Reserved
+	Staged 2 hrs prior
+	Guaranteed within 2-Hour Selected Slot
+	Slot Guarantee (Shipping Fee Refund if missed)
+	Customer Communication
+Expedited order processing triggers heightened customer communication to provide complete operational transparency:
+1. Order Checkout Confirmation: Displays explicit delivery time commitment, guaranteed delivery date, and assigned fulfillment hub.
+2. Dispatch & Tracking Activation: Instant SMS, WhatsApp, and Email alerts sent upon FC dock handover containing direct live tracking links and assigned express courier contact details.
+3. Live Rider Map Tracking (Priority Same-Day): For SRV-SDY orders, the customer mobile application displays interactive real-time GPS tracking of the delivery rider once OUT_FOR_DELIVERY status is activated.
+4. Pre-Arrival Notification: Delivery riders make an automated 30-minute pre-arrival phone call to confirm recipient availability at the doorstep.
+Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Express & Priority Responsibilities
+	Primary Portal Used
+	Primary SLA Target
+	Logistics & Supply Chain
+	Oversees express carrier contracts; manages hyper-local fleet dispatch; audits OTD SLAs.
+	tms.novacart.internal
+	Express OTD $\ge 98.5\%$
+	Warehouse Operations
+	Maintains fast-track picking lines; executes packaging within 30–60 mins; manages dock handovers.
+	wms.novacart.internal
+	FC Pick-Pack SLA $< 30\text{ Mins}$
+	Customer Support
+	Provides priority line response for expedited order queries; processes delay fee refunds.
+	crm.novacart.internal
+	Priority Chat FRT $< 15\text{ Secs}$
+	Software Engineering
+	Maintains real-time GPS tracking infrastructure, cutoff calculation engines, and carrier APIs.
+	api.novacart.internal
+	$99.99\%$ API Uptime
+	Business Rules
+Rule 1: Cut-Off Enforcement Policy
+Order placement timestamps in api.novacart.internal/oms strictly govern delivery commitments. An express order placed at 14:01 Local Time is classified as post-cutoff and automatically adopts the next business day dispatch schedule.
+Rule 2: Express Delivery Guarantee & Fee Waiver
+If an Express (SRV-EXP) or Priority (SRV-SDY) order fails to arrive within the committed delivery window due to an internal or carrier operational delay (and not due to customer unreachability or invalid address), NovaCart automatically refunds the express shipping fee in full and issues a ₹250 / $5 / AED 15 goodwill wallet credit (Refer to SUP-005).
+Rule 3: High-Value Packaging Mandate
+All Express and Priority shipments containing high-value electronics (CAT-ELE, CAT-MOB) exceeding ₹25,000 / $400 / AED 1,100 must be packaged in reinforced tamper-evident containers secured with serialized security tape. The security seal ID must be scanned into WMS and verified by the recipient upon doorstep delivery (Refer to SHIP-001).
+Exception Handling
+* Severe Weather & Force Majeure Suspensions: In the event of severe weather alerts, flooding, airport closures, or civic disruptions, the Logistics Operations Director may declare a temporary "Express Guarantee Suspension." Active customers are notified via SMS/Push notification, and late delivery financial guarantees are waived during the suspension period.
+* Carrier Capacity Exhaustion: When daily express volume limits are reached for a specific postal zone during major shopping events, the platform automatically greys out Express/Priority options at checkout, defaulting to Standard Shipping (SRV-STD) to prevent unfulfillable commitments.
+* Doorstep Unreachability (Express NDR): If a priority delivery rider arrives at the doorstep but the recipient is unreachable, the rider waits 10 minutes and attempts phone contact twice. If still unreachable, the rider logs NDR code EXPRESS_CUSTOMER_UNREACHABLE. Priority Same-Day orders are returned to the local hub, and a re-attempt is scheduled for the next morning (Refer to SHIP-001, SHIP-005).
+Practical Examples
+Scenario 1: Successful Priority Same-Day Fulfillment (SRV-SDY)
+1. Customer in Bangalore places an order for a replacement smartphone (CAT-MOB) at 09:30 AM selecting Priority Same-Day Shipping (SRV-SDY).
+2. Order is assigned to local urban hub BLR-01. WMS generates high-priority pick task at 09:31 AM.
+3. Item is picked, serial number logged, tamper-evident security tape applied, and packaged by 09:55 AM (Status: READY_FOR_DISPATCH).
+4. TMS allocates direct last-mile rider at 10:05 AM (SHIPPED). Customer receives WhatsApp message with live GPS map link.
+5. Rider arrives at customer premises at 01:15 PM, verifies 4-digit mobile OTP, and completes delivery (DELIVERED) in under 4 hours from order placement.
+Scenario 2: Express Delivery Cutoff & On-Time Guarantee Claim
+1. Customer in Dubai places an express order (SRV-EXP) for a gaming headset at 01:45 PM (15 minutes prior to the 14:00 cutoff).
+2. FC DXB-01 packs item and hands parcel to express courier dock run at 03:30 PM.
+3. Due to a middle-mile express courier sorting hub failure, the parcel is delivered on the 2nd business day instead of the guaranteed next business day.
+4. TMS flags the late delivery exception automatically. System issues a full refund of the AED 25 express shipping fee back to the customer's credit card and deposits an AED 15 goodwill credit into their NovaCart Wallet (Refer to SUP-005).
+Frequently Asked Questions (FAQs)
+Q1: Is Express Shipping available on weekends and public holidays?
+Answer: Priority Same-Day (SRV-SDY) and Scheduled Delivery (SRV-SCH) operate 7 days a week (Monday through Sunday) in Tier 1 metropolitan zones. Express Delivery (SRV-EXP) operates Monday through Saturday, excluding regional statutory national holidays.
+Q2: How do NovaCart Prime members qualify for free Express Shipping?
+Answer: NovaCart Prime members automatically receive free Express Shipping (SRV-EXP) on all eligible items displaying the Prime badge at checkout, provided the delivery address falls within supported Tier 1 or Tier 2 metropolitan zones (Refer to COMP-001).
+Q3: What happens if an express parcel arrives with a broken tamper-evident security seal?
+Answer: Customers must refuse delivery immediately if the serialized tamper-evident security tape is broken, cut, or altered upon arrival. The customer should instruct the rider to log "Refused - Seal Tampered" in the TMS app and contact Customer Support immediately for a priority replacement dispatch (Refer to SHIP-001, REF-003).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of SHIP-003. Established express and priority service tiers, cutoff deadlines, eligibility matrices, carrier selection rules, delivery guarantees, and high-value packaging standards.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-005: Customer Support SLA Policy
+* ORD-001: Order Lifecycle Management Policy
+* ORD-004: Order Tracking Policy
+* SHIP-001: Domestic Shipping Policy
+* SHIP-002: International Shipping Policy
+* SHIP-005: Delayed Deliveries Protocol
+* REF-001: Master Refund Eligibility Rules

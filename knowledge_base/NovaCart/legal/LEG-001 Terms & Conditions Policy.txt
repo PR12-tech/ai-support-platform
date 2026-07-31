@@ -1,0 +1,306 @@
+﻿LEG-001: Terms & Conditions Policy
+Document Header
+* Document Title: Terms & Conditions Policy
+* Document ID: LEG-001
+* Version: 1.0.0
+* Document Category: Legal
+* Classification: Internal / Public Operational Standard
+* Department Owner: Legal, Regulatory & Compliance Governance
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: General Counsel, Head of Corporate Compliance, VP of Customer Experience, Chief Operating Officer
+* Approved By: Chief Executive Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Terms & Conditions, Platform Terms, Customer Eligibility, Acceptable Use, Account Responsibilities, Prohibited Activities, Service Limitations, Account Suspension
+Purpose
+This document defines the official Terms & Conditions Policy of NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes standardized operational principles, customer eligibility criteria, account responsibilities, acceptable platform usage guidelines, prohibited activity definitions, service availability limitations, and business rules governing customer engagement across NovaCart’s products, services, e-commerce storefronts, mobile applications, and digital platforms.
+As the foundational document (LEG-001) in the Legal category of the NovaCart Enterprise Knowledge Base (NEKB), LEG-001 governs customer engagement terms across e-commerce channels, operating in strict operational alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, REF-001 through REF-006, PROD-001 through PROD-006, SEC-001 through SEC-006, and LEG-001.
+Scope
+This policy applies universally to all end-users, registered B2C customers, NovaCart Prime VIP members, B2B merchant partners, corporate accounts, guest checkouts, and platform visitors accessing NovaCart's digital channels across India, Singapore, and the United Arab Emirates.
+Coverage Includes
+* Platform terms acceptance, electronic agreement binding, and policy update notification protocols.
+* Customer eligibility parameters, age restrictions, and corporate account representation standards.
+* Customer account ownership principles, credential security duties, and multi-user access restrictions.
+* Acceptable use rules, acceptable content posting guidelines, and anti-scraping/anti-bot parameters.
+* Prohibited platform activities, fraud indicators, security circumventions, and promotional abuse controls.
+* Operational service limitations, inventory availability disclaimers, scheduled maintenance windows, and account suspension/termination workflows.
+Out of Scope
+* Detailed dispute resolution, court jurisdiction clauses, and litigation procedures (governed by internal legal department guidelines).
+* Technical data protection, privacy consent mechanisms, and PII storage schedules (governed by SEC-003).
+Terms & Conditions Overview
+The Terms & Conditions Policy serves as the operational baseline governing interactions between NovaCart and its platform users. By registering an account, placing an order, browsing the website, or utilizing NovaCart's digital services, users acknowledge and agree to comply with the operational principles established herein.
+
+
+
+
+
+
+<ElicitationsGroup message="To explore related account security, privacy, or order management policies further:">
+ <Elicitation label="Review SEC-001 Account Security Policy" query="Show SEC-001 Account Security Policy detailing account protection rules." />
+ <Elicitation label="Review SEC-003 Data Protection Policy" query="Show SEC-003 Data Protection & Privacy Policy detailing PII processing standards." />
+ <Elicitation label="Examine ORD-001 Order Lifecycle Policy" query="Show ORD-001 Order Lifecycle Management Policy detailing order execution flows." />
+</ElicitationsGroup>
+
+Core Operational Principles
+1. Reciprocal Fair Use: Platform access is provided as a service conditioned upon customer compliance with acceptable use standards and honest commercial intent.
+2. Deterministic Governance: All platform interactions—from account creation to checkout, delivery, and post-purchase support—are governed by consistent, transparent operational rules.
+3. Proactive Risk Containment: NovaCart reserves the right to enforce immediate protective holds, account suspensions, or service restrictions to mitigate fraud, security threats, or systemic platform abuse (SEC-004, SEC-005).
+4. Policy Harmony: Platform usage rules operate in complete synchronization with underlying security (SEC-001 to SEC-006), payment (PAY-001 to PAY-006), refund (REF-001 to REF-006), and product (PROD-001 to PROD-006) policies.
+Acceptance of Terms
+1. Binding Electronic Acceptance: Acceptance of this policy occurs upon creating a NovaCart account, checking the "I Agree to Terms & Conditions" prompt during checkout, or accessing digital platform services.
+2. Policy Version Binding: Users are bound by the version of LEG-001 active at the time of account action or order placement.
+3. Modification and Update Standards: NovaCart reserves the right to update this policy periodically to reflect operational, technical, or regulatory changes.
+   * Minor Modifications: Operational updates, typographical corrections, or layout enhancements take effect immediately upon publication to the platform.
+   * Material Modifications: Significant policy updates affecting customer rights, account fees, or core service conditions are notified to registered users 14 calendar days prior to the effective date via email, SMS, or in-app dashboard banners. Continued use of the platform after the 14-day notice period constitutes acceptance of updated terms.
+Customer Eligibility
+Platform access is restricted strictly to qualified individuals and legal business entities satisfying NovaCart's eligibility criteria:
+Customer Eligibility Matrix
+User Category
+	Age / Registration Requirement
+	Legal Identification Requirement
+	Account Scope & Limits
+	B2C Standard User
+	Minimum 18 years of age (or legal age of majority).
+	Verified primary email address & mobile phone number (SEC-001).
+	Standard personal retail purchases; subject to catalog quantity caps.
+	B2C Minor (Dependents)
+	Ages 13 to 17 under parent/guardian supervision.
+	Parent/Guardian verified account binding; guardian assumes full liability.
+	Restricted purchasing; prohibited from high-risk or age-gated categories.
+	NovaCart Prime VIP
+	Active Prime Membership subscription (REF-006).
+	Verified primary contact & valid payment instrument (PAY-006).
+	Priority support, express shipping (SHIP-003), exclusive promotional access.
+	B2B / Corporate User
+	Duly incorporated business entity; authorized representative.
+	Business Tax ID / GSTIN / VAT Registration & Corporate Credentials.
+	Commercial purchasing, tax invoicing, bulk quantity entitlements.
+	Account Responsibilities
+Account registration establishes a unique digital profile within auth.novacart.internal bound by explicit customer obligations:
+Customer Rights & Responsibilities Matrix
+Domain
+	Customer Entitlements & Rights
+	Mandatory Customer Responsibilities
+	Prohibited Actions
+	Account Identity
+	Right to accurate account management & data export (SEC-003).
+	Provide accurate, current, and complete registration information (SEC-001).
+	Creating fake identities or registering accounts with temporary emails.
+	Credentials & Access
+	Secure multi-device login entitlement (SEC-002).
+	Maintain password secrecy & enable Multi-Factor Authentication (MFA).
+	Sharing credentials, renting accounts, or transferring profiles to third parties.
+	Orders & Commerce
+	Right to transparent pricing, tracking, & statutory warranties (PROD-003).
+	Honor payment commitments for authorized checkouts (PAY-001).
+	Initiating fraudulent chargebacks or filing false loss claims (PAY-004, SEC-004).
+	Platform Content
+	Right to post authentic product reviews & ratings.
+	Ensure user-generated content is respectful, accurate, and non-infringing.
+	Posting abusive content, spamming reviews, or uploading malicious media.
+	Acceptable Platform Usage
+NovaCart provides platform access for legitimate personal and commercial retail transactions under explicit acceptable use guidelines:
+Acceptable Use Matrix
+Platform Functional Area
+	Approved Operational Usage
+	Unapproved / Borderline Usage
+	Enforcement Action
+	Product Browsing
+	Manual search, price comparison, catalog review.
+	High-frequency manual page refreshing.
+	Automated rate-limiting at edge API (SEC-002).
+	Checkout & Ordering
+	Authentic retail checkouts for personal or corporate use.
+	Rapid automated ordering scripts for commercial resale.
+	Order hold (HOLD_SECURITY_REVIEW) & quantity cap enforcement.
+	Promotional Codes
+	Applying earned coupon codes to valid checkouts (REF-006).
+	Farming single-use codes across synthetic accounts.
+	Coupon revocation, wallet credit freeze, account flag.
+	Product Reviews
+	Submitting genuine post-purchase user feedback.
+	Incentive-driven or competitor review manipulation.
+	Content removal; review submission privilege block.
+	Prohibited Activities
+To preserve platform security, user safety, and inventory integrity, NovaCart strictly prohibits the following activities:
+Prohibited Activities Matrix
+Violation Tier
+	Prohibited Activity Scope
+	Technical / Operational Indicators
+	Immediate System Action
+	Tier 1: Security & Tech
+	Automated scraping, bot purchasing, security probe, credential stuffing.
+	API rate exceedance, headless browser traffic, impossible velocity (SEC-004).
+	Instant IP block, active session revocation, account lockout (SEC-002).
+	Tier 2: Fraud & Commercial
+	Payment fraud, stolen card usage, chargeback abuse, bulk resale gaming.
+	Cross-account card sharing (PAY-006), false claims, quantity cap bypass.
+	Order cancellation, wallet freeze (REF-006), Tier 1 fraud hold (SEC-004).
+	Tier 3: Platform Abuse
+	Review manipulation, abusive support behavior, fake return submissions.
+	Toxic language in chat (SUP-001), empty box returns (REF-004), referral farming.
+	Support escalation block (SUP-003), RMA refusal, temporary profile lock.
+	Orders, Products & Services
+1. Order Offer and Acceptance: The display of products on NovaCart storefronts constitutes an "invitation to offer." An order placed by a customer represents a commercial offer to purchase. Acceptance occurs when NovaCart updates the order status to PAYMENT_CONFIRMED and issues a formal Order Confirmation email (ORD-001).
+2. Catalog Description Accuracy: NovaCart strives for absolute product information accuracy (PROD-001). However, minor cosmetic variances in packaging or manufacturer design updates may occur.
+3. Order Capping and Quantity Limits: To ensure fair distribution of high-demand merchandise, NovaCart reserves the right to cap maximum purchase quantities per account, per household, or per payment card (PROD-002).
+4. Digital Products & Licensing: Purchase of digital software, gift cards, or subscriptions grants a non-exclusive, revocable usage license under PROD-006. Unmasked or revealed digital keys are non-refundable (REF-001).
+Pricing & Payment Principles
+* Price Currency & Display: All product prices are displayed in local regional currency (INR for India, SGD for Singapore, AED for UAE) inclusive of applicable local taxes (GST/VAT) as detailed in PAY-001.
+* Pricing Error Corrections: In the event of an obvious technical or typographical pricing error where an item is listed at a fraction of its retail value due to a system bug, NovaCart reserves the right to cancel unfulfilled orders placed at the erroneous price, issue a 100% full refund via PAY-003, and notify the customer.
+* Payment Method Authorization: Customers must utilize authorized, legally owned payment instruments. Transactions flagged for name mismatches or cross-account card sharing trigger automated security holds under SEC-004 and PAY-006.
+Intellectual Property Overview
+1. NovaCart Platform Assets: All digital storefront interfaces, brand trademarks, website design graphics, underlying software code, microservices, and compiled catalog databases are the exclusive intellectual property of NovaCart Technologies Pvt. Ltd.
+2. Manufacturer & Vendor Marks: Product brand names, logos, and manufacturer images displayed on the platform belong to their respective trademark owners and are utilized under authorized retail distribution agreements (PROD-001).
+3. User-Generated Content License: By posting product reviews, ratings, or feedback images, customers grant NovaCart a non-exclusive, royalty-free, perpetual license to use, display, and publish the content for marketing and quality assurance purposes.
+Service Availability & Limitations
+NovaCart operates high-availability e-commerce infrastructure (api.novacart.internal) but enforces explicit operational disclaimers regarding service continuity:
+Service Limitation Matrix
+Service Dimension
+	Target Operational Availability
+	Standard Operational Limitation
+	Customer Remediation / Scope
+	Storefront & App Access
+	99.9% Uptime Target
+	Temporary downtime during scheduled maintenance (02:00 AM – 04:00 AM local time).
+	Prior notification posted on status dashboard; zero order data loss.
+	Inventory Availability
+	Real-time ATP sync ($< 1\text{ sec}$)
+	Unexpected warehouse physical inventory mismatch (PROD-002).
+	Priority re-sourcing from secondary FC OR 100% refund + store credit (REF-006).
+	Third-Party Logistics
+	On-time delivery SLA $\ge 98\%$
+	Unforeseen transit delays due to severe weather or road closures (SHIP-005).
+	Proactive SLA delay notifications; delivery fee refund if express (SHIP-003).
+	Account Suspension & Termination
+To protect the platform ecosystem, NovaCart enforces structured account status controls within auth.novacart.internal:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        ACCOUNT STATUS CONTROL WORKFLOW                            |
++-----------------------------------------------------------------------------------+
+| 1. INCIDENT FLAG    | System or agent flags acceptable use or security violation. |
+| 2. REVIEW & HOLD    | Account status moves to STATUS_TEMP_LOCK / STATUS_SUSPENDED. |
+| 3. INVESTIGATION    | Fraud / Security audit evaluates evidence (SEC-004 / SEC-005).|
+| 4. FINAL RESOLUTION | Account [A] Restored with warning, OR [B] Terminated permanently.|
++-----------------------------------------------------------------------------------+
+
+Account Status Matrix
+Account Status Tag
+	Operational System Scope
+	Conditions for Triggering
+	Unlocking / Closure Criteria
+	STATUS_ACTIVE
+	Normal, unrestricted platform access.
+	Fully compliant customer account.
+	Baseline operating state.
+	STATUS_TEMP_LOCK
+	Login & checkout temporarily blocked (30 mins).
+	Failed login threshold exceeded (SEC-001).
+	Auto-unlock after 30 mins or successful password reset.
+	STATUS_SUSPENDED
+	Orders held; wallet frozen; login restricted.
+	Active fraud investigation (SEC-004) or policy violation.
+	Identity re-verification (Level 4) or Fraud Analyst clearance.
+	STATUS_TERMINATED
+	Account permanently closed; tokens revoked.
+	Confirmed severe fraud, repeated abuse, or illegal activity.
+	Permanent closure; historical data archived per SEC-003.
+	Customer Responsibilities
+Customers accessing NovaCart platforms must adhere to the following mandatory duties:
+1. Compliance with Policies: Read, understand, and comply with all published enterprise policies, including Account Security (SEC-001), Privacy (SEC-003), and Refund Eligibility (REF-001).
+2. Protection of Credentials: Guard account passwords, OTPs, and authentication tokens against unauthorized exposure (SEC-002).
+3. Respectful Support Engagement: Treat Customer Support Representatives and Field Technicians with professional respect. Verbal abuse, harassment, or threats trigger immediate support escalation and potential account restriction (SUP-001, SUP-003).
+4. Honest Return Submissions: Ensure returned merchandise matches original shipped items, complete with serial numbers, accessories, and packaging (REF-004).
+NovaCart Responsibilities
+NovaCart commits to fulfilling the following operational obligations:
+1. Fair and Transparent Commerce: Provide accurate product listings, clear pricing disclosures, transparent delivery commitments, and robust customer support (SUP-001).
+2. Robust Data Security: Safeguard customer account data, payment tokens, and personal information using industry-standard encryption and security controls (SEC-002, SEC-003, PAY-006).
+3. Honoring Valid Warranties and Refunds: Process eligible returns, replacements, and refunds promptly in accordance with published policy schedules (REF-001, PAY-003, PROD-003).
+Department Responsibilities
+Accountability for governing platform terms and usage rules is shared across internal teams:
+Department Responsibility Matrix
+Department Unit
+	Primary Terms Governance Responsibilities
+	Primary System Portal
+	Operational Target KPI
+	Legal & Compliance
+	Oversees LEG-001 updates, manages legal notifications, reviews commercial policy compliance.
+	compliance.novacart.internal
+	Policy review cycle $\le 12\text{ Months}$
+	Customer Experience
+	Enforces acceptable support behavior rules, assists customers with terms queries.
+	crm.novacart.internal
+	Terms inquiry resolution $< 24\text{ Hours}$
+	Information Security
+	Monitors acceptable platform use, executes account holds on bot/scraping attempts.
+	shield.novacart.internal
+	Threat containment $< 15\text{ Mins}$ (SEC-005)
+	Fraud Operations
+	Investigates policy violations, promo abuse, payment fraud, and false claims.
+	shield.novacart.internal
+	Fraud containment SLA (SEC-004)
+	Business Rules
+Rule 1: Single Identity Binding Rule
+An individual customer may register and operate only one primary personal B2C account. Creating multiple synthetic or duplicate accounts to farm promotional discounts, bypass catalog purchase limits, or evade account suspensions constitutes a Tier 2 policy violation resulting in immediate account consolidation, credit revocation (REF-006), and account termination (SEC-004).
+Rule 2: Unclaimed Orders and Abandoned Accounts
+In-transit orders returned to NovaCart fulfillment centers due to multiple failed delivery attempts or customer refusal without valid justification are processed under REF-002 rules, incurring standard reverse logistics deductions from the final refund.
+Rule 3: Record Retention for Policy Acknowledgments
+All user policy acknowledgments, term acceptance timestamps, IP logs, and version consent records must be logged continuously in auth.novacart.internal and retained for a mandatory period of 7 years to support operational and legal compliance audits (SEC-003).
+Exception Handling
+* Corporate Bulk Purchase Pre-Approval: Commercial entities seeking to purchase products in quantities exceeding standard consumer catalog caps (PROD-001) must apply for a Corporate B2B Account. Upon tax ID verification, B2B accounts are granted customized order quantity limits and dedicated invoicing (ORD-001).
+* Appeals for Suspended Accounts: A customer whose account has been suspended or terminated for suspected policy violations may file a formal appeal through Customer Support within 14 calendar days of suspension. Security Operations re-evaluates the case file; the decision upon appeal review is final (SUP-003, SEC-004).
+Practical Examples
+Scenario 1: Automated Scripting and Quantity Bypass Attempt
+1. A customer utilizes an automated browser script to bypass catalog purchase limits (max 1 unit) on a limited-release gaming console (CAT-GAM).
+2. The script attempts to place 6 consecutive orders across 4 synthetic accounts using the same credit card token (PAY-006).
+3. shield.novacart.internal detects Rule 1 violation (multi-account farming) and Tier 1 security violation (automated script traffic).
+4. System automatically cancels the unfulfilled orders, voids payment holds (PAY-003), revokes promotional credits, and sets all synthetic accounts to STATUS_TERMINATED.
+Scenario 2: Handling Unacceptable User Support Behavior
+1. A customer dissatisfied with a out-of-warranty replacement rejection (PROD-003) engages in repeated verbal abuse and profane threats toward Customer Support agents on live chat (SUP-001).
+2. The CSR logs a Tier 3 policy violation and escalates the ticket to Level 3 Management via SUP-003.
+3. Support Manager reviews chat transcripts, issues a formal written warning, and temporarily restricts the customer's live chat privileges for 30 days, re-routing future inquiries exclusively to formal email channels.
+Frequently Asked Questions (FAQs)
+Q1: How am I notified when NovaCart updates its Terms & Conditions Policy?
+Answer: Minor operational updates take effect upon publication to our website. For material policy modifications that affect your customer rights or account rules, we provide an advance 14-day notice via email, SMS, or dashboard pop-up alerts before updated terms take effect.
+Q2: Can I share my NovaCart Prime membership account with friends or family members?
+Answer: NovaCart retail and Prime accounts are non-transferable and designed strictly for individual household or corporate use. Sharing login credentials across unlinked households violates account security policies (SEC-001, SEC-002) and may trigger automated step-up MFA challenges or security suspensions.
+Q3: What happens if an item I ordered was listed at an incorrect price due to a system glitch?
+Answer: In the rare event of a clear technical pricing error (where an item is displayed at a fraction of its true value due to a system bug), NovaCart reserves the right to cancel unfulfilled orders placed under the error, notify you immediately, and issue a 100% full refund to your original payment method (Refer to PAY-003).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of LEG-001. Established platform terms acceptance rules, customer eligibility matrices, acceptable usage boundaries, prohibited activity classification, account status workflows, and policy update notification standards.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* ORD-001: Order Lifecycle Management Policy
+* SHIP-001: Domestic Shipping Policy
+* SHIP-003: Express & Priority Shipping Policy
+* PAY-001: Payment Processing SOP
+* PAY-003: Refund Payment Processing Policy
+* PAY-004: Chargeback & Payment Dispute Policy
+* PAY-006: Stored Payment Methods & Tokenization Policy
+* REF-001: Master Refund Eligibility Rules
+* REF-006: Store Credit & Promotional Refund Policy
+* PROD-001: Product Catalog Management Policy
+* PROD-002: Product Availability & Inventory Policy
+* PROD-003: Product Warranty Policy
+* PROD-006: Digital Products & Licensing Policy
+* SEC-001: Account Security Policy
+* SEC-002: Authentication & Access Control Policy
+* SEC-003: Data Protection & Privacy Policy
+* SEC-004: Fraud Prevention & Risk Management Policy
+* SEC-005: Incident Response & Security Breach Policy

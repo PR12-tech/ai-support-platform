@@ -1,0 +1,433 @@
+﻿ORD-001: Order Lifecycle Management Policy
+Document Header
+* Document Title: Order Lifecycle Management Policy
+* Document ID: ORD-001
+* Version: 1.0.0
+* Document Category: Orders
+* Classification: Internal
+* Department Owner: Operations & Engineering
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Logistics, VP of Finance Operations, Chief Technology Officer
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Order Lifecycle, Order Status, OMS, State Transitions, Order Processing, Inventory Reservation, Fulfillment, Delivery Completion, Terminal States
+Purpose
+This document establishes the official enterprise governance framework for managing the complete lifecycle of customer orders within NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It defines the sequential stages, state transition logic, system interactions, departmental ownership boundaries, and operational rules governing orders from initial placement through payment validation, inventory reservation, warehouse picking and packing, shipping handover, delivery, post-delivery return window closure, and final archival.
+As a foundational operational policy (ORD-001) in the NovaCart Enterprise Knowledge Base (NEKB), ORD-001 enforces deterministic order execution across human operators and backend microservices, ensuring full compatibility with COMP-001 through COMP-004, SUP-001 through SUP-005, PAY-001, SHIP-001, and REF-001.
+Scope
+This policy applies universally across all operating territories (India, Singapore, UAE), commercial channels (B2C Retail, B2B SMB, Corporate Enterprise Accounts, NovaCart Prime Memberships), and underlying software engines managing checkout and fulfillment pipelines.
+Coverage Includes
+* Order state transitions within the core Order Management System (api.novacart.internal/oms).
+* Departmental handoffs across Sales, Finance, Warehouse Management, Logistics, Customer Support, and Returns.
+* Event-driven notifications generated for customers and merchant sellers.
+* Operational exception pathways including inventory stock-outs, payment gateway drops, delivery failures, split fulfillment, and post-delivery returns.
+Order Lifecycle Overview
+The NovaCart order lifecycle is governed by an automated, event-driven state machine managed by the core Order Management System (OMS). Every order moves through distinct processing phases designed to ensure transactional integrity, real-time inventory precision, and verifiable logistics execution.
+
+
+
+
+
+
+<ElicitationsGroup message="To examine related order fulfillment, payment, or shipping policies further:">
+{/* Reason: Provides structured paths to explore related domain policies governing order execution. */}
+ <Elicitation label="Review ORD-005 Split Orders Procedure" query="Show ORD-005 Split Orders Procedure governing multi-hub order partitioning." />
+ <Elicitation label="Examine SHIP-001 Domestic Shipping Policy" query="Show SHIP-001 Domestic Shipping Policy detailing dispatch and delivery SLAs." />
+ <Elicitation label="Review PAY-001 Payment Processing SOP" query="Show PAY-001 Payment Processing SOP governing transaction clearing." />
+</ElicitationsGroup>
+
+Primary Lifecycle Phases
+1. Ingress & Authorization: Order checkout initiation, price calculation, fraud screening, and payment authorization.
+2. Inventory Allocation: Hard reservation of Stock Keeping Units (SKUs) in localized Fulfillment Center (FC) databases.
+3. Fulfillment Execution: Warehouse pick, pack, weight audit, serial number logging, and staging.
+4. Logistics & Transit: Carrier pickup, middle-mile linehaul, regional hub sorting, and last-mile out-for-delivery routing.
+5. Final Settlement: Delivery confirmation via digital Proof of Delivery (POD), return window countdown, merchant settlement, and final archiving.
+Order Status Definitions
+Every order record within the OMS maintains an explicit, singular status tag that defines permitted system actions, departmental ownership, and customer visibility.
+Order Status Matrix
+Order Status Tag
+	Status Description
+	Owning Department
+	Primary System
+	Terminal State?
+	Customer Visible Label
+	PENDING_PAYMENT
+	Checkout initiated; awaiting payment gateway authorization or COD confirmation.
+	Finance
+	Payment Gateway / OMS
+	No
+	Payment Pending
+	PAYMENT_CONFIRMED
+	Payment successfully cleared or COD eligibility verified; passed anti-fraud screening.
+	Finance
+	Financial Ledger (ledger)
+	No
+	Payment Confirmed
+	INVENTORY_RESERVED
+	OMS has allocated stock against localized FC inventory bins; pick-list generated.
+	Operations / Warehouse
+	WMS (wms)
+	No
+	Order Processing
+	PROCESSING
+	Warehouse staff assigned wave pick; items retrieved and brought to packing station.
+	Warehouse Management
+	WMS (wms)
+	No
+	Preparing Item(s)
+	PACKED
+	Items packaged, tamper-evident seal applied, shipping label and shipping invoice affixed.
+	Warehouse Management
+	WMS (wms)
+	No
+	Packed
+	READY_FOR_DISPATCH
+	Parcel staged at FC loading bay; manifest assigned to linehaul/courier driver.
+	Warehouse / Logistics
+	WMS / TMS
+	No
+	Ready for Pickup
+	SHIPPED
+	Courier scanned parcel barcode onto transport vessel; main tracking ID activated.
+	Logistics
+	TMS (tms)
+	No
+	In Transit
+	OUT_FOR_DELIVERY
+	Package arrived at last-mile delivery hub and assigned to local delivery rider route.
+	Logistics
+	TMS Driver App
+	No
+	Out for Delivery
+	DELIVERED
+	Parcel handed to recipient; digital Proof of Delivery (OTP/Signature) verified.
+	Logistics
+	TMS Driver App
+	No
+	Delivered
+	COMPLETED
+	Return/replacement window (7–10 days) expired without claim; funds released to merchant.
+	Operations / Finance
+	OMS / Ledger
+	Yes
+	Completed
+	CANCELLED
+	Order terminated prior to dispatch by customer, merchant, system, or anti-fraud trigger.
+	Customer Support / System
+	OMS / ERP
+	Yes
+	Cancelled
+	RETURNED
+	Delivered parcel collected via reverse logistics and accepted at reverse processing hub.
+	Returns & Refunds
+	RMA Portal (rma)
+	No
+	Item Returned
+	REFUNDED
+	Monetary transaction reversed to original payment instrument or customer wallet.
+	Finance
+	Financial Ledger
+	Yes
+	Refunded
+	Order Creation Process
+1. Cart Submission: The customer submits a purchase request via web or mobile application interfaces.
+2. Tax & Delivery Calculation: The platform calculates real-time regional taxes (GST in IN, VAT in UAE), shipping fees based on delivery speed (Standard, Express, Same-Day), and applicable promotions.
+3. Master Order Generation: The OMS writes a Master Order ID (e.g., NC-IN-88201) to the primary transactional database in api.novacart.internal with an initial status of PENDING_PAYMENT.
+Payment Verification
+1. Gateway Handshake: For prepaid orders (Credit/Debit Card, UPI, Net Banking, EMI, Wallets), the payment gateway attempts financial clearing (Refer to PAY-001).
+2. Fraud & Risk Screening: Parallel anti-fraud algorithms screen the transaction for velocity spikes, card-not-present risk, and IP mismatches (Refer to SEC-004).
+3. State Transition:
+   * Success: Payment gateway returns AUTHORIZATION_SUCCESS. The OMS updates status to PAYMENT_CONFIRMED.
+   * Failure: Gateway returns AUTHORIZATION_FAILED. OMS retains status as PENDING_PAYMENT for 15 minutes to allow customer payment re-attempt. If uncompleted after 15 minutes, OMS transitions order to CANCELLED (Reason: PAYMENT_TIMEOUT) (Refer to PAY-002).
+   * COD Validation: Cash on Delivery orders bypass electronic clearing but undergo automated phone OTP verification or customer historical COD acceptance audit before moving to PAYMENT_CONFIRMED.
+Inventory Reservation
+1. Sourcing Optimization: Upon reaching PAYMENT_CONFIRMED, the OMS sourcing logic evaluates customer delivery address against FC inventory levels (BLR-01, DEL-02, BOM-01, CCU-01, SIN-01, DXB-01, AUH-01).
+2. Split Order Evaluation: If items within a multi-item order reside in separate FCs, the OMS partitions the Master Order into distinct Sub-Order IDs (e.g., NC-IN-88201-A and NC-IN-88201-B) (Refer to ORD-005).
+3. Hard Lock Execution: The WMS locks specific item quantities in physical storage bins. Order status transitions to INVENTORY_RESERVED.
+4. Stock Unavailability Trigger: If inventory audit reveals a stock mismatch (physical stock missing), WMS issues an immediate STOCK_UNAVAILABLE exception event to OMS.
+Order Confirmation
+1. Confirmation Messaging: Once inventory is successfully reserved, OMS generates an automated email, SMS, and in-app push notification to the customer containing order breakdown, sub-order tracking IDs, itemized tax invoice, and estimated delivery dates (ETA).
+2. Seller / Warehouse Alert: The sub-order details populate on active picking workstations within designated FCs.
+Warehouse Processing
+1. Wave Picking: Warehouse personnel receive digital wave pick tasks on handheld terminals (hht.novacart.internal). Status transitions to PROCESSING.
+2. Serial Number Registration: For high-value categories including Consumer Electronics (CAT-ELE) and Mobile Devices (CAT-MOB), picking staff scan unique item IMEI/serial numbers, permanently binding them to the Sub-Order ID in WMS (Refer to COMP-001, PROD-001).
+3. Packaging & Weight Audit: Items pass to packing stations where tamper-evident packaging is applied. Automated inline scales verify package gross weight against catalog SKU expectations. Status updates to PACKED.
+4. Labeling: Shipping labels containing destination barcodes, routing codes, and masked customer PII are affixed. Status transitions to READY_FOR_DISPATCH.
+Shipment Handover
+1. Carrier Manifesting: The Transportation Management System (TMS) assigns staged packages to scheduled linehaul transport or direct 3PL courier pickups (Refer to SHIP-001, SHIP-002).
+2. Dock Scanning: Courier driver scans package barcodes at FC dispatch docks, transferring custody from Warehouse Management to Logistics.
+3. State Transition: Status updates to SHIPPED. TMS activates public tracking milestones and calculates dynamic courier ETA.
+4. Last-Mile Routing: Upon parcel arrival at regional destination hubs, TMS assigns packages to delivery riders. Status transitions to OUT_FOR_DELIVERY.
+Delivery Completion
+1. Verification at Doorstep: Delivery rider arrives at customer location and requests verification via time-stamped One-Time Password (OTP) sent to customer mobile device or recipient digital signature.
+2. Delivery Confirmation: Successful verification writes a digital Proof of Delivery (POD) record to TMS.
+3. State Transition: Status updates immediately to DELIVERED. OMS triggers customer delivery confirmation alerts.
+Order Closure
+1. Return Window Holding Period: Orders remain in DELIVERED status for the duration of the category-specific return window (7 days for CAT-ELE/CAT-MOB; 10 days for CAT-APP) (Refer to REF-001).
+2. Transition to Completed: If no return request (RMA), defect report, or delivery dispute is initiated prior to return window expiration:
+   * OMS updates order status to COMPLETED (Terminal State).
+   * Financial ledger releases merchant escrow funds and triggers seller commission settlement.
+   * Order record is archived for long-term audit and tax compliance.
+Order Exceptions
+The following matrix defines mandatory handling workflows for non-standard order events:
+Order Exception Matrix
+Exception Event
+	Triggering System
+	Immediate Status Action
+	Secondary Operational Action
+	Policy / SOP Reference
+	Payment Authorization Drop
+	Payment Gateway
+	Retain PENDING_PAYMENT (15 Mins)
+	Trigger automated recovery SMS; cancel if unpaid after 15 mins.
+	PAY-002
+	Inventory Stock-Out
+	WMS
+	Transition to CANCELLED_NO_STOCK
+	Issue auto-refund; alert merchant; issue ₹200 goodwill credit.
+	ORD-002, REF-001
+	Pre-Dispatch Customer Cancel
+	OMS / Support Portal
+	Transition to CANCELLED_BY_CUSTOMER
+	Release inventory lock; trigger 100% refund to original payment source.
+	ORD-002, REF-001
+	Non-Delivery Attempt (NDR)
+	TMS Driver App
+	Retain SHIPPED / Reschedule
+	Trigger automated address re-confirmation SMS to customer.
+	SHIP-005
+	Delivery Refusal / Returned
+	TMS Driver App
+	Transition to RETURN_TO_ORIGIN
+	Carrier returns package to FC; process refund minus shipping fee.
+	SHIP-005, REF-001
+	Transit Loss Declared
+	TMS / Logistics
+	Transition to CANCELLED_LOST_IN_TRANSIT
+	Auto-dispatch replacement order or issue full refund to customer.
+	SHIP-006, REF-001
+	Damaged Item Returned
+	RMA Portal
+	Transition to RETURNED
+	Reverse logistics inspects item; triggers REFUNDED status upon pass.
+	REF-003, REF-005
+	Department Responsibilities
+Department Responsibility Matrix
+Order State / Stage
+	Sales / Commercial
+	Finance Operations
+	Warehouse Management
+	Logistics & Fleet
+	Customer Support
+	Returns & Refunds
+	Order Placement
+	A
+	C
+	I
+	I
+	I
+	I
+	Payment Verification
+	I
+	A
+	I
+	I
+	C
+	I
+	Inventory Reservation
+	I
+	I
+	A
+	C
+	C
+	I
+	Pick, Pack & Staging
+	I
+	I
+	A
+	C
+	I
+	I
+	Dispatch & Transit
+	I
+	I
+	C
+	A
+	C
+	I
+	Last-Mile & Delivery
+	I
+	I
+	I
+	A
+	C
+	I
+	Post-Delivery / Return
+	I
+	C
+	I
+	C
+	C
+	A
+	Final Completion
+	C
+	A
+	I
+	I
+	I
+	C
+	(Legend: A = Accountable / Primary Lead; C = Consulted / Action Unit; I = Informed)
+Business Rules
+Rule 1: Permitted State Transitions
+Order state transitions must follow valid pathways defined in the State Transition Matrix below. Illegal manual state skips (e.g., transitioning directly from INVENTORY_RESERVED to DELIVERED without SHIPPED logs) are blocked by database constraints within OMS.
+Order State Transition Matrix
+Current Order Status ↓
+	PAYMENT_CONFIRMED
+	INVENTORY_RESERVED
+	PROCESSING
+	PACKED
+	SHIPPED
+	DELIVERED
+	CANCELLED
+	COMPLETED
+	PENDING_PAYMENT
+	VALID
+	Invalid
+	Invalid
+	Invalid
+	Invalid
+	Invalid
+	VALID
+	Invalid
+	PAYMENT_CONFIRMED
+	Invalid
+	VALID
+	Invalid
+	Invalid
+	Invalid
+	Invalid
+	VALID
+	Invalid
+	INVENTORY_RESERVED
+	Invalid
+	Invalid
+	VALID
+	Invalid
+	Invalid
+	Invalid
+	VALID
+	Invalid
+	PROCESSING
+	Invalid
+	Invalid
+	Invalid
+	VALID
+	Invalid
+	Invalid
+	VALID
+	Invalid
+	PACKED
+	Invalid
+	Invalid
+	Invalid
+	Invalid
+	VALID
+	Invalid
+	VALID
+	Invalid
+	SHIPPED
+	Invalid
+	Invalid
+	Invalid
+	Invalid
+	Invalid
+	VALID
+	Invalid
+	Invalid
+	DELIVERED
+	Invalid
+	Invalid
+	Invalid
+	Invalid
+	Invalid
+	Invalid
+	Invalid
+	VALID
+	COMPLETED (Terminal)
+	Invalid
+	Invalid
+	Invalid
+	Invalid
+	Invalid
+	Invalid
+	Invalid
+	Invalid
+	CANCELLED (Terminal)
+	Invalid
+	Invalid
+	Invalid
+	Invalid
+	Invalid
+	Invalid
+	Invalid
+	Invalid
+	Rule 2: Non-Modifiability of Shipped Orders
+Once an order state transitions to SHIPPED, customer-initiated cancellations or delivery address modifications via self-service applications are strictly locked. Address changes post-dispatch require L2 Logistics intervention (Refer to SHIP-007).
+Rule 3: Immutable Terminal States
+The statuses COMPLETED, CANCELLED, and REFUNDED represent absolute terminal states. Once an order reaches a terminal state, its status cannot be reopened or transitioned to an active state. Any secondary dispute requires creating a new administrative ticket ID.
+Exception Handling
+* Systemic OMS Outages: If the central OMS experiences API database locks, picking terminals fall back to local queue offline caching. Offline pick logs sync back to OMS upon connectivity restoration, preventing fulfillment halts.
+* Lost Package Auto-Replacement: If TMS logs no courier tracking updates for 96 hours, OMS flags the parcel as lost, initiates an automatic replacement sub-order dispatching new inventory from the nearest FC, and files an internal insurance claim (Refer to SHIP-006).
+Order Lifecycle Examples
+Scenario 1: Successful Order Completion
+1. Customer purchases a gaming mouse (₹3,499) via UPI checkout at 10:00 AM. Status: PENDING_PAYMENT.
+2. UPI authorization clears at 10:00:15 AM. OMS updates status to PAYMENT_CONFIRMED.
+3. OMS sources item at hub BLR-01 at 10:02 AM. Status updates to INVENTORY_RESERVED.
+4. FC staff picks and packs item by 11:30 AM. Status transitions: PROCESSING $\rightarrow$ PACKED $\rightarrow$ READY_FOR_DISPATCH.
+5. Courier scans parcel at 02:00 PM. Status updates to SHIPPED.
+6. Delivery rider completes OTP doorstep verification next day at 01:30 PM. Status updates to DELIVERED.
+7. Return window (7 days) expires without dispute. OMS transitions order to COMPLETED (Terminal State) and settles funds to merchant.
+Scenario 2: Split Order Processing
+1. Customer orders a laptop (CAT-ELE) and a refrigerator (CAT-APP) in Master Order NC-IN-99102. Status: PAYMENT_CONFIRMED.
+2. OMS identifies laptop at BLR-01 and refrigerator at BOM-01. OMS creates Sub-Orders NC-IN-99102-A (Laptop) and NC-IN-99102-B (Refrigerator).
+3. Laptop processes through express air freight (SHIPPED $\rightarrow$ DELIVERED in 24 hours).
+4. Refrigerator processes through heavy surface freight (SHIPPED $\rightarrow$ DELIVERED in 72 hours).
+5. Master Order reflects PARTIALLY_DELIVERED until Sub-Order B reaches DELIVERED, whereupon Master Order transitions to DELIVERED (Refer to ORD-005).
+Scenario 3: Delivery Failure & Return to Origin (RTO)
+1. Order dispatched to Dubai customer reaches OUT_FOR_DELIVERY status.
+2. Courier attempts delivery; customer is unreachable. Rider logs Non-Delivery Report (NDR) attempt 1 (Refer to SHIP-005).
+3. After 3 failed attempts over 3 consecutive days, courier marks parcel as DELIVERY_REFUSED_RTO.
+4. Package returns to hub DXB-01. Returns team verifies unopened seal and updates status to RETURNED.
+5. Finance processes full item refund minus outbound shipping charges, updating final status to REFUNDED (Terminal State).
+Frequently Asked Questions (FAQs)
+Q1: Can a customer cancel an order after it has reached PACKED status?
+Answer: Yes. Customers may cancel orders self-service or via Customer Support while in PACKED or READY_FOR_DISPATCH status. WMS receives a recall command, prevents courier handover, unpacks the item back to inventory, and Finance issues a 100% refund (Refer to ORD-002, REF-001).
+Q2: What happens to allocated inventory if a customer's payment remains pending?
+Answer: Allocated stock is soft-locked for exactly 15 minutes during PENDING_PAYMENT status. If payment verification is not completed within 15 minutes, OMS releases the soft lock back to active platform catalog inventory and cancels the order (Refer to PAY-002).
+Q3: Who holds operational authority to manually alter an order status?
+Answer: Manual status overrides are restricted to authorized L2/L3 Customer Support, Operations, and Finance Specialists via crm.novacart.internal. Every manual status change requires a mandatory reason code entry and generates an indelible audit log entry linked to the employee's ID.
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of ORD-001. Established master order lifecycle, status definitions, state transition matrix, departmental RACI, exception pathways, and terminal state rules.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* ORD-002: Order Cancellation Policy
+* ORD-005: Split Orders Procedure
+* SHIP-001: Domestic Shipping Policy
+* SHIP-002: International Shipping Policy
+* SHIP-005: Delayed Deliveries Protocol
+* PAY-001: Payment Processing SOP
+* PAY-002: Payment Failure Handling
+* REF-001: Master Refund Eligibility Rules
+* REF-005: Return Process Protocols
+* PROD-001: Warranty Validation Policy

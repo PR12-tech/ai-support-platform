@@ -1,0 +1,285 @@
+﻿SEC-004: Fraud Prevention & Risk Management Policy
+Document Header
+* Document Title: Fraud Prevention & Risk Management Policy
+* Document ID: SEC-004
+* Version: 1.0.0
+* Document Category: Security
+* Classification: Internal / Public Operational Standard
+* Department Owner: Risk Management & Fraud Operations
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Fraud Operations, Chief Information Security Officer, VP of Payment Operations, General Counsel
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Fraud Prevention, Risk Assessment, Transaction Screening, Account Takeover, Chargeback Abuse, Promo Exploitation, Order Verification, Fraud Containment
+Purpose
+This document defines the official Fraud Prevention & Risk Management Policy of NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes standardized operational procedures, fraud risk classifications, real-time transaction screening criteria, verification workflows, order control mechanisms, investigation standards, customer communication guidelines, and business rules governing the detection, containment, investigation, and mitigation of fraudulent activities across all NovaCart digital channels and commerce platforms.
+As a core security policy (SEC-004) in the Security module of the NovaCart Enterprise Knowledge Base (NEKB), SEC-004 coordinates threat monitoring across the Security & Fraud Engine (shield.novacart.internal), Identity & Access Management (auth.novacart.internal), Payment Ledgers (ledger.novacart.internal), and Order Management (api.novacart.internal/oms), operating in strict operational alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, REF-001 through REF-006, PROD-001 through PROD-006, SEC-001, SEC-002, and SEC-003.
+Scope
+This policy applies universally across all customer account types, sales channels, payment methods, promotional programs, and commercial transactions executed across NovaCart’s operating territories (India, Singapore, UAE) across both 1P Direct Distribution and 3P Marketplace Merchant fulfillment models.
+Coverage Includes
+* Identification, triage, and mitigation of transaction fraud, account takeover (ATO), promo code gaming, friendly fraud (chargeback abuse), return fraud, and resellers bypassing volume limits.
+* Risk-based transaction scoring, high-risk order holds, and manual review queues.
+* Customer identity verification triggers, document validation, and high-value order confirmations.
+* Order interception controls, carrier recalls for in-transit shipments, and account blacklisting protocols.
+* Formal fraud investigation lifecycles, evidence gathering, dispute defense coordination, case closure criteria, and audit logging.
+Out of Scope
+* Technical authentication architectures, JWT token lifecycles, and SAML/SSO integrations (governed by SEC-002).
+* Bank chargeback representment mechanics, dispute arbitration schedules, and card network representment rules (governed by PAY-004).
+Fraud Prevention & Risk Management Overview
+Digital e-commerce platforms face evolving security threats ranging from automated credential stuffing attacks to stolen card usage, promo code farming, and return abuse. NovaCart balances a frictionless checkout experience for legitimate customers with robust risk management controls designed to detect and intercept fraudulent behavior before financial loss or customer harm occurs.
+Core Fraud Prevention Principles
+1. Adaptive Frictionless Protection: Low-risk transactions proceed through automated checkout without friction, while high-risk activities trigger targeted step-up verification or manual risk review.
+2. Real-Time Pre-Dispatch Containment: Risk screening occurs continuously during checkout and order processing, enabling the system to intercept suspicious transactions prior to warehouse dispatch or digital product key reveal (PROD-006).
+3. Data-Driven Behavioral Baselines: Threat detection relies on multi-parameter risk scoring, evaluating device reputation, velocity metrics, geographic consistency, and historical transaction patterns (SEC-003).
+4. Presumption of Good Faith: Verification workflows and customer outreach must maintain a professional, respectful tone, treating flagged customers as legitimate users undergoing routine security validation until fraud is conclusively proven.
+Fraud Risk Classification
+Fraud threats are categorized into three standardized risk severity tiers based on potential financial loss, systemic operational impact, and customer account compromise:
+Fraud Risk Classification Matrix
+Risk Tier
+	Hazard Severity Level
+	Operational Threat Profile
+	Example Fraud Scenarios
+	Mandatory System Action SLA
+	Tier 1 (Critical)
+	Extreme / High Impact
+	Systematic attack; stolen payment instruments; account takeover (ATO); organized fraud rings.
+	Concurrent stolen card testing; ATO with shipping address changes; high-value electronics theft (CAT-ELE).
+	Order hold $\le 1\text{ Min}$; Account freeze $\le 5\text{ Mins}$; Manual review $\le 2\text{ Hrs}$.
+	Tier 2 (Major)
+	Moderate / Medium Impact
+	Isolated fraud; chargeback abuse; promo code exploitation; false return claims.
+	Friendly fraud chargeback filings (PAY-004); multi-account promo code farming; return box serial mismatches (REF-004).
+	Transaction hold $\le 15\text{ Mins}$; Verification alert $\le 4\text{ Hrs}$; Review $\le 12\text{ Hrs}$.
+	Tier 3 (Minor)
+	Low / Policy Abuse
+	Unauthorized reseller buying; minor information discrepancies; policy gaming.
+	Commercial reselling exceeding catalog quantity caps (PROD-001); minor billing/shipping name variations.
+	Flagged for automated rule enforcement; Quantity capping $\le 1\text{ Hr}$.
+	Common Fraud Scenarios
+NovaCart establishes targeted detection rules for seven primary enterprise fraud patterns:
+1. Stolen Payment Card Usage: Unauthorized checkout attempts utilizing stolen credit/debit card details obtained from external breaches (PAY-001).
+2. Account Takeover (ATO): Compromise of a legitimate customer account to drain NovaCart Wallet balances (REF-006), utilize stored payment tokens (PAY-006), or place orders to unauthorized addresses (SEC-001).
+3. Card Testing Attacks: High-frequency, low-value checkout attempts executed by automated bots to test the validity of stolen card lists (PAY-002).
+4. Friendly Fraud & Chargeback Abuse: Legitimate account holders receiving delivered goods and subsequently filing false "unauthorized transaction" claims with issuing banks (PAY-004).
+5. Promotional & Coupon Farming: Creation of multiple synthetic accounts using temporary email domains to repeatedly exploit single-use introductory discounts or referral credits (REF-006).
+6. Return & Serial Substitution Fraud: Returning older, broken, or dummy items inside original packaging, or tampering with physical serial/IMEI tags on high-value items (REF-004).
+7. Reseller Bulk Buying: Unauthorized commercial entities using automated purchasing scripts to buy out restricted, high-demand inventory for unofficial secondary market resale (PROD-002).
+Fraud Indicator Matrix
+The Security & Fraud Engine (shield.novacart.internal) monitors transaction telemetry for key fraud indicators:
+Fraud Indicator Matrix
+Category
+	Fraud Risk Indicator
+	Risk Weight
+	Triggering Condition
+	Identity Telemetry
+	Rapid Multi-Account Creation
+	High
+	$\ge 3$ new accounts created from the same device fingerprint within 1 hour.
+	Identity Telemetry
+	High-Risk Email Domain
+	Moderate
+	Account registered using temporary, disposable, or unverified email domains.
+	Payment Telemetry
+	Card-Account Name Mismatch
+	Moderate
+	Billing name on card differs completely from account holder name.
+	Payment Telemetry
+	Cross-Account Card Sharing
+	High
+	Same payment card token (PAY-006) utilized across $\ge 3$ distinct user accounts.
+	Velocity Telemetry
+	Velocity Spike in Checkouts
+	High
+	$\ge 5$ order attempts within 10 minutes from a single IP or account.
+	Fulfillment Telemetry
+	High-Risk Address Change
+	High
+	Delivery address modified to a new city within 15 minutes of password reset (SEC-001).
+	Risk Assessment Process
+Every order submitted to api.novacart.internal/oms passes through a real-time risk assessment pipeline in shield.novacart.internal:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        TRANSACTION RISK EVALUATION PIPELINE                       |
++-----------------------------------------------------------------------------------+
+| 1. TELEMETRY INGESTION | Capture device fingerprint, IP, payment token, and order value. |
+| 2. RULE ENGINE CHECK   | Evaluate velocity, cross-account links, and address changes.  |
+| 3. SCORE CALCULATION   | Calculate composite Risk Score: Low (0-29), Med (30-69), High (70-100). |
+| 4. DECISION EXECUTION  | Low = Auto-Approve; Med = Step-up Auth; High = Order Hold / Review. |
++-----------------------------------------------------------------------------------+
+
+Transaction Risk Matrix
+Risk Score Range
+	Risk Classification
+	Order Fulfillment Status
+	Operational Action Required
+	0 to 29
+	Low Risk
+	APPROVED_FOR_FULFILLMENT
+	Order releases automatically to warehouse picking (ORD-001).
+	30 to 69
+	Medium Risk
+	HOLD_SECURITY_REVIEW
+	Order paused; Step-up MFA or telephone confirmation triggered.
+	70 to 100
+	High Risk
+	HOLD_FRAUD_CONTAINMENT
+	Order held; active session revoked; assigned to Fraud Analyst.
+	Customer Verification Procedures
+When a transaction or account action triggers a security hold, NovaCart executes risk-proportional verification procedures:
+Customer Verification Matrix
+Triggering Operational Event
+	Required Verification Level
+	Required Customer Proof / Action
+	Verification SLA Target
+	High-Value Order ($> \text{INR } 50,000$)
+	Level 2 (Step-Up Verification)
+	6-digit OTP sent to registered phone + 3DS authorization (PAY-001).
+	Instant ($< 2\text{ Mins}$)
+	Address Change Post-ATO Flag
+	Level 3 (High Security Check)
+	Phone verification call + dual-OTP to registered email and phone (SEC-001).
+	$< 2\text{ Hours}$
+	High-Risk Transaction Flag
+	Level 4 (Identity Audit)
+	Government ID photo (Aadhaar/Passport/Emirates ID) + live selfie verification.
+	$< 12\text{ Business Hours}$
+	Suspected Chargeback Abuse
+	Level 4 (Identity Audit)
+	Written transaction confirmation + Proof of Delivery review (PAY-004).
+	$< 24\text{ Hours}$
+	Order Review & Transaction Controls
+1. Temporary Hold Execution: Orders placed on HOLD_FRAUD_CONTAINMENT reserve inventory soft locks (PROD-002) but are blocked from warehouse picking queues in wms.novacart.internal and digital key release in digital.novacart.internal (PROD-006).
+2. Order Cancellation for Unverified Fraud: If an order remains in HOLD_FRAUD_CONTAINMENT and the customer fails to complete required Level 4 identity verification within 24 hours, the order transitions automatically to CANCELLED_FRAUD_RISK. Soft locks release back to sellable inventory (PROD-002), and payment authorizations are voided or refunded (PAY-003).
+3. In-Transit Carrier Recalls: If an order is confirmed as fraudulent after physical dispatch from a fulfillment center, Fraud Operations executes an immediate "In-Transit Courier Recall" payload via api.novacart.internal/tms. The carrier intercepts the parcel and returns it directly to the origin warehouse (SHIP-001).
+Fraud Investigation Workflow
+Reported or system-flagged fraud incidents proceed through a formal 5-phase investigation lifecycle:
+1. Case Triage & Intake: The system or analyst opens a Fraud Investigation File (FRD-XXXXX) in shield.novacart.internal, linking Order IDs, User IDs, payment tokens, IP logs, and device fingerprints.
+2. Evidence Collection: Analysts compile comprehensive evidentiary packages, including delivery signatures (Proof of Delivery - POD), courier GPS logs (SHIP-001), unboxing inspection photos/CCTV (REF-004), device fingerprint trails, and historical chat transcripts (SUP-001).
+3. Analysis & Cross-Account Linkage: Analysts query shield.novacart.internal for hidden linkages (e.g., shared shipping addresses, matching payment tokens, or identical browser canvas hashes).
+4. Determination & Action Execution:
+   * Confirmed Fraud: Order cancelled; payment refunded to legitimate cardholder (PAY-003); fraudulent user account blacklisted; physical delivery address flagged.
+   * False Positive: Order released from hold (APPROVED_FOR_FULFILLMENT); account status restored; priority processing assigned (ORD-001).
+5. Case Closure & Reporting: Analyst logs narrative findings, updates risk scoring models, and archives evidence.
+Fraud Investigation Status Matrix
+Case Status Code
+	Status Name
+	Operational Meaning
+	Target Resolution SLA
+	FRD_NEW
+	Case Opened
+	Flagged by system rules; queued for analyst triage.
+	$< 1\text{ Hour}$
+	FRD_IN_REVIEW
+	Under Investigation
+	Analyst actively collecting evidence and conducting checks.
+	$< 12\text{ Hours}$
+	FRD_PENDING_VERIFY
+	Awaiting Customer
+	Identity verification request sent to customer.
+	$< 24\text{ Hours}$
+	FRD_CONFIRMED
+	Fraud Verified
+	Fraud confirmed; containment and account blacklist applied.
+	$< 24\text{ Hours}$
+	FRD_CLEARED
+	False Positive
+	Order cleared of suspicion; released for fulfillment.
+	$< 2\text{ Hours}$
+	Customer Communication Standards
+All customer communications regarding risk reviews, verification holds, or order cancellations must adhere to strict professional standards:
+* Neutral & Security-Focused Tone: Communications must frame holds around "protecting your account and payment security" rather than accusing the customer of fraudulent intent.
+* Clear Action Instructions: Notifications must specify exact verification steps required, provide direct links to secure upload portals (auth.novacart.internal/verify), and state explicit completion deadlines.
+* Prohibition of Sensitive Data Transmission: Staff must never request full credit card numbers, CVVs, or account passwords via email, SMS, or unencrypted chat (SEC-001, SEC-003).
+Employee Responsibilities
+All NovaCart employees share operational duty in protecting the platform against risk:
+1. Adherence to Screening Protocols: Customer Support Representatives (CSRs) and Warehouse staff must follow standardized identity checks (SEC-001) and unboxing inspection rules (REF-004) without taking unauthorized shortcuts.
+2. Reporting Suspicious Patterns: Staff must immediately escalate unusual patterns (e.g., customer demanding shipping address change to a freight forwarder post-checkout) to Fraud Operations.
+3. Confidentiality of Risk Rules: Employees must keep internal risk scoring thresholds, velocity caps, and fraud detection algorithms strictly confidential to prevent bad actors from engineering circumvention tactics.
+Department Responsibilities
+Accountability for fraud prevention and risk mitigation is distributed across specialized operational units:
+Department Responsibility Matrix
+Department Unit
+	Primary Risk Management Responsibilities
+	Primary System Portal
+	SLA / Target KPI
+	Fraud Operations
+	Operates real-time risk screening, conducts manual reviews, handles chargeback defense (PAY-004).
+	shield.novacart.internal
+	Fraud Loss Rate $< 0.05\%$ of GMV
+	Information Security
+	Maintains IAM controls (SEC-002), monitors bot/credential stuffing attacks, manages vault security.
+	shield.novacart.internal
+	High-risk review SLA $< 2\text{ Hours}$
+	Customer Support
+	Guides customers through identity verification; assists with order hold inquiries.
+	crm.novacart.internal
+	Verification guidance FRT $< 15\text{ Secs}$
+	Logistics & Fleet
+	Executes carrier in-transit shipment recalls, verifies delivery signatures (POD).
+	tms.novacart.internal
+	Carrier recall execution SLA $< 2\text{ Hours}$
+	Business Rules
+Rule 1: Instant Hold on Address Change Post-Password Reset
+Any order placed within 15 minutes of an account password reset or primary email update that specifies a newly added delivery address must be placed on mandatory HOLD_SECURITY_REVIEW pending step-up phone or dual-OTP confirmation (SEC-001).
+Rule 2: Absolute Serial Number Matching for Return Refunds
+No monetary refund or replacement dispatch shall be approved for returned high-value electronics (CAT-ELE/CAT-MOB) if the returned item's physical Serial Number or IMEI fails to match the outbound dispatch log recorded in wms.novacart.internal. Mismatched items trigger immediate refund rejection, physical unit impoundment, and fraud file creation (REF-001, REF-004).
+Rule 3: Single Payment Card Token Multi-Account Cap
+A single payment card token (PAY-006) may be linked to a maximum of two (2) distinct customer accounts. Attempting to process checkouts using the same card token across three or more accounts triggers an automated Tier 1 fraud hold and locks the card token across the platform.
+Rule 4: Mandatory 7-Year Fraud Audit Retention
+All fraud investigation files, evidence packages, courier POD signatures, device logs, and chargeback representment records must be retained in secure storage for a mandatory period of 7 years to support law enforcement inquiries, financial audits, and regulatory reviews (SEC-003).
+Exception Handling
+* VIP Customer High-Risk Order Holds: If a high-value order placed by a NovaCart Prime VIP member triggers a medium risk hold, the system routes the file to a Senior Fraud Specialist for priority review within 15 minutes. The analyst conducts an expedited phone confirmation or cross-references historical VIP purchasing baselines to minimize customer disruption (SUP-003).
+* False Positive Release Authority: A Senior Fraud Analyst or Fraud Operations Manager possesses sole authority to override a system fraud hold and release an order for fulfillment. The analyst must log a narrative justification detailing why the transaction was deemed legitimate.
+Practical Examples
+Scenario 1: Interception of Account Takeover (ATO) and In-Transit Recall
+1. An attacker gains access to a customer's account using compromised credentials leaked on a third-party forum.
+2. Attacker resets account password, immediately changes the delivery address to an unverified location in another city, and places an order for a high-end laptop (₹120,000) using stored payment tokens (PAY-006).
+3. shield.novacart.internal detects Rule 1 violation (Address change post-password reset) and sets status to HOLD_FRAUD_CONTAINMENT.
+4. Attacker attempts to bypass hold; order is initially dispatched due to a system lag. Analyst identifies breach within 30 minutes and triggers a carrier in-transit recall via api.novacart.internal/tms.
+5. Carrier intercepts package at regional sorting hub and returns it to FC BLR-01. Account is suspended (STATUS_SUSPENDED_SEC), active sessions are killed, payment is fully refunded to legitimate cardholder (PAY-003), and legitimate customer is guided through Level 4 recovery (SEC-001).
+Scenario 2: Detection and Containment of Friendly Fraud (Chargeback Abuse)
+1. Customer purchases a gaming console (₹45,000), receives delivery, and provides a verified 4-digit Delivery OTP and digital signature to the courier (SHIP-001).
+2. Thirty days later, customer files a chargeback with their issuing bank claiming "Fraudulent / Unauthorized Transaction" (PAY-004).
+3. Fraud Operations opens investigation file FRD-99201. Analyst compiles evidentiary package: courier GPS log, verified Delivery OTP timestamp, matching IP history, and chat logs.
+4. NovaCart submits evidence to the acquiring bank and succeeds in chargeback representment. Customer account is flagged for friendly fraud, stored payment methods are revoked, and future orders require strict pre-payment verification.
+Frequently Asked Questions (FAQs)
+Q1: Why was my order placed on a security hold right after I completed payment?
+Answer: Orders are occasionally placed on a temporary security hold (HOLD_SECURITY_REVIEW) if our automated system detects an unusual pattern—such as an order placed from a new location, an unfamiliar device, or a recent change to your delivery address right after a password reset. This hold protects your payment instrument from unauthorized use. Our risk team usually reviews and releases legitimate orders within 2 hours (Refer to SEC-001).
+Q2: What documentation do I need to submit if my order requires identity verification?
+Answer: If your transaction requires Level 4 identity verification, you will receive a secure notification directing you to upload a clear photo of a government-issued photo ID (such as an Aadhaar Card, Passport, Driving License, or Emirates ID) and a live selfie through our secure portal (auth.novacart.internal/verify). Documents are reviewed within 12 business hours and securely deleted after audit completion (Refer to SEC-001, SEC-003).
+Q3: What happens if an order I placed is cancelled due to fraud risk?
+Answer: If an order cannot be verified or is determined to pose an unmitigated security risk, it is cancelled (CANCELLED_FRAUD_RISK). Any payment authorization holds placed on your card are released immediately, or a full refund is processed to your original payment method within 1 business day (Refer to PAY-003).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of SEC-004. Established fraud risk classifications (Tiers 1–3), risk evaluation pipelines, verification matrices, in-transit shipment recall rules, ATO containment protocols, and 7-year audit retention standards.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* ORD-001: Order Lifecycle Management Policy
+* SHIP-001: Domestic Shipping Policy
+* PAY-001: Payment Processing SOP
+* PAY-003: Refund Payment Processing Policy
+* PAY-004: Chargeback & Payment Dispute Policy
+* PAY-006: Stored Payment Methods & Tokenization Policy
+* REF-001: Master Refund Eligibility Rules
+* REF-004: Return Inspection & Quality Assessment Policy
+* PROD-001: Product Catalog Management Policy
+* PROD-006: Digital Products & Licensing Policy
+* SEC-001: Account Security Policy
+* SEC-002: Authentication & Access Control Policy
+* SEC-003: Data Protection & Privacy Policy

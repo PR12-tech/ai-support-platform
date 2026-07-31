@@ -1,0 +1,318 @@
+﻿LEG-002: Privacy Notice & Customer Rights Policy
+Document Header
+* Document Title: Privacy Notice & Customer Rights Policy
+* Document ID: LEG-002
+* Version: 1.0.0
+* Document Category: Legal
+* Classification: Internal / Public Operational Standard
+* Department Owner: Legal, Regulatory & Data Privacy Governance
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Data Protection Officer, General Counsel, Head of Customer Experience, Chief Information Security Officer
+* Approved By: Chief Executive Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Privacy Notice, Customer Rights, Personal Data Transparency, Data Subject Access Request, Data Rectification, Right to Erasure, Communication Preferences, Privacy Governance
+Purpose
+This document defines the official Privacy Notice & Customer Rights Policy of NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes standardized enterprise principles, customer privacy commitments, information transparency guidelines, customer rights management workflows, privacy request handling procedures, operational responsibilities, and business rules governing how NovaCart informs customers about the collection, usage, storage, sharing, retention, and protection of their personal information.
+As a foundational document (LEG-002) in the Legal category of the NovaCart Enterprise Knowledge Base (NEKB), LEG-002 governs customer-facing privacy commitments across e-commerce channels, operating in strict operational alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, REF-001 through REF-006, PROD-001 through PROD-006, SEC-001 through SEC-006, and LEG-001.
+Scope
+This policy applies universally across all customer interaction touchpoints, digital storefronts, mobile applications, customer support portals, marketplace integrations, and communication channels operated by NovaCart across India, Singapore, and the United Arab Emirates.
+Coverage Includes
+* Customer privacy commitments and transparency principles regarding personal data processing.
+* Identification and categorization of personal information collected across customer journeys.
+* Explicit business and operational purposes for collecting, processing, and storing customer data.
+* Third-party data sharing principles, logistics partner integrations, and payment processor handshakes.
+* Customer privacy rights, including Access, Rectification, Erasure, Data Portability, and Consent Withdrawal.
+* End-to-end privacy request workflows, identity validation standards, and fulfillment SLAs.
+* Customer communication preference management, marketing opt-ins/opt-outs, and transactional alert settings.
+Out of Scope
+* Technical data encryption algorithms, database field-level security, and SIEM audit logging (governed by SEC-003 and SEC-006).
+* Account security authentication mechanics, multi-factor authentication (MFA) enforcement, and ATO containment workflows (governed by SEC-001 and SEC-002).
+Privacy Notice Overview
+NovaCart believes that trust is the foundation of digital commerce. This policy outlines NovaCart’s commitment to providing complete transparency regarding how customer information is handled, establishing clear mechanisms for customers to exercise control over their personal data, and maintaining accountability across all commercial operations.
+Core Operational Principles
+1. Absolute Transparency: NovaCart provides clear, unambiguous disclosures regarding what personal data is collected, why it is needed, and how it is processed across the e-commerce lifecycle.
+2. Customer Empowerment & Control: Customers maintain operational control over their personal information, possessing self-service and support-assisted tools to access, correct, export, or request deletion of their profile data.
+3. Purpose-Bound Data Usage: Personal information collected for order fulfillment, delivery, payment clearing, or support inquiries is processed strictly for those designated business purposes and never reused for incompatible commercial activities.
+4. No Commercial Data Sales: NovaCart strictly prohibits selling, renting, or trading customer personal information or purchase histories to third-party data brokers or external advertisers.
+NovaCart Privacy Commitments
+To preserve customer trust and ensure consistent operational standards across all operational regions, NovaCart commits to the following four privacy pillars:
+* Proportionality & Minimization: NovaCart captures only the minimum personal details required to complete requested transactions, deliver orders (ORD-001), process refunds (PAY-003), or resolve support tickets (SUP-001).
+* Secure Handling Assurance: Customer information is processed within environments governed by continuous security controls (SEC-002), field-level encryption (SEC-003), and real-time monitoring (SEC-006).
+* Third-Party Accountability: External logistics providers (SHIP-001), payment gateways (PAY-001), and technical service partners are bound by strict contractual non-disclosure agreements restricting data usage exclusively to authorized fulfillment tasks.
+* Frictionless Rights Execution: Exercising privacy rights—such as requesting a copy of personal data or opting out of promotional marketing—is designed to be accessible, free of administrative fees, and completed within defined operational SLAs.
+Categories of Personal Information
+NovaCart categorizes customer information into standardized functional data groups to ensure transparent management throughout the platform lifecycle:
+Personal Information Category Matrix
+Category Code
+	Information Category Name
+	Data Elements Included
+	Primary Collection Touchpoint
+	CAT-PII-ACC
+	Account & Profile Data
+	Full name, registered email address, mobile phone number, birth date, account password hash.
+	Account registration & profile updates (SEC-001).
+	CAT-PII-ORD
+	Order & Delivery Data
+	Physical shipping/billing address, item SKUs purchased, order value, delivery instructions.
+	Checkout placement (ORD-001) & carrier dispatch (SHIP-001).
+	CAT-PII-FIN
+	Transaction & Payment Data
+	Payment gateway transaction IDs, card BIN/last-4 digits, NovaCart Wallet ledger balance.
+	Payment authorization (PAY-001) & refund processing (PAY-003).
+	CAT-PII-SUP
+	Customer Support Records
+	Live chat transcripts, email support tickets, phone call recordings, defect photo uploads.
+	Inquiry logging (SUP-001) & dispute handling (PAY-004).
+	CAT-PII-VER
+	Identity Verification Media
+	Government-issued photo ID (Aadhaar/Passport/Emirates ID), dynamic verification selfies.
+	Level 4 Account Recovery (SEC-001) & High-Risk Fraud Audits (SEC-004).
+	CAT-PII-PRE
+	Preferences & Behavioral Data
+	Marketing subscription status, communication channels, saved wishlist items, search logs.
+	Account settings & storefront interaction (PROD-001).
+	Purposes for Collecting Information
+Personal information is collected and processed exclusively to support legitimate operational functions across the NovaCart ecosystem:
+Purpose of Data Collection Matrix
+Operational Purpose
+	Categories of Data Utilized
+	Secondary Operational Context
+	Permissible Alternative Usage
+	Order Fulfillment & Logistics
+	CAT-PII-ORD, CAT-PII-ACC
+	Courier dispatch, shipping updates, doorstep delivery verification (SHIP-001).
+	Restricted strictly to active order execution.
+	Payment Clearing & Refunds
+	CAT-PII-FIN, CAT-PII-ORD
+	Chargeback defense (PAY-004), wallet credit deposits (REF-006), tax invoicing.
+	Restricted strictly to financial ledger accounting.
+	Account Management & Security
+	CAT-PII-ACC, CAT-PII-VER
+	Identity verification (SEC-001), ATO containment, credential recovery.
+	Fraud prevention & threat mitigation (SEC-004).
+	Customer Service & Warranty
+	CAT-PII-SUP, CAT-PII-ORD
+	Order tracking inquiries, warranty registration (PROD-003), installation dispatch (PROD-004).
+	Service quality auditing & staff training.
+	Promotional Communication
+	CAT-PII-PRE, CAT-PII-ACC
+	Personalized catalog updates, promotional discount codes, Prime member alerts.
+	Opt-in marketing; revoked instantly upon opt-out.
+	Information Sharing Principles
+NovaCart shares customer personal data with external entities strictly when required for order execution, statutory compliance, or system maintenance, governed by explicit sharing rules:
+1. Fulfillment Partner Disclosures: To deliver physical orders (SHIP-001) or execute on-site appliance installations (PROD-004), NovaCart provides contracted courier and technical service partners with the recipient's name, street address, and contact phone number. Partners are contractually prohibited from retaining or using this data for secondary commercial purposes.
+2. Financial Gateway Disclosures: Payment authorizations and refund clearing require exchanging transaction values, billing addresses, and gateway tokens with certified payment acquirers and issuing banks (PAY-001, PAY-003). Cardholder data environments adhere to PCI-DSS standards (PAY-006).
+3. Regulatory and Legal Disclosures: NovaCart discloses specific customer details to law enforcement or statutory consumer protection authorities strictly when presented with valid legal notices, court orders, or mandatory product recall directives (PROD-005).
+Customer Privacy Rights
+NovaCart grants customers operational control over their personal information through five fundamental privacy rights:
+Customer Privacy Rights Matrix
+Customer Privacy Right
+	Operational Meaning & Scope
+	Customer Portal Execution Pathway
+	Maximum Fulfillment SLA
+	Right to Access (Portability)
+	Request a complete digital copy of all stored personal profile and transactional data.
+	My Account $\rightarrow$ Privacy Settings $\rightarrow$ Download My Data
+	$< 48 \text{ Hours}$
+	Right to Rectification
+	Correct or update inaccurate, incomplete, or outdated personal information.
+	My Account $\rightarrow$ Profile Settings OR Customer Support
+	Instant (Self-Service) / $< 24 \text{ Hours}$
+	Right to Erasure (Deletion)
+	Request permanent account closure and scrubbing of personal profile data.
+	My Account $\rightarrow$ Privacy Settings $\rightarrow$ Delete Account
+	30 Calendar Days (Grace Period)
+	Right to Restrict / Opt-Out
+	Withdraw consent for promotional marketing, SMS alerts, or personalized ads.
+	My Account $\rightarrow$ Communication Preferences
+	Instant (System Update)
+	Right to Request Sharing Details
+	Request an itemized report of external partners with whom data was shared.
+	Privacy Inquiry via privacy.novacart.internal
+	$< 5 \text{ Business Days}$
+	Privacy Request Process
+Customer privacy requests follow a standardized four-phase operational workflow within privacy.novacart.internal and crm.novacart.internal:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        PRIVACY REQUEST HANDLING WORKFLOW                          |
++-----------------------------------------------------------------------------------+
+| 1. REQUEST INGRESS  | Customer submits privacy request via Portal or Support ticket.|
+| 2. IDENTITY VERIFY  | System enforces Level 2/3 OTP re-authentication (SEC-001).   |
+| 3. ELIGIBILITY AUDIT| Automated checks verify open orders, balances, or legal holds.  |
+| 4. FULFILLMENT      | System executes data export, profile correction, or erasure.   |
++-----------------------------------------------------------------------------------+
+
+1. Request Lodgment: The customer initiates a privacy request (Access, Rectification, Deletion, or Sharing Report) via self-service portal tools or by contacting Customer Support (SUP-001).
+2. Identity Verification: To prevent unauthorized data exposure, auth.novacart.internal triggers mandatory Level 2 or Level 3 identity validation using 6-digit One-Time Passwords (OTPs) sent to the customer's registered mobile number and email address (SEC-001).
+3. Operational Eligibility Audit: For account deletion requests, the system validates that the account holds zero active in-transit orders (ORD-001), zero open return requests (REF-001), zero active legal holds (LEG-001), and zero unexpired wallet balances (REF-006).
+4. Execution & Confirmation: Once verified and audited, the system executes the requested action, generates a cryptographic completion log, and dispatches a formal completion notice to the customer.
+Privacy Request Matrix
+Request Type Code
+	Action Requested
+	Required Authentication Level
+	System Execution Mechanism
+	REQ-PRV-ACC
+	Export Data Profile
+	Level 2 (SMS/Email Dual OTP)
+	Generates password-protected .zip archive containing JSON/CSV files.
+	REQ-PRV-RCT
+	Correct Contact Info
+	Level 3 (Dual OTP to Old + New Contact)
+	Updates profile records instantly in auth.novacart.internal.
+	REQ-PRV-DEL
+	Delete Account Profile
+	Level 3 (Dual OTP + Security Re-auth)
+	Places account in 30-day grace period, then scrubs PII (SEC-003).
+	REQ-PRV-SHR
+	Shared Data Report
+	Level 2 (SMS/Email Dual OTP)
+	Compiles list of logistics/payment partners receiving transaction data.
+	Data Retention Overview
+Personal information is retained strictly for the duration necessary to satisfy operational business needs or legal and tax compliance obligations:
+Data Retention Overview Matrix
+Information Category
+	Operational Active Retention
+	Post-Account Closure Retention
+	Long-Term Archive Justification
+	Account Profile (CAT-PII-ACC)
+	Duration of active profile life
+	30 Calendar Days
+	Purged permanently post 30-day deletion grace period.
+	Order History (CAT-PII-ORD)
+	Duration of active profile life
+	7 Calendar Years
+	Anonymized; financial totals kept for tax & ledger audit (SEC-003).
+	Financial Records (CAT-PII-FIN)
+	Duration of active transaction
+	7 Calendar Years
+	Token records scrubbed; transaction ledgers retained for audit (PAY-003).
+	Support Logs (CAT-PII-SUP)
+	2 Years from resolution
+	5 Calendar Years
+	Support transcripts retained for dispute defense (PAY-004).
+	Identity Scans (CAT-PII-VER)
+	30 Days post-audit completion
+	Zero Days (Purged Post-Audit)
+	Cryptographically shredded automatically in media-vault.novacart.internal.
+	Communication Preferences
+NovaCart respects customer choices regarding commercial messaging and provides full operational control over communication channels:
+Communication Preference Matrix
+Channel Category
+	Message Content Scope
+	Default Opt-In Status
+	Opt-Out Mechanics & SLAs
+	Transactional Alerts
+	Order confirmations, shipping updates, refund alerts, security OTPs.
+	Mandatory (Essential Service)
+	Non-opt-outable while orders or account actions are active.
+	Service Notifications
+	System maintenance alerts, policy updates (LEG-001), recall warnings (PROD-005).
+	Mandatory (Essential Service)
+	Non-opt-outable for active customer safety and platform operation.
+	Promotional Email
+	Catalog discount codes, seasonal sale updates, personalized recommendations.
+	Opt-In (Prompted at signup)
+	One-click Unsubscribe link in email footer; effective in $< 1 \text{ Hour}$.
+	Promotional SMS/WhatsApp
+	Flash sale alerts, exclusive Prime member promotional deals (REF-006).
+	Opt-In (Explicit checkbox)
+	Reply STOP or toggle off in Communication Preferences; $< 1 \text{ Hour}$.
+	Customer Responsibilities
+Customers share responsibility for maintaining personal data accuracy and account privacy:
+1. Provide Accurate Information: Ensure profile details, delivery addresses, and contact phone numbers provided during checkout are current and complete.
+2. Maintain Account Hygiene: Protect account login credentials and OTPs. Report unauthorized account updates or privacy concerns to Customer Support immediately (SEC-001).
+3. Use Official Verification Portals: Submit identity verification media or privacy requests strictly through authorized, encrypted NovaCart web/app portals (auth.novacart.internal/verify).
+NovaCart Responsibilities
+NovaCart commits to fulfilling explicit operational duties regarding customer privacy:
+1. Maintain Transparent Disclosures: Keep this Privacy Notice accessible on all digital storefronts and update disclosures whenever data practices evolve.
+2. Fulfill Privacy Requests Promptly: Honor customer rights requests for data access, rectification, and erasure within the mandatory SLAs defined in this policy.
+3. Enforce Partner Compliance: Audit third-party logistics and service vendors to ensure customer data shared for fulfillment is handled securely and destroyed upon task completion.
+Department Responsibilities
+Accountability for customer privacy transparency and rights fulfillment is managed across key operational units:
+Department Responsibility Matrix
+Department Unit
+	Primary Privacy Governance Responsibilities
+	Primary System Portal
+	Operational Target KPI
+	Data Protection Office (DPO)
+	Oversees LEG-002 implementation, handles complex privacy appeals, manages privacy impact reviews.
+	privacy.novacart.internal
+	Privacy request SLA compliance $\ge 99.8\%$
+	Customer Support
+	Assists customers with profile updates, privacy inquiries, and communication preference changes.
+	crm.novacart.internal
+	First Response Time $< 15 \text{ Seconds}$ (SUP-005)
+	Information Security
+	Operates automated data export scripts, manages PII anonymization pipelines, audits log access.
+	shield.novacart.internal
+	Zero unauthorized data exposure incidents
+	Legal & Compliance
+	Monitors regulatory privacy compliance, reviews third-party vendor NDA agreements.
+	compliance.novacart.internal
+	Annual privacy audit $100\%$ passed
+	Business Rules
+Rule 1: Zero Administrative Fees for Privacy Rights
+NovaCart shall never charge customers administrative fees for processing standard data access requests, profile corrections, data exports, or communication opt-outs.
+Rule 2: Mandatory Account Deletion Grace Period
+All customer account deletion requests trigger an automated 30-day grace period. During this window, the account status remains STATUS_CLOSED_USER, allowing the customer to cancel the deletion request if initiated accidentally. On Day 31, all Class 3 Confidential PII is permanently scrubbed or anonymized (SEC-003).
+Rule 3: Permanent Logging of Privacy Rights Actions
+All customer privacy requests—including access exports, rectification steps, opt-out toggles, and deletion requests—must be logged permanently in audit.novacart.internal with timestamp, User ID, authentication method, and completion status, retained for 7 years for audit compliance (SEC-006).
+Exception Handling
+* Account Deletion Paused by Active Transactions or Legal Holds: If a customer submits an account deletion request while an active order is in transit (ORD-001), an open return/refund request is pending (REF-001), or a chargeback dispute is active (PAY-004), the system automatically pauses the deletion process, notifies the customer of the specific operational hold, and resumes the 30-day deletion countdown immediately upon order completion or dispute resolution.
+* Former Customer Requesting Retained Financial Records: If a former customer whose account was deleted requests copies of past tax invoices, NovaCart dispatches anonymized transaction records where PII has been scrubbed ([DATA_PURGED_PER_SEC-003]), explaining that personal profile data was permanently destroyed per their prior deletion request.
+Practical Examples
+Scenario 1: Customer Requesting a Copy of Personal Data (Data Portability)
+1. A customer accesses My Account $\rightarrow$ Privacy Settings and clicks Download My Data.
+2. System enforces Level 2 identity verification by dispatching a 6-digit OTP to the customer’s verified mobile number (SEC-001).
+3. Upon OTP verification, privacy.novacart.internal triggers an automated data export script.
+4. Within 12 hours, the customer receives an email containing a secure link to download a password-protected .zip archive containing JSON files of their account profile, order history, and active wallet ledger.
+Scenario 2: Former Customer Account Deletion Execution
+1. A customer submits an account deletion request via the mobile app.
+2. System executes an automated eligibility check: confirms zero active orders, zero open support tickets, and zero wallet balance.
+3. Account status updates to STATUS_CLOSED_USER, and a 30-day grace period countdown begins.
+4. On Day 31, batch scripts in auth.novacart.internal permanently scrub the customer’s name, email, phone number, and physical addresses from the active profile database, replacing PII strings with [DATA_PURGED_PER_SEC-003]. The customer receives a final confirmation email.
+Frequently Asked Questions (FAQs)
+Q1: How do I stop receiving promotional emails and SMS alerts from NovaCart?
+Answer: You can manage your communication preferences at any time by logging into your account and going to My Account $\rightarrow$ Communication Preferences. You can toggle off marketing emails, SMS, or WhatsApp alerts independently. Alternatively, you can click the Unsubscribe link at the bottom of any marketing email or reply STOP to any promotional SMS. Transactional alerts regarding active orders, shipping updates, and security OTPs will still be delivered (Refer to SUP-001).
+Q2: Will deleting my NovaCart account delete my past order invoices and payment history?
+Answer: Requesting account deletion permanently scrubs your personal profile data (name, email, phone number, delivery addresses) after a 30-day grace period. However, financial totals and itemized order records are retained in an anonymized format ([DATA_PURGED_PER_SEC-003]) for 7 years strictly to comply with corporate tax laws and statutory financial auditing rules (Refer to SEC-003).
+Q3: How long does it take to get a response to a privacy request?
+Answer: Data access exports and profile correction requests are processed within 48 hours. Account deletion requests initiate an immediate 30-day grace period, with final data scrubbing occurring on Day 31. You can check the real-time status of any active privacy request by contacting Customer Support or viewing Privacy Settings in your account (Refer to SUP-005).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of LEG-002. Established customer privacy commitments, data classification alignments, information sharing rules, customer rights matrices (Access, Rectification, Erasure), communication preference controls, and 30-day deletion grace period workflows.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* SUP-005: Customer Support SLA Policy
+* ORD-001: Order Lifecycle Management Policy
+* SHIP-001: Domestic Shipping Policy
+* PAY-001: Payment Processing SOP
+* PAY-003: Refund Payment Processing Policy
+* PAY-004: Chargeback & Payment Dispute Policy
+* REF-001: Master Refund Eligibility Rules
+* REF-006: Store Credit & Promotional Refund Policy
+* PROD-001: Product Catalog Management Policy
+* PROD-003: Product Warranty Policy
+* PROD-005: Product Recall & Safety Policy
+* SEC-001: Account Security Policy
+* SEC-002: Authentication & Access Control Policy
+* SEC-003: Data Protection & Privacy Policy
+* SEC-004: Fraud Prevention & Risk Management Policy
+* SEC-006: Security Monitoring & Audit Logging Policy
+* LEG-001: Terms & Conditions Policy

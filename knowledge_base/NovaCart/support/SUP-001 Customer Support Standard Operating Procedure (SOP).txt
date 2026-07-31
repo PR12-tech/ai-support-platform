@@ -1,0 +1,297 @@
+﻿SUP-001: Customer Support Standard Operating Procedure (SOP)
+Document Header
+* Document Title: Customer Support Standard Operating Procedure (SOP)
+* Document ID: SUP-001
+* Version: 1.0.0
+* Document Category: Customer Support
+* Classification: Internal
+* Department Owner: Customer Support
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Technical Documentation Specialist, Customer Support Director
+* Approved By: VP of Customer Experience, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Customer Support, SOP, L1 Support, L2 Support, L3 Support, Ticketing, Escalation, SLAs, Verification, Resolutions
+Purpose
+This document establishes the mandatory Standard Operating Procedures (SOPs) governing Customer Support Representatives (CSRs) and automated interaction agents across all supported communication channels at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart").
+As a primary operational document (SUP-001) in the NovaCart Enterprise Knowledge Base (NEKB), SUP-001 defines ticket intake, identity verification, ticket categorization, handling workflows, escalation paths, and communication standards required to deliver consistent, high-velocity, and policy-compliant customer resolutions.
+Scope
+This SOP applies globally to all L1, L2, and L3 Customer Support personnel, vendor-operated support centers, and automated conversational support modules operating in India (IN), Singapore (SG), and the United Arab Emirates (UAE).
+Coverage Includes
+* Inbound customer communications across Live Chat, Web Portal / Email, Voice Telephony, and Mobile Messaging.
+* Standard interaction lifecycles from intake to verification, investigation, resolution, and ticket closure.
+* Operational handoffs to specialized departments (Logistics, Warehouse, Returns, Finance, Security).
+* Customer compensation, goodwill credit issuance, and fee waiver authority thresholds.
+Support Objectives
+NovaCart Customer Support operates under four primary performance objectives:
+1. Resolution Velocity: Maximize First Contact Resolution (FCR $\ge 75\%$) while minimizing Average Handling Time (AHT) without sacrificing service quality.
+2. Deterministic Execution: Enforce strict adherence to published enterprise policies (REF-001, PAY-001, SHIP-001) to eliminate discretionary policy drift.
+3. Data Security & Privacy: Maintain zero exposure of unmasked Personal Identifiable Information (PII) or financial credentials during customer interactions (Refer to SEC-001).
+4. Data Integrity: Ensure meticulous, structured ticket logging to maintain audit trails and optimize Retrieval-Augmented Generation (RAG) knowledge search performance.
+Customer Support Channels
+NovaCart maintains four official customer communication channels integrated directly into the centralized Omni-Channel Support Portal (crm.novacart.internal).
+Channel Name
+	Operating Hours
+	Supported Regions
+	Target Ingress Priority
+	Primary Use Case
+	Live Chat (Web / App)
+	24/7 / 365
+	IN, SG, UAE
+	Immediate (Real-Time)
+	Rapid order status, cancellation, basic troubleshooting
+	Voice Telephony
+	08:00–22:00 Local Time
+	IN, SG, UAE
+	Immediate (Real-Time)
+	Urgent delivery issues, payment escalations, account security
+	Web Ticket / Email
+	24/7 / 365
+	IN, SG, UAE
+	Asynchronous Queue
+	Complex returns, B2B disputes, warranty claims
+	Mobile Messaging
+	08:00–20:00 Local Time
+	IN, SG, UAE
+	Asynchronous Queue
+	Order tracking updates, NDR address re-confirmations
+	Support Team Levels (L1, L2, L3)
+Customer Support execution is structured across three distinct operational tiers defined in COMP-002 and COMP-003.
+
+
+
+
+
+
+<ElicitationsGroup message="To explore related support frameworks and operational guidelines:">
+{/* Reason: Offers structured paths to access related support documents and escalation frameworks. */}
+ <Elicitation label="Review SUP-003 Escalation Matrix" query="Show SUP-003 Escalation Matrix for cross-departmental support routing." />
+ <Elicitation label="Review SUP-005 SLA Policy" query="Show SUP-005 SLA Policy detailing response and resolution timelines." />
+ <Elicitation label="Examine KB-001 Knowledge Base Usage" query="Show KB-001 Knowledge Base Usage detailing AI and RAG agent guidelines." />
+</ElicitationsGroup>
+
+Level 1 (L1) Support
+* Composition: Automated AI conversational bots and general front-line CSRs.
+* Scope: First-line ticket intake, customer identity verification, order tracking, basic policy guidance, and simple cancellations prior to warehouse processing.
+* Financial Authorization: Goodwill credit or shipping fee waiver up to $\text{INR } 1,000$ / $\text{SGD } 15$ / $\text{AED } 45$.
+Level 2 (L2) Support
+* Composition: Senior CSRs and domain-specialized resolution squads (Payments, Shipping, Returns).
+* Scope: Complex payment failures, carrier transit delays, damaged item RMA approvals, and partial refund calculations.
+* Financial Authorization: Out-of-policy refunds or compensation up to $\text{INR } 5,000$ / $\text{SGD } 80$ / $\text{AED } 220$.
+Level 3 (L3) Support
+* Composition: Customer Support Operations Managers, Department Leads, and Legal/Security liaisons.
+* Scope: Systemic platform glitches, legal threats, fraud freezes, severe carrier losses, and executive escalations.
+* Financial Authorization: Compensation approvals exceeding $\text{INR } 25,000$ / $\text{SGD } 400$ / $\text{AED } 1,100$ (requires Manager co-signoff).
+Standard Customer Interaction Workflow
+Every customer interaction must strictly follow a six-stage sequential execution lifecycle.
+1. Intake & Routing: The Omni-Channel Portal captures the incoming contact, identifies the user profile, and routes the interaction to the appropriate L1 agent or automated queue.
+2. Customer Verification: The CSR performs mandatory identity verification according to the customer verification protocol prior to disclosing account details.
+3. Problem Identification & KB Lookup: The CSR reviews customer statements, checks system logs (OMS, WMS, TMS), and searches the NEKB for applicable policy KBAs.
+4. Action Execution: The CSR executes authorized system actions (e.g., initiating RMA, placing shipment hold, logging cancellation) within crm.novacart.internal.
+5. Customer De-escalation & Confirmation: The CSR clearly explains the resolution, references official policy parameters, confirms user understanding, and obtains concurrence.
+6. Ticket Logging & Closure: The CSR logs structured interaction notes, tags root-cause categories, sets ticket status (RESOLVED or ESCALATED), and triggers a automated post-interaction CSAT survey.
+Ticket Creation Guidelines
+A unique Ticket ID must be generated automatically or manually for every distinct customer interaction.
+Mandatory Ticket Data Fields
+* Master Order ID / Sub-Order ID: (If applicable; must reference explicit transaction).
+* Customer Identity ID: Unique platform user identifier (CUST-XXXXX).
+* Channel Ingress Source: Web Chat, App Chat, Voice, Email, Messaging.
+* Primary Category & Sub-Category: Selected from standard taxonomy.
+* Priority Level: Assigned based on Priority Matrix guidelines.
+* Agent Case Summary: Concise, factual description of user claim and actions taken.
+Ticket Categorization
+To maintain data integrity and optimize reporting, tickets must be categorized under standard taxonomy branches:
+* CAT-ORD (Orders): Order Placement, Order Modification, Order Cancellation, Split Order Query. (Refer to ORD-001, ORD-002, ORD-005).
+* CAT-PAY (Payments): Payment Failure, Duplicate Debit, EMI Issue, Wallet/Gift Card Balance. (Refer to PAY-001, PAY-002, PAY-003, PAY-006).
+* CAT-SHIP (Shipping & Delivery): Address Change, Tracking Request, Delivery Delay, NDR Re-attempt, Lost Shipment. (Refer to SHIP-001, SHIP-005, SHIP-006, SHIP-007).
+* CAT-RET (Returns & Refunds): RMA Generation, Item Return Status, Refund Eligibility, Damaged Goods, Wrong Item. (Refer to REF-001, REF-003, REF-005).
+* CAT-SEC (Security & Account): Password Reset, 2FA Locked, Account Freeze, Suspicious Login. (Refer to SEC-001, SEC-002, SEC-003, SEC-005).
+* CAT-PROD (Product & Warranty): Warranty Registration, Replacement Request, Technical Support. (Refer to PROD-001, PROD-002, PROD-004).
+Priority Levels
+Ticket priority dictates queue placement and SLA timers within crm.novacart.internal.
+Priority Code
+	Severity Description
+	Criteria / Condition
+	Target First Response
+	Target Resolution SLA
+	P1 - Urgent
+	Critical Business / Security Impact
+	Active account compromise, fraud alert, payment debit without order generation.
+	$< 2\text{ Minutes}$ (Chat) / $< 5\text{ Mins}$ (Voice)
+	$< 2\text{ Hours}$
+	P2 - High
+	Severe Operational Disruption
+	Order delivery delayed $> 48\text{ hrs}$, wrong product delivered, damaged high-value item.
+	$< 15\text{ Minutes}$
+	$< 12\text{ Hours}$
+	P3 - Standard
+	Normal Business Query
+	Standard order tracking, return eligibility query, address update prior to dispatch.
+	$< 1\text{ Hour}$
+	$< 24\text{ Hours}$
+	P4 - Low
+	Informational / General
+	General catalog query, feedback submission, promotional policy clarification.
+	$< 4\text{ Hours}$
+	$< 48\text{ Hours}$
+	Escalation Process
+When an issue exceeds an agent's authority level or technical capability, it must be escalated using the standard protocol:
+1. Internal Queue Escalation: The CSR updates ticket priority, attaches detailed case notes, and transfers the ticket to the specific L2 domain queue (QUEUE_PAYMENTS, QUEUE_LOGISTICS, QUEUE_RETURNS).
+2. Cross-Departmental Notification: For systemic issues, the L2 Lead creates a linked ticket in the target department's portal (jira.novacart.internal).
+3. Escalation SLA Monitoring: Escalated tickets retain their original creation timestamp; target departments must respond within agreed inter-departmental SLAs (Refer to SUP-003, SUP-005).
+Response Time Guidelines
+CSRs must strictly maintain active response standards during live and asynchronous interactions:
+* Live Chat First Response: First message sent within 30 seconds of queue assignment.
+* Live Chat In-Session Latency: Agent responses must not exceed 90 seconds between customer messages.
+* Voice Call Answer SLA: Calls picked up within 20 seconds of ringing.
+* Customer Hold Limit: Maximum on-call hold duration is 120 seconds; agent must refresh hold status if research requires additional time.
+Resolution Guidelines
+A ticket is formally classified as RESOLVED only when:
+1. The requested action (e.g., refund trigger, address update, RMA generation) has been executed in backend systems.
+2. The resolution strictly complies with published policies (REF-001, PAY-001, SHIP-001).
+3. The resolution steps have been communicated clearly to the customer.
+4. The customer acknowledges resolution or fails to respond to 3 automated follow-ups over a 72-hour period.
+Communication Standards
+CSRs must maintain a professional, empathetic, and unambiguous tone across all interactions.
+Standard Phrasing Rules
+* Empathy Disclosure: "I understand how frustrating this delay is, and I am reviewing your order details right now to resolve this for you."
+* Policy Explanation: "In accordance with our Return Policy (REF-001), opened software items cannot be accepted for return once the activation code has been displayed."
+* Action Commitment: "I have initiated an urgent tracer with our courier team under Reference Number TR-99201. You will receive an automated tracking update within 4 hours."
+Strictly Prohibited Language
+* Speculative promises (e.g., "I promise the courier will arrive in 10 minutes").
+* Expressing personal opinions or criticizing internal departments or logistics partners.
+* Disclosing employee internal full names, personal phone numbers, or private system credentials.
+Customer Verification Process
+To prevent account takeover and protect privacy laws (DPDP, PDPA), CSRs must complete identity verification before sharing order or account details.
+Verification Matrix
+Interaction Type
+	Required Primary Verification
+	Required Secondary Verification
+	Permissible Disclosures Post-Verification
+	Authenticated App / Chat
+	Active User Session ID
+	None (Pre-Authenticated)
+	Full Order Status, Tracking IDs, RMA Status
+	Unauthenticated Chat / Email
+	Account Registered Email ID
+	Order ID + Delivery Address
+	General Order Status (PII Masked)
+	Voice Telephony
+	Registered Mobile Phone Number
+	One-Time Password (OTP) sent to mobile
+	Full Account Details, Refund Status
+	Documentation Requirements
+Every ticket log must contain structured, concise case summaries formatted as follows:
+
+
+
+
+
+
+[SUMMARY]: Customer reported non-delivery of package.
+[VERIFICATION]: OTP verified via mobile voice channel.
+[INVESTIGATION]: Checked TMS logs; courier logged NDR attempt due to incorrect house number.
+[ACTION TAKEN]: Corrected address in TMS, requested carrier re-attempt for tomorrow. Issued ₹100 goodwill shipping fee waiver.
+[STATUS]: RESOLVED - Customer notified via SMS.
+
+Common Support Scenarios
+Scenario 1: Order Status Enquiry
+* Context: Customer inquires about the status of an order that shows PROCESSING.
+* Workflow:
+   1. Verify customer identity via mobile OTP.
+   2. Access OMS backend; check if order is split across hubs (Refer to ORD-005).
+   3. Locate tracking ID in TMS; confirm parcel is dispatched from hub BLR-01 with ETA of tomorrow 14:00.
+   4. Provide tracking link and ETA window to customer; set ticket to RESOLVED.
+Scenario 2: Payment Failure
+* Context: Customer card was debited ₹14,999, but order status shows CANCELLED_PAYMENT_FAILED.
+* Workflow:
+   1. Verify customer identity.
+   2. Search ledger.novacart.internal using transaction reference; confirm payment failed gateway authorization (Refer to PAY-002).
+   3. Inform customer that unlinked debit was flagged by auto-reconciliation and will be automatically reversed to their card within 3–5 business days.
+   4. Provide Payment Reconciliation Reference ID (PR-88210); set ticket to RESOLVED.
+Scenario 3: Refund Request
+* Context: Customer requests a refund for a returned smartphone (CAT-MOB).
+* Workflow:
+   1. Access RMA portal (rma.novacart.internal); verify returned item inspection status (Refer to REF-005).
+   2. Confirm warehouse inspection passed serial number check at hub DEL-02.
+   3. Confirm refund eligibility under REF-001; verify original payment method was Credit Card.
+   4. Trigger refund in ledger.novacart.internal; advise customer of 3-to-5 day bank processing window.
+Scenario 4: Delivery Delay
+* Context: Shipment is 48 hours past projected ETA window.
+* Workflow:
+   1. Verify customer identity; open TMS tracking log (Refer to SHIP-005).
+   2. Identify middle-mile transit hold at hub BOM-01.
+   3. Initiate urgent carrier trace request; update ticket priority to P2 - High.
+   4. Issue ₹250 shipping delay credit to customer wallet; schedule automated follow-up in 12 hours.
+Scenario 5: Wrong Product Received
+* Context: Customer received a gaming mouse instead of the ordered mechanical keyboard.
+* Workflow:
+   1. Request customer upload photo evidence of wrong item and package shipping label via secure portal.
+   2. Verify item barcode against warehouse dispatch scan logs.
+   3. Generate immediate free reverse pickup RMA in rma.novacart.internal.
+   4. Create priority replacement sub-order dispatching correct keyboard from nearest FC (Refer to REF-005, PROD-002).
+Scenario 6: Damaged Product
+* Context: Customer receives a television screen with visible shipping cracks.
+* Workflow:
+   1. Request photo/video evidence of damaged packaging and screen within 48 hours of delivery (Refer to REF-003).
+   2. Verify carrier Proof of Delivery (POD) logs and packaging damage reports.
+   3. Approve immediate RMA for technician on-site verification or free pickup.
+   4. Flag parcel damage claim with Logistics for 3PL carrier recovery.
+Scenario 7: Account Login Issue
+* Context: Customer locked out of account due to forgotten password and broken 2FA device.
+* Workflow:
+   1. Initiate strict identity verification (government ID verification upload via secure link) (Refer to SEC-002, SEC-003).
+   2. Upon Legal/Security review approval, disable compromised 2FA device.
+   3. Trigger temporary password reset link to registered email address; log security event in SIEM portal.
+Scenario 8: Warranty Enquiry
+* Context: Customer inquires about warranty repair coverage for a laptop purchased 6 months ago.
+* Workflow:
+   1. Check order purchase date in OMS; confirm laptop (CAT-ELE) is within 1-year brand warranty window (Refer to PROD-001).
+   2. Verify device serial number in system catalog.
+   3. Provide customer with authorized regional service center address and email digital warranty certificate.
+Business Rules
+Rule 1: Master Policy Compliance
+CSRs must strictly execute actions within parameters established in published policies (REF-001, PAY-001, SHIP-001). Agents are strictly forbidden from approving refunds or returns for explicitly non-refundable categories (CAT-SFT, CAT-GFT) without L3 Manager sign-off.
+Rule 2: Mandatory Logging Rule
+Every customer contact—regardless of duration or outcome—must result in a logged ticket. Un-ticketed off-platform resolutions are strictly prohibited.
+Rule 3: Single Active RMA Limit
+Only one active RMA identifier may exist for a given sub-order at any time. Secondary return requests for remaining items in a split order must generate distinct sub-RMA records.
+Exception Handling
+When exceptional circumstances arise that are not covered by standard workflows:
+* Systemic Outages: If backend portals (crm.novacart.internal or OMS) experience technical downtime, CSRs must switch to read-only backup views, log interactions manually, and inform customers of a temporary 2-hour processing delay.
+* Irate / Abusive Customers: If a customer uses profanity or threatens violence, the CSR must issue one formal warning. If abusive behavior continues, the CSR may terminate the chat/voice session and escalate the ticket to Security (CAT-SEC) for account review.
+Frequently Asked Questions (FAQs)
+Q1: What is the maximum discretionary refund a L1 CSR can approve?
+Answer: A L1 CSR can approve discretionary goodwill credits or shipping fee waivers up to $\text{INR } 1,000$ (or regional equivalents: $\text{SGD } 15$ / $\text{AED } 45$). Out-of-policy refunds exceeding this amount require L2 or L3 approval.
+Q2: How are support interactions verified for unauthenticated web visitors?
+Answer: Unauthenticated users must provide their registered account email address, Master Order ID, and full delivery address before agents can disclose non-sensitive order status information. Sensitive account changes require mobile OTP verification.
+Q3: What happens if a customer refuses delivery of a Cash on Delivery (COD) order?
+Answer: The parcel is marked as a Non-Delivery Report (NDR) due to customer refusal (Refer to SHIP-005). The courier returns the item to the warehouse, and the customer's account may be restricted from future COD checkout options if refusal rates exceed threshold limits.
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial operational baseline release of SUP-001. Established standardized interaction workflows, categorization rules, priority SLAs, verification protocols, and scenario handling scripts.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-002: Communication Guidelines
+* SUP-003: Escalation Matrix
+* SUP-004: Priority Matrix
+* SUP-005: SLA Policy
+* ORD-001: Order Lifecycle Framework
+* ORD-005: Split Orders Procedure
+* SHIP-001: Domestic Shipping Policy
+* SHIP-005: Delayed Deliveries Protocol
+* SHIP-006: Lost Shipments Protocol
+* PAY-001: Payment Processing SOP
+* PAY-002: Payment Failure Handling
+* REF-001: Master Refund Eligibility Rules
+* REF-005: Return Process Protocols
+* SEC-001: Account Security & Access Control
+* PROD-001: Warranty Validation Policy

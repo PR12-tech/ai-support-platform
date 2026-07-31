@@ -1,0 +1,311 @@
+﻿PROD-003: Product Warranty Policy
+Document Header
+* Document Title: Product Warranty Policy
+* Document ID: PROD-003
+* Version: 1.0.0
+* Document Category: Products
+* Classification: Internal / Public Operational Standard
+* Department Owner: Quality Assurance & After-Sales Governance
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Quality Assurance, Director of After-Sales Services, General Counsel
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Warranty Coverage, Manufacturer Warranty, Seller Warranty, Extended Warranty, Serial Number Verification, Authorized Service Center, Warranty Exclusions, Proof of Purchase
+Purpose
+This document defines the official Product Warranty Policy of NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes standardized procedures, warranty coverage standards, claim processing workflows, customer obligations, exclusions, repair vs. replacement decision criteria, and business rules governing manufacturer, seller, and extended warranties for all products sold through NovaCart.
+As a core operational document (PROD-003) in the Products category of the NovaCart Enterprise Knowledge Base (NEKB), PROD-003 governs post-return window warranty administration within the Service & Warranty Management Portal (warranty.novacart.internal), operating in strict alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, REF-001 through REF-006, PROD-001, and PROD-002.
+Scope
+This policy applies universally across all product categories sold across NovaCart’s operating regions (India, Singapore, UAE) across all commercial fulfillment models (1P Direct Distribution and 3P Marketplace Merchants).
+Coverage Includes
+* Manufacturer Warranty (Brand Direct) processing and facilitation.
+* NovaCart Seller Warranty (1P Direct) coverage and execution.
+* NovaCart Protect Extended Warranty plans and optional service contracts.
+* Serial number/IMEI verification, proof of purchase validation, and coverage period calculation.
+* Repair, replacement, and warranty refund decision trees.
+* In-warranty service logistics, authorized service center (ASC) routing, and customer communications.
+Out of Scope
+* Initial return window refunds and exchanges within the standard 7-to-10 day post-delivery period (governed by REF-001, REF-002, and REF-003).
+* Physical unboxing inspection and warehouse dock quality checks (governed by REF-004).
+Product Warranty Overview
+NovaCart ensures that products sold on its platform meet statutory durability and performance standards. While standard return windows (REF-001) address immediate Dead-On-Arrival (DOA) units, transit damage, or initial defects, the Product Warranty Policy governs technical performance, component failures, and manufacturing defects occurring during the extended ownership lifecycle.
+Core Operational Principles
+1. Single Warranty Portal: All warranty claims, regardless of brand or fulfillment model, must be logged and tracked through warranty.novacart.internal.
+2. Serial Number Binding: Warranty coverage attaches strictly to the unique physical Serial Number, IMEI, or MAC address registered in wms.novacart.internal during outbound dispatch.
+3. Statutory Alignment: Warranty policies strictly adhere to regional consumer protection laws, including the Consumer Protection Act (India), Consumer Protection Fair Trading Act (Singapore), and Federal Law No. 15 on Consumer Protection (UAE).
+4. Resolution First: Warranty claims prioritize functional restoration via authorized repair or component replacement before authorizing whole-unit replacement or monetary refund (REF-003, REF-005).
+Warranty Types
+Products sold on NovaCart carry one or more of the following three distinct warranty structures:
+1. Manufacturer Warranty (Brand Direct)
+Coverage provided directly by the Original Equipment Manufacturer (OEM) (e.g., Apple, Samsung, Sony, LG). Claims are serviced through OEM Authorized Service Centers (ASCs). NovaCart acts as a logistics and service facilitator for customer convenience.
+2. Seller Warranty (NovaCart Direct / 1P)
+Coverage provided directly by NovaCart for private-label products, imported merchandise, or unrepresented brand partners. Serviced through NovaCart Central Technical Repair Hubs.
+3. NovaCart Protect (Extended Warranty)
+Optional extended service plan purchased by the customer during checkout. Coverage commences immediately upon the expiration of the primary Manufacturer/Seller Warranty, extending coverage by 12 or 24 months.
+Warranty Coverage Matrix
+Warranty Type
+	Primary Issuer
+	Servicing Entity
+	Logistics Sourcing
+	Primary Resolution Pathway
+	Manufacturer Warranty
+	Original Equipment Manufacturer (OEM)
+	OEM Authorized Service Center (ASC)
+	Brand Service Pickup / Customer Drop-off
+	OEM Authorized Repair / OEM Replacement
+	Seller Warranty
+	NovaCart Technologies Pvt. Ltd.
+	NovaCart Technical Repair Hub
+	NovaCart Doorstep Courier (SRV-EXP)
+	Component Repair / Refurbished Swap
+	NovaCart Protect
+	NovaCart Underwriting / Third-Party Insurer
+	Certified Third-Party Repair Network
+	NovaCart Doorstep Courier / On-Site Tech
+	Free Repair / Commercial Depreciated Refund
+	Warranty Coverage
+Covered Failures
+Warranty coverage applies strictly to hardware, electronic, and mechanical failures resulting from manufacturing defects, faulty workmanship, or material degradation occurring under normal residential or office operating conditions:
+* Internal board failure, motherboard short circuits, or chipset breakdown.
+* Display panel defects (e.g., dead pixels $> 3\text{ units}$, vertical line bleeding, backlight failure).
+* Mechanical motor burnout, compressor failure, or internal heating element failure in Home Appliances (CAT-APP).
+* Battery capacity degradation exceeding $> 40\%$ loss within the first 6 months of ownership.
+* Wireless connectivity module failure (Wi-Fi, Bluetooth, 5G modems) in CAT-MOB or CAT-SMT.
+Warranty Exclusion Matrix
+Exclusion Category
+	Disqualifying Condition / Scenario
+	Verification Mechanism
+	System Action
+	Physical Damage
+	Cracks, dropped housing, bent frames, or impact fractures caused by customer misuse.
+	High-resolution photography / ASC Physical Audit
+	Claim Rejected; Out-of-Warranty Quote Issued
+	Liquid / Water Damage
+	Internal Liquid Contact Indicator (LCI) triggered; corrosion on PCB logic board.
+	ASC Physical Tear-Down Inspection
+	Claim Rejected; Warranty Permanently Voided
+	Unauthorized Repairs
+	Broken tamper-evident seals; third-party component substitution; non-ASC repair history.
+	Internal Hardware Audit & Serial Check
+	Claim Rejected; Warranty Permanently Voided
+	Consumables & Wear
+	Normal degradation of fuses, outer cosmetic paint, filters, rubber seals, or printer ink.
+	Component Category Checklist
+	Claim Rejected for Consumable Part
+	Software & Malware
+	OS corruption, viruses, bootloader rooting, or user configuration errors.
+	Remote Diagnostics (warranty.novacart.internal)
+	Claim Rejected; Remote OS Flashing Offered
+	Serial Mismatch
+	Physical Serial/IMEI missing, defaced, or mismatched against outbound WMS log (PROD-001).
+	Barcode Audit against wms.novacart.internal
+	Claim Rejected; Security Fraud Alert (SEC-004)
+	Warranty Periods
+Warranty coverage periods commence on the date of physical order delivery (DELIVERED status in tms.novacart.internal) and run for the duration specified in the product catalog master record (PROD-001).
+Product Category Warranty Matrix
+Category Code
+	Product Vertical Name
+	Standard Manufacturer / Seller Warranty
+	NovaCart Protect Eligibility
+	Maximum Extended Coverage
+	CAT-MOB
+	Mobile Devices & Wearables
+	12 Months
+	Eligible
+	Up to +24 Months
+	CAT-ELE
+	Consumer Electronics & Laptops
+	12 to 24 Months
+	Eligible
+	Up to +24 Months
+	CAT-GAM
+	Gaming Hardware & Consoles
+	12 Months
+	Eligible
+	Up to +12 Months
+	CAT-APP
+	Large Home Appliances
+	12 to 24 Months (10 Yrs Compressor)
+	Eligible
+	Up to +36 Months
+	CAT-SMT
+	Smart Home Hardware
+	12 Months
+	Eligible
+	Up to +12 Months
+	CAT-SFT
+	Digital Software
+	Non-Applicable (License Only)
+	Ineligible
+	None (REF-001)
+	CAT-GFT
+	Digital Gift Cards
+	Non-Applicable (Voucher Only)
+	Ineligible
+	None (REF-006)
+	Warranty Registration Requirements
+To ensure frictionless warranty processing, NovaCart enforces digital auto-registration upon fulfillment:
+1. Automated Digital Registration: Upon doorstep delivery confirmation (DELIVERED), api.novacart.internal/warranty/register automatically binds the Master Order ID, Delivery Date, Serial Number/IMEI, and Customer ID into warranty.novacart.internal.
+2. Tax Invoice as Proof of Purchase: The official GST/VAT Tax Invoice generated by NovaCart (downloadable via customer portal) serves as the legally binding proof of purchase for all OEM ASCs.
+3. Secondary Registration (Brand Portals): Certain OEMs (e.g., Apple, HP, Samsung) require secondary registration on their global portals. NovaCart dispatches an automated registration link containing serial metadata within 24 hours of delivery.
+Warranty Claim Process
+When a customer experiences a product malfunction post-return window, the claim follows a structured operational workflow:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        WARRANTY CLAIM PROCESSING WORKFLOW                         |
++-----------------------------------------------------------------------------------+
+| 1. CLAIM INITIATION | Customer submits claim in portal with diagnostic notes/video.|
+| 2. REMOTE DIAGNOSIS | Tech Specialist conducts 5-minute remote triage session.      |
+| 3. IDENTITY AUDIT   | System validates Tax Invoice & Serial/IMEI in WMS logs.     |
+| 4. SERVICE ROUTING  | System routes to OEM ASC or schedules Doorstep / Pick-up.   |
+| 5. REPAIR / SWAP    | Service center executes Repair, Component Swap, or Replacement.|
+| 6. FILE CLOSURE     | Quality audit conducted; unit returned to customer.         |
++-----------------------------------------------------------------------------------+
+
+1. Claim Initiation: Customer accesses My Orders $\rightarrow$ Warranty Claim, selects the item, describes the malfunction, and uploads video/photographic evidence.
+2. Remote Technical Triage: Within 4 business hours, a NovaCart Technical Specialist conducts a remote diagnostic session (phone/video) to rule out software configuration errors (SUP-001).
+3. Serial & Proof Audit: The system validates active warranty status against warranty.novacart.internal logs and checks serial number alignment.
+4. Service Dispatch Allocation:
+   * Carry-In (OEM Brand): System generates an ASC Service Voucher and provides the customer with the nearest verified brand service center address.
+   * Pickup & Repair (1P / Seller Warranty): System assigns a prepaid reverse express shipping label (SRV-EXP) for courier collection to a Central Repair Hub.
+   * On-Site Service (Large Appliances CAT-APP): System dispatches a certified field technician to the customer's residence within 24 hours (PROD-004).
+Warranty Verification Process
+Before authorizing repairs or component replacements, the receiving service center executes mandatory physical verification:
+1. Tamper & Seal Inspection: Technical staff verify that external warranty stickers and screw seals are intact.
+2. Serial / IMEI Barcode Scan: The physical barcode on the chassis/logic board is scanned into wms.novacart.internal to confirm 100% match against outbound dispatch logs (PROD-001).
+3. Liquid Contact Indicator (LCI) Audit: Internal hardware sensors are inspected for color changes indicating liquid exposure.
+4. Defect Replication: Technicians execute standardized stress tests to replicate the customer-reported malfunction.
+Warranty Claim Status Matrix
+Claim Status Code
+	Status Name
+	System Meaning & Context
+	Customer Portal Label
+	WRN_INITIATED
+	Claim Logged
+	Customer submitted claim; pending technical triage.
+	Claim Submitted
+	WRN_TRIAGED
+	Triage Passed
+	Remote diagnostic complete; service route assigned.
+	Action Required / Dispatch Assigned
+	WRN_IN_INSPECTION
+	Under Inspection
+	Unit arrived at ASC or Central Repair Hub; physical audit active.
+	Item Under Technical Audit
+	WRN_REPAIR_ACTIVE
+	Repair in Progress
+	Technician replacing internal components or logic board.
+	Repairing Your Device
+	WRN_APPROVED_SWAP
+	Replacement Approved
+	Repair unviable; whole-unit replacement authorized (REF-003).
+	Replacement Processing
+	WRN_REJECTED
+	Claim Rejected
+	Physical damage, water ingress, or serial mismatch detected.
+	Claim Rejected (Out-of-Warranty)
+	WRN_CLOSED
+	Claim Concluded
+	Repaired/replaced unit delivered to customer; file archived.
+	Completed
+	Repair, Replacement & Resolution Options
+When a warranty claim is validated, resolution adheres to a strict hierarchical decision tree:
+Decision Hierarchy
+1. Option 1: Technical Repair (Primary): The service center replaces defective internal modules (e.g., screen panel, motherboard, power board) using genuine OEM spare parts. Target SLA: $\le 7 \text{ business days}$.
+2. Option 2: Whole-Unit Replacement (Secondary): If the unit cannot be repaired, requires unavailable spare parts, or experiences recurring failures ($> 2 \text{ repair attempts}$), NovaCart authorizes a whole-unit factory-sealed replacement under REF-003 rules. Target SLA: $\le 48 \text{ hours}$ post-approval.
+3. Option 3: Commercial Depreciated Refund (Tertiary): If the item is discontinued (PROD-001) and replacement stock is depleted nationwide (PROD-002), NovaCart issues a depreciated monetary refund or store credit under REF-005 / REF-006 rules, calculated using the standard depreciation formula:
+
+
+$$\text{Refund Value} = \text{Invoice Purchase Price} \times \left(1 - \frac{\text{Months Elapsed}}{\text{Total Warranty Months}}\right)$$
+Customer Responsibilities
+Customers seeking warranty service must comply with the following operational obligations:
+1. Backup Personal Data: Customers are solely responsible for backing up all personal files, media, and applications prior to surrendering devices (CAT-MOB, CAT-ELE). NovaCart and ASCs accept zero liability for data loss during repair or software re-flashing.
+2. Disable Security Locks: Personal cloud accounts (iCloud, Google Account, Samsung Account) and screen passwords must be completely removed before device handover (REF-002, REF-004).
+3. Safe Packaging: Items shipped for repair must be packaged in protective corrugated cartons to prevent physical transit damage.
+4. Cooperation with On-Site Technicians: For CAT-APP claims, customers must provide clear physical access, working electrical connections, and required plumbing inputs for diagnostic testing (PROD-004).
+Merchant & Manufacturer Responsibilities
+1. 3P Merchant Warranty Guarantee: Marketplace merchants offering seller warranties must fulfill repair or replacement obligations within 10 business days of receiving defective units. Failure to comply results in NovaCart executing customer remediation and debiting merchant payout accounts (PAY-003).
+2. OEM Spare Part SLA: Contracted OEM brand partners must maintain spare part availability for all active catalog models for a minimum of 3 years post-discontinuation (PROD-001).
+Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Warranty Responsibilities
+	Primary System Portal
+	SLA / Target
+	Quality Assurance
+	Oversees warranty policy compliance, audits ASC repair quality, evaluates repeat failures.
+	warranty.novacart.internal
+	Claim audit SLA $< 12\text{ Hours}$
+	After-Sales Operations
+	Manages reverse courier repair logistics, coordinates carry-in ASC vouchers, tracks spare parts.
+	tms.novacart.internal
+	Courier pickup $< 24\text{ Hours}$
+	Customer Support
+	Conducts L1 remote technical triage; guides customers through ASC drop-offs; handles appeals.
+	crm.novacart.internal
+	Priority Chat FRT $< 15\text{ Secs}$ (SUP-005)
+	Finance Operations
+	Processes depreciated warranty refunds, bills 3P merchants for unfulfilled claims, audits Protect plans.
+	ledger.novacart.internal
+	Financial clearing $< 24\text{ Hours}$ (PAY-003)
+	Business Rules
+Rule 1: Continuous Coverage on Replaced Items
+When a product is completely replaced under warranty (REF-003), the replacement unit inherits the remaining unexpired warranty balance of the original purchase or a 90-day replacement warranty, whichever duration is longer. Warranty coverage does not reset to a full new 12-month period unless an extended warranty plan (NovaCart Protect) was purchased.
+Rule 2: Absolute Serial Number Integrity
+No warranty claim shall be approved, nor shall repair labor commence, if the physical Serial/IMEI barcode on the product chassis is missing, defaced, tampered with, or mismatched against outbound dispatch logs stored in wms.novacart.internal (PROD-001). Mismatched items trigger immediate claim rejection and security fraud logging (SEC-004).
+Rule 3: Repeat Failure Rule (3-Strike Policy)
+If a product undergoes two (2) unsuccessful repair attempts for the same technical defect within the active warranty period and fails a third time, the service hub must halt further repairs and authorize an immediate whole-unit replacement (REF-003) or depreciated refund (REF-005).
+Exception Handling
+* OutOf-Stock Spare Parts ($> 14 \text{ Days}$): If an authorized repair is delayed beyond 14 business days due to OEM spare part supply chain shortages, Customer Support automatically escalates the claim to Level 3 Management to authorize an immediate whole-unit replacement or full platform store credit (REF-006).
+* Disputed Liquid / Physical Damage Rejections: If a customer disputes an ASC rejection for water/physical damage, Customer Support requests a formal Secondary Audit from NovaCart QA. Senior QA specialists review high-resolution internal chassis photographs and tear-down logs. The Senior QA Specialist's ruling is final.
+Practical Examples
+Scenario 1: Manufacturer Warranty Service for Smartphone (CAT-MOB)
+1. Customer in Bangalore purchases a smartphone (₹35,000) that develops vertical display lines 5 months after delivery.
+2. Customer logs claim in warranty.novacart.internal. System verifies delivery date, active 12-month warranty, and tax invoice.
+3. System issues an ASC Carry-In Voucher for the nearest Samsung Authorized Service Center.
+4. Customer drops off device. ASC verifies serial number, confirms display driver defect, and replaces display panel free of charge within 48 hours. File closed as WRN_CLOSED.
+Scenario 2: Depreciated Refund for Discontinued Large Appliance (CAT-APP)
+1. Customer in Dubai experiences a compressor failure on a refrigerator (AED 3,000) 18 months into a 24-month NovaCart Seller Warranty.
+2. On-site technician inspects unit, confirms internal compressor failure, but logs that replacement compressors and replacement units are permanently out of stock (STAGE-ARC in PROD-001).
+3. System applies Depreciation Formula:
+
+
+$$\text{Refund Value} = 3000 \times \left(1 - \frac{18}{24}\right) = 3000 \times 0.25 = \text{AED } 750$$
+4. Finance dispatches AED 750 store credit (CRD-WAL) instantly to customer wallet (REF-006, PAY-003) alongside free removal of the unserviceable appliance.
+Frequently Asked Questions (FAQs)
+Q1: Do I need to keep the original cardboard packaging box to claim warranty service?
+Answer: No. While original packaging is mandatory for standard returns within the initial 7-day window (REF-002, REF-004), it is not required for post-return window warranty claims. You only need the physical product, all inbox power adapters/accessories, and your digital Tax Invoice (Refer to SUP-001).
+Q2: What happens if my product breaks down after the manufacturer warranty expires?
+Answer: If you purchased a NovaCart Protect Extended Warranty plan at checkout, your coverage continues seamlessly for an additional 12 or 24 months under the same terms. If you do not have an extended plan, Customer Support can assist you in booking a paid out-of-warranty repair with a verified service partner at discounted labor rates.
+Q3: Will opening my device to upgrade RAM or storage void my warranty?
+Answer: For laptops (CAT-ELE), upgrading RAM or storage does not void the overall warranty, provided the upgrade is performed without physically damaging surrounding components and original warranty seals remain intact. However, the upgraded third-party components themselves are not covered by NovaCart or OEM warranties (Refer to PROD-001).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of PROD-003. Established warranty coverage matrices, exclusion rules, carry-in/pick-up workflows, 3-strike repair limits, depreciated refund formulas, and digital registration rules.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* ORD-001: Order Lifecycle Management Policy
+* SHIP-001: Domestic Shipping Policy
+* SHIP-003: Express & Priority Shipping Policy
+* PAY-003: Refund Payment Processing Policy
+* REF-001: Master Refund Eligibility Rules
+* REF-003: Replacement Policy
+* REF-004: Return Inspection & Quality Assessment Policy
+* REF-005: Refund Approval & Exception Handling Policy
+* REF-006: Store Credit & Promotional Refund Policy
+* PROD-001: Product Catalog Management Policy
+* PROD-002: Product Availability & Inventory Policy

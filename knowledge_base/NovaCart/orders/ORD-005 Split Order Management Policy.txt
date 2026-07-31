@@ -1,0 +1,249 @@
+﻿ORD-005: Split Order Management Policy
+Document Header
+* Document Title: Split Order Management Policy
+* Document ID: ORD-005
+* Version: 1.0.0
+* Document Category: Orders
+* Classification: Internal
+* Department Owner: Operations & Engineering
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Logistics, VP of Finance Operations, Customer Experience Director
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Split Orders, Parent Order, Child Order, Sub-Order ID, Partial Fulfillment, Distributed Inventory, Independent Tracking, Multi-Hub Sourcing
+Purpose
+This document defines the official enterprise policy, system architecture rules, operational workflows, and financial handling standards governing split orders at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It specifies conditions that trigger order partitioning, parent-child record relationships, independent sub-order tracking, partial cancellations, isolated returns, and pro-rated financial reconciliations.
+As a core operational document (ORD-005) in the NovaCart Enterprise Knowledge Base (NEKB), ORD-005 ensures deterministic execution across multi-hub fulfillment centers, marketplace vendor networks, and automated Order Management System (api.novacart.internal/oms) services, maintaining strict consistency with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-004, SHIP-001, PAY-001, and REF-001.
+Scope
+This policy applies universally across all commercial channels (B2C Retail, B2B SMB, Corporate Enterprise Accounts, NovaCart Prime Memberships), fulfillment models (1P Direct Distribution, 3P Marketplace Sellers), operating regions (India, Singapore, UAE), and product categories (CAT-ELE, CAT-MOB, CAT-GAM, CAT-APP, CAT-SMT, CAT-SFT, CAT-GFT, CAT-SUB).
+Coverage Includes
+* Architectural rules for generating Parent Master Order IDs and Child Sub-Order IDs.
+* Automated order partitioning algorithms within api.novacart.internal/oms.
+* Independent logistics routing, carrier tracking assignment, and last-mile execution per sub-order.
+* Independent post-purchase modifications, partial cancellations, transit loss claims, and returns.
+* Financial escrow splits, pro-rated tax invoice generation, and seller commission settlements.
+Split Order Overview
+A split order occurs when a single customer purchase transaction contains multiple items that cannot be fulfilled as a single physical shipment. To optimize fulfillment velocity, minimize shipping distance, and handle multi-vendor transactions, the Order Management System (OMS) automatically partitions the master transaction into distinct, self-contained sub-orders.
+
+
+
+
+
+
+<ElicitationsGroup message="To explore related order execution, shipping, or refund policies further:">
+{/* Reason: Offers structured paths to navigate deeper into related domain policies. */}
+ <Elicitation label="Review ORD-001 Order Lifecycle Management Policy" query="Show ORD-001 Order Lifecycle Management Policy detailing master order state transitions." />
+ <Elicitation label="Review ORD-002 Order Cancellation Policy" query="Show ORD-002 Order Cancellation Policy governing partial cancellation rules." />
+ <Elicitation label="Examine SHIP-001 Domestic Shipping Policy" query="Show SHIP-001 Domestic Shipping Policy governing multi-hub logistics routing." />
+</ElicitationsGroup>
+
+Reasons for Order Splitting
+The OMS sourcing algorithm automatically triggers an order split under six explicit operational conditions:
+1. Multi-Warehouse Inventory Sourcing: Ordered Stock Keeping Units (SKUs) are located in separate physical Fulfillment Centers (FCs) (e.g., Item A is in BLR-01, while Item B is in BOM-01).
+2. Multi-Seller Marketplace Orders: Items belong to different third-party marketplace merchants or a mix of 1P NovaCart direct inventory and 3P merchant inventory.
+3. Mixed Digital and Physical Items: Transaction includes physical goods (e.g., Laptop) requiring physical delivery alongside digital activation products (e.g., Software License Key or Gift Card) requiring instant digital delivery.
+4. Fulfillment Speed Constraints: Transaction contains items with differing fulfillment SLAs (e.g., Same-Day Express Item mixed with Standard Surface Freight Heavy Appliance).
+5. Hazmat & Shipping Category Restrictions: Items possess conflicting transportation constraints (e.g., Standalone Lithium-Ion Batteries requiring ground surface freight mixed with Consumer Electronics eligible for air freight).
+6. Partial Inventory Staggering: High-demand items in stock are dispatched immediately, while backordered pre-order items are scheduled for secondary dispatch.
+Split Order Creation Process
+Order partitioning executes seamlessly during checkout processing via automated OMS algorithms:
+1. Master Transaction Ingress: Customer authorizes payment for total shopping cart value. OMS creates Parent Master Order ID (e.g., NC-IN-88201) with status PAYMENT_CONFIRMED (Refer to ORD-001).
+2. Sourcing Optimization Engine: OMS Sourcing Engine (api.novacart.internal/oms/source) evaluates delivery address, item availability across regional FCs, merchant identities, and product category constraints.
+3. Child Sub-Order Generation: If split conditions are met, OMS generates child sub-order records using letter suffixes attached to the Parent Master Order ID:
+   * Sub-Order A: NC-IN-88201-A (Fulfilling from BLR-01)
+   * Sub-Order B: NC-IN-88201-B (Fulfilling from BOM-01)
+   * Sub-Order C: NC-IN-88201-C (Digital Software Key - Instant Activation)
+4. Financial & Tax Allocation: OMS splits the total financial charge, allocating pro-rated item prices, regional taxes (GST/VAT), and shipping fees proportionally across sub-orders.
+5. Independent Dispatch Initialization: Each sub-order transitions independently to INVENTORY_RESERVED and emits distinct picking tasks to respective warehouse management workstations (WMS) or seller portals.
+Parent Order and Child Order Relationship
+To maintain database integrity and operational clarity, NovaCart enforces strict hierarchical relationship rules between Parent and Child orders:
+* Financial Integrity: The Parent Master Order ID retains aggregate financial logs, payment gateway authorization references, and aggregate checkout transaction records (Refer to PAY-001).
+* Sub-Order Independence: Each Child Sub-Order operates as an independent transactional entity record containing its own item lines, allocated inventory, warehouse pick tasks, shipping labels, carrier tracking IDs, and tax invoices.
+* Parent State Aggregation: The Parent Order status is dynamically derived from the collective statuses of its Child Sub-Orders.
+Parent vs. Child Order Status Matrix
+Sub-Order A Status
+	Sub-Order B Status
+	Sub-Order C Status
+	Aggregate Parent Order Status
+	Primary Customer Portal View Label
+	DELIVERED
+	SHIPPED
+	DELIVERED
+	PARTIALLY_DELIVERED
+	Partially Delivered (1 Package In Transit)
+	DELIVERED
+	DELIVERED
+	DELIVERED
+	DELIVERED
+	Delivered (All Packages)
+	CANCELLED
+	SHIPPED
+	DELIVERED
+	PARTIALLY_CANCELLED
+	Partially Cancelled (1 Package In Transit)
+	CANCELLED
+	CANCELLED
+	CANCELLED
+	CANCELLED
+	Cancelled
+	COMPLETED
+	COMPLETED
+	COMPLETED
+	COMPLETED
+	Completed
+	Independent Shipment Processing
+Each child sub-order moves through the fulfillment pipeline independently without waiting for co-ordered items:
+* Independent Packaging & Weight Audits: Warehouse staff pick, weight-audit, and pack sub-orders in separate tamper-evident packages at their assigned FC.
+* Independent Tracking Assignment: Transportation Management System (TMS) assigns a unique, dedicated Tracking ID (e.g., NCIN2621088201-A) and 3PL waybill number to each sub-order parcel (Refer to ORD-004).
+* Independent Carrier Routing: Sub-orders may utilize different logistics carriers, linehaul routes, and last-mile delivery riders based on destination optimization.
+* Independent Proof of Delivery (POD): Each physical delivery requires a separate time-stamped One-Time Password (OTP) or recipient digital signature upon doorstep arrival.
+Customer Communication Standards
+To eliminate customer confusion regarding multi-package deliveries, NovaCart enforces transparent communication protocols:
+1. Checkout Transparency: The checkout screen explicitly alerts the customer when items will arrive in multiple packages, displaying itemized package groupings and estimated delivery windows.
+2. Itemized Order Confirmation Email: Order confirmation disclosures explicitly group items by sub-order tracking ID, detailing shipping origins and expected ETAs per package.
+3. Independent Status Alerts: Automated SMS, WhatsApp, and email alerts dispatch independently whenever a specific sub-order changes state (e.g., "Package 1 of 2 from Order #NC-IN-88201 has been shipped!") (Refer to ORD-004).
+4. Unified Customer Portal View: The customer dashboard (My Orders) displays an overarching Parent Order card that expands to reveal individual Child Sub-Order progress cards, direct tracking links, and digital tax invoices per package.
+Cancellation Rules for Split Orders
+Cancellation operations on split orders execute with complete sub-order isolation:
+* Partial Cancellation Authority: Customers possess self-service authority to cancel an individual sub-order (e.g., Sub-Order B) while in pre-dispatch status (PENDING_PAYMENT to PACKED) without invalidating or delaying remaining sub-orders (Sub-Order A) (Refer to ORD-002).
+* Automatic Price Re-calculation: Cancelling a single sub-order automatically recalculates aggregate order totals, tax charges, and promotional threshold eligibility.
+* Promotional Discount Protection: If a multi-item promotional discount required purchasing both items, cancelling one sub-order automatically re-applies standard pricing to the retained sub-order, deducting the discount variance from the partial refund credit.
+Cancellation Rules Matrix
+Target Order Level
+	Target Status Tag
+	Permissible Action
+	Operational System Execution
+	Refund Triggered
+	Sub-Order Level
+	Pre-Dispatch (PACKED or earlier)
+	Cancel Sub-Order
+	OMS cancels target child record; releases FC bin lock.
+	Pro-rated refund for sub-order item + taxes + specific shipping fee.
+	Sub-Order Level
+	Post-Dispatch (SHIPPED)
+	Intercept / Refuse
+	Direct cancel locked. L2 Logistics attempts carrier intercept or customer refuses doorstep delivery.
+	Refund issued upon physical FC receipt minus outbound shipping fee.
+	Parent Order Level
+	All Sub-Orders Pre-Dispatch
+	Cancel Master Order
+	OMS cancels all child records simultaneously.
+	100% Full refund of aggregate master transaction value.
+	Modification Rules for Split Orders
+Modification requests apply strictly at the sub-order level in accordance with ORD-003 guidelines:
+* Address Updates: Modifying a delivery address updates all sub-orders currently in pre-dispatch status (PROCESSING or earlier). Sub-orders that have reached SHIPPED status are locked and require L2 Logistics intercept handling under SHIP-007.
+* Variant Swaps: Product variant swaps (e.g., color/size changes) execute strictly on the specific child sub-order record containing the target SKU, provided FC stock exists and unit pricing is identical.
+* Delivery Slot Adjustments: Delivery time window modifications apply independently to the specific sub-order being scheduled.
+Tracking Split Orders
+Shipment tracking for split orders operates independently per child record within tms.novacart.internal:
+* Dedicated Tracking Timelines: Each sub-order maintains an independent tracking milestone timeline (LABEL_CREATED $\rightarrow$ SHIPPED $\rightarrow$ OUT_FOR_DELIVERY $\rightarrow$ DELIVERED) (Refer to ORD-004).
+* Rider Map Isolation: Live map tracking for express or same-day deliveries displays the specific last-mile delivery rider assigned to that distinct sub-order package.
+* Independent NDR Processing: If a last-mile delivery attempt fails for Sub-Order A (logging a Non-Delivery Report - NDR), Sub-Order B delivery processing continues unaffected.
+Refund Handling
+Financial refunds for split orders are executed on a pro-rated, sub-order isolated basis through the financial ledger (ledger.novacart.internal):
+* Pro-Rated Refund Calculation: Refunds for cancelled or returned sub-orders match the exact item price, applicable regional taxes (GST/VAT), and allocated shipping fees bound to that specific child record.
+* Shipping Fee Refund Rules: If a flat shipping fee was charged on the Parent Order, the shipping fee is allocated proportionally based on item weight across sub-orders. Cancelling a sub-order refunds its proportional shipping fee allocation.
+* Payment Destination: Refunds route directly back to the original payment instrument used during checkout or to the customer's NovaCart Wallet within 3 to 5 business days (Refer to PAY-001, REF-001, REF-002).
+Refund Processing Matrix
+Event Type
+	Affected Sub-Order Status
+	Calculated Refund Amount
+	Processing Timeline
+	Policy Reference
+	Pre-Dispatch Sub-Order Cancel
+	PACKED or earlier
+	100% Sub-Order Item Price + Taxes + Allocated Shipping Fee
+	3–5 Business Days / Instant Wallet
+	ORD-002, REF-001
+	Post-Dispatch Sub-Order Return
+	DELIVERED (RMA Approved)
+	100% Sub-Order Item Price + Taxes (Outbound shipping fee excluded)
+	3–5 Business Days post-FC inspection
+	REF-001, REF-002
+	Sub-Order Transit Loss
+	CANCELLED_LOST_IN_TRANSIT
+	100% Sub-Order Item Price + Taxes + Shipping Fee + ₹200 Voucher
+	Instant Wallet / 3–5 Business Days
+	SHIP-006, REF-001
+	Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Split Order Responsibilities
+	Primary Portal Used
+	SLA / Performance Target
+	Software Engineering
+	Maintains OMS split algorithms, API database constraints, parent-child status sync.
+	api.novacart.internal
+	$99.99\%$ OMS Sourcing Engine availability
+	Warehouse Operations
+	Executes independent wave picks, serial logging, packaging, and FC dock dispatch.
+	wms.novacart.internal
+	Inbound putaway to dispatch $< 6\text{ Hours}$
+	Logistics & Fleet
+	Manages independent AWB generation, 3PL carrier dispatch, last-mile rider routes.
+	tms.novacart.internal
+	On-Time Delivery (OTD) $\ge 96\%$ per sub-order
+	Finance Operations
+	Audits pro-rated tax invoicing, partial refund execution, and merchant escrow splits.
+	ledger.novacart.internal
+	Partial refund processing $< 24\text{ Hours}$
+	Customer Support
+	Assists customers with sub-order tracking, partial cancellations, and isolated RMA creation.
+	crm.novacart.internal
+	$< 2\text{ Mins}$ (Chat) / $< 15\text{ Mins}$ (Email)
+	Business Rules
+Rule 1: Master Parent Order Invariance
+Parent Master Order IDs are permanent and immutable. Sub-Order IDs must remain permanently linked to their Parent Master Order ID in all system logs, accounting ledgers, and customer interaction histories.
+Rule 2: Sub-Order Isolation Principle
+Operational actions executed on a single child sub-order record—including cancellations, address modifications, carrier trace holds, transit loss claims, and RMA returns—must never automatically alter, delay, or invalidate active processing schedules for remaining child sub-orders.
+Rule 3: Terminal State Parent Completion
+The Parent Master Order reaches its final terminal state (COMPLETED or REFUNDED) only when every associated Child Sub-Order record has reached an absolute terminal state (COMPLETED, CANCELLED, or REFUNDED).
+Exception Handling
+* Sub-Order Transit Loss Isolation: If Sub-Order A is confirmed lost in transit by carrier trace (SHIP-006), OMS flags Sub-Order A as CANCELLED_LOST_IN_TRANSIT, issues an immediate auto-refund or replacement for Sub-Order A, while Sub-Order B continues normal last-mile delivery to the customer.
+* Multi-Hub Return Processing: If a customer returns two items from separate sub-orders under a single return request, the customer is issued separate prepaid return labels. Item A routes back to BLR-01, and Item B routes back to BOM-01. Refunds trigger independently as each FC receives and verifies its respective item (Refer to REF-005).
+Practical Examples
+Scenario 1: Multi-Warehouse Sourcing & Independent Delivery
+* Context: Customer purchases a gaming laptop (₹85,000) and an external hard drive (₹4,500) in Master Order NC-IN-99301.
+* Workflow: OMS Sourcing Engine identifies laptop at hub BLR-01 and hard drive at hub BOM-01. OMS creates Sub-Orders NC-IN-99301-A (Laptop) and NC-IN-99301-B (Hard Drive).
+* Laptop dispatches via air freight (NCIN2621088201-A), delivering next day at 02:00 PM (DELIVERED).
+* Hard drive dispatches via surface freight (NCIN2621088201-B), delivering 48 hours later (DELIVERED).
+* Parent Order reflects PARTIALLY_DELIVERED after day 1, transitioning to DELIVERED on day 3.
+Scenario 2: Partial Cancellation of a Split Order
+* Context: Master Order NC-SG-40012 contains a smart TV (Sub-Order A) and a wall mount bracket (Sub-Order B). Sub-Order A is SHIPPED, while Sub-Order B is INVENTORY_RESERVED.
+* Workflow: Customer opens mobile app and selects Cancel Item on Sub-Order B. OMS cancels Sub-Order B instantly, releases warehouse lock at SIN-01, recalculates order totals, and issues a 100% refund for the wall mount bracket to customer's card. Sub-Order A remains SHIPPED and completes doorstep delivery.
+Scenario 3: Mixed Physical and Digital Order Processing
+* Context: Customer orders a desktop computer (CAT-ELE) and a digital OS software key (CAT-SFT) in Master Order NC-UAE-20088.
+* Workflow: OMS splits order into Sub-Order A (Desktop) and Sub-Order B (Software Key).
+* Sub-Order B fulfills instantly within 30 seconds, delivering activation code directly to customer's account portal (DELIVERED).
+* Sub-Order A is picked and packed at hub DXB-01, delivering 2 days later via express courier.
+Frequently Asked Questions (FAQs)
+Q1: Why was my order split into multiple packages with separate delivery dates?
+Answer: Orders are split when items reside in different regional fulfillment centers, belong to different marketplace sellers, or require different shipping methods (e.g., surface freight for heavy appliances vs. air freight for electronics). Splitting ensures available items ship immediately without waiting for remaining stock (Refer to ORD-001, SHIP-001).
+Q2: Is the customer charged additional shipping fees when an order is split into multiple packages?
+Answer: No. Shipping fees are calculated based on the total aggregate order at checkout. If NovaCart splits an order into multiple packages for operational efficiency, NovaCart absorbs all additional packaging and carrier delivery expenses.
+Q3: How does a customer return only one item from a split order?
+Answer: The customer logs into My Orders, selects the specific Sub-Order ID containing the item they wish to return, and generates an RMA under REF-005. A prepaid return shipping label is generated specifically for that sub-order package, and the refund is processed upon warehouse receipt.
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of ORD-005. Established split order overview, parent-child status matrices, isolated cancellation/modification rules, pro-rated refund matrix, and multi-hub scenario workflows.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* ORD-001: Order Lifecycle Management Policy
+* ORD-002: Order Cancellation Policy
+* ORD-003: Order Modification Policy
+* ORD-004: Order Tracking Policy
+* SHIP-001: Domestic Shipping Policy
+* PAY-001: Payment Processing SOP
+* REF-001: Master Refund Eligibility Rules
+* REF-002: Refund Timeline Standards
+* REF-005: Return Process Protocols

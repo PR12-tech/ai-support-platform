@@ -1,0 +1,215 @@
+﻿PAY-002: Payment Failure & Retry Policy
+Document Header
+* Document Title: Payment Failure & Retry Policy
+* Document ID: PAY-002
+* Version: 1.0.0
+* Document Category: Payments
+* Classification: Internal / Public Operational Standard
+* Department Owner: Finance Operations
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Payment Operations, Chief Information Security Officer, Customer Experience Director
+* Approved By: Chief Financial Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Payment Failure, Retry Policy, Unlinked Debit, Transaction Recovery, Gateway Timeout, Payment Reconciliation, 3DS Timeout, Pending Payment
+Purpose
+This document defines the official enterprise policy, operational standards, automated recovery mechanisms, failure categorization frameworks, and customer communication protocols for managing failed and unconfirmed payment transactions at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes clear rules for handling bank declines, gateway time-outs, network drops, unlinked debits, and pending payment status reconciliations.
+As an essential operational document (PAY-002) in the NovaCart Enterprise Knowledge Base (NEKB), PAY-002 ensures deterministic execution across payment gateway integrations, financial ledgers (ledger.novacart.internal), Customer Support workflows, and the Order Management System (api.novacart.internal/oms), maintaining full compatibility with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, and PAY-001.
+Scope
+This policy applies to all failed, dropped, timed-out, or pending financial transactions across all operating regions (India, Singapore, UAE), supported payment methods (Credit/Debit Cards, UPI, Net Banking, Digital Wallets, BNPL, Gift Cards), commercial channels, and product categories.
+Coverage Includes
+* Categorization of payment failures based on origin root cause (User, Issuer Bank, Gateway, Network).
+* Automated payment retry mechanisms and manual recovery link generation.
+* Handling of "Unlinked Debits" (Customer debited, but order not generated in OMS).
+* Handling of "Pending Payments" (Order created, but payment status unconfirmed).
+* Multi-channel customer alerting, anti-fraud intervention, and duplicate payment prevention.
+Payment Failure Overview
+Payment failures represent a critical friction point in e-commerce fulfillment. NovaCart treats payment recovery with high operational priority to maximize checkout conversion while ensuring zero financial loss for the customer.
+Core Operational Principles
+1. Zero Customer Loss: Any payment debited from a customer's account without generating a confirmed order must be automatically recovered via order generation or fully refunded without requiring manual customer claims.
+2. Deterministic Retry Logic: Programmatic, rule-based retry protocols that distinguish between hard declines (e.g., fraudulent card) and soft failures (e.g., temporary bank network drop).
+3. 15-Minute Cart Holding Guarantee: Temporary reservation of inventory for 15 minutes following a soft payment failure to allow seamless customer payment re-attempts without cart loss.
+4. Transparent Communication: Immediate multi-channel alerting informing customers of failure root causes, exact debit statuses, and secure re-payment options.
+Types of Payment Failures
+Payment failures are categorized into four primary failure classes based on the originating system or user action:
+Payment Failure Classification Matrix
+Failure Class
+	Category Code
+	Typical Failure Scenarios
+	Primary Failure Root Cause
+	Retry Eligible?
+	User Input Error
+	FAIL-USR
+	Incorrect CVV, expired card date, wrong OTP, invalid UPI PIN, user abandoned checkout midway.
+	Customer error or voluntary session termination.
+	Yes (Manual Re-attempt)
+	Account / Balance
+	FAIL-ACC
+	Insufficient account balance, credit limit exceeded, account block, non-3DS card.
+	Issuing bank declined due to account limitations.
+	Yes (Alternate Instrument)
+	Issuer / Bank Drop
+	FAIL-BNK
+	Issuing bank server down, core banking timeout, 3DS authentication server crash.
+	Temporary technical outage at issuing bank.
+	Yes (Auto / Manual Retry)
+	Gateway / Network
+	FAIL-GWY
+	Payment gateway API drop, network timeout, webhook delivery failure, unlinked debit.
+	Network latency or technical integration failure.
+	Yes (Auto-Reconciliation)
+	Failure Detection Process
+Payment failures are detected in real time through event listeners and health checks within api.novacart.internal/pay:
+
+
+
+
+
+
+<ElicitationsGroup message="To explore related payment, order cancellation, or support policies further:">
+{/* Reason: Offers structured paths to navigate deeper into related domain policies. */}
+ <Elicitation label="Review PAY-001 Payment Processing SOP" query="Show PAY-001 Payment Processing SOP detailing standard payment lifecycles." />
+ <Elicitation label="Review ORD-002 Order Cancellation Policy" query="Show ORD-002 Order Cancellation Policy governing timeout cancellations." />
+ <Elicitation label="Examine SUP-005 Customer Support SLA Policy" query="Show SUP-005 Customer Support SLA Policy detailing resolution response SLAs." />
+</ElicitationsGroup>
+
+1. Immediate Gateway Response Ingress: The Payment Gateway (PG) returns an explicit failure payload (e.g., AUTHORIZATION_DECLINED, EXPIRED_CARD, INSUFFICIENT_FUNDS) via API response.
+2. Webhook Timeout Listener: If no authorization payload or failure response is received within 180 seconds of checkout initiation, the payment state machine flags the transaction as PENDING_RECONCILIATION.
+3. Automated Gateway Polling: For PENDING_RECONCILIATION transactions, background worker routines query the PG status endpoint (GET /v1/payments/{pg_id}) at 3-minute, 6-minute, and 12-minute intervals to obtain definitive transaction status.
+Automatic Retry Policy
+NovaCart enforces intelligent, automated retry logic to recover soft technical drops without requiring customer action:
+Retry Eligibility Matrix
+Failure Category
+	Failure Description
+	Auto-Retry Eligible?
+	Maximum Auto-Retry Limit
+	Retry Execution Logic / Mechanism
+	FAIL-GWY
+	Gateway Timeout / Webhook Drop
+	Yes
+	3 System Retries
+	Background API polling query at 3, 6, and 12 minutes post-checkout.
+	FAIL-BNK
+	Issuing Bank 3DS Server Outage
+	Yes (Cascading PG)
+	1 Secondary Switch
+	Auto-routes transaction to secondary PG acquirer (e.g., Razorpay $\rightarrow$ PayU).
+	FAIL-USR
+	Incorrect CVV / Wrong OTP
+	No
+	0 Auto-Retries
+	Requires explicit customer input correction on checkout screen.
+	FAIL-ACC
+	Insufficient Balance
+	No
+	0 Auto-Retries
+	Hard decline; customer must select an alternate payment method.
+	Manual Retry Process
+When an automatic retry cannot resolve a payment failure, the customer is guided through a secure manual recovery workflow:
+1. Failure Overlay Display: The checkout interface displays a clear, empathetic failure message explaining the specific root cause (e.g., "Your card was declined due to insufficient funds. Please try an alternate card or UPI.").
+2. 15-Minute Cart Holding Guarantee: OMS holds the shopping cart items and allocated inventory in PENDING_PAYMENT status for 15 minutes.
+3. Express Recovery Link: An automated SMS and WhatsApp message is sent containing a secure, single-use payment recovery link ([https://pay.novacart.com/recover/](https://pay.novacart.com/recover/){token}).
+4. Instrument Switching: The customer clicks the recovery link, selects a different payment instrument (e.g., switching from Credit Card to UPI or Cash on Delivery), and completes payment.
+5. Auto-Cancellation on Expiry: If no successful payment is completed within 15 minutes, OMS transitions the order status to CANCELLED_TIMEOUT and releases allocated inventory (Refer to ORD-001, ORD-002).
+Pending Transaction Management
+Pending transactions occur when funds are debited from a customer's bank account, but network drops prevent the gateway from notifying NovaCart in real time:
+* Unlinked Debit Recovery (Order Auto-Creation): If background gateway polling confirms that funds were successfully debited within the 15-minute reservation window, ledger.novacart.internal automatically validates payment, creates the order in OMS, and updates order status to PAYMENT_CONFIRMED (Refer to ORD-001).
+* Stock Depletion During Verification: If the gateway confirms payment after the 15-minute window expires and inventory has been purchased by another customer, OMS cannot generate the order. The system automatically triggers an Immediate Full Refund back to the customer's payment source and dispatches an apology notification with a ₹200 goodwill credit.
+Customer Notification Process
+Transparent multi-channel notifications reassure customers and prevent duplicate payment attempts:
+Customer Notification Matrix
+Transaction Event
+	Notification Channel(s)
+	Trigger Condition
+	Message Content Summary
+	Soft Payment Failure
+	Checkout Screen + SMS
+	Immediate upon PG failure response.
+	"Payment failed: [Reason]. Your items are saved for 15 mins. Complete payment here: [Link]"
+	Unlinked Debit Detected
+	SMS + WhatsApp
+	Gateway poll confirms debit during pending state.
+	"Good news! We verified your payment of [Amount] for Order #[ID]. Your order is confirmed."
+	Unlinked Debit Refunded
+	Email + SMS
+	Debit confirmed after inventory depletion.
+	"Payment of [Amount] received after stock depleted. Full refund issued. Ref: [REF-ID]."
+	Payment Timeout Expired
+	Email + SMS
+	15-minute unpaid timer expires.
+	"Order #[ID] cancelled due to payment timeout. Saved items released back to catalog."
+	Merchant & Payment Gateway Responsibilities
+* Payment Gateway (PG) SLAs: Partner gateways must maintain an API authorization uptime of $\ge 99.95\%$ and process status polling queries within $< 500\text{ milliseconds}$.
+* Merchant Non-Interference: Marketplace merchants are strictly prohibited from cancelling orders or altering prices while an order remains in PENDING_PAYMENT or PENDING_RECONCILIATION status (Refer to ORD-002).
+Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Payment Failure Responsibilities
+	Primary Portal Used
+	Primary SLA Target
+	Finance Operations
+	Manages auto-reconciliation engines; audits unlinked debits; processes manual payment traces.
+	ledger.novacart.internal
+	Daily zero-variance reconciliation ($100\%$)
+	Customer Support
+	Assists customers with payment recovery links; verifies payment trace reference numbers.
+	crm.novacart.internal
+	Priority Chat FRT $< 15\text{ Secs}$ (Refer to SUP-005)
+	Software Engineering
+	Maintains gateway fallback routing logic, recovery link generation, and polling workers.
+	api.novacart.internal
+	$99.99\%$ payment recovery uptime
+	Security Operations
+	Audits payment failure spikes for distributed denial-of-service (DDoS) or carding attacks.
+	shield.novacart.internal
+	Real-time threat containment
+	Business Rules
+Rule 1: Maximum Manual Retry Attempts
+A customer may attempt manual payment retries up to a maximum of five (5) attempts per order within the 15-minute window. If 5 consecutive payment attempts fail, the checkout session is locked for 1 hour to prevent carding fraud (Refer to SEC-004).
+Rule 2: Absolute Prevention of Duplicate Debits
+If a customer completes a successful payment retry using an alternate instrument, but the initial "failed" attempt is subsequently cleared by the bank, ledger.novacart.internal detects the duplicate debit within 2 hours and issues an Automatic 100% Refund for the secondary transaction back to the original payment source (Refer to PAY-003).
+Rule 3: Single Recovery Link Policy
+Payment recovery links ([https://pay.novacart.com/recover/](https://pay.novacart.com/recover/){token}) are single-use, cryptographically signed, and expire strictly after 15 minutes. Links automatically deactivate upon successful payment confirmation.
+Exception Handling
+* Bank Server Outages During Peak Events: During major shopping sales, if a major issuing bank (e.g., HDFC or State Bank of India) experiences a total core banking outage, api.novacart.internal/pay dynamically disables the affected bank option on checkout screens and highlights stable alternative payment methods (e.g., UPI or Digital Wallets).
+* Unverified Pending Debits Exceeding 24 Hours: If a payment gateway maintains a transaction in PENDING status for $> 24\text{ hours}$ without definitive confirmation, NovaCart proactively issues a conditional store wallet credit to the customer, enabling order fulfillment while Finance pursues bank reconciliation.
+Practical Examples
+Scenario 1: Soft Failure & Success via Manual Recovery Link
+1. Customer in Mumbai attempts credit card checkout for a smartphone (₹24,999). Issuing bank returns 3DS_TIMEOUT.
+2. OMS holds items in PENDING_PAYMENT and sends an automated SMS/WhatsApp message containing a secure recovery link.
+3. Customer clicks the link 4 minutes later, selects UPI payment (PAY-UPI), and enters valid UPI PIN.
+4. Razorpay gateway returns AUTHORIZATION_SUCCESS. OMS updates status to PAYMENT_CONFIRMED and releases shipping manifest (Refer to ORD-001).
+Scenario 2: Unlinked Debit Auto-Recovery
+1. Customer in Dubai authorizes a credit card payment (AED 450) for a smart home hub. Network drops during 3DS redirection.
+2. Customer sees a browser timeout screen and assumes payment failed. However, the bank debited AED 450.
+3. Background polling worker queries Telr PG API 6 minutes later. Telr returns CAPTURED.
+4. ledger.novacart.internal matches the PG transaction ID, creates the order in OMS, updates status to PAYMENT_CONFIRMED, and sends a WhatsApp confirmation alert to the customer.
+Frequently Asked Questions (FAQs)
+Q1: What should I do if my bank account was debited, but I received a "Payment Failed" notification?
+Answer: Do not worry. Your money is completely safe. Our automated reconciliation system checks pending bank transactions every 3 minutes. If the payment was debited, your order will be automatically confirmed within 15 minutes. If stock is no longer available, a 100% full refund will be processed back to your bank account automatically (Refer to PAY-001, REF-001).
+Q2: How long does NovaCart hold items in my shopping cart after a payment fails?
+Answer: NovaCart reserves your selected items and holds active inventory for exactly 15 minutes after a soft payment failure, allowing you time to retry using an alternate payment method without losing your items (Refer to ORD-001).
+Q3: Why was I prevented from retrying my payment after multiple failed attempts?
+Answer: To protect your account from fraud and comply with security rules, our system locks checkout payment retries for 1 hour if 5 consecutive payment attempts fail on a single order. You can try again after 1 hour or contact Customer Support for assistance (Refer to SEC-004).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of PAY-002. Established payment failure classification matrices, automatic/manual retry rules, 15-minute cart holding protocols, unlinked debit recovery logic, and customer notification SLAs.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* SUP-005: Customer Support SLA Policy
+* ORD-001: Order Lifecycle Management Policy
+* ORD-002: Order Cancellation Policy
+* PAY-001: Payment Processing SOP
+* PAY-003: Duplicate Payment Procedures
+* REF-001: Master Refund Eligibility Rules
+* SEC-004: Fraud Detection Framework

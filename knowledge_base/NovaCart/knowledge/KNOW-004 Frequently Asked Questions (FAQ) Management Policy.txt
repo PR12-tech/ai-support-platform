@@ -1,0 +1,324 @@
+﻿KNOW-004: Frequently Asked Questions (FAQ) Management Policy
+Document Header
+* Document Title: Frequently Asked Questions (FAQ) Management Policy
+* Document ID: KNOW-004
+* Version: 1.0.0
+* Document Category: Knowledge Management
+* Classification: Internal Operational Standard
+* Department Owner: Knowledge Management & Content Operations
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Knowledge Management, Director of Customer Experience, VP of Quality Assurance, General Counsel
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: FAQ Management, Frequently Asked Questions, Self-Service Content, Knowledge Optimization, Customer Support Deflection, Content Lifecycle, Quality Assurance, Searchability
+Purpose
+This document defines the official Frequently Asked Questions (FAQ) Management Policy of NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes standardized enterprise principles, content management standards, asset ownership responsibilities, creation guidelines, review workflows, approval processes, quality assurance controls, and business rules governing the identification, creation, maintenance, publication, optimization, categorization, and retirement of Frequently Asked Questions (FAQs) across NovaCart's customer support ecosystem and digital storefronts.
+As a core operational document (KNOW-004) in the Knowledge Management category of the NovaCart Enterprise Knowledge Base (NEKB), KNOW-004 governs FAQ repository administration within faq.novacart.internal and public storefront help centers, operating in strict operational alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, REF-001 through REF-006, PROD-001 through PROD-006, SEC-001 through SEC-006, LEG-001 through LEG-006, and KNOW-001 through KNOW-003.
+Scope
+This policy applies universally across all public customer-facing FAQ portals, storefront help center pages, in-app self-service widgets, chatbot quick-reply repositories, and internal agent FAQ reference manuals utilized by NovaCart across India, Singapore, and the United Arab Emirates.
+Coverage Includes
+* Identification, prioritization, and drafting criteria for new Frequently Asked Questions based on support ticket analytics and customer feedback.
+* Structural architecture, categorization taxonomy, plain-language writing standards, and search optimization guidelines for FAQs.
+* Multi-stage review, verification, and formal approval workflows prior to FAQ publication.
+* Scheduled review frequencies, drift detection, ticket-volume correlation, and content maintenance protocols.
+* FAQ deprecation, archiving, restoration, and permanent retirement workflows.
+* Quality assurance sampling, helpfulness rating integration, and continuous improvement metrics.
+Out of Scope
+* Detailed internal operational Standard Operating Procedures (SOPs) and agent CRM execution steps (governed by KNOW-003 and SUP-001).
+* Master product catalog specifications, technical spec sheets, and merchandise attributes (governed by PROD-001 and KNOW-002).
+FAQ Management Overview
+Frequently Asked Questions (FAQs) serve as the frontline of customer self-service empowerment at NovaCart. By addressing common inquiries proactively—such as order tracking (ORD-001), shipping timelines (SHIP-001), return eligibility (REF-001), warranty coverage (PROD-003), and account security (SEC-001)—effective FAQ management reduces inbound support ticket volume, accelerates customer resolution, and enhances overall platform satisfaction.
+
+
+
+
+
+
+<ElicitationsGroup message="To explore related knowledge governance policies further:">
+ <Elicitation label="Review KNOW-001 Customer Support KB Governance Policy" query="Show KNOW-001 Customer Support Knowledge Base Governance Policy detailing support knowledge standards." />
+ <Elicitation label="Review KNOW-002 Product & Service Knowledge Policy" query="Show KNOW-002 Product & Service Knowledge Management Policy detailing product documentation." />
+ <Elicitation label="Examine KNOW-003 SOP Knowledge Repository Policy" query="Show KNOW-003 Standard Operating Procedures Knowledge Repository Policy detailing SOP governance." />
+</ElicitationsGroup>
+
+Core Governance Principles
+1. Customer-Centric Clarity: FAQs must be written from the customer's perspective using natural, plain-language phrasing, completely free of internal corporate jargon or complex technical acronyms.
+2. Definitive Single Source of Truth: All FAQ answers must derive directly from validated master enterprise policies (NEKB) and published SOPs (know.novacart.internal and sop.novacart.internal). Disconnected or contradictory answers are strictly prohibited.
+3. Data-Driven Prioritization: Creation and optimization of FAQ content must be driven empirically by support ticket volume analysis, search query analytics, and customer feedback trends.
+4. Proactive Drift Management: FAQ content is audited continuously against policy revisions (LEG-005), product launches, and seasonal promotional campaigns to prevent information drift.
+FAQ Governance Principles
+NovaCart's FAQ management infrastructure operates under four non-negotiable governance principles:
+* Strict Alignment with Master Policies: FAQs represent summarized guidance; they do not replace master enterprise policies. Every FAQ must cross-reference its governing NEKB document (e.g., cross-referencing REF-001 for return eligibility).
+* Universal Accessibility & Categorization: FAQs must be organized into intuitive category taxonomies and tagged with standardized search keywords to maximize discoverability across mobile and web platforms.
+* Measurable Deflection Impact: FAQ performance is evaluated continuously based on self-service deflection rates, article helpfulness percentages, and post-view ticket creation metrics.
+* Traceable Version Control: Every modification to FAQ questions, answers, or categorization tags must maintain semantic version history and audit log logging in audit.novacart.internal (SEC-006).
+FAQ Identification & Prioritization
+FAQ assets are created and prioritized based on empirical operational demand:
+FAQ Priority Matrix
+Priority Tier
+	Identification Trigger
+	Operational Significance
+	Target Creation / Update SLA
+	P1 - Critical
+	New product launch (PROD-001), major policy revision (LEG-001), or critical recall (PROD-005).
+	Prevents massive inbound support spikes and customer confusion.
+	$\le 24$ Hours
+	P2 - High
+	Support ticket spike ($> 100$ inquiries/week on a specific topic) or seasonal event (REF-006).
+	Addresses high-frequency customer friction points.
+	$\le 3$ Business Days
+	P3 - Medium
+	Search analytics showing frequent zero-result queries in the Help Center.
+	Fills informational gaps in self-service navigation.
+	$\le 7$ Business Days
+	P4 - Low
+	Routine periodic review or minor terminology adjustment.
+	Maintenances ongoing content hygiene.
+	$\le 14$ Business Days
+	FAQ Creation Standards
+FAQ authors must adhere to strict structural, formatting, and stylistic requirements:
+Standardized Authoring Guidelines
+* Question Formulation: Questions must be framed precisely as customers ask them (e.g., "How do I track my delivery?" rather than Inbound Shipment Tracking Protocols).
+* Answer Structure: Answers must follow the inverted pyramid principle—providing the direct answer in the first sentence, followed by actionable step-by-step guidance, and concluding with a clear call-to-action or link to related policies.
+* NEKB Cross-Referencing: FAQs must include a "Learn More" or cross-reference link pointing directly to the governing master policy document (e.g., linking to SHIP-001 for shipping details).
+* Length and Readability: Answers should remain concise (between 50 and 150 words), utilizing bullet points for scannability and achieving a Flesch-Kincaid Readability Score $\ge 60$.
+FAQ Review & Approval Process
+All new FAQ articles and material revisions must complete a structured review pipeline in faq.novacart.internal:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        FAQ APPROVAL WORKFLOW                                      |
++-----------------------------------------------------------------------------------+
+| 1. DRAFT CREATION   | Author drafts FAQ based on ticket analytics or policy update.|
+| 2. POLICY AUDIT     | SME and Compliance verify alignment with master NEKB docs.  |
+| 3. EDITORIAL REVIEW | Knowledge Manager audits tone, clarity, and search tags.    |
+| 4. PUBLICATION      | System assigns Active Status (STAGE-ACT) and indexes search. |
++-----------------------------------------------------------------------------------+
+
+Content Approval Matrix
+FAQ Classification
+	Technical / Policy Reviewer
+	Legal / Compliance Reviewer
+	Final Approval Authority
+	Target Approval SLA
+	Standard Retail FAQ
+	Customer Support Lead
+	Not Required
+	Knowledge Manager
+	$\le 24$ Hours
+	Policy / Legal FAQ (Returns/Terms)
+	Operations Lead
+	Mandatory (Legal / LEG-005)
+	General Counsel / KB Manager
+	$\le 48$ Hours
+	Security / Account FAQ
+	Information Security Lead
+	Mandatory (Security / SEC-001)
+	CISO / KB Manager
+	$\le 24$ Hours
+	Emergency / Recall FAQ
+	CSIRT / Safety Lead (PROD-005)
+	Mandatory
+	On-Call KB Manager
+	$\le 15$ Minutes
+	FAQ Publication & Categorization
+Upon receiving final approval in faq.novacart.internal, the system executes automated publication workflows:
+FAQ Category Matrix
+FAQ Category Code
+	Category Name
+	Primary Subject Scope
+	Governing Master Policies
+	FAQ-CAT-ORD
+	Orders & Delivery
+	Order placement, modification, tracking, delivery slots.
+	ORD-001, SHIP-001, SHIP-003
+	FAQ-CAT-REF
+	Returns & Refunds
+	Return windows, RMA inspections, refund clearing timelines.
+	REF-001, REF-002, PAY-003
+	FAQ-CAT-WRN
+	Warranties & Repairs
+	Manufacturer warranties, extended plans, service drop-offs.
+	PROD-003, PROD-004
+	FAQ-CAT-ACC
+	Account & Security
+	Login issues, password resets, 2FA, privacy data requests.
+	SEC-001, SEC-002, LEG-002
+	FAQ-CAT-PAY
+	Payments & Promos
+	Payment methods, wallet balances, promotional coupon codes.
+	PAY-001, PAY-006, REF-006
+	FAQ-CAT-DIG
+	Digital Products
+	Software licenses, game keys, subscription renewals.
+	PROD-006
+	FAQ Maintenance & Continuous Improvement
+FAQ assets are maintained continuously to prevent information drift and maximize self-service deflection:
+Review Frequency Matrix
+FAQ Category / Risk Profile
+	Scheduled Review Frequency
+	Review Trigger Conditions
+	Responsible Audit Unit
+	Account & Security (FAQ-CAT-ACC)
+	Quarterly (90 Days)
+	Security policy revision or ATO threat alert (SEC-001).
+	Security Audit Lead
+	Payments & Promos (FAQ-CAT-PAY)
+	Quarterly (90 Days)
+	Financial policy update or payment gateway change.
+	Finance Operations Lead
+	Orders, Returns & Warranty
+	Semi-Annual (180 Days)
+	Operational policy update or shipping SLA shift.
+	Customer Experience Lead
+	General & Digital Products
+	Annual (365 Days)
+	Catalog update or digital licensing term change.
+	Knowledge Management
+	Customer Feedback Integration
+* Helpfulness Ratings: Every public FAQ includes binary helpfulness voting buttons ("Was this article helpful? Yes / No").
+* Automated Threshold Triggers: If an FAQ article drops below an 80% positive helpfulness rating over a rolling 14-day window, the system flags the article with an FAQ_FEEDBACK_HOLD (STAGE-SPD) and routes it to the author for immediate clarity revision.
+FAQ Retirement & Archiving
+Content that becomes obsolete, superseded, or inaccurate must be removed systematically:
+FAQ Lifecycle Matrix
+Lifecycle Stage
+	Stage Code
+	System Access State
+	Operational Action
+	Drafting
+	STAGE-DFT
+	Author & Reviewer Only
+	In-progress creation; hidden from search.
+	Under Review
+	STAGE-REV
+	Reviewers & Approvers
+	Pending SME and Legal verification.
+	Active / Published
+	STAGE-ACT
+	Full Live Visibility
+	Fully searchable in public Help Center and agent CRM.
+	Deprecation Hold
+	STAGE-SPD
+	Restricted Access
+	Temporarily hidden due to reported ambiguity or low helpfulness.
+	Archived / Retired
+	STAGE-ARC
+	Read-Only Admin Vault
+	Removed from active search; retained for audit.
+	Retirement Criteria & Restoration
+* Retirement Criteria: An FAQ is permanently archived (STAGE-ARC) when the underlying product is discontinued (PROD-001), the governing policy is retired, or duplicate FAQs are consolidated.
+* Restoration Workflow: Archived FAQs may be restored to active status (STAGE-ACT) by submitting a formal revision request in faq.novacart.internal, re-completing the full review and approval pipeline.
+Quality Assurance Standards
+FAQ quality is audited continuously using quantitative sampling and qualitative evaluation metrics:
+FAQ Quality Checklist
+Quality Assessment Dimension
+	Verification Standard / Goal
+	Audit Failure Indicator
+	Factual Accuracy
+	$100\%$ alignment with published NEKB master policies.
+	Outdated return windows, incorrect refund methods.
+	Plain Language Tone
+	Flesch-Kincaid Readability Score $\ge 60$; zero corporate jargon.
+	Dense legal text, complex technical acronyms.
+	Policy Cross-Referencing
+	Explicit cross-references to foundational master policies.
+	Missing document ID links (e.g., missing REF-001 link).
+	Search Discoverability
+	Inclusion of at least 5 relevant search synonyms and tags.
+	Zero search hits for common customer phrasing.
+	Quality Audit Process
+1. Monthly FAQ Sampling: Quality Assurance specialists randomly audit $10\%$ of active FAQ articles against the FAQ Quality Checklist.
+2. Search Analytics Review: Knowledge Managers review monthly Help Center search analytics to identify zero-result queries and feed them into the FAQ creation pipeline as P3 priorities.
+Department Responsibilities
+Accountability for FAQ management is distributed across enterprise operational units:
+Department Responsibility Matrix
+Department Unit
+	Primary FAQ Management Responsibilities
+	Primary System Portal
+	Target Performance KPI
+	Knowledge Management
+	Governs KNOW-004 policy, oversees approval workflows, manages QA sampling.
+	faq.novacart.internal
+	FAQ Helpfulness Index $\ge 85\%$
+	Customer Support
+	Identifies ticket deflection opportunities, authors frontline FAQ drafts.
+	crm.novacart.internal
+	Support Ticket Deflection $\ge 25\%$
+	Legal & Compliance
+	Reviews policy-related FAQs, audits regulatory accuracy, approves public disclosures.
+	compliance.novacart.internal
+	Review SLA $\le 48\text{ Hours}$
+	Information Security
+	Reviews security and account FAQs, verifies PII protection guidelines (SEC-003).
+	shield.novacart.internal
+	Review SLA $\le 24\text{ Hours}$
+	Business Rules
+Rule 1: Mandatory Policy Alignment Rule
+No FAQ answer may contradict, expand, or restrict the provisions of a published NEKB master policy. In the event of a conflict between an FAQ answer and a master policy document (e.g., KNOW-004 vs. REF-001), the master policy document takes absolute precedence.
+Rule 2: Single Active FAQ Rule for Core Topics
+faq.novacart.internal must maintain exactly one (1) active master FAQ answer per distinct customer inquiry. Creating duplicate, overlapping, or conflicting FAQ variants for the exact same question is strictly prohibited.
+Rule 3: Immediate Deprecation upon Policy Update
+When a foundational enterprise policy is revised (e.g., an update to REF-001 or PAY-003), the Knowledge Manager must place all associated FAQ articles on temporary deprecation hold (STAGE-SPD) within 2 hours of policy publication until updated drafts are approved and published.
+Rule 4: Mandatory 7-Year Archive Retention
+All retired FAQs (STAGE-ARC), version histories, helpfulness rating logs, and executive approval sign-offs must be retained in immutable WORM storage for a mandatory period of 7 years (SEC-003, SEC-006).
+Exception Handling
+* Emergency FAQ Publication Protocol: During critical platform outages, active security incidents (SEC-005), or urgent product recall announcements (PROD-005), the On-Call Knowledge Manager is authorized to bypass standard SME review and publish an Emergency FAQ instantly. The emergency FAQ holds an expiration timer of 72 hours, during which formal retrospective review and approval must be completed.
+* Rejection of Sub-Standard Submissions: Submissions failing the FAQ Quality Checklist or exhibiting unclear phrasing are rejected in faq.novacart.internal with detailed reviewer notes. The author has 3 business days to resubmit corrected drafts.
+Practical Examples
+Scenario 1: Creating a New FAQ Following a Product Launch
+1. Merchandising launches a new Smart Home Security Lock (CAT-SMT). Customer support experiences a surge of inquiries regarding door thickness compatibility.
+2. Knowledge Manager identifies the gap as a P1 Priority and assigns a Knowledge Author to draft a new FAQ: "What door thickness is compatible with the NovaCart Smart Lock?".
+3. The draft includes the exact specification (35mm to 65mm), links to PROD-004 installation rules, and passes review within 24 hours.
+4. The FAQ is published (STAGE-ACT), reducing inbound ticket volume on door compatibility by $35\%$ within the first week.
+Scenario 2: Emergency Update of an Existing FAQ After a Policy Revision
+1. Executive Committee updates the Master Replacement Policy (REF-003), altering return shipping fee rules.
+2. Executing Rule 3, the Knowledge Manager places associated FAQ articles regarding return shipping fees on temporary deprecation hold (STAGE-SPD) within 2 hours.
+3. Author updates the FAQ answer to reflect the new policy terms and submits minor revision version v1.1.0.
+4. Legal Reviewer approves the draft within 24 hours, restoring active public visibility across Help Center channels.
+Frequently Asked Questions (FAQs) About FAQ Management
+Q1: How are new Frequently Asked Questions identified and prioritized for creation?
+Answer: New FAQs are identified empirically through support ticket volume analysis, agent feedback, and customer search analytics within our Help Center. Inquiries generating high repetition are categorized and prioritized (P1 through P4) for rapid creation by our Knowledge Management team (Refer to FAQ Priority Matrix).
+Q2: What happens to an FAQ when the underlying enterprise policy changes?
+Answer: In accordance with Rule 3, whenever a foundational enterprise policy (such as REF-001 or PAY-003) is updated, all associated FAQ articles are placed on a temporary deprecation hold (STAGE-SPD) within 2 hours. Authors update the FAQ content to match the new policy terms, legal reviewers verify accuracy, and the revised FAQ is republished within 24 to 48 hours.
+Q3: How long are retired FAQ articles retained in the system?
+Answer: When an FAQ is permanently retired or replaced, it transitions to STAGE-ARC (Archived Vault). In accordance with our enterprise governance standards, all retired FAQ version histories, helpfulness metrics, and approval sign-offs are retained securely in immutable WORM storage for 7 years to support operational audits and legal compliance (Refer to SEC-003, SEC-006).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of KNOW-004. Established FAQ management principles, priority matrices (P1–P4), authoring standards, approval workflows, category taxonomies, helpfulness rating triggers, emergency publication rules, and 7-year WORM retention standards.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* SUP-005: Customer Support SLA Policy
+* ORD-001: Order Lifecycle Management Policy
+* SHIP-001: Domestic Shipping Policy
+* PAY-001: Payment Processing SOP
+* PAY-003: Refund Payment Processing Policy
+* REF-001: Master Refund Eligibility Rules
+* REF-002: Return & Exchange Policy
+* REF-003: Replacement Policy
+* PROD-001: Product Catalog Management Policy
+* PROD-003: Product Warranty Policy
+* PROD-005: Product Recall & Safety Policy
+* SEC-001: Account Security Policy
+* SEC-002: Authentication & Access Control Policy
+* SEC-003: Data Protection & Privacy Policy
+* SEC-005: Incident Response & Security Breach Policy
+* SEC-006: Security Monitoring & Audit Logging Policy
+* LEG-001: Terms & Conditions Policy
+* LEG-005: Compliance & Regulatory Governance Policy
+* KNOW-001: Customer Support Knowledge Base Governance Policy
+* KNOW-002: Product & Service Knowledge Management Policy
+* KNOW-003: Standard Operating Procedures (SOP) Knowledge Repository Policy

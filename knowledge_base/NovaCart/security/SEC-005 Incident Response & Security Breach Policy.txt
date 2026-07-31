@@ -1,0 +1,290 @@
+﻿SEC-005: Incident Response & Security Breach Policy
+Document Header
+* Document Title: Incident Response & Security Breach Policy
+* Document ID: SEC-005
+* Version: 1.0.0
+* Document Category: Security
+* Classification: Internal / Public Operational Standard
+* Department Owner: Information Security & Cyber Governance
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Chief Information Security Officer, Head of Cyber Security, VP of Infrastructure, General Counsel
+* Approved By: Chief Technology Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Incident Response, Security Breach, Incident Containment, Threat Recovery, Data Exposure, CSIRT, Security Alerts, Incident Closure
+Purpose
+This document defines the official Incident Response & Security Breach Policy of NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes standardized operational procedures, incident response principles, severity classification levels, containment protocols, investigation standards, customer communication standards, service restoration guidelines, and business rules governing the detection, reporting, containment, investigation, recovery, and post-incident review of security events and data breaches affecting NovaCart systems, customer accounts, products, or business operations.
+As a core security policy (SEC-005) in the Security module of the NovaCart Enterprise Knowledge Base (NEKB), SEC-005 governs emergency threat management across the Incident Management Engine (incident.novacart.internal), Identity & Access Management (auth.novacart.internal), Threat Telemetry (shield.novacart.internal), and Customer Communications (crm.novacart.internal), operating in strict operational alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, REF-001 through REF-006, PROD-001 through PROD-006, SEC-001, SEC-002, SEC-003, and SEC-004.
+Scope
+This policy applies universally across all technology systems, cloud networks, database environments, customer support portals, payment microservices, mobile applications, employee devices, third-party vendor integrations, and physical facilities operated by NovaCart across India, Singapore, and the United Arab Emirates.
+Coverage Includes
+* Detection, triage, and handling of account compromises, unauthorized logins, insider misuse, malware/ransomware events, credential leaks, data exposures, third-party vendor incidents, DDoS attacks, and payment service disruptions resulting from security events.
+* Computer Security Incident Response Team (CSIRT) mobilization, leadership, and operational escalation hierarchies.
+* Immediate containment controls, system isolation, session revocations, and network perimeter filtering.
+* Forensic evidence preservation, chain-of-custody logging, and root-cause analysis.
+* Service restoration sign-offs, customer notification thresholds, regulatory filings, post-incident reviews, and 7-year audit retention.
+Out of Scope
+* Routine non-security technical glitches, hardware failures, or routine maintenance downtime not caused by security events (governed by IT Operations SOPs).
+* Day-to-day individual transaction risk scoring and payment chargeback defense (governed by PAY-004 and SEC-004).
+Incident Response Overview
+Security incidents—ranging from isolated credential stuffing attacks to complex multi-node data exposures or third-party service compromises—pose severe operational, financial, and reputational risks. NovaCart maintains a structured, proactive incident response capability designed to minimize customer impact, contain threats rapidly, ensure operational continuity, and restore services securely.
+Core Incident Response Principles
+1. Safety & Customer Protection First: The primary goal during any security incident is isolating threats to prevent customer account compromise, financial loss, or personal data exposure (SEC-001, SEC-003).
+2. Speed & Rapid Containment: Response teams execute immediate containment controls to isolate affected subnets, revoke compromised session tokens, and block malicious traffic before full root-cause analysis concludes.
+3. Preservation of Evidence: All incident response actions must preserve system state telemetry, server logs, and memory dumps in a tamper-evident manner to support forensic audit, regulatory reporting, and legal proceedings.
+4. Transparent Communication: Customer and stakeholder notifications regarding security breaches must be accurate, timely, and provided through verified channels without misleading or minimizing the event's scope.
+Security Incident Classification
+Security incidents are categorized into four standardized severity tiers based on operational impact, customer data exposure risk, and system service degradation:
+Incident Severity Classification Matrix
+Severity Tier
+	Incident Impact Profile
+	Operational & System Indicators
+	Example Security Scenarios
+	Initial Response SLA
+	SEV-1 (Critical)
+	Extreme / Platform Crisis
+	Widespread data breach; core payment outage; active ransomware; critical third-party compromise.
+	Exfiltration of Class 3/4 PII (SEC-003); active ransomware on production nodes; total payment gateway disruption due to breach.
+	$\le 15$ Minutes (24/7 CSIRT Mobilization)
+	SEV-2 (Major)
+	High / Major Service Impact
+	Isolated data exposure; high-volume account takeover (ATO); active credential stuffing campaign.
+	Bulk credential leaks affecting $> 500$ accounts; insider misuse of privileged admin tool (SEC-002); DDoS impacting storefront.
+	$\le 30$ Minutes
+	SEV-3 (Moderate)
+	Moderate / Contained Threat
+	Single customer account compromise; malware on employee laptop; localized phishing campaign.
+	Isolated ATO report (SEC-001); non-containment malware on corporate endpoint; minor vendor security alert.
+	$\le 2$ Hours
+	SEV-4 (Minor)
+	Low / Informational Event
+	Accidental exposure of Class 1/2 internal data; false positive alerts; minor policy violations.
+	Accidental internal share of non-sensitive SOP; localized port scan blocked by firewall; minor policy anomaly.
+	$\le 8$ Business Hours
+	Incident Reporting Process
+Every NovaCart employee, contractor, merchant partner, or customer support representative who discovers or suspects a security anomaly must report the event immediately:
+1. Internal Incident Reporting Channels:
+   * Emergency Portal: Submit a high-priority security ticket via incident.novacart.internal.
+   * Emergency Hotline: Call the 24/7 CSIRT Incident Dispatch Line (+91-CSIRT-NOW).
+   * SIEM Telemetry Ingestion: Automated alerts generated by shield.novacart.internal ingest directly into the CSIRT triage queue.
+2. Mandatory Reporting Telemetry: Initial reports must include the reporter's contact details, timestamp of discovery, affected system or user IDs, observed anomalous behavior, and initial threat indicators.
+3. No-Penalty Security Reporting Policy: Employees who report security incidents, accidental exposures, or suspected breaches in good faith are protected from disciplinary action, encouraging immediate transparency.
+Incident Response Lifecycle
+NovaCart executes incident response through a six-phase operational lifecycle managed within incident.novacart.internal:
+Incident Response Lifecycle Matrix
+Lifecycle Phase
+	Operational Objective
+	Primary System Portal
+	Key Deliverable / Output
+	Phase 1: Preparation
+	Maintain CSIRT readiness, SIEM detection rules, and response playbooks.
+	shield.novacart.internal
+	Audited response playbooks & active 24/7 rotation schedules.
+	Phase 2: Identification
+	Triage incoming alerts, verify threat legitimacy, assign SEV tier.
+	incident.novacart.internal
+	Formal Incident Declaration (INC-XXXXX) & Severity Assignment.
+	Phase 3: Containment
+	Execute short-term and long-term isolation to stop threat propagation.
+	auth.novacart.internal / Network Edge
+	System isolation, session token revocation, and firewall blocks.
+	Phase 4: Eradication
+	Remove malicious artifacts, patch vulnerabilities, revoke compromised keys.
+	Production Infrastructure
+	Root-cause removal, system patching, credential rotation.
+	Phase 5: Recovery
+	Restore services safely, execute validation testing, re-enable access.
+	api.novacart.internal
+	Verified service restoration sign-off & clean telemetry.
+	Phase 6: Post-Incident
+	Conduct Post-Mortem, document lessons learned, update security controls.
+	incident.novacart.internal
+	Final Post-Incident Review (PIR) Report & Action Items.
+	Incident Assessment & Prioritization
+Upon receiving a security alert, the CSIRT On-Call Lead conducts immediate triage to evaluate the incident's priority:
+
+
+$$\text{Incident Priority Score} = \text{Data Sensitivity Weight (Classes 1--4)} \times \text{System Criticality Score} \times \text{Active Propagation Velocity}$$
+Incident Priority Matrix
+Calculated Score
+	Assigned Priority
+	Target CSIRT Resource Allocation
+	Executive Escalation SLA
+	80 to 100
+	P1 - Critical
+	Full CSIRT Team + CISO + Lead Forensics Specialists
+	CISO & CTO notified within 15 minutes.
+	50 to 79
+	P2 - High
+	Dedicated Security Lead + Primary Infrastructure Engineers
+	Security Director notified within 30 minutes.
+	20 to 49
+	P3 - Medium
+	Security Operations Specialist + On-Call System Admin
+	Security Manager notified within 2 hours.
+	0 to 19
+	P4 - Low
+	Standard Incident Queue Assignment
+	Standard weekly security reporting digest.
+	Containment Procedures
+Once an incident is declared (SEV-1 through SEV-3), CSIRT executes immediate containment to isolate the threat vector:
+1. Short-Term Containment (Immediate Isolation):
+   * Account & Session Revocation: Mass revocation of active JWT session tokens (LOGOUT_ALL_DEVICES) for affected user accounts or compromised employee credentials (SEC-001, SEC-002).
+   * Network Edge Filtering: Blocking malicious IP subnets, user-agent strings, or geographic regions at the edge API gateway (api.novacart.internal).
+   * Database & Vault Isolation: Placing sensitive data vaults (digital.novacart.internal, media-vault.novacart.internal) into read-only mode or temporary offline isolation (SEC-003).
+   * Payment Microservice Pause: Temporarily pausing automated payment processing (PAY-001) or refund disbursements (PAY-003) if payment API integrations exhibit breach indicators.
+2. Long-Term Containment (System Stabilization):
+   * Applying temporary code hotfixes, re-routing traffic to uncompromised failover subnets, and isolating infected virtual instances or container nodes for offline forensic analysis.
+Investigation Process
+The investigation phase determines the root cause, scope of compromise, and extent of data exposure while preserving evidence integrity:
+1. Forensic Evidence Preservation Standards:
+   * Forensic snapshots of virtual machine memory, disk volumes, and container states must be captured before terminating or rebooting compromised nodes.
+   * Server logs, SIEM telemetry, and network traffic captures must be hashed (SHA-256) and copied to an immutable, write-once-read-many (WORM) storage bucket (forensics-vault.novacart.internal).
+2. Root-Cause Analysis (RCA): Forensics specialists analyze attack vectors, entry points (e.g., unpatched software vulnerability, compromised employee API key, phishing credential harvest), lateral movement paths, and data access logs (SEC-002, SEC-003).
+3. Data Impact Assessment: Auditing database access logs to determine precisely which data classification tiers (Classes 1–4 under SEC-003) and specific customer accounts were accessed or exfiltrated.
+Recovery & Service Restoration
+Restoring affected systems to live operational production requires strict multi-stage verification to ensure the threat is completely eradicated:
+1. Eradication Verification: Confirming that all malicious artifacts, unauthorized backdoors, rogue administrative accounts, and compromised API keys have been removed.
+2. System Hardening & Patching: Applying permanent software patches, updating firewall rules, enforcing fresh credential rotations, and re-certifying RBAC permissions (SEC-002).
+3. Staged Service Restoration: Systems are restored in controlled phases:
+   * Phase 1: Core Database & Identity Services (auth.novacart.internal).
+   * Phase 2: Internal Operational Tools & Warehouse Logistics (wms.novacart.internal).
+   * Phase 3: Customer Storefront & Checkout APIs (api.novacart.internal/oms).
+4. Formal Restoration Approval: Services cannot be restored to live customer traffic following a SEV-1 or SEV-2 incident without formal, documented sign-off from both the Chief Information Security Officer (CISO) and VP of Infrastructure.
+Customer & Stakeholder Communication
+Communication during and after a security incident must be coordinated exclusively through the Communications Response Team:
+Customer Notification Matrix
+Incident Scenario
+	Notification Trigger Threshold
+	Customer Notification Channels
+	Target Dispatch SLA
+	Confirmed PII Exposure (Class 3/4)
+	Verified access or exfiltration of customer PII (SEC-003).
+	Direct Email + In-App Portal Alert + Account Security Notice
+	$\le 24$ Hours post-verification
+	High-Volume Account Takeover (ATO)
+	$\ge 50$ customer accounts compromised via credential leak.
+	SMS Alert + Direct Email + Mandatory Password Reset Prompt
+	$\le 2$ Hours post-containment
+	Service Outage due to DDoS / Attack
+	Customer-facing storefront unavailable $> 30\text{ Mins}$.
+	Public Status Page (status.novacart.com) + Social Banner
+	$\le 15$ Minutes post-outage flag
+	Third-Party Vendor Breach Impact
+	Vendor incident compromises NovaCart customer data.
+	Direct Email + Portal Advisory detailing vendor containment
+	$\le 24$ Hours post-vendor notice
+	Communication Responsibility Matrix
+Stakeholder Group
+	Authorized Spokesperson / Unit
+	Primary Communication Portal
+	Content Standard Mandate
+	Impacted Customers
+	Customer Experience Director
+	Registered Email / In-App Portal
+	Clear explanation of breach, data involved, actions taken, and customer protective steps (SEC-001).
+	Regulatory Authorities
+	Chief Legal Officer / DPO
+	Legal Regulatory Filings
+	Formal statutory filings to CERT-In (India), ESG (Singapore), or MoIAT (UAE) per legal timelines.
+	Internal Employees
+	Internal Communications Lead
+	Corporate All-Hands / Email
+	Event summary, operational workarounds, security reminders, strict media silence directive.
+	Media & Public
+	Chief Communications Officer
+	Press Release / Status Page
+	Factual, verified statements approved by Legal and CISO; zero speculation.
+	Post-Incident Review & Continuous Improvement
+Every SEV-1, SEV-2, and SEV-3 security incident must conclude with a formal Post-Incident Review (PIR) process:
+1. Mandatory PIR Meeting: Held within five (5) business days of incident closure, attended by the CSIRT leads, CISO, Engineering Leads, and Customer Support Director.
+2. Post-Mortem Analysis Scope: Reviewing the complete timeline, initial detection gaps, containment efficacy, communication delays, and root-cause vulnerabilities.
+3. PIR Action Item Tracking: Every identified gap (e.g., missing SIEM alert rule, unpatched API endpoint, outdated playbook) is assigned a Jira tracking ticket with a strict resolution SLA:
+   * Critical Security Action Items: Must be resolved within 7 calendar days.
+   * Major Security Action Items: Must be resolved within 14 calendar days.
+4. Lessons Learned Documentation: Final PIR reports are archived in incident.novacart.internal/pir and integrated into annual security awareness training.
+Employee Responsibilities
+All NovaCart employees, contractors, and third-party personnel maintain explicit duties during security events:
+1. Immediate Reporting Duty: Report any suspected security anomaly, accidental data exposure, or phished credential to the CSIRT within 15 minutes of discovery.
+2. Strict Media Silence: Employees are strictly prohibited from commenting on, posting about, or discussing active or past security incidents on social media, public forums, or with news media outlets.
+3. Cooperation with Forensics: Fully assist CSIRT forensic investigators, surrender assigned corporate devices upon request, and provide accurate timelines without altering or deleting log files.
+Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Incident Response Responsibilities
+	Primary System Portal
+	SLA / Performance Target
+	Information Security (CSIRT)
+	Leads threat triage, executes containment, conducts forensics, drafts PIR reports.
+	incident.novacart.internal
+	SEV-1 Response SLA $\le 15\text{ Mins}$
+	Infrastructure & Engineering
+	Applies emergency hotfixes, isolates network subnets, executes staged service restoration.
+	Production Console
+	Systems restoration per CISO sign-off
+	Legal & Compliance
+	Manages regulatory filings (CERT-In/ESG/MoIAT), advises CISO on customer notices, handles legal claims.
+	compliance.novacart.internal
+	Regulatory notification per statutory limits
+	Customer Support
+	Operates emergency incident support queues, assists affected customers with account recovery (SEC-001).
+	crm.novacart.internal
+	Escalation FRT $< 15\text{ Secs}$ (SUP-005)
+	Business Rules
+Rule 1: Dual Sign-Off Service Restoration Mandate
+No production system, checkout API, or customer portal isolated during a SEV-1 or SEV-2 security incident may be reconnected to live traffic without documented, dual digital sign-off from both the CISO and the VP of Infrastructure in incident.novacart.internal.
+Rule 2: Mandatory 24-Hour Breach Notification Threshold
+If an investigation confirms that Class 3 (Confidential) or Class 4 (Restricted) customer PII has been exfiltrated or accessed by an unauthorized entity (SEC-003), direct customer breach notifications must be dispatched within 24 hours of confirmation, regardless of brand sensitivity.
+Rule 3: Automated Containment Override Block
+System-automated containment actions (e.g., edge IP blocking, session revocations, account freezes executed by shield.novacart.internal) cannot be overridden or unblocked by Customer Support Representatives or IT Helpdesk agents. Overrides require explicit CSIRT Lead authorization.
+Rule 4: Mandatory 7-Year Incident Record Retention
+All incident ticket records, CSIRT chat logs, forensic disk images, telemetry snapshots, PIR reports, and regulatory correspondence must be retained in WORM secure storage for a mandatory period of 7 years (SEC-003).
+Exception Handling
+* False Positive Security Alert Containment Release: If automated system containment is triggered by a false positive alert (e.g., a legitimate high-traffic promotional campaign misidentified as a DDoS attack), the CSIRT On-Call Lead can issue a CONTAINMENT_OVERRIDE in incident.novacart.internal, restoring traffic flow within 5 minutes while logging the false positive for SIEM rule tuning.
+* Simultaneous Multiple Security Incidents: If multiple independent security incidents occur concurrently, the CSIRT Lead invokes Emergency Multi-Triage Protocol. Resources are allocated strictly by Incident Priority Score (P1 through P4), and secondary engineering teams are mobilized from standby rotations.
+Practical Examples
+Scenario 1: Response to High-Volume Account Takeover (ATO) Campaign (SEV-2)
+1. shield.novacart.internal detects a credential stuffing attack originating from a botnet targeting customer login endpoints. 600 accounts experience unauthorized logins from unfamiliar geographic subnets.
+2. System triggers SEV-2 Incident INC-88201 and alerts the CSIRT On-Call Lead within 2 minutes.
+3. CSIRT executes short-term containment: Mass revokes active JWT session tokens (LOGOUT_ALL_DEVICES) for all 600 accounts (SEC-001, SEC-002), blocks botnet IP ranges at the edge API gateway, and places temporary shipping holds on active pending orders (ORD-001).
+4. CSIRT verifies zero PII exfiltration beyond account profile viewing.
+5. Within 2 hours, affected customers receive SMS and Email alerts explaining the containment action and providing a direct link to re-verify identity and establish new credentials (SEC-001).
+Scenario 2: Third-Party Payment Service Security Disruption (SEV-1)
+1. A major third-party payment gateway integration exhibits anomalous API responses indicating a potential security breach at the vendor level.
+2. CSIRT declares SEV-1 Incident INC-99102 and mobilizes full emergency response.
+3. CSIRT executes Rule 1 containment: Instantly pauses the affected gateway payment route in api.novacart.internal/oms and shifts 100% of payment traffic to secondary failover gateways (PAY-001) within 3 minutes.
+4. Storefront displays zero downtime for customers. CSIRT collaborates with vendor security leads to verify breach scope.
+5. Once vendor submits an audited security remediation certificate, CISO and VP of Infrastructure sign off on restoring the primary gateway route.
+Frequently Asked Questions (FAQs)
+Q1: What should I do if I suspect my NovaCart customer account has been hacked or accessed without my permission?
+Answer: If you notice unauthorized orders, unexpected password reset emails, or logins from unfamiliar locations, contact Customer Support immediately via Live Chat or phone. Our team will initiate emergency account containment, lock active sessions, place holds on pending orders, and guide you through secure identity re-verification and recovery (Refer to SEC-001).
+Q2: How does NovaCart notify customers if a data breach affects their personal information?
+Answer: If an investigation confirms that your personal information was involved in a security breach, NovaCart will notify you directly via registered Email, SMS, and an In-App Account Security Banner within 24 hours of confirmation. The notice will clearly explain what happened, what data was involved, what steps NovaCart has taken, and what protective measures you should take (Refer to SEC-003).
+Q3: Who leads the response team during a major cyber attack or security emergency at NovaCart?
+Answer: Major security incidents are directed by the Computer Security Incident Response Team (CSIRT), led by the Chief Information Security Officer (CISO) and On-Call Security Lead. CSIRT coordinates technical containment with Engineering, legal reporting with Legal & Compliance, and customer messaging with Customer Experience (Refer to SUP-003).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of SEC-005. Established incident severity tiers (SEV-1 through SEV-4), CSIRT response lifecycles, containment protocols, dual-signoff service restoration rules, customer notification SLAs, and 7-year audit retention standards.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* SUP-005: Customer Support SLA Policy
+* ORD-001: Order Lifecycle Management Policy
+* SHIP-001: Domestic Shipping Policy
+* PAY-001: Payment Processing SOP
+* PAY-003: Refund Payment Processing Policy
+* PAY-004: Chargeback & Payment Dispute Policy
+* REF-001: Master Refund Eligibility Rules
+* SEC-001: Account Security Policy
+* SEC-002: Authentication & Access Control Policy
+* SEC-003: Data Protection & Privacy Policy
+* SEC-004: Fraud Prevention & Risk Management Policy

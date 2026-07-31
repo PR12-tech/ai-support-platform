@@ -1,18 +1,32 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.database.db import get_db
 from app.auth.dependencies import get_current_user
 from app.models.user import User
 from app.models.ticket import Ticket
 from app.models.messages import Message
-from app.schemas.message import MessageCreate
-from app.services.ai_service import summarize_text, classify_ticket, analyze_ticket
-
+from app.schemas.message import (
+    MessageCreate,
+    MessageCreateResponse,
+    MessageResponse,
+    TicketSummaryResponse,
+    TicketClassificationResponse,
+    TicketAnalysisResponse,
+)
+from app.services.ai_service import (
+    summarize_text,
+    classify_ticket,
+    analyze_ticket,
+)
 
 router = APIRouter()
 
 
-@router.post("/tickets/{ticket_id}/messages")
+@router.post(
+    "/tickets/{ticket_id}/messages",
+    response_model=MessageCreateResponse
+)
+
 def create_message(
         ticket_id: int,
         message: MessageCreate,
@@ -26,9 +40,10 @@ Ticket.id == ticket_id,
     ).first()
 
     if not ticket:
-        return {
-            "message": "Ticket not found"
-        }
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Ticket not found."
+        )
 
     new_message = Message(
         content = message.content,
@@ -47,7 +62,11 @@ Ticket.id == ticket_id,
     }
 
 
-@router.get("/tickets/{ticket_id}/messages")
+@router.get(
+    "/tickets/{ticket_id}/messages",
+    response_model=list[MessageResponse]
+)
+
 def get_messages(
         ticket_id: int,
         current_user: User = Depends(get_current_user),
@@ -60,9 +79,10 @@ def get_messages(
     ).first()
 
     if not ticket:
-        return{
-            "message": "Ticket not found"
-        }
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Ticket not found."
+        )
 
     messages = db.query(Message).filter(
         Message.ticket_id == ticket_id,
@@ -71,7 +91,11 @@ def get_messages(
     return messages
 
 
-@router.post("/tickets/{ticket_id}/summarize")
+@router.post(
+    "/tickets/{ticket_id}/summarize",
+    response_model=TicketSummaryResponse
+)
+
 def summarize_ticket(
         ticket_id: int,
         current_user: User = Depends(get_current_user),
@@ -84,9 +108,10 @@ Ticket.id == ticket_id,
     ).first()
 
     if not ticket:
-        return {
-            "message": "Ticket not found"
-        }
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Ticket not found."
+        )
 
     messages = db.query(Message).filter(
         Message.ticket_id == ticket_id
@@ -104,7 +129,11 @@ Ticket.id == ticket_id,
         "summary": summary
     }
 
-@router.post("/tickets/{ticket_id}/classify")
+@router.post(
+    "/tickets/{ticket_id}/classify",
+    response_model=TicketClassificationResponse
+)
+
 def classify_ticket_endpoint(
         ticket_id: int,
         current_user: User = Depends(get_current_user),
@@ -116,9 +145,10 @@ def classify_ticket_endpoint(
     ).first()
 
     if not ticket:
-        return {
-            "message": "Ticket not found"
-        }
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Ticket not found."
+        )
 
     messages = db.query(Message).filter(
         Message.ticket_id == ticket_id
@@ -135,7 +165,11 @@ def classify_ticket_endpoint(
         "category": category
     }
 
-@router.post("/tickets/{ticket_id}/analyze")
+@router.post(
+    "/tickets/{ticket_id}/analyze",
+    response_model=TicketAnalysisResponse
+)
+
 def analyze_ticket_endpoint(
         ticket_id: int,
         current_user: User = Depends(get_current_user),
@@ -148,9 +182,10 @@ def analyze_ticket_endpoint(
     ).first()
 
     if not ticket:
-        return {
-            "message": "Ticket not found"
-        }
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Ticket not found."
+        )
 
     messages = db.query(Message).filter(
         Message.ticket_id == ticket_id

@@ -1,0 +1,243 @@
+﻿LEG-003: Acceptable Use Policy
+Document Header
+* Document Title: Acceptable Use Policy
+* Document ID: LEG-003
+* Version: 1.0.0
+* Document Category: Legal
+* Classification: Internal / Public Operational Standard
+* Department Owner: Legal, Regulatory & Compliance Governance
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: General Counsel, Head of Corporate Compliance, VP of Customer Experience, Chief Information Security Officer
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Acceptable Use, Prohibited Conduct, Enforcement Actions, Content Moderation, Promotional Abuse, Bot Prevention, Platform Integrity, Customer Behavior
+Purpose
+This document defines the official Acceptable Use Policy of NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes standardized enterprise principles, acceptable customer behavior standards, prohibited activities, enforcement procedures, content moderation guidelines, customer responsibilities, operational duties, and business rules governing the appropriate and fair use of NovaCart's products, services, e-commerce storefronts, mobile applications, APIs, and digital platforms.
+As a core operational document (LEG-003) in the Legal module of the NovaCart Enterprise Knowledge Base (NEKB), LEG-003 governs platform conduct and enforcement workflows across e-commerce channels, operating in strict operational alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, REF-001 through REF-006, PROD-001 through PROD-006, SEC-001 through SEC-006, LEG-001, and LEG-002.
+Scope
+This policy applies universally across all customer account types—registered B2C retail users, NovaCart Prime members, B2B merchant partners, corporate accounts, guest checkouts, and digital platform visitors—accessing NovaCart channels across India, Singapore, and the United Arab Emirates.
+Coverage Includes
+* Principles of acceptable customer behavior and fair platform usage.
+* Standardized classifications of acceptable vs. prohibited customer conduct.
+* Rules governing the use of promotional campaigns, discount codes, referral credits, and platform wallet balances.
+* Technical and operational standards for platform security integrity, automated bot prevention, and API usage limits.
+* Content moderation and communication standards for user-generated reviews, product Q&As, and customer support interactions.
+* Enforcement escalation hierarchies, warning issuing workflows, account restrictions, account terminations, and appeal procedures.
+Out of Scope
+* Detailed technical fraud scoring algorithms and chargeback representment mechanics (governed by PAY-004 and SEC-004).
+* Criminal prosecution workflows and formal court litigation procedures (governed by internal legal department guidelines).
+Acceptable Use Overview
+NovaCart provides an open, reliable, and secure e-commerce ecosystem designed to connect customers with genuine products and services. To protect platform integrity, safeguard legitimate users, and ensure fair access to merchandise and promotional offers, all users must interact with NovaCart's platforms responsibly, honestly, and in good faith.
+Core Guiding Principles
+1. Reciprocal Respect & Fair Play: Platform features, customer support channels, promotional discounts, and inventory allocations are resources provided for fair consumer engagement. Exploiting system vulnerabilities or abusing services harms the community and is strictly prohibited.
+2. Platform & Data Integrity: Users must respect NovaCart's digital infrastructure, software systems, and data privacy boundaries (SEC-003). Attempting to disrupt, manipulate, or scrape platform systems is prohibited.
+3. Proportional & Escalated Enforcement: Violations of this policy are evaluated based on severity, frequency, and intent. Enforcement actions range from educational warnings to immediate permanent account termination and service blocks.
+4. Transparent Governance & Due Process: Customers subjected to account restrictions or policy enforcement actions are provided clear notifications and accessible appeal pathways to request administrative review.
+Guiding Principles
+Acceptable platform engagement requires adherence to four core operational standards:
+* Honest Identity Representation: Customers must maintain accurate profile details, utilize authorized payment instruments (PAY-006), and avoid creating synthetic or duplicate accounts (SEC-001, LEG-001).
+* Responsible Commercial Engagement: Purchases must be conducted for legitimate personal, household, or authorized corporate consumption (ORD-001). Using automated scripts to corner high-demand inventory for unofficial secondary markets is prohibited (PROD-002).
+* Constructive Communication: Interactions across live chat, phone support (SUP-001), product reviews, and public forums must remain professional, civil, and free of toxic, abusive, or defamatory language.
+* Good-Faith Dispute Resolution: Customers seeking returns (REF-002), replacements (REF-003), or warranty claims (PROD-003) must provide accurate product details, untampered serial numbers (REF-004), and truthful descriptions of item conditions.
+Acceptable Customer Activities
+NovaCart encourages active, fair engagement across its e-commerce ecosystem:
+Acceptable Activity Matrix
+Activity Category
+	Approved Customer Behavior Scope
+	Permissible Operational Context
+	Primary System Framework
+	Account Management
+	Maintaining a single, accurate primary personal or corporate account.
+	Personal shopping, wishlist management, address updates (SEC-001).
+	auth.novacart.internal
+	Purchasing & Checkout
+	Manual checkouts for retail products within published quantity caps.
+	Household consumption, verified corporate procurement (ORD-001).
+	api.novacart.internal/oms
+	Promotional Usage
+	Applying single-use discount codes earned through legitimate platform promotions.
+	Valid single-account promotional redemptions (REF-006).
+	ledger.novacart.internal
+	Community Feedback
+	Submitting honest, authentic product reviews and post-purchase ratings.
+	Constructive feedback based on verified completed orders.
+	catalog.novacart.internal
+	Support Engagement
+	Inquiring about order status, tracking delays, or initiating eligible return requests.
+	Professional interaction with support representatives (SUP-001).
+	crm.novacart.internal
+	Prohibited Activities
+To preserve platform security, user safety, and operational fairness, NovaCart prohibits actions categorized into four violation severity tiers:
+Prohibited Activity Matrix
+Violation Severity Tier
+	Prohibited Activity Scope
+	Technical / Behavioral Indicators
+	Primary Impact
+	Tier 1 (Critical)
+	System hacking, DDoS attacks, stolen card usage, account takeover (ATO), malware distribution.
+	Automated vulnerability scanning, cross-account card sharing (PAY-006), unauthorized account access (SEC-001).
+	Critical platform security threat; severe financial/legal loss (SEC-005).
+	Tier 2 (Major)
+	Promo code farming, automated bot purchasing, return fraud, friendly fraud chargeback abuse.
+	Multi-account creation from single device, serial tag tampering (REF-004), false non-receipt claims (PAY-004).
+	Inventory distortion; significant commercial loss; promo program impairment.
+	Tier 3 (Moderate)
+	Review manipulation, commercial reselling bypassing caps, excessive API rate abuse.
+	Unusually rapid review submission, automated page scraping, bulk buying exceeding caps (PROD-002).
+	Market manipulation; catalog data degradation; service slowness for others.
+	Tier 4 (Minor)
+	Isolated abusive language in support chat, minor billing variations, accidental spamming.
+	Non-threatening profanity during support interaction, accidental duplicate ticket generation (SUP-001).
+	Customer support agent disruption; minor operational inefficiency.
+	Misuse of Products & Services
+Customers must utilize NovaCart's commercial policies and post-purchase services in good faith:
+1. Return & Refund Abuse: Submitting empty boxes, returning older/different items, swapping internal components, or defacing physical serial/IMEI tags on returned merchandise (REF-001, REF-004) is strictly prohibited and constitutes commercial fraud (SEC-004).
+2. False Loss Claims: Claiming non-receipt of delivered parcels when courier GPS logs and delivery OTPs confirm successful doorstep delivery (SHIP-001) to fraudulently obtain double shipments or unauthorized refunds is prohibited.
+3. Digital Product Key Misuse: Unmasking digital software keys (CAT-SFT) or gift vouchers (CAT-GFT) in My Digital Library (PROD-006) and subsequently filing false "unauthorized transaction" claims or chargebacks (PAY-004) is prohibited.
+Promotional Offer & Coupon Abuse
+Promotional discounts, introductory vouchers, referral credits, and cashback offers are provided to reward loyal customers and welcome new users:
+* Single Identity Binding: Promotional codes designed for "New Users" or "First Purchases" are strictly limited to one redemption per individual, per household, per primary phone number, and per physical delivery address (LEG-001, REF-006).
+* Prohibited Promo Farming: Creating synthetic accounts, using disposable email services, or cycling temporary phone numbers to repeatedly exploit single-use promotional vouchers is strictly prohibited.
+* Automated Credit Revocation: Upon detecting promotional abuse, ledger.novacart.internal automatically revokes active promotional wallet credits (CRD-PRO), cancels pending orders placed using illicit coupons, and converts affected orders to standard retail pricing or cancels them (SEC-004).
+Platform Integrity & Security
+NovaCart’s digital storefronts, APIs, and microservices are protected against automated manipulation:
+1. Anti-Bot & Automated Scripting Rules: Using automated software, purchasing bots, head-less browser scripts, or crawler tools to auto-buy restricted inventory during flash sales or scrape pricing data is strictly prohibited.
+2. Rate-Limiting & API Thresholds: Automated API requests exceeding published rate limits (e.g., $> 100 \text{ calls/minute}$ from a single IP subnet) are throttled or blocked by edge security gateways (SEC-002).
+3. Prohibition of Circumvention: Bypassing security controls, overriding geographic IP locks, utilizing anonymizing TOR exit nodes to conceal fraudulent activity, or probing platform vulnerabilities without authorization is strictly prohibited (SEC-005).
+Content & Communication Standards
+User-generated content—including product reviews, customer Q&As, and support messaging—must maintain high community standards:
+* Prohibited Content Categories: Users shall not upload, post, or transmit content that is abusive, obscene, defamatory, discriminatory, hateful, sexually explicit, or promoting illegal acts.
+* Review Authenticity Standard: Reviews must reflect genuine product experiences from completed orders. Posting fake positive reviews for incentives or submitting malicious negative reviews against competitors is prohibited and results in content removal.
+* Support Staff Respect Mandate: Customer Support Representatives and Field Technicians (PROD-004) must be treated with professional civility. Abusive, profane, or threatening behavior during live chat, phone calls, or doorstep visits triggers immediate support escalation and restriction of real-time support privileges (SUP-001, SUP-003).
+Enforcement Actions
+NovaCart enforces policy compliance through a structured, multi-tier enforcement framework:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        POLICY ENFORCEMENT ESCALATION WORKFLOW                     |
++-----------------------------------------------------------------------------------+
+| 1. INCIDENT DETECTED| Rule trigger in SIEM or support ticket escalation (SUP-003).|
+| 2. SEVERITY EVAL    | Incident assigned Severity Tier (Tiers 1, 2, 3, or 4).       |
+| 3. ENFORCEMENT EXEC | Action executed: Warning, Feature Block, Hold, or Termination|
+| 4. NOTIFICATION     | Customer notified via email detailing violation & appeal rights.|
+| 5. APPEAL REVIEW    | Legal / Risk team reviews appeal within 14 business days.     |
++-----------------------------------------------------------------------------------+
+
+Enforcement Action Matrix
+Violation Severity Tier
+	Primary Operational Enforcement Action
+	Impact on Account Status
+	Account Portal Access Impact
+	Tier 4 (Minor)
+	Official Warning: Written notification issued detailing specific policy breach.
+	STATUS_ACTIVE
+	Unrestricted; violation logged in account profile.
+	Tier 3 (Moderate)
+	Feature Restriction: Specific capability blocked (e.g., reviews blocked, live chat disabled).
+	STATUS_ACTIVE
+	Purchasing allowed; restricted feature locked for 30–90 days.
+	Tier 2 (Major)
+	Temporary Suspension & Order Hold: Active orders held; wallet credits frozen.
+	STATUS_SUSPENDED
+	Account locked for 14–30 days pending verification (SEC-004).
+	Tier 1 (Critical)
+	Permanent Termination & Blacklisting: Account closed; tokens revoked; address blacklisted.
+	STATUS_TERMINATED
+	Account closed permanently; active sessions killed (SEC-002).
+	Customer Responsibilities
+Customers accessing NovaCart platforms share operational responsibility for maintaining policy compliance:
+Customer Responsibility Matrix
+Operational Area
+	Mandatory Customer Responsibilities
+	System / Policy Reference
+	Account Ownership
+	Maintain single profile; keep credentials confidential; enable MFA.
+	SEC-001, SEC-002
+	Fair Commercial Usage
+	Honor order checkouts; adhere to catalog quantity caps; avoid bot tools.
+	ORD-001, PROD-002
+	Promotional Integrity
+	Use promotional codes as intended; avoid synthetic account farming.
+	REF-006, LEG-001
+	Respectful Interaction
+	Maintain civil language during support calls, live chats, and field visits.
+	SUP-001, PROD-004
+	Return Compliance
+	Return exact shipped merchandise with untampered serial/IMEI tags.
+	REF-001, REF-004
+	NovaCart Responsibilities
+NovaCart commits to executing policy enforcement with fairness, consistency, and operational accountability:
+1. Consistent Policy Application: Apply acceptable use standards uniformly across all customers without arbitrary discrimination.
+2. Clear Notification of Violations: Provide written notifications when issuing warnings, feature blocks, or account suspensions, citing the specific policy tier and rationale.
+3. Timely Appeal Reviews: Process customer enforcement appeals within 14 business days and restore accounts promptly when false positive alerts or administrative errors are verified.
+4. Protection of User Community: Actively monitor and contain threats to prevent fraud, data breaches, and service disruptions from impacting legitimate platform users (SEC-004, SEC-005).
+Business Rules
+Rule 1: Instant Account Termination for Stolen Payment Instruments
+Any account confirmed to have initiated a checkout using a stolen payment card, compromised bank account, or fraudulent payment gateway token (PAY-001, SEC-004) shall be permanently terminated (STATUS_TERMINATED) immediately, with all active orders cancelled, wallet balances frozen, and delivery addresses blacklisted.
+Rule 2: Single-Warning Threshold for Support Staff Harassment
+Customers engaging in severe verbal abuse, profanity, racial slurs, or personal threats toward Customer Support staff or Field Technicians receive one (1) official written warning. A second occurrence results in immediate, permanent revocation of real-time phone/chat support access, restricting future inquiries strictly to formal email communication (SUP-001, SUP-003).
+Rule 3: Automated Order Cancellation for Bot Purchases
+Orders identified by shield.novacart.internal as originating from automated purchasing scripts, headless browser tools, or botnet IP subnets are automatically cancelled (CANCELLED_FRAUD_RISK). Payment authorizations are voided immediately, and reserved inventory soft locks are released back to sellable stock (PROD-002, SEC-004).
+Rule 4: Mandatory 7-Year Audit Record Retention for Enforcement Actions
+All records of policy warnings, feature restrictions, temporary suspensions, account terminations, appeal submissions, and CSIRT/Fraud investigation files must be retained in secure WORM storage for a mandatory period of 7 years (SEC-003, SEC-006).
+Exception Handling
+* Approved Commercial Reseller Whitelisting: Commercial business entities seeking to purchase products in quantities exceeding standard consumer catalog caps (PROD-001) must apply for a verified Corporate B2B Account. Upon business tax registration audit, B2B accounts are granted authorized quantity limit waivers and dedicated procurement portals (ORD-001).
+* Legitimate Multi-Account Household Exception: If multiple family members living in the same physical household maintain separate personal accounts, Customer Support verifies that each account possesses a distinct, verified phone number, separate primary email, and independent payment instrument (SEC-001). Upon validation, the household address is exempted from automated multi-account fraud holds.
+Practical Examples
+Scenario 1: Bot Purchasing Attempt During High-Demand Product Launch
+1. A user deploys an automated purchasing script to buy 15 units of a newly launched smartphone (CAT-MOB) during a flash sale.
+2. The script attempts rapid checkouts across 5 synthetic accounts using the same IP subnet and payment card token (PAY-006).
+3. shield.novacart.internal detects Rule 3 violation (automated bot purchasing) and Tier 2 prohibited activity (multi-account promo/quantity farming).
+4. System automatically cancels all 15 orders (CANCELLED_FRAUD_RISK), voids payment authorizations (PAY-003), releases stock soft locks back to sellable ATP stock (PROD-002), and terminates all 5 synthetic accounts (STATUS_TERMINATED).
+Scenario 2: Enforcement Escalation for Support Staff Harassment
+1. A customer dissatisfied with an out-of-warranty replacement rejection (PROD-003) uses profane and abusive language toward a Customer Support Representative on live chat (SUP-001).
+2. The CSR logs a Tier 4 policy breach and issues an official written warning via email per Rule 2.
+3. Two weeks later, the customer engages in a second live chat session and repeats profane verbal abuse.
+4. The CSR escalates the incident to Level 3 Management (SUP-003). Manager executes Rule 2 enforcement: Customer's real-time live chat and phone support privileges are permanently revoked, and future communications are restricted strictly to formal email channels.
+Frequently Asked Questions (FAQs)
+Q1: Why was my order cancelled and my account placed on a security hold?
+Answer: Orders are held or cancelled if our automated risk monitoring system (shield.novacart.internal) detects potential policy violations—such as purchasing via automated scripts, exceeding purchase quantity limits, applying promotional codes across multiple accounts, or checkout telemetry indicating potential payment fraud. You will receive an email detailing the hold and instructions on how to verify your account (Refer to SEC-001, SEC-004).
+Q2: How can I appeal an account suspension or feature restriction?
+Answer: If your account has been suspended or restricted and you believe a false positive error occurred, you may file a formal appeal within 14 calendar days of the enforcement notice. Send an email to appeals@novacart.com or submit a ticket through our online Help Center specifying your Master Order ID, Account Email, and detailed narrative explanation. Our Legal & Risk team reviews appeals within 14 business days (Refer to SUP-003).
+Q3: Can multiple family members in the same home maintain separate NovaCart accounts?
+Answer: Yes. Separate family members in the same household may maintain individual accounts, provided each profile is registered with a unique, verified mobile phone number, distinct email address, and individual payment card. Creating fake or duplicate profiles under a single individual's control to farm introductory coupons or bypass item limits is strictly prohibited (Refer to SEC-001, LEG-001).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of LEG-003. Established acceptable use principles, prohibited activity matrices (Tiers 1–4), bot prevention rules, promotional abuse controls, content moderation standards, multi-tier enforcement matrices, and 14-day appeal workflows.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* ORD-001: Order Lifecycle Management Policy
+* SHIP-001: Domestic Shipping Policy
+* PAY-001: Payment Processing SOP
+* PAY-004: Chargeback & Payment Dispute Policy
+* PAY-006: Stored Payment Methods & Tokenization Policy
+* REF-001: Master Refund Eligibility Rules
+* REF-004: Return Inspection & Quality Assessment Policy
+* REF-006: Store Credit & Promotional Refund Policy
+* PROD-001: Product Catalog Management Policy
+* PROD-002: Product Availability & Inventory Policy
+* PROD-003: Product Warranty Policy
+* PROD-006: Digital Products & Licensing Policy
+* SEC-001: Account Security Policy
+* SEC-002: Authentication & Access Control Policy
+* SEC-003: Data Protection & Privacy Policy
+* SEC-004: Fraud Prevention & Risk Management Policy
+* SEC-005: Incident Response & Security Breach Policy
+* SEC-006: Security Monitoring & Audit Logging Policy
+* LEG-001: Terms & Conditions Policy
+* LEG-002: Privacy Notice & Customer Rights Policy

@@ -1,0 +1,253 @@
+﻿PAY-001: Payment Processing Policy
+Document Header
+* Document Title: Payment Processing Policy
+* Document ID: PAY-001
+* Version: 1.0.0
+* Document Category: Payments
+* Classification: Internal / Public Operational Standard
+* Department Owner: Finance Operations
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Payment Operations, Chief Information Security Officer, VP of Legal & Compliance
+* Approved By: Chief Financial Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Payment Processing, Payment Authorization, Payment Capture, Payment Settlement, PCI-DSS, Tokenization, Payment Gateway, UPI, Credit Card, Cash on Delivery
+Purpose
+This document establishes the official enterprise policy, security standards, authorization workflows, capture mechanics, settlement reconciliations, and business rules governing payment processing operations at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It defines supported regional payment channels, transaction status lifecycles, automated gateway reconciliations, customer payment confirmation protocols, and exception handling for all financial transactions.
+As a core operational document (PAY-001) in the NovaCart Enterprise Knowledge Base (NEKB), PAY-001 enforces deterministic execution across payment gateway integrations, financial ledgers (ledger.novacart.internal), and backend microservices, operating in strict alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, and SHIP-001 through SHIP-007.
+Scope
+This policy applies to all financial inflows, payment authorizations, settlements, and stored balances generated across NovaCart operating regions (India, Singapore, UAE), customer channels (B2C Retail, B2B SMB, Corporate Enterprise Accounts, NovaCart Prime Memberships), and product categories (CAT-ELE through CAT-SUB).
+Coverage Includes
+* Electronic payment clearing across Credit/Debit Cards, UPI, Net Banking, Digital Wallets, Buy Now Pay Later (BNPL), Gift Cards, and Cash on Delivery (COD).
+* Payment Gateway (PG) integrations and acquiring bank interfaces.
+* Transactional state machine transitions within api.novacart.internal/pay.
+* PCI-DSS Level 1 compliance, tokenization, and anti-fraud transaction screening.
+* Daily gateway reconciliation, merchant escrow splits, and customer payment notifications.
+Payment Processing Overview
+NovaCart operates an integrated, high-availability financial processing infrastructure designed to deliver instant checkout authorization, absolute transactional security, and zero-variance ledger reconciliation. The payment ecosystem interfaces with certified regional payment gateways (e.g., Razorpay, Stripe, PayU, Telr) managed via ledger.novacart.internal.
+Core Operational Principles
+1. PCI-DSS Level 1 Security Compliance: Zero storage of raw Primary Account Numbers (PAN) or Card Verification Value (CVV) codes on NovaCart servers. All card details must be tokenized at gateway ingress.
+2. Two-Stage Payment Execution: Enforcing explicit Separation of Authorization (funds soft-locked) and Capture (funds debited) across eligible electronic payment instruments.
+3. Multi-Instrument Split Transactions: Supporting combined payment methods (e.g., Digital Gift Card balance applied alongside Credit Card or UPI for remaining balance).
+4. Deterministic Reconciliation: 100% daily automated reconciliation matching payment gateway settlement files against Order Management System (api.novacart.internal/oms) transaction logs.
+Supported Payment Methods
+NovaCart supports localized, regional payment instruments tailored to operating jurisdictions:
+Supported Payment Method Matrix
+Payment Instrument Code
+	Instrument Name
+	Regional Availability
+	Authorized Processing Gateway(s)
+	Supported Settlement Currency
+	Payment Execution Model
+	PAY-CARD
+	Credit / Debit Cards (Visa, Mastercard, Amex, RuPay)
+	Global (IN, SG, UAE)
+	Razorpay, Stripe, CyberSource
+	INR, SGD, AED, USD
+	Two-Stage (Auth + Capture)
+	PAY-UPI
+	Unified Payments Interface (UPI / Instant Bank Transfer)
+	India (IN)
+	Razorpay, PayU, PhonePe
+	INR ($\mathbf{\text{\rupee}}$)
+	Immediate Direct Clearing
+	PAY-NB
+	Net Banking (Direct Bank Transfer)
+	India (IN)
+	Razorpay, PayU
+	INR ($\mathbf{\text{\rupee}}$)
+	Immediate Direct Clearing
+	PAY-WAL
+	Digital Wallets (Paytm, GrabPay, Careem Pay)
+	IN, SG, UAE
+	Razorpay, GrabPay API, Careem
+	INR, SGD, AED
+	Immediate Direct Clearing
+	PAY-BNPL
+	Buy Now Pay Later (Tabby, LazyPay, Simpl)
+	UAE, IN
+	Tabby API, Razorpay
+	AED, INR
+	Deferred Installment Clearing
+	PAY-GFT
+	NovaCart Gift Cards & Store Wallet Credit
+	Global (IN, SG, UAE)
+	Internal Ledger (ledger)
+	INR, SGD, AED
+	Instant Ledger Deduction
+	PAY-COD
+	Cash on Delivery (Cash / POS Terminal at Doorstep)
+	IN, UAE
+	Last-Mile Courier POS
+	INR, AED
+	Post-Delivery Cash Clearing
+	Payment Lifecycle
+Every payment transaction initiated on the platform moves through a controlled, event-driven status machine managed by api.novacart.internal/pay.
+Payment Status Matrix
+Payment Status Tag
+	Status Description
+	Primary System Action
+	Terminal State?
+	Customer Visible Label
+	INITIATED
+	Checkout session created; payment gateway handshake established.
+	System generates transaction token.
+	No
+	Processing Payment
+	AUTHORIZED
+	Issuing bank verifies card/account; funds soft-locked; order moves to PAYMENT_CONFIRMED.
+	OMS reserves inventory (ORD-001).
+	No
+	Payment Authorized
+	CAPTURED
+	Merchant executes financial debit; funds transferred to NovaCart escrow ledger.
+	Financial ledger records debit.
+	No
+	Payment Successful
+	SETTLED
+	Acquiring bank remits funds to NovaCart corporate bank account; merchant payout queued.
+	Finance completes reconciliation.
+	Yes
+	Paid
+	PENDING_RECONCILIATION
+	Debit unconfirmed by gateway; background auto-query active (15 mins timeout).
+	System runs automated query.
+	No
+	Verifying Payment
+	FAILED
+	Gateway returns authorization rejection, insufficient funds, or security block.
+	OMS retains order 15 mins (PAY-002).
+	Yes
+	Payment Failed
+	CANCELLED_TIMEOUT
+	Unpaid checkout session exceeds 15-minute timer; soft reservation released.
+	OMS cancels order (ORD-002).
+	Yes
+	Payment Expired
+	REFUNDED
+	Funds reversed to original payment instrument or customer store wallet.
+	Ledger executes credit instruction.
+	Yes
+	Refunded
+	Payment Authorization Process
+The authorization phase verifies account validity and soft-locks transaction funds without executing an immediate ledger credit transfer:
+1. Tokenized Handshake: Customer submits payment credentials via an encrypted client-side iframe. The payment gateway returns a secure, single-use payment token.
+2. Two-Factor Authentication (3D Secure / OTP):
+   * For Card transactions (PAY-CARD), the issuing bank initiates 3D Secure verification (OTP sent to customer mobile).
+   * For UPI transactions (PAY-UPI), an in-app push notification or collect request is sent to the customer's UPI mobile application.
+3. Risk & Anti-Fraud Screening: The transaction payload passes through the Anti-Fraud Shield (shield.novacart.internal). Transactions exhibiting abnormal velocity or IP/card geographic mismatches are flagged for security review (Refer to SEC-004).
+4. Authorization Response: Upon successful 3DS/OTP validation, the gateway issues an AUTHORIZATION_SUCCESS code containing a unique Gateway Reference ID (PG-XXXXX). OMS transitions order status to PAYMENT_CONFIRMED (Refer to ORD-001).
+Payment Capture Process
+Payment capture converts soft-locked authorized funds into a permanent financial debit:
+* Immediate Auto-Capture: For digital subscriptions (CAT-SUB), digital software keys (CAT-SFT), digital gift cards (CAT-GFT), and express physical items (SRV-EXP), payment capture executes automatically upon authorization.
+* Shipment-Triggered Capture: For standard physical goods (CAT-ELE, CAT-MOB, CAT-APP), payment capture executes automatically when warehouse staff scan the parcel barcode onto the courier linehaul vessel (SHIPPED status tag) (Refer to ORD-001).
+* Capture Expiry Limit: Authorized card funds must be captured within 7 calendar days of authorization. If shipment is delayed beyond 7 days, OMS issues a re-authorization request before dispatch.
+Payment Settlement Process
+1. Daily Gateway Settlement: Acquiring banks net-settle captured transactions into NovaCart corporate bank accounts within $T+1$ business days for domestic card/UPI transactions and $T+2$ business days for international card/BNPL transactions.
+2. Automated Ledger Reconciliation: At 02:00 AM daily, ledger.novacart.internal ingests bank settlement CSV/API files, matching each transaction against OMS orders.
+3. Escrow & Merchant Payout Allocation: Settled funds are partitioned into NovaCart commission fees, regional tax liability accounts (GST/VAT), and seller net payout escrow pools (Refer to COMP-001).
+Payment Confirmation
+A payment is legally recognized as confirmed when an AUTHORIZATION_SUCCESS payload is validated by ledger.novacart.internal.
+Payment Completion Criteria
+* Prepaid Electronic Methods: Verified electronic authorization code returned by PG; transaction reference logged in OMS.
+* Digital Store Wallets & Gift Cards: Instant ledger debit confirmed in ledger.novacart.internal.
+* Cash on Delivery (COD): Physical cash collected or doorstep POS terminal debit confirmed by delivery rider, supported by a digital Proof of Delivery (POD) record in tms.novacart.internal (Refer to SHIP-001).
+Customer Notifications
+Automated financial notifications keep customers informed throughout the transaction lifecycle:
+Customer Notification Matrix
+Payment Lifecycle Event
+	Delivery Channel(s)
+	Trigger Condition
+	Notification Content Summary
+	Payment Authorized / Success
+	Email + SMS + Push
+	Gateway authorization success.
+	"Payment Confirmed! Amount: [Cur] [Val]. Order #[ID]. PG Ref: [PG-ID]."
+	Payment Failed
+	SMS + Push
+	Gateway authorization rejection.
+	"Payment failed for Order #[ID]. Complete payment within 15 mins: [Payment Link]"
+	Pending Reconciliation
+	SMS + Push
+	Gateway timeout during 3DS.
+	"Payment pending verification. We are verifying with your bank. Updates shortly."
+	Payment Timeout / Expired
+	Email + SMS
+	15-minute unpaid timer expires.
+	"Order #[ID] cancelled due to payment timeout. Items released to cart: [Link]"
+	Refund Processed
+	Email + SMS
+	Ledger refund credit executed.
+	"Refund of [Cur] [Val] processed for Order #[ID]. Reflection: 3–5 days. Ref: [REF-ID]."
+	Department Responsibilities
+Coordinated management across functional units ensures payment processing integrity:
+Department Responsibility Matrix
+Department Unit
+	Primary Payment Responsibilities
+	Primary Portal Used
+	Primary SLA Target
+	Finance Operations
+	Manages gateway relationships, daily reconciliations, merchant payouts, and chargeback defense.
+	ledger.novacart.internal
+	Daily zero-variance reconciliation ($100\%$)
+	Information Security
+	Audits PCI-DSS Level 1 compliance, tokenization infrastructure, and anti-fraud shield logic.
+	shield.novacart.internal
+	Zero unpatched PCI vulnerabilities
+	Software Engineering
+	Maintains gateway API integrations, webhook listeners, payment microservices, and checkout uptime.
+	api.novacart.internal
+	$99.99\%$ payment checkout availability
+	Customer Support
+	Assists customers with payment failures, unlinked debits, duplicate charges, and payment trace queries.
+	crm.novacart.internal
+	Priority Chat FRT $< 15\text{ Secs}$ (Refer to SUP-005)
+	Business Rules
+Rule 1: Master Tokenization Mandate
+No employee, system component, or customer support agent may request, log, or record raw credit/debit card numbers, CVV codes, or bank account PINs. All payment processing must utilize encrypted gateway tokens.
+Rule 2: 15-Minute Unpaid Reservation Timer
+When an order enters PENDING_PAYMENT status, inventory is soft-locked for exactly 15 minutes. If payment authorization is not confirmed within 15 minutes, OMS releases the inventory lock back to the active catalog and cancels the order (CANCELLED_TIMEOUT) (Refer to ORD-001, ORD-002).
+Rule 3: Single Refund Path Rule
+All transaction refunds must be processed back to the exact payment instrument used during checkout. Cash on Delivery (COD) refunds are strictly restricted to electronic NEFT/RTGS/IMPS bank transfers or platform wallet credits. Cash refunds are strictly prohibited (Refer to REF-001).
+Exception Handling
+* Payment Succeeded but Order Failed (Unlinked Debit): If a customer's bank account is debited but the payment gateway times out before updating OMS, the transaction enters PENDING_RECONCILIATION. Background reconciliation engines query the gateway every 3 minutes. If confirmed paid, OMS automatically generates the order or triggers an automated instant refund if stock depleted (Refer to PAY-002).
+* Duplicate Payment Debits: If a network glitch causes two debit authorizations for a single order, the auto-reconciliation engine flags the unlinked second debit within 2 hours and issues an immediate automated refund to the customer's card (Refer to PAY-003).
+Practical Examples
+Scenario 1: Credit Card Auth and Shipment-Triggered Capture
+1. Customer in Dubai purchases a laptop (AED 3,500) via Visa card checkout at 10:00 AM.
+2. Gateway prompts 3DS OTP. Customer validates OTP. Gateway returns AUTHORIZATION_SUCCESS. OMS sets order status to PAYMENT_CONFIRMED and reserves inventory (Refer to ORD-001).
+3. FC DXB-01 packs item and hands parcel to courier at 04:00 PM. Courier dock scan updates order to SHIPPED.
+4. api.novacart.internal/pay receives SHIPPED webhook and issues a capture command to Stripe gateway. AED 3,500 is debited from customer's card and transferred to escrow.
+Scenario 2: Combined Gift Card and UPI Split Payment
+1. Customer in Bangalore purchases a smartwatch (₹12,000). Customer applies a ₹2,000 NovaCart Gift Card balance (PAY-GFT) and selects UPI (PAY-UPI) for the remaining ₹10,000 balance.
+2. ledger.novacart.internal instantly locks ₹2,000 from the gift card balance.
+3. Razorpay gateway sends a ₹10,000 UPI collect request to the customer's Google Pay app. Customer authorizes UPI PIN.
+4. Razorpay returns UPI authorization success. OMS logs split payment references (GFT-88210 + UPI-99201) and confirms order.
+Frequently Asked Questions (FAQs)
+Q1: Is it safe to save my credit card details on NovaCart?
+Answer: Yes. NovaCart utilizes PCI-DSS Level 1 tokenization infrastructure. Your raw card numbers and CVV codes are never stored on NovaCart servers. Instead, a secure, encrypted token provided by certified payment gateways (e.g., Razorpay, Stripe) is saved for future checkouts (Refer to SEC-001).
+Q2: Why was my bank account debited if my order shows "Payment Failed"?
+Answer: This occurs when your bank authorizes the debit, but network latency delays the gateway response to NovaCart. Our automated reconciliation system detects unlinked debits within 2 hours and either creates your order or triggers an automatic full refund back to your bank account within 3 to 5 business days (Refer to PAY-002).
+Q3: Can I pay using Cash on Delivery (COD) for international orders?
+Answer: COD is supported for domestic deliveries within India and UAE up to specified order value limits. COD is strictly unavailable for international cross-border shipments (SHIP-002), digital software (CAT-SFT), or gift cards (CAT-GFT) (Refer to COMP-001).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of PAY-001. Established supported payment instrument matrices, payment status machine, auth/capture workflows, PCI-DSS rules, reconciliation SLAs, and split payment parameters.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* ORD-001: Order Lifecycle Management Policy
+* ORD-002: Order Cancellation Policy
+* PAY-002: Payment Failure Handling
+* PAY-003: Duplicate Payment Procedures
+* SHIP-001: Domestic Shipping Policy
+* REF-001: Master Refund Eligibility Rules
+* SEC-001: Account Security & Access Control

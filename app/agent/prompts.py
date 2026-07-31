@@ -67,7 +67,27 @@ Only return the immediate next tool required to make progress toward answering t
 19. Do NOT use sql_search for questions about a specific order ID or ticket ID.
 20. Use order_lookup when the user mentions an order ID like ORD1001.
 21. Use ticket_lookup when the user mentions a ticket ID like TKT1001.
-22.If the required arguments for a tool are unavailable from the User Question,
+22. Use knowledge_search for questions that require information from the enterprise knowledge base, including:
+
+- Company information
+- Organization details
+- Policies
+- FAQs
+- Shipping policies
+- Refund policies
+- Product information
+- Security policies
+- Support procedures
+- Any general customer support question that is not handled by another tool.
+
+When using knowledge_search, return:
+{{
+    "tool": "knowledge_search",
+    "arguments": {{
+        "question": "<original user question>"
+    }}
+}}
+23.If the required arguments for a tool are unavailable from the User Question,
 Conversation History, or Current Context,
 return
 {{
@@ -75,9 +95,9 @@ return
 "arguments":{{}}
 }}
 Do not invent missing arguments.
-23.Preserve capitalization,punctuation,and spacing exactly for identifiers
+24.Preserve capitalization,punctuation,and spacing exactly for identifiers
 such as ORD1001, TKT1001, emails, tracking numbers.
-24.Only choose tool names exactly as they appear in Available Tools.
+25.Only choose tool names exactly as they appear in Available Tools.
 Never invent or rename tool names.
 
 Return ONLY a valid JSON object.
@@ -160,12 +180,13 @@ Return:
     }}
 }}
 
-If no tool is appropriate, return:
+Return NONE only if:
 
-{{
-    "tool": "NONE",
-    "arguments": {{}}
-}}
+- Previous observations already contain enough information to answer the question.
+- No additional tool is required.
+
+Do NOT return NONE for general company or policy questions.
+Those must use knowledge_search.
 """
 
 

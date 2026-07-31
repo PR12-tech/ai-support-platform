@@ -1,0 +1,901 @@
+﻿COMP-003: Department Directory
+Document Header
+* Document Title: Enterprise Department Directory and Operational Capabilities Registry
+* Document ID: COMP-003
+* Version: 1.0.0
+* Document Category: Company
+* Classification: Internal
+* Department Owner: Corporate Strategy & Enterprise Knowledge Architecture
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Chief Operating Officer, Chief Technology Officer, VP of Human Resources
+* Approved By: Board of Directors, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 20, 2026
+* Next Review Date: July 20, 2027
+* Keywords: Department Directory, Operational Scope, Systems Owned, Documents Owned, Inter-Departmental Dependencies, KPIs, Escalation Management, Communication Protocols
+Purpose
+This document serves as the official enterprise department directory and operational capabilities registry for NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes an exhaustive reference model for every operational division within the organization, defining their overarching purpose, core responsibilities, operational scope, software systems owned, policy documentation owned, internal customer networks, external vendor/regulatory interfaces, key performance indicators (KPIs), and escalation parameters.
+As a primary core document (COMP-003) in the NovaCart Enterprise Knowledge Base (NEKB), this directory works in direct alignment with COMP-001 (Company Overview) and COMP-002 (Organization Structure) to eliminate departmental friction, standardize cross-functional communication, clarify operational ownership boundaries, and optimize vector retrieval engines utilized by automated AI support and knowledge platforms.
+Scope
+This directory applies globally across all operating territories, corporate offices, fulfillment facilities, customer engagement hubs, and technical deployment zones of NovaCart Technologies Pvt. Ltd.
+Coverage Includes
+* All fourteen (14) official enterprise departments operating across global hubs in India (Bangalore, Mumbai, Delhi, Kolkata), Singapore (Marina Bay), and the United Arab Emirates (Dubai, Abu Dhabi).
+* Full mapping of primary department mandates, operational boundaries, owned technological systems, and governed documentation.
+* Enterprise-wide responsibility assignment frameworks, system ownership matrices, and escalation matrices.
+* Standardized inter-departmental communication protocols and operational collaboration workflows.
+Definitions
+To ensure standardized interpretation across human personnel and automated Retrieval-Augmented Generation (RAG) agent systems, the following terms and abbreviations apply throughout this document:
+Acronyms & Abbreviations
+* API: Application Programming Interface. Software intermediary allowing systems to communicate.
+* B2B: Business-to-Business. Commercial transactions conducted between NovaCart and corporate/business clients.
+* B2C: Business-to-Consumer. Direct retail commercial transactions with individual consumers.
+* BAU: Business As Usual. Standard routine operational activities.
+* CISO: Chief Information Security Officer. Executive lead for corporate cybersecurity and platform risk.
+* CRM: Customer Relationship Management. Software platform tracking customer interactions and support records.
+* ERP: Enterprise Resource Planning. Integrated software suite managing core financial, inventory, and human resource processes.
+* FC: Fulfillment Center. Physical logistics facility handling inventory receipt, packaging, and dispatch.
+* KPI: Key Performance Indicator. Quantifiable metric measuring performance against operational goals.
+* NEKB: NovaCart Enterprise Knowledge Base. The central repository of structured enterprise knowledge.
+* OMS: Order Management System. Core platform module governing order validation, routing, and state transitions.
+* RACI: Responsible, Accountable, Consulted, Informed. Framework clarifying cross-functional roles.
+* RMA: Return Merchandise Authorization. Tracking authorization code required for product returns.
+* SLA: Service Level Agreement. Enforceable operational timeline commitment for task execution.
+* SOC: Security Operations Center. Centralized team monitoring and securing enterprise infrastructure.
+* TMS: Transportation Management System. Logistics software optimizing shipment routing and fleet dispatch.
+* WMS: Warehouse Management System. Operational software managing inventory storage, picking, and packing.
+Department Classification Standards
+Enterprise departments within NovaCart are classified into three primary operational tiers based on their primary touchpoints, technical access levels, and organizational functions:
+1. Direct Operations & Customer-Facing Tiers
+* Departments: Customer Support, Sales, Returns & Refunds.
+* Characteristics: Direct interaction with retail/business customers and active merchant accounts; high-volume real-time transactional interfaces; strict adherence to customer-facing SLAs.
+2. Supply Chain & Physical Execution Tiers
+* Departments: Operations, Logistics, Warehouse Management.
+* Characteristics: Physical asset management, inventory movement, middle-mile/last-mile routing, hub facility management, and fulfillment safety protocols.
+3. Strategy, Platform & Governance Tiers
+* Departments: Executive Office, Engineering, Product Management, Finance, Information Security, Human Resources, Legal & Compliance, Enterprise Knowledge Management.
+* Characteristics: Enterprise strategy, software development, financial reconciliation, regulatory adherence, risk mitigation, talent acquisition, and information taxonomy management.
+Detailed Department Directory
+
+
+
+
+
+
+<ElicitationsGroup message="To examine specific departmental structures, policies, or escalation workflows further:">
+{/* Reason: Provides immediate actionable follow-ups to navigate deeper into specific departmental documentation or cross-functional SOPs. */}
+ <Elicitation label="Review SUP-001 Support Standard Operating Procedures" query="Show SUP-001 Support SOP detailing customer support execution workflows." />
+ <Elicitation label="Examine PAY-001 Payment Processing SOP" query="Show PAY-001 Payment Processing SOP governing financial settlements and gateway reconciliations." />
+ <Elicitation label="Explore SHIP-001 Domestic Shipping Policy" query="Show SHIP-001 Domestic Shipping Policy detailing logistics operations and fulfillment SLAs." />
+</ElicitationsGroup>
+
+1. Executive Office
+Department Purpose
+Provides overarching corporate leadership, global strategic vision, capital allocation, corporate governance, and operational oversight across all NovaCart operating entities.
+Primary Responsibilities
+* Formulating long-term enterprise strategy, market expansion plans, and annual operational budgets.
+* Governing executive decision-making, board reporting, and shareholder communications.
+* Overseeing enterprise risk management, crisis response, and high-value commercial partnerships.
+* Driving organizational alignment with core mission, vision, and operational values established in COMP-001.
+Operational Scope
+Global corporate strategy, M&A operations, executive leadership alignment, cross-regional expansion, board-level governance.
+Systems Owned
+* Executive Business Intelligence (BI) Portal (exec-bi.novacart.internal)
+* Enterprise Performance Dashboard (epd.novacart.internal)
+Documents Owned
+* COMP-001: Company Overview
+* COMP-002: Organization Structure
+* COMP-003: Department Directory
+Internal Customers
+All functional enterprise departments, Regional Managing Directors, Corporate Strategy leads.
+External Stakeholders
+Board of Directors, Institutional Investors, Financial Audit Authorities, Foreign Direct Investment (FDI) Regulatory Bodies.
+Typical Activities
+* Conducting weekly C-suite operational reviews.
+* Evaluating quarterly financial targets and regional expansion milestones.
+* Presiding over Enterprise Risk Management (ERM) committee meetings.
+Key Performance Indicators (KPIs)
+* Enterprise Gross Merchandise Value (GMV) growth rate year-over-year.
+* Global EBITDA margin and operational cost-to-revenue ratio.
+* Enterprise Employee Net Promoter Score (eNPS).
+Escalation Responsibilities
+Final internal appeal authority for enterprise-wide operational impasses, legal settlements exceeding threshold limits, and major crisis management response.
+Cross-Department Dependencies
+Relies on Finance for financial auditing, Legal for regulatory alignment, HR for talent strategies, and Engineering for platform performance visibility.
+Roles Frequently Interacting with Department
+Chief Executive Officer (CEO), Chief Operating Officer (COO), Chief Technology Officer (CTO), Chief Financial Officer (CFO), VP of Corporate Strategy.
+2. Customer Support
+Department Purpose
+Delivers 24/7 omni-channel customer service, resolution management, transaction support, and post-purchase assistance to retail, business, and premium customers.
+Primary Responsibilities
+* Operating L1 automated customer chat/self-service interfaces, L2 specialized resolution queues, and L3 managerial escalation paths.
+* Resolving customer inquiries regarding order tracking, payment processing, returns, damaged goods, and warranties.
+* Issuing customer compensations, goodwill credits, and shipping fee waivers within authorized financial limits (Refer to SUP-001, SUP-003).
+* Gathering real-time feedback to drive platform usability improvements.
+Operational Scope
+Multi-channel support operations (Live Chat, Email, Voice, Social Media) across India, Singapore, and the UAE.
+Systems Owned
+* Omni-Channel Support Portal (crm.novacart.internal)
+* Customer Interaction Analytics Tool (ciat.novacart.internal)
+* Telephony & Voice Routing Gateway (voip.novacart.internal)
+Documents Owned
+* SUP-001: Support SOP
+* SUP-002: Communication Guidelines
+* SUP-003: Escalation Matrix
+* SUP-004: Priority Matrix
+* SUP-005: SLA Policy
+Internal Customers
+Retail Customers, Business SMB Accounts, Corporate Clients, NovaCart Prime Members.
+External Stakeholders
+End-consumer retail buyers, enterprise client procurement managers, third-party support delivery contractors.
+Typical Activities
+* Managing active queue workloads across chat, email, and voice channels.
+* Processing tier-1 and tier-2 customer compensation requests.
+* Escalating unresolved shipping or payment failures to domain specialist queues.
+Key Performance Indicators (KPIs)
+* First Contact Resolution (FCR) rate ($\ge 75\%$).
+* Average Handling Time (AHT) per channel.
+* Customer Satisfaction Score (CSAT $\ge 88\%$) and Net Promoter Score (NPS).
+Escalation Responsibilities
+Manages customer dissatisfaction escalations; escalates unresolved technical bugs to Engineering, delivery losses to Logistics, and payout issues to Finance.
+Cross-Department Dependencies
+Requires real-time integration with Logistics (order tracking), Returns (RMA status), Finance (refund execution), and Engineering (system bugs).
+Roles Frequently Interacting with Department
+Customer Support Representative (CSR), Support Team Lead, Customer Experience Manager, Escalation Desk Specialist.
+3. Engineering
+Department Purpose
+Designs, develops, scales, and secures the software applications, cloud infrastructure, databases, and automated pipelines powering the NovaCart e-commerce platform.
+Primary Responsibilities
+* Maintaining $99.99\%$ platform service availability across web, mobile, and administrative applications.
+* Developing and optimizing core platform microservices: Order Management System (OMS), Warehouse Management System (WMS), Payment Gateway Integrations, and Vector Search Engines for RAG AI systems.
+* Executing continuous integration/continuous deployment (CI/CD) pipelines, load testing, and technical patch management.
+* Designing enterprise disaster recovery, database redundancy, and cloud infrastructure frameworks.
+Operational Scope
+Global cloud architecture (AWS/GCP nodes in Mumbai, Singapore, and Dubai), core software backend, mobile client apps, internal administrative tools.
+Systems Owned
+* Core Platform Microservices Suite (api.novacart.internal)
+* Engineering DevOps & CI/CD Pipeline (deploy.novacart.internal)
+* Cloud Infrastructure Console (cloud.novacart.internal)
+* Centralized Application Logging & APM (monitor.novacart.internal)
+Documents Owned
+* Software Architecture & Developer Guidelines
+* IT Disaster Recovery & Business Continuity Plan
+* System API Specifications & Integration Guides
+Internal Customers
+All internal enterprise departments utilizing software tools, customer-facing interfaces, or administrative portals.
+External Stakeholders
+Cloud infrastructure providers (AWS/GCP), third-party SaaS vendors, payment gateway technical engineering teams.
+Typical Activities
+* Deploying software patches and new feature iterations.
+* Monitoring system latency, database performance, and API response metrics.
+* Conducting technical root-cause analyses (RCA) following platform operational incidents.
+Key Performance Indicators (KPIs)
+* Platform Availability / System Uptime ($99.99\%$).
+* Mean Time to Detect (MTTD) and Mean Time to Resolve (MTTR) system incidents.
+* API P99 latency limits ($< 200\text{ ms}$).
+Escalation Responsibilities
+Handles L3 technical escalations, platform outages, database corruption incidents, and payment integration failures.
+Cross-Department Dependencies
+Works closely with Product Management (feature requirements), Security (DevSecOps), Operations (WMS/OMS enhancements), and Customer Support (bug resolution).
+Roles Frequently Interacting with Department
+VP of Engineering, Software Architect, DevOps Engineer, Backend Microservices Engineer, Frontend Developer, Engineering Lead.
+4. Product Management
+Department Purpose
+Defines product vision, maps strategic user journeys, gathers operational requirements, and manages the feature release lifecycle across buyer app, merchant portal, and internal enterprise tools.
+Primary Responsibilities
+* Conducting user experience (UX) research and defining functional product requirements (PRDs).
+* Managing product roadmaps and prioritizing engineering sprint backlogs based on business value and unit economics.
+* Overseeing catalog management systems, taxonomy frameworks, and pricing engine algorithms.
+* Tracking product usage metrics, conversion funnels, and checkout friction points to drive optimization.
+Operational Scope
+Customer Mobile Apps (iOS/Android), Desktop Web Storefront, Merchant Management Portal, Internal Enterprise Operational Workstations.
+Systems Owned
+* Product Roadmap & Backlog System (jira.novacart.internal)
+* Catalog & Taxonomy Management System (catalog.novacart.internal)
+* User Analytics & Funnel Tracking Platform (analytics.novacart.internal)
+Documents Owned
+* PROD-001: Warranty Policy
+* PROD-002: Replacement Policy
+* PROD-003: Extended Warranty Policy
+* PROD-004: Product Installation SOP
+Internal Customers
+Sales, Customer Support, Marketing, Operations, Logistics, Finance.
+External Stakeholders
+End-users (consumers), platform merchants, third-party software integration partners.
+Typical Activities
+* Writing detailed PRDs and user stories for engineering sprint cycles.
+* Analyzing A/B test results on checkout conversion flows.
+* Reviewing product defect rates with Warranty and Customer Support teams.
+Key Performance Indicators (KPIs)
+* Checkout Conversion Rate across web and mobile platforms.
+* Feature Adoption Rate among target user cohorts.
+* Product Roadmap Execution Velocity.
+Escalation Responsibilities
+Resolves catalog taxonomy disputes, product feature specification ambiguities, and platform UX blocking issues.
+Cross-Department Dependencies
+Collaborates continuously with Engineering (development), Customer Support (UX feedback), Sales (merchant features), and Operations (fulfillment tools).
+Roles Frequently Interacting with Department
+Head of Product, Senior Product Manager, Technical Product Manager, UX/UI Designer, Product Analyst.
+5. Operations
+Department Purpose
+Oversees end-to-end operational planning, network capacity management, demand forecasting, regional market alignment, and cross-functional operational fulfillment execution.
+Primary Responsibilities
+* Designing fulfillment hub networks, capacity planning models, and shift scheduling across operating regions.
+* Establishing operational SLAs for order pick-pack-ship pipelines and monitoring network throughput.
+* Coordinating inter-facility inventory transfers, stock rebalancing, and middle-mile transit schedules.
+* Managing third-party operational vendors, packaging material procurement, and facility maintenance.
+Operational Scope
+Regional operations planning across India, Singapore, and UAE operational networks.
+Systems Owned
+* Enterprise Resource Planning (ERP) Core (erp.novacart.internal)
+* Network Operations Control Center (noc.novacart.internal)
+* Packaging & Supplies Inventory Tool (supplies.novacart.internal)
+Documents Owned
+* ORD-001: Order Lifecycle
+* ORD-002: Order Cancellation
+* ORD-003: Order Modification
+* ORD-004: Order Tracking
+* ORD-005: Split Orders
+Internal Customers
+Warehouse Management, Logistics, Customer Support, Finance, Sales.
+External Stakeholders
+Packaging material suppliers, facility management contractors, operational equipment vendors.
+Typical Activities
+* Conducting daily operational volume planning and capacity forecasting.
+* Monitoring regional order backlogs and fulfillment bottlenecks.
+* Adjusting shift rosters and labor allocation based on promotional sales surges.
+Key Performance Indicators (KPIs)
+* Order Processing Cycle Time (Order Placement to Dispatch).
+* Order Fulfillment Cost per Unit.
+* On-Time Fulfillment Rate ($\ge 98.5\%$).
+Escalation Responsibilities
+Handles major network capacity bottlenecks, severe operational disruptions, facility shutdowns, and inter-facility inventory imbalances.
+Cross-Department Dependencies
+Directs Warehouse Management and Logistics execution while relying on Engineering (OMS/ERP), Finance (budgeting), and HR (operational staffing).
+Roles Frequently Interacting with Department
+VP of Operations, Regional Operations Director, Capacity Planning Manager, Operations Analyst.
+6. Logistics
+Department Purpose
+Manages last-mile delivery operations, middle-mile transportation networks, courier partner integrations, express deliveries, and shipping carrier performance across domestic and international markets.
+Primary Responsibilities
+* Optimizing route optimization algorithms, driver dispatch systems, and courier assignment logic.
+* Managing last-mile delivery fleets, delivery partner onboarding, and regional delivery hubs.
+* Tracking shipment delivery milestones, managing delayed deliveries, non-delivery reports (NDRs), and carrier claims (Refer to SHIP-005, SHIP-006).
+* Overseeing cross-border logistics, customs clearance documentation, and international shipping protocols (Refer to SHIP-002).
+Operational Scope
+Domestic last-mile delivery networks, middle-mile freight, express/same-day delivery zones, and international air/sea freight routes.
+Systems Owned
+* Transportation Management System (TMS) (tms.novacart.internal)
+* Dispatch & Route Optimization Engine (dispatch.novacart.internal)
+* Delivery Agent Mobile Platform (driver.novacart.internal)
+Documents Owned
+* SHIP-001: Domestic Shipping
+* SHIP-002: International Shipping
+* SHIP-003: Express Delivery
+* SHIP-004: Same-Day Delivery
+* SHIP-005: Delayed Deliveries
+* SHIP-006: Lost Shipments
+* SHIP-007: Address Changes
+Internal Customers
+Customer Support, Operations, Warehouse Management, Sales, Finance.
+External Stakeholders
+Third-party logistics (3PL) carriers (e.g., DHL, FedEx, Aramex, Delhivery), customs clearance brokers, commercial delivery partners.
+Typical Activities
+* Managing daily dispatch runs and delivery partner fleet deployment.
+* Resolving address correction requests and Non-Delivery Reports (NDRs) in real time.
+* Conducting lost shipment investigations and filing carrier compensation claims.
+Key Performance Indicators (KPIs)
+* On-Time Delivery (OTD) Rate ($\ge 96\%$).
+* First-Attempt Delivery Success Rate ($\ge 90\%$).
+* Lost/Damaged Shipment Rate ($< 0.1\%$).
+Escalation Responsibilities
+Manages shipment loss investigations, carrier SLA breaches, customs hold-ups, and severe weather shipping disruptions.
+Cross-Department Dependencies
+Requires direct coordination with Warehouse Management (handover), Customer Support (delivery tracking inquiries), and Finance (carrier billing reconciliation).
+Roles Frequently Interacting with Department
+Head of Logistics, Last-Mile Fleet Manager, Middle-Mile Coordinator, Customs Compliance Specialist, Courier Partner Account Manager.
+7. Warehouse Management
+Department Purpose
+Controls fulfillment center (FC) operations, inbound stock receiving, bin storage, cycle counting, picking, packing, and dispatch handovers for physical inventory.
+Primary Responsibilities
+* Managing dark store networks, regional distribution hubs, and automated packaging lines.
+* Executing inbound inventory verification, quality inspection, barcoding, and putaway workflows.
+* Performing precise pick-and-pack operations utilizing handheld scanning terminals to eliminate fulfillment errors.
+* Conducting continuous inventory cycle counts, shrink prevention, and stock adjustment audits.
+Operational Scope
+All primary distribution centers and local dark stores across BLR-01, DEL-02, BOM-01, CCU-01, SIN-01, DXB-01, and AUH-01.
+Systems Owned
+* Warehouse Management System (WMS) (wms.novacart.internal)
+* Handheld Terminal (HHT) Scanner Platform (hht.novacart.internal)
+* Inventory Bin Management Console (bins.novacart.internal)
+Documents Owned
+* Standard Operating Procedures for Inbound Receiving & Putaway
+* Pick-Pack-Ship Operational Guidelines
+* Facility Safety & Inventory Audit Standards
+Internal Customers
+Operations, Logistics, Returns & Refunds, Sales, Finance.
+External Stakeholders
+Merchants shipping stock inbound, inventory auditing firms, warehouse equipment maintenance contractors.
+Typical Activities
+* Receiving supplier trucks and performing barcode verification on inbound boxes.
+* Executing wave picking and packing for active outgoing orders.
+* Conducting nightly cycle counts on high-value electronic storage cages (CAT-ELE, CAT-MOB).
+Key Performance Indicators (KPIs)
+* Pick-and-Pack Accuracy Rate ($\ge 99.8\%$).
+* Inbound Stock Putaway Time ($< 6\text{ hours}$ from dock receipt).
+* Inventory Shrinkage Rate ($< 0.02\%$ of stored GMV).
+Escalation Responsibilities
+Handles physical inventory mismatches, damaged stock received from suppliers, warehouse safety incidents, and storage space shortages.
+Cross-Department Dependencies
+Coordinates closely with Logistics (package handover), Returns (restock processing), Operations (space management), and Security (shrinkage control).
+Roles Frequently Interacting with Department
+Warehouse Operations Manager, Inbound Lead, Outbound Shift Supervisor, Inventory Auditor, Fulfillment Associate.
+8. Returns & Refunds
+Department Purpose
+Oversees reverse logistics, product return inspections, RMA validations, product dispositioning, and eligibility verification for customer refund triggers.
+Primary Responsibilities
+* Processing Return Merchandise Authorization (RMA) requests generated by customers or support channels (Refer to REF-005).
+* Conducting physical return item inspections at specialized reverse logistics hubs to verify serial numbers and item condition.
+* Categorizing returned goods into disposition pathways: active stock restock, return-to-vendor (RTV), refurbishment, or liquidation.
+* Authorizing financial refund triggers to Finance based on eligibility policies (Refer to REF-001, REF-002, REF-004).
+Operational Scope
+Dedicated reverse processing hubs attached to regional fulfillment centers in India, Singapore, and UAE.
+Systems Owned
+* Reverse Logistics & RMA Portal (rma.novacart.internal)
+* Product Inspection & Disposition Console (inspect.novacart.internal)
+Documents Owned
+* REF-001: Refund Eligibility
+* REF-002: Refund Timeline
+* REF-003: Damaged Products
+* REF-004: Partial Refunds
+* REF-005: Return Process
+* REF-006: Non-Refundable Products
+Internal Customers
+Customer Support, Finance, Warehouse Management, Product Management, Legal.
+External Stakeholders
+Customers returning merchandise, liquidators, vendor returns managers.
+Typical Activities
+* Receiving reverse courier parcels and scanning RMA barcodes.
+* Unboxing returned high-value electronics and verifying serial numbers against dispatch logs.
+* Approving or rejecting refund eligibility and updating order ledgers.
+Key Performance Indicators (KPIs)
+* Return Inspection Turnaround Time ($< 24\text{ hours}$ from receipt).
+* Return Inspection Accuracy Rate ($\ge 99.5\%$).
+* Restock Cycle Time for Resaleable Items.
+Escalation Responsibilities
+Handles suspected return fraud (e.g., empty box returns, wrong item returned), disputed RMA rejections, and damaged product claims.
+Cross-Department Dependencies
+Requires strict collaboration with Customer Support (RMA creation), Security (fraud escalation), Finance (refund disbursement), and Warehouse (stock restock).
+Roles Frequently Interacting with Department
+Returns Operations Manager, RMA Inspection Specialist, Reverse Logistics Lead, Fraud Prevention Auditor.
+9. Finance
+Department Purpose
+Manages financial strategy, payment gateway processing, merchant settlements, tax administration, corporate accounting, and financial reconciliation.
+Primary Responsibilities
+* Reconciling daily payment gateway settlements, processing credit card, debit card, UPI, EMI, and wallet transactions (Refer to PAY-001).
+* Executing validated customer refunds, cash-on-delivery (COD) bank transfers, and duplicate payment adjustments (Refer to PAY-002, PAY-003).
+* Managing merchant payout schedules, commission deductions, and statutory tax withholdings (GST/VAT).
+* Managing chargeback disputes with credit card acquirers and payment processors.
+Operational Scope
+Global treasury operations, financial accounting, tax compliance, and payment gateway infrastructure across INR, SGD, and AED currencies.
+Systems Owned
+* Financial Ledger & Reconciliation Engine (ledger.novacart.internal)
+* Merchant Payout Gateway (payouts.novacart.internal)
+* Chargeback Management Console (chargeback.novacart.internal)
+Documents Owned
+* PAY-001: Payment Processing
+* PAY-002: Payment Failure
+* PAY-003: Duplicate Payment
+* PAY-004: EMI Processing
+* PAY-005: Wallet Payments
+* PAY-006: Gift Cards
+Internal Customers
+All enterprise departments, merchant partners, executive leadership.
+External Stakeholders
+Acquiring banks, payment gateways (Razorpay, Stripe, PayU), tax authorities, external audit firms.
+Typical Activities
+* Performing daily automated payment gateway vs. OMS ledger reconciliations.
+* Processing approved customer refund queue disbursements.
+* Defending chargeback claims by submitting proof-of-delivery documents to banks.
+Key Performance Indicators (KPIs)
+* Financial Reconciliation Accuracy ($100\%$ zero variance).
+* Customer Refund Processing SLA ($3\text{ to }5\text{ business days}$).
+* Unresolved Gateway Settlement Variance ($< 0.001\%$ of transaction volume).
+Escalation Responsibilities
+Handles gateway outages, payment debit discrepancies, merchant payout holds, and complex chargeback disputes.
+Cross-Department Dependencies
+Works continuously with Customer Support (refund execution), Engineering (payment APIs), Legal (tax compliance), and Security (fraud losses).
+Roles Frequently Interacting with Department
+Head of Finance, Payment Operations Manager, Financial Reconciliation Specialist, Accounts Payable/Receivable Lead, Tax Manager.
+10. Information Security
+Department Purpose
+Protects enterprise digital assets, customer data, platform networks, physical infrastructure, and payment interfaces from cyber threats and data compromise.
+Primary Responsibilities
+* Managing role-based access control (RBAC), multi-factor authentication (MFA), and zero-trust security infrastructure (Refer to SEC-001, SEC-003).
+* Monitoring security threat vectors via a 24/7 Security Operations Center (SOC) and responding to active security incidents (Refer to SEC-005).
+* Conducting algorithmic fraud monitoring to prevent account takeover, fraudulent transactions, and promotion abuse (Refer to SEC-004).
+* Ensuring compliance with PCI-DSS Level 1, DPDP (India), PDPA (Singapore), and regional data privacy standards.
+Operational Scope
+Global IT infrastructure, cloud networks, corporate workstations, physical fulfillment center access systems, customer data repositories.
+Systems Owned
+* Identity & Access Management (IAM) Portal (auth.novacart.internal)
+* Security Information & Event Management (SIEM) (siem.novacart.internal)
+* Anti-Fraud & Transaction Screening Engine (shield.novacart.internal)
+Documents Owned
+* SEC-001: Account Security
+* SEC-002: Password Reset
+* SEC-003: Two-Factor Authentication
+* SEC-004: Fraud Detection
+* SEC-005: Suspicious Activity
+Internal Customers
+All internal enterprise departments, IT systems administration teams.
+External Stakeholders
+Cybersecurity regulatory bodies, PCI-DSS audit agencies, external penetration testing teams, law enforcement agencies.
+Typical Activities
+* Monitoring real-time SIEM security alerts and intrusion detection logs.
+* Reviewing flagged high-risk customer transactions for potential card-not-present fraud.
+* Conducting internal vulnerability assessments and penetration testing.
+Key Performance Indicators (KPIs)
+* Mean Time to Detect (MTTD) and Contain Security Threats.
+* Zero Critical Unpatched Security Vulnerabilities $> 14\text{ days}$.
+* Platform Fraud Loss Ratio ($< 0.01\%$ of GMV).
+Escalation Responsibilities
+Holds absolute authority to isolate compromised cloud instances, freeze accounts suspected of fraud, lock down physical access, and initiate cyber incident protocols.
+Cross-Department Dependencies
+Collaborates closely with Engineering (DevSecOps), Legal (data protection compliance), Customer Support (account recovery), and Finance (fraud losses).
+Roles Frequently Interacting with Department
+Chief Information Security Officer (CISO), SOC Lead, Information Security Engineer, Fraud Investigation Manager, IAM Specialist.
+11. Sales
+Department Purpose
+Drives enterprise commercial revenue, recruits brand manufacturers and third-party merchants, expands product catalog depth, and manages corporate accounts.
+Primary Responsibilities
+* Identifying, onboarding, and managing top-tier merchant sellers and brand partners onto the NovaCart marketplace.
+* Negotiating commercial contract terms, commission structures, and promotional co-marketing agreements.
+* Managing B2B SMB and Corporate Enterprise Client acquisition and custom procurement catalog setups.
+* Collaborating with Product Management to enhance merchant portal tooling and advertising features.
+Operational Scope
+Commercial seller operations across India, Singapore, and UAE, including B2B enterprise client acquisition.
+Systems Owned
+* Merchant Onboarding & CRM Gateway (seller-crm.novacart.internal)
+* Commercial Contracts Portal (sales-agreements.novacart.internal)
+Documents Owned
+* Merchant Onboarding Standards & Agreements
+* B2B Corporate Procurement Terms
+* Seller Commission & Fee Structures
+Internal Customers
+Operations, Warehouse Management, Product Management, Legal, Finance.
+External Stakeholders
+Third-party sellers, brand manufacturers, corporate enterprise buyers, merchant associations.
+Typical Activities
+* Pitching retail brands to list inventory on NovaCart marketplace.
+* Reviewing seller performance metrics and enforcing catalog quality guidelines.
+* Managing promotional placement schedules during peak festive shopping events.
+Key Performance Indicators (KPIs)
+* Gross Merchandise Value (GMV) contributed by marketplace sellers.
+* Active Onboarded Merchant Count and Catalog SKU Depth.
+* B2B Corporate Account Revenue Growth.
+Escalation Responsibilities
+Handles merchant commercial disputes, seller account suspension appeals, and contract term renegotiations.
+Cross-Department Dependencies
+Requires alignment with Legal (merchant contracts), Operations (inbound stock capacity), Finance (payout terms), and Customer Support (seller rating enforcement).
+Roles Frequently Interacting with Department
+VP of Sales, Head of Merchant Acquisition, Key Account Manager, B2B Enterprise Sales Lead, Seller Onboarding Specialist.
+12. Human Resources
+Department Purpose
+Manages talent acquisition, organizational design, workforce development, total rewards, labor law compliance, and employee relations globally.
+Primary Responsibilities
+* Leading end-to-end talent acquisition for technical, corporate, customer support, and operational logistics roles.
+* Managing employee onboarding, organizational performance review cycles, and learning and development initiatives.
+* Administering corporate payroll support, benefits, leave policies, and workplace safety compliance.
+* Enforcing workplace code of conduct, anti-harassment policies (POSH), and employee dispute resolution protocols.
+Operational Scope
+Global workforce footprint covering corporate headquarters, regional hubs, support centers, and fulfillment facilities across IN, SG, and UAE.
+Systems Owned
+* Human Resource Information System (HRIS) (hris.novacart.internal)
+* Global Applicant Tracking System (ATS) (jobs.novacart.internal)
+* Performance & Learning Portal (grow.novacart.internal)
+Documents Owned
+* Employee Handbook & Code of Conduct
+* Global Recruitment & Compensation Guidelines
+* Workplace Health & Safety Regulations
+Internal Customers
+All enterprise departments and global employees.
+External Stakeholders
+Recruitment agencies, labor regulatory authorities, payroll administration vendors, employee health insurance providers.
+Typical Activities
+* Managing recruitment pipelines for open operational and engineering requisitions.
+* Conducting new-hire orientation and corporate policy training modules.
+* Facilitating annual performance appraisal reviews and employee feedback sessions.
+Key Performance Indicators (KPIs)
+* Time-to-Fill Open Requisitions ($< 30\text{ days}$ corporate / $< 14\text{ days}$ operational).
+* Annual Employee Retention Rate ($\ge 85\%$).
+* Training Completion Rate for Mandatory Compliance Modules ($100\%$).
+Escalation Responsibilities
+Handles employee workplace grievances, code of conduct violations, labor law compliance escalations, and executive personnel reviews.
+Cross-Department Dependencies
+Supports all departments with staffing while working closely with Legal (labor law), Finance (payroll processing), and Security (background checks).
+Roles Frequently Interacting with Department
+Chief Human Resources Officer (CHRO), Head of HR Operations, HR Business Partner (HRBP), Talent Acquisition Lead, L&D Specialist.
+13. Legal & Compliance
+Department Purpose
+Governs legal risk exposure, regulatory compliance, commercial contract execution, intellectual property protection, and regional statutory compliance.
+Primary Responsibilities
+* Drafting, reviewing, and approving corporate contracts, vendor agreements, merchant terms, and platform legal policies.
+* Ensuring compliance with local e-commerce regulations, consumer protection statutes, tax laws, and cross-border trade guidelines.
+* Managing corporate intellectual property (trademarks, patents, domain assets) and defending against third-party litigation.
+* Overseeing enterprise data privacy compliance frameworks in coordination with the Data Protection Officer (DPO).
+Operational Scope
+Legal and regulatory jurisdictions across India, Singapore, the UAE, and international cross-border trade hubs.
+Systems Owned
+* Legal Contract Repository (contracts.novacart.internal)
+* Regulatory Compliance Tracker (compliance.novacart.internal)
+Documents Owned
+* Enterprise Terms of Service & Privacy Policy
+* Merchant Master Services Agreement
+* Intellectual Property & Trademark Guidelines
+Internal Customers
+Executive Office, Sales, Finance, Operations, Security, HR.
+External Stakeholders
+External legal counsel, judicial courts, consumer protection forums, trade regulatory authorities, regional data protection commissioners.
+Typical Activities
+* Reviewing custom commercial terms for B2B enterprise clients and major merchant accounts.
+* Responding to formal notices from consumer protection agencies or regulatory authorities.
+* Reviewing proposed platform policy changes to ensure legal alignment.
+Key Performance Indicators (KPIs)
+* Contract Review Turnaround Time ($< 48\text{ hours}$).
+* Zero Regulatory Non-Compliance Fines or Statutory Sanctions.
+* Successful Defense Rate for Consumer and Commercial Disputes.
+Escalation Responsibilities
+Handles active litigation, regulatory inquiries, formal legal notices, data protection breach notifications, and intellectual property disputes.
+Cross-Department Dependencies
+Provides legal guidance to all departments, working closely with Finance (tax compliance), Security (privacy law), and Sales (commercial contracts).
+Roles Frequently Interacting with Department
+Chief Legal Officer (CLO), Head of Corporate Legal, Regulatory Compliance Counsel, Data Protection Officer (DPO), Legal Operations Manager.
+14. Enterprise Knowledge Management
+Department Purpose
+Designs, maintains, and governs the enterprise documentation architecture, information taxonomies, policy updates, and vector database retrieval structures powering the NovaCart Enterprise Knowledge Base (NEKB) and AI customer support platforms.
+Primary Responsibilities
+* Governing the lifecycle, version control, and structural consistency of all NEKB documentation (COMP, SUP, ORD, SHIP, PAY, REF, SEC, PROD modules).
+* Ensuring all published policies maintain strict internal consistency, standard formatting, and precise cross-referencing.
+* Structuring document chunks, metadata tags, and semantic headers to optimize Retrieval-Augmented Generation (RAG) performance for AI support systems.
+* Auditing departmental documentation annually to eliminate obsolete policies and enforce standardized corporate terminologies.
+Operational Scope
+Global documentation architecture, internal knowledge portals, and RAG vector search indices across all enterprise functional domains.
+Systems Owned
+* Enterprise Knowledge Management Portal (knowledge.novacart.internal)
+* Vector Search Indexing & Chunking Console (rag-index.novacart.internal)
+Documents Owned
+* KB-001: Knowledge Base Usage
+* KB-002: Customer Interaction Standards
+* KB-003: AI Support Guidelines
+Internal Customers
+All enterprise departments, Customer Support teams, Engineering AI development squads.
+External Stakeholders
+External technical documentation auditors, AI platform integration partners.
+Typical Activities
+* Reviewing new policy document drafts submitted by functional departments for NEKB compliance.
+* Updating metadata keywords, vector embeddings, and cross-references following policy revisions.
+* Monitoring AI retrieval accuracy metrics and refining documentation structures based on search gaps.
+Key Performance Indicators (KPIs)
+* Knowledge Base Search Retrieval Precision Rate ($\ge 95\%$).
+* Policy Updating SLA ($< 24\text{ hours}$ from executive sign-off to live RAG indexing).
+* Documentation Compliance Audit Coverage ($100\%$ annual review of published KBAs).
+Escalation Responsibilities
+Resolves document hierarchy conflicts, terminology discrepancies, and RAG search index failures.
+Cross-Department Dependencies
+Interacts with every department to capture operational policies, working closely with Engineering (RAG pipelines) and Customer Support (KBA utility).
+Roles Frequently Interacting with Department
+Enterprise Knowledge Architect, Technical Documentation Specialist, Information Architect, AI Knowledge Engineer.
+Inter-Department Relationships
+Operational execution at NovaCart requires systematic inter-departmental collaboration. The matrix below defines the primary interactions connecting functional departments across daily workflows.
+
+
+
+
+
+
++-------------------+-------------------------------------+-------------------------------------+
+| Origin Department | Core Interacting Department         | Primary Interaction Purpose         |
++-------------------+-------------------------------------+-------------------------------------+
+| Customer Support  | Returns & Refunds                   | RMA validation and refund status    |
+| Customer Support  | Logistics                           | Delivery tracking and lost parcels  |
+| Customer Support  | Finance                             | Payment debit discrepancies         |
+| Engineering       | Information Security                | DevSecOps and vulnerability fixes   |
+| Engineering       | Product Management                  | Feature sprint execution            |
+| Logistics         | Warehouse Management                | Physical dispatch package handover  |
+| Returns & Refunds | Finance                             | Refund trigger authorization        |
+| Operations        | Human Resources                     | Warehouse staffing and shift plans  |
+| Sales             | Legal & Compliance                  | Merchant contract approvals         |
+| Ent. Knowledge    | All Departments                     | Policy publication and updates      |
++-------------------+-------------------------------------+-------------------------------------+
+
+Department Ownership Matrix
+The following table details system and document ownership assignments across all enterprise departments to enforce operational accountability.
+Department ID
+	Department Name
+	System Owned (Primary)
+	Key Document ID Owned
+	Primary Executive Owner
+	DEP-EXEC
+	Executive Office
+	Executive BI Portal (exec-bi)
+	COMP-001, COMP-002, COMP-003
+	Chief Executive Officer
+	DEP-SUP
+	Customer Support
+	Support Portal (crm)
+	SUP-001 through SUP-005
+	VP of Customer Support
+	DEP-ENG
+	Engineering
+	Core Microservices (api)
+	System Architecture SOPs
+	Chief Technology Officer
+	DEP-PROD
+	Product Management
+	Roadmap Portal (jira)
+	PROD-001 through PROD-004
+	Head of Product
+	DEP-OPS
+	Operations
+	ERP Core (erp)
+	ORD-001 through ORD-005
+	VP of Operations
+	DEP-LOG
+	Logistics
+	TMS Platform (tms)
+	SHIP-001 through SHIP-007
+	Head of Logistics
+	DEP-WH
+	Warehouse Management
+	WMS Platform (wms)
+	Warehouse Safety SOPs
+	Warehouse Operations Manager
+	DEP-RET
+	Returns & Refunds
+	RMA Portal (rma)
+	REF-001 through REF-006
+	Returns Operations Manager
+	DEP-FIN
+	Finance
+	Financial Ledger (ledger)
+	PAY-001 through PAY-006
+	Chief Financial Officer
+	DEP-SEC
+	Information Security
+	Anti-Fraud Engine (shield)
+	SEC-001 through SEC-005
+	Chief Info Security Officer
+	DEP-SAL
+	Sales
+	Seller CRM (seller-crm)
+	Merchant Agreements
+	VP of Sales
+	DEP-HR
+	Human Resources
+	HRIS Portal (hris)
+	Employee Handbook
+	Chief HR Officer
+	DEP-LGL
+	Legal & Compliance
+	Contract Repository (contracts)
+	Terms of Service / Privacy
+	Chief Legal Officer
+	DEP-KM
+	Ent. Knowledge Mgmt
+	Knowledge Portal (knowledge)
+	KB-001 through KB-003
+	Enterprise Knowledge Architect
+	Responsibility Matrix
+Operational execution across cross-functional processes adheres to the RACI framework (Responsible, Accountable, Consulted, Informed) as outlined below:
+Enterprise Process
+	Customer Support
+	Engineering
+	Operations / Logistics
+	Finance
+	Security
+	Legal
+	Ent. Knowledge
+	Customer Refund Processing
+	R
+	I
+	C
+	A
+	I
+	I
+	I
+	Lost Shipment Claims
+	C
+	I
+	R / A
+	C
+	I
+	I
+	I
+	Platform Bug Patching
+	I
+	R / A
+	I
+	I
+	C
+	I
+	I
+	Fraud Investigation
+	I
+	C
+	I
+	C
+	R / A
+	C
+	I
+	Merchant Onboarding
+	I
+	C
+	C
+	C
+	I
+	C
+	I
+	Policy Document Publishing
+	C
+	C
+	C
+	C
+	C
+	C
+	R / A
+	System Ownership Matrix
+The following matrix maps software tools to their owning departments, user groups, and technical maintainers.
+System Name
+	System URL Domain
+	Owning Department
+	Primary User Group
+	Technical Maintainer
+	Support CRM
+	crm.novacart.internal
+	Customer Support
+	Front-line CSRs, Support Leads
+	Engineering (CRM Squad)
+	Core API Gateway
+	api.novacart.internal
+	Engineering
+	All Backend Platform Services
+	Engineering (Core Infra)
+	ERP Core
+	erp.novacart.internal
+	Operations
+	Operations Analysts, Finance
+	Engineering (ERP Team)
+	TMS Platform
+	tms.novacart.internal
+	Logistics
+	Dispatchers, Fleet Managers
+	Engineering (Logistics Squad)
+	WMS Platform
+	wms.novacart.internal
+	Warehouse Management
+	Warehouse Shift Supervisors
+	Engineering (Supply Chain Squad)
+	Financial Ledger
+	ledger.novacart.internal
+	Finance
+	Finance Specialists, Auditors
+	Engineering (FinTech Squad)
+	Anti-Fraud Shield
+	shield.novacart.internal
+	Information Security
+	Fraud Analysts, SOC Team
+	Engineering (SecOps Squad)
+	Knowledge Portal
+	knowledge.novacart.internal
+	Ent. Knowledge Mgmt
+	All Enterprise Employees
+	Engineering (RAG/AI Squad)
+	Escalation Ownership Matrix
+When operational exceptions occur, issues must escalate strictly according to the designated functional paths defined in the matrix below:
+Issue Category
+	Initial Level (L1)
+	Tier 2 Escalation (L2)
+	Tier 3 Final Escalation (L3)
+	Primary Reference Policy
+	Unresolved Customer Refund
+	Front-line CSR
+	Support Resolution Specialist
+	Finance Operations Manager
+	SUP-003, REF-001
+	Lost In-Transit Package
+	Courier Dispatcher
+	Logistics Hub Supervisor
+	Head of Logistics
+	SHIP-006
+	Payment Gateway Failure
+	Automated Monitoring
+	Payment Ops Specialist
+	Head of Finance / FinTech Lead
+	PAY-002
+	Suspicious Login / Fraud
+	Fraud Alert System
+	Fraud Prevention Analyst
+	CISO / SOC Lead
+	SEC-004, SEC-005
+	Product Defect / Warranty
+	Support Agent
+	Product Quality Lead
+	Head of Product
+	PROD-001, PROD-002
+	Policy Ambiguity in KBA
+	CSR / Employee
+	Knowledge Analyst
+	Enterprise Knowledge Architect
+	KB-001
+	Communication Guidelines
+To maintain operational velocity and prevent information fragmentation, all internal departmental communications must follow structured channels:
+1. Urgent Operational Incidents (P1/P2): Communicated via centralized incident management channels on the enterprise chat platform and automated SMS callouts to on-call leads.
+2. Standard Inter-Department Tasks (P3/P4): Ticketed and tracked exclusively through official enterprise workflow portals (jira.novacart.internal or crm.novacart.internal). Direct un-ticketed messaging for operational requests is prohibited.
+3. Policy Modifications & KBA Announcements: Published exclusively through the Enterprise Knowledge Base (knowledge.novacart.internal) with automated notification blasts sent to impacted department managers.
+Business Rules
+Rule 1: System Administrative Custody
+Each software application listed in the System Ownership Matrix must have exactly one primary Owning Department responsible for user privilege approvals, and one Technical Maintainer squad within Engineering responsible for code maintenance and uptime.
+Rule 2: Non-Interference in Security Locks
+Decisions made by Information Security to suspend an account, halt a transaction, or lock down a facility module due to active fraud or security threats take precedence over commercial considerations. Locks may only be lifted by the CISO or designated Fraud Operations Leads (Refer to SEC-004, SEC-005).
+Rule 3: Mandatory Cross-Departmental Ticket Trails
+No department may execute a financial refund, inventory write-off, address change, or shipment re-routing without creating a traceable, system-logged ticket containing the unique Order ID, employee ID, and business justification (Refer to SUP-001, PAY-001, SHIP-007).
+Operational Examples
+The following practical workflows illustrate cross-departmental collaboration in standard enterprise scenarios.
+Example 1: Customer Refund Involving Support, Returns, and Finance
+1. Initiation (Customer Support): The customer contacts live chat stating a received smartphone (CAT-MOB) is defective. The CSR initiates an RMA request in crm.novacart.internal adhering to SUP-001 and REF-005.
+2. Reverse Pickup (Logistics): The TMS dispatches a reverse courier agent to collect the smartphone from the customer and transport it to hub BLR-01.
+3. Physical Inspection (Returns & Refunds): Returns specialists unbox the item, scan the barcode into inspect.novacart.internal, and verify that the hardware serial number matches dispatch records. The inspection passes, and the return is marked "Approved."
+4. Financial Settlement (Finance): The approved RMA automatically triggers a refund instruction to ledger.novacart.internal. Finance executes an electronic credit card reversal, updating the transaction status to "Refunded" and notifying the customer via email (Refer to REF-002).
+Example 2: Lost Shipment Investigation Involving Logistics and Warehouse
+1. Trigger (Logistics): An outbound package containing a laptop (CAT-ELE) shipped to Dubai misses its ETA window by 72 hours. The TMS automatically flags the tracking ID as "In-Transit Delay" (Refer to SHIP-005).
+2. Warehouse Audit (Warehouse Management): Logistics contacts hub DXB-01 to verify if the parcel was loaded onto the line-haul trailer. Warehouse staff review video manifest logs and confirm the package left the loading dock.
+3. Loss Declaration (Logistics): After a 48-hour carrier trace fails to locate the parcel, Logistics marks the tracking ID as "Lost in Transit" in tms.novacart.internal (Refer to SHIP-006).
+4. Replacement & Claim (Customer Support & Finance): Customer Support is alerted to dispatch an expedited replacement order to the customer. Concurrently, Logistics submits a formal insurance loss claim to the 3PL carrier.
+Example 3: Fraud Investigation Involving Security and Finance
+1. Alert (Information Security): The Anti-Fraud Shield (shield.novacart.internal) flags three rapid high-value transactions originating from a single IP address using different international credit cards.
+2. Account Containment (Security): The SOC analyst freezes the user account and places an immediate shipping hold on the orders in the OMS (Refer to SEC-004).
+3. Gateway Verification (Finance): Security alerts Finance to check payment gateway authorization logs. Finance confirms two of the three cards were flagged for chargebacks by the issuing bank.
+4. Resolution (Security & Finance): Security cancels the fraudulent orders, preventing inventory dispatch. Finance initiates pre-emptive transaction reversals to avoid bank chargeback processing fees.
+Example 4: Warranty Claim Involving Product Management and Support
+1. Claim Submission (Customer Support): A customer reports a smart home appliance hub (CAT-SMT) failed 4 months post-purchase. The CSR registers a warranty validation request in crm.novacart.internal (Refer to PROD-001).
+2. Validation (Product Management): Product Management's warranty rules engine verifies that the product is within the 1-year coverage window and that the issue code matches covered hardware failures.
+3. RMA Authorization (Support & Returns): The customer receives a prepaid shipping label to send the defective unit to an authorized repair center for replacement under PROD-002.
+Example 5: Knowledge Base Update Involving Knowledge Management and Engineering
+1. Policy Update (Engineering & Payments): Engineering releases a new payment feature supporting regional Buy-Now-Pay-Later (Tabby in UAE).
+2. Drafting (Enterprise Knowledge Management): Knowledge Architects collaborate with Finance and Engineering to draft updated documentation for PAY-001 and KB-002.
+3. RAG Indexing (Enterprise Knowledge Management): Upon approval, Knowledge Management publishes the updated documents to knowledge.novacart.internal, triggering automated vector re-indexing (rag-index.novacart.internal) to ensure AI support bots answer customer queries accurately.
+Frequently Asked Questions (FAQs)
+Q1: How do I identify which department owns a specific software system or portal?
+Answer: Refer to the System Ownership Matrix in COMP-003. Each software tool domain is explicitly mapped to its Owning Department (for business privileges) and Technical Maintainer squad in Engineering (for system bugs).
+Q2: What is the process for updating a department's operational scope or primary responsibilities?
+Answer: Any modification to departmental scope must be submitted as a formal revision request to Enterprise Knowledge Management. Changes require approval from the Department Owner and Chief Operating Officer before COMP-003 is updated and re-indexed.
+Q3: Which department handles customer disputes regarding damaged goods received in transit?
+Answer: Customer Support manages initial customer contact (SUP-001), Returns & Refunds inspects returned items (REF-003), and Logistics handles carrier damage investigations and insurance claims (SHIP-006).
+Q4: How are cross-departmental SLA disagreements or operational impasses resolved?
+Answer: Operational disagreements follow the Escalation Ownership Matrix in COMP-003. If L2 domain managers cannot reach resolution within 24 hours, the issue escalates to L3 Department Heads or the Chief Operating Officer for a binding decision.
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of the NovaCart Department Directory and Capabilities Registry. Established 14 department profiles, system matrices, RACI charts, and escalation pathways in full alignment with COMP-001 and COMP-002.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-002: Organization Structure
+* SUP-001: Support Standard Operating Procedures
+* SUP-003: Escalation Matrix
+* ORD-001: Order Lifecycle Framework
+* SHIP-001: Domestic Shipping Policy
+* SHIP-005: Delayed Deliveries Protocol
+* SHIP-006: Lost Shipments Protocol
+* PAY-001: Payment Processing SOP
+* PAY-003: Duplicate Payment Procedures
+* REF-001: Master Refund Eligibility Rules
+* REF-005: Return Process Protocols
+* SEC-001: Account Security & Access Control
+* SEC-004: Fraud Detection Framework
+* PROD-001: Warranty Validation Policy
+* KB-001: Knowledge Base Usage & RAG Guidelines

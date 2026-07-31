@@ -1,0 +1,270 @@
+﻿LEG-004: Intellectual Property Policy
+Document Header
+* Document Title: Intellectual Property Policy
+* Document ID: LEG-004
+* Version: 1.0.0
+* Document Category: Legal
+* Classification: Internal / Public Operational Standard
+* Department Owner: Legal, Regulatory & Intellectual Property Governance
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: General Counsel, Head of Corporate Compliance, Chief Technology Officer, VP of Brand & Marketing
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Intellectual Property, Trademarks, Copyright, Brand Assets, User-Generated Content, Digital Rights Management, Infringement Reporting, Counterfeit Prevention
+Purpose
+This document defines the official Intellectual Property Policy of NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes standardized operational procedures, ownership standards, asset protection guidelines, permitted usage rules, infringement complaint workflows, licensing principles, and business rules governing the creation, ownership, protection, licensing, authorized use, and infringement management of NovaCart's proprietary intellectual property and third-party intellectual property hosted across NovaCart platforms.
+As a core operational policy (LEG-004) in the Legal module of the NovaCart Enterprise Knowledge Base (NEKB), LEG-004 governs brand assets, software IP, catalog content, and digital rights across all platform channels, operating in strict operational alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, REF-001 through REF-006, PROD-001 through PROD-006, SEC-001 through SEC-006, LEG-001, LEG-002, and LEG-003.
+Scope
+This policy applies universally across all proprietary technology platforms, mobile applications, software source code, digital storefronts, brand assets, product catalog listings (catalog.novacart.internal), digital software licenses (PROD-006), 3P merchant product listings, and user-generated content across NovaCart’s operating regions (India, Singapore, UAE).
+Coverage Includes
+* Ownership frameworks for NovaCart brand assets, logos, proprietary software, UI/UX designs, catalog data, and employee work products.
+* Licensing and permitted usage rules for customers, 3P marketplace merchants, corporate partners, and employees.
+* Governance of user-generated content (UGC), product reviews, Q&As, and uploaded profile media.
+* Usage, display, and authorization standards for third-party manufacturer trademarks, brand logos, and copyrighted product imagery.
+* Notice-and-action workflows for processing intellectual property infringement notices, copyright takedown requests, and counterfeit product complaints.
+* Investigation procedures, content removal criteria, merchant counter-notice handling, repeat infringer enforcement, and audit record retention.
+Out of Scope
+* Detailed technical digital rights management (DRM) key encryption mechanics and token distribution architectures (governed by PROD-006).
+* Litigation procedures, formal court injunctions, and jurisdiction-specific statutory lawsuit filings (governed by internal legal department protocols).
+Intellectual Property Overview
+Intellectual property (IP) is a vital commercial asset for NovaCart, its brand partners, marketplace merchants, and software vendors. Maintaining a trusted e-commerce ecosystem requires protecting NovaCart's proprietary assets while respecting the copyrights, trademarks, patents, and trade secrets of third-party rights holders.
+Core IP Principles
+1. Ownership Clarity & Protection: All intellectual property created by NovaCart, embedded in its technology platforms, or produced by employees within their scope of employment belongs exclusively to NovaCart.
+2. Zero-Tolerance for Counterfeiting: NovaCart strictly prohibits the listing, promotion, or sale of counterfeit goods, unauthorized replicas, or pirated digital media across all 1P and 3P fulfillment channels.
+3. Fair Notice and Takedown Framework: NovaCart operates an efficient, objective, and transparent notice-and-action process for rights holders to report suspected IP infringements, ensuring rapid investigation and appropriate content removal.
+4. Balanced Rights Governance: Takedown mechanisms protect legitimate rights holders while providing safeguards against false, bad-faith, or anti-competitive infringement claims through counter-notice mechanisms.
+Categories of Intellectual Property
+Intellectual property assets governed by NovaCart are classified into four distinct operational domains:
+Intellectual Property Category Matrix
+Category Code
+	IP Category Name
+	Asset Scope & Examples
+	Primary Ownership Entity
+	Governance Framework
+	IP-CAT-NOVA
+	NovaCart Brand Assets
+	NovaCart name, logo, trade dress, platform UI/UX layout, domain names, slogans.
+	NovaCart Technologies Pvt. Ltd.
+	Proprietary; restricted usage under strict brand guidelines.
+	IP-CAT-TECH
+	Proprietary Technology
+	Software source code, algorithms, microservices, databases, API schemas (api.novacart.internal).
+	NovaCart Technologies Pvt. Ltd.
+	Trade secret / Copyright; closed-source enterprise software.
+	IP-CAT-BRAND
+	Third-Party Brand IP
+	Manufacturer brand names, logos, official product photography, trade marks.
+	Original Equipment Manufacturers (OEMs) / Brand Partners
+	Authorized usage under retail distribution agreements (PROD-001).
+	IP-CAT-UGC
+	User-Generated Content
+	Product reviews, ratings, customer Q&As, uploaded defect photos, profile avatars.
+	Individual Customer / Merchant (Licensed to NovaCart)
+	Non-exclusive, royalty-free, perpetual license to NovaCart (LEG-001).
+	Ownership Principles
+NovaCart enforces clear ownership frameworks across all platform-related creations and submissions:
+Ownership Matrix
+IP Asset Type
+	Primary Owner
+	NovaCart Rights Scope
+	User / Merchant Rights Scope
+	Platform Software & Code
+	NovaCart Technologies
+	Exclusive 100% Ownership
+	Non-exclusive, revocable end-user access license (LEG-001).
+	Catalog Metadata & Text
+	NovaCart / Brand Partners
+	Exclusive compilation & database rights
+	Permissible viewing; no commercial scraping or copying (LEG-003).
+	Employee Work Products
+	NovaCart Technologies
+	Exclusive ownership under "Work Made for Hire"
+	Zero personal ownership rights retained by employee.
+	User Reviews & Photos
+	Submitting Customer
+	Perpetual, worldwide, royalty-free usage license
+	Personal ownership retained; right to modify/delete profile media.
+	3P Merchant Listings
+	Merchant / Manufacturer
+	Right to host, index, display, and format on storefront
+	Retains underlying product IP; warrants non-infringement.
+	Permitted Use of NovaCart Intellectual Property
+NovaCart brand assets, logos, and platform materials may be utilized strictly within defined authorized boundaries:
+Permitted Use Matrix
+User Group
+	Permitted Asset Usage Scope
+	Unauthorized Prohibited Usage Scope
+	Authorization Approval Process
+	Customers
+	Viewing storefronts, personal sharing of product links, personal app usage.
+	Downloading logos, scraping catalog data, re-publishing text (LEG-003).
+	Granted automatically via LEG-001 upon standard platform access.
+	3P Merchants
+	Displaying "Available on NovaCart" badges on approved promotional materials.
+	Modifying NovaCart logos, implying corporate ownership or joint venture.
+	Standard Merchant Partner Brand Kit agreement download.
+	Media / Press
+	Utilizing official press kit images for news reporting and media coverage.
+	Altering brand colors, incorporating logos into commercial products.
+	Formal request via NovaCart Corporate Communications.
+	Employees
+	Creating documentation and marketing assets within employment scope.
+	Using company IP for external personal projects or secondary employment.
+	Standard employment contract and internal NDA compliance.
+	Customer-Generated Content
+Customers frequently contribute text, ratings, and media to the platform:
+1. Grant of License: By posting product reviews, ratings, Q&A responses, or uploading defect photographs (REF-004), the customer grants NovaCart a non-exclusive, royalty-free, worldwide, perpetual, irrevocable license to display, reproduce, format, translate, and distribute the content across NovaCart's digital storefronts, marketing channels, and mobile apps.
+2. Content Standards & Originality: Customers warrant that uploaded content is original, accurate, and does not infringe upon any third-party copyright, trademark, privacy, or publicity rights (LEG-003).
+3. Moderation and Removal: NovaCart reserves the right to edit, reformat, decline, or remove any user-generated content that violates community standards, contains copyrighted media owned by third parties without authorization, or engages in review manipulation (LEG-003).
+Third-Party Intellectual Property
+NovaCart respects the intellectual property rights of brand partners, original equipment manufacturers (OEMs), and digital content creators:
+* Authorized Brand Assets: Manufacturer logos, brand names, and official product imagery hosted in catalog.novacart.internal are utilized strictly under authorized distribution, retail partner, or reseller agreements (PROD-001).
+* Merchant Listing Warranties: 3P marketplace merchants listing merchandise on NovaCart warrant that all product titles, descriptions, and uploaded images are original or fully licensed from rights holders. Merchants are strictly prohibited from copying text or imagery from competing listings or external websites (LEG-003).
+* Prohibition of Digital Piracy: Digital software products (CAT-SFT), e-books, e-learning content, and gaming keys sold via NovaCart (PROD-006) must be genuine, legally sourced activation keys provided under official publisher licensing models.
+Intellectual Property Infringement Reporting
+Rights holders or their authorized representatives who believe their copyright, trademark, or brand rights are being infringed on NovaCart may submit a formal complaint through the NovaCart IP Rights Portal (ip.novacart.internal):
+Mandatory Takedown Notice Requirements
+To be processed, an Infringement Takedown Notice must contain:
+1. Identification of Rights Holder: Full legal name, organization, physical address, email address, and contact phone number of the rights holder or authorized agent.
+2. Proof of Ownership: Registration certificates, trademark numbers, copyright registration details, or verifiable documentation demonstrating legal ownership of the asserted IP.
+3. Identification of Infringing Material: Exact Product Title, Master SKU, Order ID, or direct URL leading to the alleged infringing product listing, image, or text on NovaCart.
+4. Statement of Good Faith: An explicit statement that the complaining party believes in good faith that the disputed use is not authorized by the IP owner, its agent, or the law.
+5. Statement of Accuracy: A statement under penalty of perjury that the information in the notice is accurate and that the submitter is authorized to act on behalf of the owner.
+Investigation & Resolution Process
+Reported IP infringement notices proceed through a standardized 5-phase operational workflow:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                     IP INFRINGEMENT RESOLUTION WORKFLOW                          |
++-----------------------------------------------------------------------------------+
+| 1. NOTICE INGRESS   | Rights holder submits complete notice via ip.novacart.internal.|
+| 2. INITIAL AUDIT    | Legal IP team verifies notice completeness within 12 business hrs.|
+| 3. TEMP LOCK        | Listing temporarily suspended (STAGE-SPD); merchant notified.|
+| 4. COUNTER-NOTICE   | Merchant has 7 days to submit proof of authorization/license. |
+| 5. FINAL RESOLUTION | Permanent removal / merchant reinstatement / legal escalation.    |
++-----------------------------------------------------------------------------------+
+
+Infringement Resolution Matrix
+Complaint Type
+	Initial Triage SLA
+	Temporary Action Taken
+	Resolution Outcome (No Counter-Notice)
+	Resolution Outcome (Valid Counter-Notice)
+	Counterfeit Product
+	$\le 4$ Business Hours
+	Listing blocked (STAGE-SPD); WMS stock quarantined.
+	Listing permanently deleted; stock RTV/destroyed; merchant penalized.
+	Case escalated for expert technical/legal review; listing remains blocked.
+	Copyrighted Image / Text
+	$\le 12$ Business Hours
+	Infringing image/text removed or hidden on storefront.
+	Listing updated to generic placeholder; merchant warned.
+	Original image/text restored if valid license proof is verified.
+	Trademark Misuse
+	$\le 12$ Business Hours
+	Listing title/description edited to mask unauthorized mark.
+	Listing edited permanently; merchant issued Tier 3 violation (LEG-003).
+	Original text restored if merchant proves authorized reseller status.
+	Merchant Counter-Notice Workflow
+If a merchant believes a takedown notice was issued in error or bad faith, the merchant may submit a formal Counter-Notice within 7 calendar days of notification, providing verified distribution agreements, brand authorization letters, or invoices proving legitimate sourcing.
+Licensing Principles
+* Software Access Licenses: Purchasing software or digital subscriptions (PROD-006) grants the customer a non-exclusive, non-transferable, revocable license to use the digital item under the publisher's End-User License Agreement (EULA).
+* White-Label & Private Label IP: Products manufactured under NovaCart private-label brands (CAT-SMT, CAT-APP) are owned exclusively by NovaCart. Contract manufacturers receive a limited, time-bound manufacturing license restricted strictly to fulfilling NovaCart purchase orders.
+Customer Responsibilities
+Customers accessing NovaCart platforms must adhere to the following IP obligations:
+1. Respect Brand Assets: Refrain from using NovaCart logos, brand names, or corporate graphics on personal websites, commercial media, or social channels without prior written authorization.
+2. Originality in Contributions: Ensure product reviews, uploaded images, and Q&A submissions do not contain copyrighted music, watermarked stock images, or third-party proprietary text.
+3. No Digital Product Redistribution: Refrain from attempting to copy, reverse-engineer, resell, or unauthorizedly redistribute digital software activation keys (PROD-006) or platform digital content.
+NovaCart Responsibilities
+NovaCart commits to fulfilling explicit operational duties regarding intellectual property governance:
+1. Maintaining Platform Integrity: Actively audit catalog listings, investigate reported IP infringements promptly, and maintain robust anti-counterfeiting measures across fulfillment centers (wms.novacart.internal).
+2. Fair Due Process: Provide marketplace merchants and content contributors with fair notice and structured counter-notice mechanisms when claims are filed against their listings.
+3. Protecting Merchant & Brand Partner IP: Ensure third-party brand assets and manufacturer imagery uploaded to catalog.novacart.internal are protected against unauthorized copying or cross-merchant scraping.
+Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary IP Governance Responsibilities
+	Primary System Portal
+	SLA / Operational Target KPI
+	Legal & IP Governance
+	Manages ip.novacart.internal, audits takedown claims, processes counter-notices, enforces repeat policy.
+	ip.novacart.internal
+	Claim triage SLA $\le 12\text{ Business Hours}$
+	Catalog Merchandising
+	Audits master catalog entries, removes infringing images/text, manages manufacturer brand files.
+	catalog.novacart.internal
+	Listing edit SLA $\le 4\text{ Hours}$ post-approval
+	Warehouse Operations
+	Quarantines suspected counterfeit inventory, executes return-to-vendor (RTV) or destruction holds.
+	wms.novacart.internal
+	Quarantine execution SLA $\le 2\text{ Hours}$
+	Customer Support
+	Guides rights holders to the IP Portal, logs customer counterfeit reports, escalates complaints.
+	crm.novacart.internal
+	Inquiry routing FRT $< 15\text{ Secs}$ (SUP-005)
+	Business Rules
+Rule 1: Instant Containment for Counterfeit Claims Rule
+Any listing associated with a complete, verified counterfeit claim submitted by an established brand owner (IP-CAT-BRAND) must be placed on immediate temporary suspension (STAGE-SPD in catalog.novacart.internal) within 4 business hours, and physical inventory locked in wms.novacart.internal, pending investigation.
+Rule 2: Three-Strikes Repeat Infringer Mandate
+Any 3P marketplace merchant who incurs three (3) substantiated IP infringement violations (counterfeit goods, copyright theft, or trademark misuse) within a rolling 12-month period shall have their merchant account permanently terminated (STATUS_TERMINATED), active merchant listings purged, and escrow payout balances frozen pending legal audit (SEC-004, LEG-003).
+Rule 3: Mandatory 7-Year Retention for IP Case Files
+All infringement notices, counter-notices, brand authorization certificates, merchant communications, and takedown logs must be archived in secure WORM storage (audit.novacart.internal) for a mandatory period of 7 years to support legal compliance audits and dispute defense (SEC-003, SEC-006).
+Exception Handling
+* False or Bad-Faith Infringement Notices: If an investigation reveals that a party submitted a false, fraudulent, or bad-faith takedown notice (e.g., a competitor submitting fake claims to disrupt a seller's flash sale), NovaCart rejects the notice, restores the blocked listing immediately, and permanently blocks the submitter from using the IP Portal.
+* Authorized Parallel Imports / Grey Market Goods: Parallel import disputes where genuine, authentic branded merchandise is imported legally without the local distributor's exclusive consent are evaluated under regional trade laws. NovaCart does not block genuine, authentic products solely based on exclusive territorial distribution agreements unless statutory local law explicitly prohibits parallel importation.
+Practical Examples
+Scenario 1: Merchant Copying Copyrighted Product Imagery
+1. Brand Owner A discovers that Merchant B copied official, copyrighted studio photography from Brand A's website and uploaded it to a 3P listing on NovaCart (catalog.novacart.internal).
+2. Brand A submits a complete Takedown Notice via ip.novacart.internal containing copyright registration certificates and direct listing URLs.
+3. Legal IP Team verifies the notice within 6 hours and updates the listing to hide the copyrighted images.
+4. Merchant B is notified and fails to provide license proof within 7 days.
+5. The listing images are permanently removed, Merchant B receives a Tier 3 policy violation (LEG-003), and the merchant is required to upload original photography.
+Scenario 2: Counterfeit Claim and Inventory Quarantine
+1. A major luxury audio manufacturer files a counterfeit claim against a 3P seller offering high-end headphones at a $70\%$ discount.
+2. Executing Rule 1, NovaCart immediately suspends the listing (STAGE-SPD) within 2 hours and locks 45 physical units in FC BLR-01 into STG-RECALL_VAULT (PROD-002, PROD-005).
+3. The seller is requested to provide brand authorization letters and legitimate manufacturer invoices within 7 days.
+4. The seller fails to respond. Executing Rule 2, NovaCart deletes the listing permanently, impounds the counterfeit stock for destruction, and terminates the seller's marketplace account.
+Frequently Asked Questions (FAQs)
+Q1: How do I report a counterfeit product or copyright violation on NovaCart?
+Answer: Brand owners and authorized representatives can submit a formal infringement complaint through our online NovaCart IP Rights Portal (ip.novacart.internal). Your notice must include proof of ownership (trademark/copyright registration), the specific product URLs or SKUs, and a formal statement of accuracy. Our Legal IP team reviews complete notices within 12 business hours.
+Q2: What happens if a customer uploads a copyrighted image in a product review?
+Answer: Customers grant NovaCart a usage license for content they upload, but they must warrant that they own the media or have rights to use it (LEG-003). If a rights holder reports that a customer review contains copyrighted photography or video used without permission, NovaCart verifies the claim and removes the infringing media from the product page.
+Q3: Can I use the NovaCart logo on my website or promotional flyers?
+Answer: No. NovaCart brand names, logos, trade dress, and platform graphics are proprietary intellectual property (IP-CAT-NOVA). You may not use NovaCart logos on external websites, commercial flyers, or media without prior written approval from NovaCart Corporate Communications. Approved marketplace sellers may use official "Available on NovaCart" badges provided in the Merchant Portal.
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of LEG-004. Established IP asset classifications, ownership matrices, UGC licensing terms, IP Portal takedown workflows, counter-notice rules, counterfeit quarantine protocols, three-strikes seller rules, and 7-year audit retention schedules.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* ORD-001: Order Lifecycle Management Policy
+* SHIP-001: Domestic Shipping Policy
+* PAY-001: Payment Processing SOP
+* REF-001: Master Refund Eligibility Rules
+* REF-004: Return Inspection & Quality Assessment Policy
+* PROD-001: Product Catalog Management Policy
+* PROD-002: Product Availability & Inventory Policy
+* PROD-003: Product Warranty Policy
+* PROD-005: Product Recall & Safety Policy
+* PROD-006: Digital Products & Licensing Policy
+* SEC-001: Account Security Policy
+* SEC-002: Authentication & Access Control Policy
+* SEC-003: Data Protection & Privacy Policy
+* SEC-004: Fraud Prevention & Risk Management Policy
+* SEC-006: Security Monitoring & Audit Logging Policy
+* LEG-001: Terms & Conditions Policy
+* LEG-002: Privacy Notice & Customer Rights Policy
+* LEG-003: Acceptable Use Policy

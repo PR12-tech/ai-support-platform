@@ -1,0 +1,302 @@
+﻿KNOW-003: Standard Operating Procedures (SOP) Knowledge Repository Policy
+Document Header
+* Document Title: Standard Operating Procedures (SOP) Knowledge Repository Policy
+* Document ID: KNOW-003
+* Version: 1.0.0
+* Document Category: Knowledge Management
+* Classification: Internal Operational Standard
+* Department Owner: Knowledge Management & Operational Governance
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Knowledge Management, Director of Operational Governance, Chief Operating Officer, General Counsel
+* Approved By: Chief Executive Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Standard Operating Procedures, SOP Repository, Operational Governance, Procedural Lifecycle, Version Control, Change Management, Document Ownership, Quality Assurance
+Purpose
+This document defines the official Standard Operating Procedures (SOP) Knowledge Repository Policy of NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes standardized governance principles, document classification frameworks, asset ownership responsibilities, creation standards, review workflows, approval matrices, version control rules, publication protocols, archival criteria, and business rules governing the creation, maintenance, publication, storage, and retirement of Standard Operating Procedures across all organizational units.
+As a core operational document (KNOW-003) in the Knowledge Management category of the NovaCart Enterprise Knowledge Base (NEKB), KNOW-003 governs SOP repository administration within sop.novacart.internal, operating in strict operational alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, REF-001 through REF-006, PROD-001 through PROD-006, SEC-001 through SEC-006, LEG-001 through LEG-006, KNOW-001, and KNOW-002.
+Scope
+This policy applies universally across all operational departments, executive units, regional fulfillment centers, technical engineering teams, customer support operations, and administrative functions operated by NovaCart across India, Singapore, and the United Arab Emirates.
+Coverage Includes
+* Structural architecture, taxonomy, and classification of internal departmental and cross-functional Standard Operating Procedures.
+* Explicit roles, permissions, and accountability frameworks for SOP authors, reviewers, and executive approvers.
+* Standardized documentation templates, mandatory structural elements, and formatting requirements.
+* Multi-stage review, verification, and formal approval workflows for new and revised SOPs.
+* Semantic version control, change management protocols, and document re-issuance rules.
+* Centralized publication, distribution, role-gated access controls, and repository search indexing.
+* Scheduled review frequencies, operational drift detection, temporary withdrawal, and permanent archiving/retirement.
+Out of Scope
+* Public-facing customer help center self-service articles and customer support agent interaction scripts (governed by KNOW-001).
+* Product catalog specifications, technical spec sheets, and merchandising attributes (governed by PROD-001 and KNOW-002).
+SOP Knowledge Repository Overview
+Standard Operating Procedures (SOPs) represent the operational backbone of NovaCart's enterprise activities. They translate master enterprise policies (NEKB) into actionable, step-by-step instructions for internal personnel executing warehouse intake (REF-004), order routing (ORD-001), payment reconciliation (PAY-005), customer dispute resolution (LEG-006), and security incident response (SEC-005). Uncontrolled, ambiguous, conflicting, or outdated SOPs introduce severe operational friction, process errors, and regulatory compliance failures (LEG-005).
+Core Repository Governance Principles
+1. Single Source of Operational Truth: All internal operational workflows must derive directly from validated, published SOPs hosted in sop.novacart.internal. Localized departmental wikis, unapproved desktop checklists, and shadow procedures are strictly prohibited.
+2. Strict Accountability & Ownership: Every SOP must be assigned an explicit Department Owner and operational Author responsible for procedural accuracy, execution safety, and lifecycle maintenance.
+3. Controlled Version Integrity: SOP modifications must follow rigorous version control and change management protocols to ensure operational teams execute identical, current procedures across all regional hubs.
+4. Proactive Drift Management: SOPs are audited continuously against operational telemetry, quality assurance findings, and master policy revisions (LEG-005) to eliminate procedural drift.
+Repository Governance Principles
+NovaCart's SOP repository infrastructure operates under four non-negotiable governance principles:
+* Role-Gated Access Control: Access to operational SOPs is governed by Role-Based Access Controls (SEC-002), ensuring employees view and execute procedures strictly relevant to their verified departmental duties.
+* Mandatory Cross-Functional Coordination: SOPs affecting multiple operational units (e.g., Order Fulfillment involving Logistics, Finance, and Customer Support) require formal cross-functional sign-off prior to publication.
+* Traceable Change History: Every revision cycle, author edit, and executive approval sign-off must be recorded permanently in immutable audit logs (audit.novacart.internal under SEC-006).
+* Continuous Improvement Integration: Post-incident reviews (SEC-005), internal audit findings (LEG-005), and customer escalation trends (LEG-006) must feed directly into SOP review cycles.
+SOP Classification Framework
+SOPs within sop.novacart.internal are categorized into four standardized functional domains:
+SOP Classification Matrix
+SOP Category Code
+	Category Name
+	Functional Scope & Departmental Focus
+	Example Operational Processes
+	SOP-CAT-OPS
+	Core Operations
+	Logistics, fulfillment, warehousing, shipping, and supply chain execution.
+	Dock intake inspection (REF-004), inventory replenishment (PROD-002), parcel packing (SHIP-001).
+	SOP-CAT-FIN
+	Financial & Accounting
+	Payment processing, ledger reconciliation, refunds, and expense management.
+	Payment gateway clearing (PAY-001), refund approval (REF-005), daily financial reconciliation (PAY-005).
+	SOP-CAT-SEC
+	Security & Compliance
+	Information security, fraud operations, incident response, and legal governance.
+	ATO containment (SEC-001), CSIRT SEV-1 mobilization (SEC-005), fraud review queue (SEC-004).
+	SOP-CAT-SUP
+	Support & Administrative
+	Customer support ticketing, escalation workflows, and internal HR procedures.
+	L1 ticket triage (SUP-001), Level 3 managerial escalation (SUP-003), onboarding workflows.
+	SOP Ownership & Accountability
+Accountability for drafting, reviewing, and approving SOPs is distributed across four standardized operational roles:
+SOP Ownership Matrix
+Operational Role
+	Assigned Scope & Responsibilities
+	System Access Level (sop.novacart.internal)
+	Primary KPI / Metric
+	SOP Author (SME)
+	Drafts new operational procedures, maps workflows, and documents step-by-step instructions.
+	ROLE_SOP_AUTHOR
+	Procedural Accuracy & Submission Timeliness
+	Department Reviewer
+	Audits operational feasibility, safety standards, and cross-functional alignment.
+	ROLE_SOP_REVIEWER
+	Review SLA Compliance ($\le 24\text{ Hours}$)
+	Executive Approver
+	Validates legal and operational compliance; grants final publication authority.
+	ROLE_SOP_APPROVER
+	Operational Audit Pass Rate ($\ge 99\%$)
+	Operational User
+	Executes procedures during daily workflow duties; flags outdated steps.
+	ROLE_SOP_USER
+	Operational Defect Rate ($\le 0.1\%$)
+	SOP Creation Standards
+SOP authors must adhere to standardized formatting, structural, and language requirements to ensure operational clarity and execution safety:
+Standardized Authoring Guidelines
+* Title Structure: Titles must be explicit, action-oriented, and prefixed by functional category (e.g., [Operations] Standard Operating Procedure for Warehouse Inbound Dock Inspection or [Finance] Standard Operating Procedure for Manual Refund Approvals).
+* NEKB Cross-Referencing: SOPs must explicitly reference foundational master policies (e.g., "Executed in strict alignment with REF-004 Return Inspection Policy" or "Governed by SEC-001 Account Security standards").
+* Standardized Structural Template: All SOP documents must contain the following mandatory sections in exact sequence:
+   1. Document Header & Metadata: Document ID, Category, Department Owner, Target Audience.
+   2. Purpose & Scope: Concise explanation of the operational objective and boundaries.
+   3. Prerequisites & Required Tools: Pre-existing conditions, system access permissions, and required hardware/software tools.
+   4. Step-by-Step Procedure: Numbered, sequential, action-oriented workflows utilizing imperative verbs.
+   5. Exception & Error Handling: Bulleted resolution paths for system failures, unready sites, or non-standard conditions.
+   6. Related Documents: Cross-references to governing NEKB policies and supporting SOPs.
+* Tone & Style: Concise, professional, direct, and unambiguous. Avoid vague terms; specify exact thresholds (e.g., replace "process quickly" with "process within 15 minutes").
+SOP Review & Approval Workflow
+All new SOP documents and material revisions must complete a rigorous four-stage review pipeline in sop.novacart.internal:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        SOP APPROVAL WORKFLOW                                      |
++-----------------------------------------------------------------------------------+
+| 1. DRAFT CREATION   | Author drafts procedure using standardized NEKB SOP template.|
+| 2. CROSS-FUNC REVIEW| Department SME and Compliance audit operational feasibility.     |
+| 3. EXECUTIVE SIGN-OFF| Department Director and Legal grant formal approval.       |
+| 4. PUBLICATION      | System assigns Active Status (STAGE-ACT) and indexes search. |
++-----------------------------------------------------------------------------------+
+
+Approval Responsibility Matrix
+SOP Classification
+	Technical / Operational Reviewer
+	Legal / Compliance Reviewer
+	Final Executive Approver
+	Target Approval SLA
+	Core Operations SOP
+	Logistics Operations Lead
+	Quality Assurance Lead
+	Director of Logistics
+	$\le 48$ Hours
+	Financial & Accounting SOP
+	Finance Operations Lead
+	Corporate Accounting Lead
+	Chief Financial Officer
+	$\le 48$ Hours
+	Security & Compliance SOP
+	Information Security Lead
+	General Counsel (LEG-005)
+	Chief Information Security Officer
+	$\le 24$ Hours
+	Emergency Operational SOP
+	CSIRT Lead (SEC-005)
+	General Counsel
+	Chief Operating Officer
+	$\le 2$ Hours
+	SOP Version Control & Change Management
+To prevent operational confusion and ensure regional consistency, SOPs maintain strict semantic versioning and change management protocols:
+Version Numbering Principles
+* Major Version (vX.0.0): Advanced upon significant business process redesign, organizational restructuring, or major structural policy replacement (e.g., transitioning from v1.2.0 to v2.0.0).
+* Minor Version (v1.X.0): Advanced upon operational additions, new tool integrations, or workflow expansions that do not alter core procedural intent.
+* Patch Version (v1.0.X): Advanced upon minor administrative corrections, typographical fixes, or dead link updates.
+Change Management Process
+1. Change Request Lodgment: Any operational manager or author may submit a Change Request ticket (CHG-XXXXX) in sop.novacart.internal.
+2. Impact Assessment: The Department Reviewer evaluates the proposed change for downstream impacts on adjacent departments (e.g., how a change in warehouse intake SOP impacts customer support return inquiries).
+3. Approval & Re-Issuance: Upon approval, the system archives the prior version (STAGE-ARC), issues the new semantic version, and logs a formal change summary in audit.novacart.internal (SEC-006).
+SOP Publication & Distribution
+Upon achieving final executive approval in sop.novacart.internal, the system executes automated publication workflows:
+1. Role-Gated Indexing: The document is indexed across internal search repositories (sop.novacart.internal), restricted strictly to personnel assigned the corresponding departmental execution role (SEC-002).
+2. Mandatory Employee Notification: For SOPs classified under Critical Operations or Security, automated notification alerts dispatch to affected operational staff requiring digital acknowledgment of the new procedure within 5 business days.
+3. Audit Log Recording: Publication metadata, author signatures, and version tags commit permanently to immutable WORM storage (SEC-006).
+SOP Review, Retirement & Archiving
+SOPs undergo scheduled periodic audits to ensure continued alignment with business operations:
+Review Frequency Matrix
+SOP Category / Risk Profile
+	Scheduled Review Frequency
+	Review Trigger Conditions
+	Responsible Audit Unit
+	Security & Compliance (SOP-CAT-SEC)
+	Quarterly (90 Days)
+	Security incident review (SEC-005) or threat landscape shift.
+	Information Security Audit Lead
+	Financial Operations (SOP-CAT-FIN)
+	Semi-Annual (180 Days)
+	Payment gateway update or financial reconciliation audit.
+	Internal Accounting Audit Lead
+	Core Operations (SOP-CAT-OPS)
+	Annual (365 Days)
+	Warehouse automation upgrade or logistics carrier switch.
+	Logistics Quality Assurance Lead
+	Support & Admin (SOP-CAT-SUP)
+	Annual (365 Days)
+	CRM platform migration or support escalation tier shift.
+	Customer Experience QA Lead
+	SOP Lifecycle Matrix
+Lifecycle Stage
+	Stage Code
+	System Access State
+	Operational Action
+	Drafting
+	STAGE-DFT
+	Author & Reviewer Only
+	In-progress creation; hidden from active search.
+	Under Review
+	STAGE-REV
+	Reviewers & Approvers
+	Pending cross-functional and legal verification.
+	Active / Published
+	STAGE-ACT
+	Full Role-Gated Visibility
+	Fully searchable and operational for assigned staff.
+	Deprecation Hold
+	STAGE-SPD
+	Restricted Access
+	Temporarily suspended due to reported procedural drift.
+	Archived / Retired
+	STAGE-ARC
+	Read-Only Admin Vault
+	Removed from active execution; retained for audit.
+	Repository Quality Assurance
+Repository health and procedural accuracy are audited continuously through structured quality assurance mechanisms:
+1. Bi-Monthly Random Sampling: Quality Assurance auditors randomly sample $5\%$ of active operational SOPs across all categories to verify execution fidelity on the warehouse floor, in finance desks, and within support hubs.
+2. Operational Drift Reporting: Employees executing procedures who encounter unworkable instructions, obsolete system paths, or conflicting steps must log an SOP_DRIFT_REPORT in sop.novacart.internal. This places the SOP on temporary deprecation hold (STAGE-SPD) and routes the file to the Author for immediate correction.
+Department Responsibilities
+Accountability for SOP knowledge repository administration is distributed across enterprise operational units:
+Department Responsibility Matrix
+Department Unit
+	Primary SOP Repository Responsibilities
+	Primary System Portal
+	Target Performance KPI
+	Operational Governance
+	Governs KNOW-003 policy, oversees approval workflows, manages repository taxonomy.
+	sop.novacart.internal
+	SOP Repository Accuracy $\ge 99.5\%$
+	Internal Audit & QA
+	Executes scheduled operational audits, audits SOP adherence, tracks CAPA files (LEG-005).
+	audit.novacart.internal
+	Audit Plan Execution SLA $\ge 98\%$
+	Department Operations
+	Authors departmental SOPs, ensures staff training, executes review cycles.
+	ops.novacart.internal
+	Annual Review Completion $100\%$
+	Information Security
+	Reviews security SOPs, verifies role-gated access controls (SEC-002), audits WORM logs.
+	shield.novacart.internal
+	Zero unauthorized SOP access incidents
+	Business Rules
+Rule 1: Mandatory SOP Pre-Requisite for Operational Execution
+No operational department, fulfillment center, or financial desk may execute a business process, launch a new service, or implement a technical system integration without a fully approved, published SOP (STAGE-ACT) registered in sop.novacart.internal.
+Rule 2: Single Active Version Rule
+sop.novacart.internal must maintain exactly one (1) active master version of an SOP at any given time. Maintaining duplicate, fragmented, or unapproved departmental copies of an SOP on local network drives, shared folders, or personal wikis is strictly prohibited.
+Rule 3: Immediate Suspension upon Operational Drift Discovery
+When an internal audit or employee report identifies that an active SOP contains obsolete, unsafe, or unworkable instructions, the Quality Assurance Lead or Knowledge Manager must place the SOP on temporary deprecation hold (STAGE-SPD) within 2 hours, notifying affected operational teams instantly.
+Rule 4: Mandatory 7-Year Archive Retention
+All retired SOPs (STAGE-ARC), semantic version histories, change request logs (CHG-XXXXX), and executive approval sign-offs must be retained in immutable WORM storage for a mandatory period of 7 years (SEC-003, SEC-006).
+Exception Handling
+* Emergency Operational Procedure Override: During critical platform outages, SEV-1 security incidents (SEC-005), or emergency product recalls (PROD-005), the Chief Operating Officer or Incident Commander may authorize an "Emergency Operational SOP Override." The emergency procedure is published instantly with a mandatory 72-hour expiration timer, during which formal retrospective review and approval must be completed.
+* Cross-Functional Dispute Resolution: If two departments disagree on procedural ownership or workflow steps during cross-functional SOP drafting, the dispute escalates to the General Counsel and Chief Operating Officer, whose operational ruling is final.
+Practical Examples
+Scenario 1: Creating and Approving a New Departmental SOP for Warehouse Returns
+1. Fulfillment Operations identifies a new multi-step inspection workflow for returned large appliances (CAT-APP) and drafts a new SOP (SOP-OPS-88201) in sop.novacart.internal.
+2. The draft completes cross-functional review with QA and Compliance leads.
+3. Director of Logistics grants executive approval, and the system publishes version v1.0.0 (STAGE-ACT).
+4. Warehouse intake staff receive automated notifications requiring digital acknowledgment within 5 business days.
+Scenario 2: Emergency Modification of an SOP Following a Policy Revision
+1. Executive Committee updates the Master Refund Policy (REF-001), altering manual refund approval tiers.
+2. Executing Rule 3, the Knowledge Manager places the associated financial refund SOP (SOP-FIN-10204) on temporary deprecation hold (STAGE-SPD) within 1 hour.
+3. Finance Operations Author updates the procedural steps to match the new master policy limits and submits minor version revision v2.1.0.
+4. CFO approves the revision within 24 hours, restoring active operational status across finance desks.
+Frequently Asked Questions (FAQs)
+Q1: Where can I access official operational Standard Operating Procedures (SOPs)?
+Answer: All active internal operational SOPs are hosted centrally within the SOP Knowledge Repository at sop.novacart.internal. Access is role-gated based on your verified departmental duties (Refer to SEC-002). Localized desktop copies or shared drive files are strictly prohibited.
+Q2: What should I do if I discover that an active SOP contains outdated or unworkable instructions?
+Answer: If you encounter procedural drift or unworkable instructions while executing your daily duties, you must log an SOP_DRIFT_REPORT directly inside sop.novacart.internal. This automatically places the SOP on a temporary deprecation hold (STAGE-SPD) and routes the file to the Department Owner for immediate review and correction (Refer to Quality Assurance Section).
+Q3: How long are archived SOPs retained after they are replaced by a newer version?
+Answer: When an SOP is updated to a new major version or permanently retired, the prior version transitions to STAGE-ARC (Archived Vault). In accordance with our enterprise governance standards, all retired SOP version histories and approval logs are retained securely in immutable WORM storage for 7 years to support operational audits and legal compliance (Refer to SEC-003, SEC-006).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of KNOW-003. Established SOP repository governance principles, classification frameworks (OPS, FIN, SEC, SUP), ownership matrices, 4-stage approval pipelines, semantic version control rules (vX.Y.Z), operational drift reporting workflows, and 7-year WORM retention standards.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-002: Organization Structure
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* SUP-005: Customer Support SLA Policy
+* ORD-001: Order Lifecycle Management Policy
+* SHIP-001: Domestic Shipping Policy
+* PAY-001: Payment Processing SOP
+* PAY-005: Payment Reconciliation Policy
+* REF-001: Master Refund Eligibility Rules
+* REF-004: Return Inspection & Quality Assessment Policy
+* REF-005: Refund Approval & Exception Handling Policy
+* PROD-001: Product Catalog Management Policy
+* PROD-002: Product Availability & Inventory Policy
+* PROD-005: Product Recall & Safety Policy
+* SEC-001: Account Security Policy
+* SEC-002: Authentication & Access Control Policy
+* SEC-003: Data Protection & Privacy Policy
+* SEC-005: Incident Response & Security Breach Policy
+* SEC-006: Security Monitoring & Audit Logging Policy
+* LEG-001: Terms & Conditions Policy
+* LEG-005: Compliance & Regulatory Governance Policy
+* LEG-006: Customer Dispute Resolution Policy
+* KNOW-001: Customer Support Knowledge Base Governance Policy
+* KNOW-002: Product & Service Knowledge Management Policy

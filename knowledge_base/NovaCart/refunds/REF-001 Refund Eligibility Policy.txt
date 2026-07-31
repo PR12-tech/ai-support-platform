@@ -1,0 +1,302 @@
+﻿REF-001: Refund Eligibility Policy
+Document Header
+* Document Title: Refund Eligibility Policy
+* Document ID: REF-001
+* Version: 1.0.0
+* Document Category: Refunds
+* Classification: Internal / Public Operational Standard
+* Department Owner: Returns & Customer Experience
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Returns & Reverse Logistics, Operations Director, Customer Support Director
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Refund Eligibility, Return Merchandise Authorization, Non-Refundable Categories, Claim Windows, Evidence Verification, Decision Framework, Damaged Goods, Lost Shipments
+Purpose
+This document defines the official enterprise policy, business criteria, category-specific rules, evidence requirements, and decision-making framework governing refund eligibility at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes clear operational boundaries to evaluate customer, merchant, and system requests for monetary refunds prior to financial clearing.
+As the primary policy document (REF-001) in the Refunds module of the NovaCart Enterprise Knowledge Base (NEKB), REF-001 provides the business logic for customer service agents, automated RMA portals, and marketplace merchants, ensuring strict policy alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, and PAY-001 through PAY-006.
+Scope
+This policy applies universally across all commercial transactions, customer tiers (B2C Retail, B2B SMB, Corporate Accounts, NovaCart Prime Memberships), and operating regions (India, Singapore, UAE) serviced by NovaCart.
+Coverage Includes
+* Defining business qualification parameters for full, partial, and goodwill refunds.
+* Category-level return and refund restrictions across all catalog verticals.
+* Binding claim timeframes, required customer evidence, and merchant obligations.
+* Administrative approval authority thresholds and escalation rules.
+Out of Scope
+* Financial clearing, bank gateway reversals, settlement mechanics, or payment instrument clearing (governed exclusively by PAY-003).
+* Reverse logistics courier routing and warehouse physical inspection workflows (governed by REF-002 and REF-005).
+Refund Eligibility Overview
+NovaCart strives to maintain complete customer trust by offering fair, policy-driven refund qualifications while protecting the platform against fraudulent claims, return abuse, and unverified merchant losses.
+
+
+
+
+
+
+<ElicitationsGroup message="To explore related order execution, delay, or financial refund clearing policies further:">
+{/* Reason: Offers structured paths to navigate deeper into related domain policies. */}
+ <Elicitation label="Review ORD-002 Order Cancellation Policy" query="Show ORD-002 Order Cancellation Policy detailing pre-dispatch cancellation rules." />
+ <Elicitation label="Review SHIP-006 Lost Shipment Policy" query="Show SHIP-006 Lost Shipment Policy detailing transit loss claims." />
+ <Elicitation label="Examine PAY-003 Refund Payment Processing Policy" query="Show PAY-003 Refund Payment Processing Policy governing financial clearing." />
+</ElicitationsGroup>
+
+Core Operational Principles
+1. Evidence-Based Qualification: Claims involving physical defects, transit damage, or missing items require verifiable photographic/video proof or courier inspection reports before approval.
+2. Category-Specific Governance: Product categories with hygiene, digital activation, or perishable constraints operate under distinct eligibility restrictions.
+3. Fulfillment Status Independence: Orders cancelled pre-dispatch qualify for automatic refunds; delivered items require Return Merchandise Authorization (RMA) and physical inspection unless explicitly waived (Refer to ORD-002, REF-005).
+4. Non-Discretionary Compliance: Support agents and marketplace merchants must evaluate claims strictly using the decision matrix defined in this document.
+Eligible Refund Scenarios
+A transaction qualifies for a monetary refund under the following verified operational conditions:
+* Pre-Dispatch Order Cancellation: Cancellation executed before warehouse dispatch (PENDING_PAYMENT to READY_FOR_DISPATCH) by the customer, merchant, or automated system (Refer to ORD-002).
+* Physical Transit Loss: Shipment officially declared lost in transit by Logistics after exceeding trace SLA limits (Refer to SHIP-006).
+* Unresolvable Delivery Delay: Domestic shipment delayed by $> 72\text{ hours}$ past committed ETA (or $> 14\text{ days}$ for international shipments) where the customer elects to cancel (Refer to ORD-002, SHIP-002, SHIP-005).
+* Damaged or Defective Goods Delivered: Items arriving with physical transit damage, structural cracks, or manufacturing defects verified via photo evidence or technician inspection (Refer to REF-003, PROD-004).
+* Incorrect Item or Missing Quantity: Package containing an incorrect SKU, wrong product variant, or missing units verified against warehouse dispatch weight logs (Refer to ORD-001, REF-005).
+* Duplicate Order / Unlinked Payment Debit: System error resulting in multiple charges for a single order or an unlinked debit where stock is depleted (Refer to PAY-002, PAY-003).
+Non-Eligible Refund Scenarios
+Refund requests are strictly rejected under the following conditions:
+* Expiration of Claim Window: Requests submitted after the mandatory category claim window has closed.
+* Buyer’s Remorse on Non-Returnable Categories: Preference-based return requests for digital software keys (CAT-SFT), digital gift cards (CAT-GFT), or unsealed hygiene-sensitive items.
+* Customer-Induced Damage: Physical damage, liquid exposure, or serial number tampering caused by customer misuse or improper installation (Refer to PROD-001).
+* Unverified Non-Receipt Claims: Claims marked DELIVERED with valid, verified One-Time Password (OTP) or GPS-matched Proof of Delivery (POD) where Security audit confirms valid delivery (Refer to SHIP-001, SHIP-006).
+* Customs Abandonment (DAP/DDU): International shipments abandoned or destroyed by destination customs due to customer refusal to pay statutory import duties or provide identity documents (Refer to SHIP-002).
+Refund Eligibility Matrix
+Scenario / Condition
+	Pre-Dispatch State
+	Post-Delivery (In Window)
+	Evidence Required
+	Approval Outcome
+	Customer Cancellation
+	PACKED or earlier
+	Not Applicable
+	None
+	Approved (100% Full Refund)
+	Damaged Product
+	Not Applicable
+	Within 48 Hours
+	Photos of box & item
+	Approved (Replacement / Full Refund)
+	Defective Product
+	Not Applicable
+	Within 7–10 Days
+	Tech Diagnostic Report
+	Approved (Replacement / Full Refund)
+	Wrong Product Sent
+	Not Applicable
+	Within 7 Days
+	Photos of item barcode
+	Approved (Replacement / Full Refund)
+	Missing Item / Quantity
+	Not Applicable
+	Within 48 Hours
+	Unboxing Video / Photos
+	Approved (Partial / Item Refund)
+	Transit Loss Declared
+	In-Transit
+	Not Applicable
+	Logistics Loss Log
+	Approved (Replacement / Full Refund)
+	Severe Delivery Delay
+	In-Transit ($> 72\text{ hrs}$)
+	Not Applicable
+	TMS Delay Log
+	Approved (100% Full Refund)
+	Digital Key Revealed
+	DELIVERED
+	Post-Activation
+	Digital Audit Log
+	REJECTED (Non-Refundable)
+	Hygiene Seal Broken
+	Not Applicable
+	Post-Unsealing
+	Photo Verification
+	REJECTED (Non-Refundable)
+	Product Category Considerations
+Refund eligibility varies across catalog product verticals to account for operational, health, and software licensing constraints.
+Product Category Matrix
+Category Code
+	Vertical Name
+	Standard Return/Claim Window
+	Refund Eligibility Constraints
+	Mandatory Prerequisite
+	CAT-ELE
+	Consumer Electronics
+	7 Calendar Days
+	Eligible for defect, damage, or wrong item. Serial number must match dispatch log.
+	Serial number verification & physical RMA return.
+	CAT-MOB
+	Mobile & Accessories
+	7 Calendar Days
+	Eligible for defect or damage. Device must be factory reset with account locks removed.
+	Brand service center report or technician check.
+	CAT-GAM
+	Gaming Hardware
+	7 Calendar Days
+	Eligible for defect or damage. Game software discs/codes must remain factory sealed.
+	Unbroken software seal; hardware inspection.
+	CAT-APP
+	Home Appliances
+	10 Calendar Days
+	Eligible for transit damage or DOA. On-site technician inspection mandatory.
+	On-site technician report (PROD-004).
+	CAT-SMT
+	Smart Home Devices
+	7 Calendar Days
+	Eligible for defect or damage after remote technical troubleshooting.
+	Technical support diagnostic ticket (SUP-001).
+	CAT-SFT
+	Digital Software
+	Non-Refundable
+	Non-refundable once key is revealed or delivered to customer portal.
+	Refundable ONLY if digital key remains unrevealed.
+	CAT-GFT
+	Digital Gift Cards
+	Non-Refundable
+	Non-refundable and non-exchangeable once voucher code is generated.
+	Non-refundable per REF-006.
+	CAT-SUB
+	Subscriptions
+	30-Day Pro-Rated
+	Pro-rated refund within 30 days if no member benefits/discounts were utilized.
+	Usage log audit in api.novacart.internal.
+	Refund Request Time Limits
+To qualify for evaluation, claims must be formally lodged through crm.novacart.internal or the customer portal within strict timeframes measured from the timestamp of order delivery or transit exception.
+Refund Time Window Matrix
+Claim Category
+	Mandatory Request Window
+	Calculation Starting Milestone
+	Consequence of Exceeding Window
+	Transit Damage / Missing Items
+	Within 48 Hours
+	Timestamp of DELIVERED status in TMS
+	Claim Rejected (Treated as post-delivery damage)
+	Wrong Item Received
+	Within 7 Calendar Days
+	Timestamp of DELIVERED status in TMS
+	Claim Rejected
+	Hardware Defect (DOA)
+	Within 7–10 Calendar Days
+	Timestamp of DELIVERED status in TMS
+	Referred to Brand Warranty (PROD-001)
+	Delivery Delay Cancellation
+	Prior to Delivery
+	Timestamp of $72\text{-hr}$ delay flag in TMS
+	Governed by standard return rules upon delivery
+	Unlinked Payment Debit
+	Within 30 Calendar Days
+	Timestamp of bank payment transaction
+	Auto-reconciled under PAY-002 / PAY-003
+	Customer Responsibilities
+Customers initiating a refund request must comply with the following obligations:
+1. Timely Lodgment: Submit claims within the mandated time window specified in the Refund Time Window Matrix.
+2. Evidence Submission: Provide clear, unedited photographic or video evidence showing outer packaging, courier shipping label, and specific item damage/defect.
+3. Item Care & Integrity: Retain original manufacturer packaging, user manuals, accessories, warranty cards, and free promotional bundles.
+4. Device Sanitization: Remove all personal accounts, passwords, and security locks (e.g., iCloud, Google Account, PINs) from mobile devices (CAT-MOB) and laptops (CAT-ELE) prior to RMA pickup.
+5. RMA Return Cooperation: Hand over the approved return package to NovaCart's designated reverse courier within 5 business days of RMA approval (Refer to REF-005).
+Merchant Responsibilities
+Marketplace merchants (3P sellers) operating on NovaCart must adhere to enterprise refund standards:
+1. Mandatory Acceptance of Valid Claims: Merchants must honor refund approvals granted by NovaCart Support for verified defects, transit damage, or wrong items dispatched from their inventory.
+2. Response SLA: Merchants must review and respond to flagged defect claims within 24 business hours. Failure to respond within 24 hours results in automatic claim approval in favor of the customer, with costs debited from the merchant's payout account.
+3. Stock Accuracy: Merchants must maintain real-time inventory counts to prevent pre-dispatch stock-out cancellations (Refer to ORD-002).
+Decision-Making Framework
+Support representatives and automated portals must process refund claims using a deterministic decision tree:
+Decision Matrix
+Evaluation Step
+	Assessment Question
+	"Yes" Branch Action
+	"No" Branch Action
+	Step 1
+	Is the request within the valid claim time window?
+	Proceed to Step 2.
+	REJECT CLAIM (Inform customer of window expiry).
+	Step 2
+	Is the product in a Non-Refundable Category (CAT-SFT/CAT-GFT)?
+	Verify if digital key is unrevealed. If revealed, REJECT.
+	Proceed to Step 3.
+	Step 3
+	Is the claim for transit damage or missing items?
+	Verify 48-hr window & photo proof. If valid, APPROVE.
+	Proceed to Step 4.
+	Step 4
+	Is the claim for a hardware defect or Dead on Arrival (DOA)?
+	Verify diagnostic report. If verified, APPROVE.
+	Proceed to Step 5.
+	Step 5
+	Is the item unreturned, incomplete, or customer-damaged?
+	REJECT CLAIM or issue partial credit.
+	APPROVE FULL REFUND.
+	Department Responsibilities
+Accountability for evaluating and processing refund eligibility is mapped across functional units:
+Department Responsibility Matrix
+Department Unit
+	Primary Refund Eligibility Responsibilities
+	Primary System Portal
+	SLA Target
+	Customer Support
+	Validates initial claim evidence; approves Level 1/2 refunds; manages customer communications.
+	crm.novacart.internal
+	Claim evaluation $< 12\text{ Hours}$
+	Returns & Reverse Logistics
+	Conducts physical RMA inspections at FCs; confirms serial numbers; updates disposition status.
+	rma.novacart.internal
+	Physical inspection $< 24\text{ Hours}$
+	Finance Operations
+	Audits high-value refund approvals; executes approved financial credits.
+	ledger.novacart.internal
+	Financial clearing $< 24\text{ Hours}$ (PAY-003)
+	Security Operations
+	Investigates fraudulent return patterns, serial number mismatches, and disputed POD claims.
+	shield.novacart.internal
+	Security audit $< 24\text{ Hours}$
+	Business Rules
+Rule 1: Master Serial Number Matching
+No refund or replacement shall be approved for Consumer Electronics (CAT-ELE) or Mobile Devices (CAT-MOB) if the serial number/IMEI of the returned item does not match the outbound warehouse dispatch log recorded in wms.novacart.internal. Mismatched items are flagged as fraudulent and rejected (Refer to COMP-001, REF-005).
+Rule 2: Automatic Approval for Lost Shipments
+When a shipment is officially declared lost by Logistics (CANCELLED_LOST_IN_TRANSIT) under SHIP-006, the refund eligibility status transitions automatically to APPROVED. Customer Support must offer the customer an immediate 100% refund or free priority replacement without requiring further documentation.
+Rule 3: Single Refund Disbursement Limit
+An order or individual sub-order line item may be refunded only once. ledger.novacart.internal blocks any secondary refund request exceeding the original captured transaction value (Refer to PAY-003).
+Exception Handling
+* Out-of-Policy Escalation for VIP Accounts: NovaCart Prime VIP members or B2B Enterprise Accounts requesting out-of-policy refunds (e.g., claim lodged 2 days past window) may receive discretionary approval upon L3 Customer Support Manager co-signoff (Refer to SUP-003).
+* Unresolvable On-Site Technician Delay: If an appliance defect claim (CAT-APP) requires an on-site technician inspection, but the brand fails to dispatch a technician within 5 business days, Customer Support is authorized to override the report requirement and approve an immediate refund or replacement (Refer to PROD-004).
+Practical Examples
+Scenario 1: Approved Transit Damage Claim (48-Hour Window)
+1. Customer receives a television screen (CAT-APP) delivered at 02:00 PM on Tuesday.
+2. Upon unboxing at 05:00 PM, the customer discovers a cracked display panel.
+3. The customer submits photos of the damaged box and cracked screen via the portal at 06:30 PM (within 48 hours).
+4. Customer Support verifies outer packaging damage notes in TMS, approves RMA for immediate reverse pickup, and authorizes a 100% full refund upon FC dock scan (Refer to REF-003, REF-005).
+Scenario 2: Rejected Claim for Unsealed Digital Software
+1. Customer purchases an antivirus software license key (CAT-SFT).
+2. System delivers activation key to customer's secure portal account at 10:00 AM (DELIVERED).
+3. Customer views key at 10:05 AM and submits a refund request at 11:00 AM stating "No longer needed."
+4. System audit log confirms digital key was revealed. Support rejects claim under REF-006 rules for Non-Refundable Categories.
+Frequently Asked Questions (FAQs)
+Q1: How long do I have to request a refund after receiving my order?
+Answer: Claim windows depend on the issue type and product category: transit damage or missing items must be reported within 48 hours of delivery. Product defects or wrong items must be reported within 7 days (10 days for large appliances). Claims submitted past these windows cannot be approved for standard refunds (Refer to SUP-001).
+Q2: Will I get a full refund if I cancel my order before it ships?
+Answer: Yes. Orders cancelled prior to warehouse dispatch (PACKED or earlier) receive an immediate 100% full refund, including item price, taxes, and shipping fees (Refer to ORD-002, PAY-003).
+Q3: What happens if I return an item without its original box or accessories?
+Answer: Returned items must include all original packaging, user manuals, and accessories. If an item is returned incomplete or with missing accessories, NovaCart may reject the refund or deduct a re-stocking fee from the total refund amount (Refer to REF-005).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of REF-001. Established master refund eligibility rules, non-eligible scenarios, category return matrices, claim timeframes, decision trees, and serial matching requirements.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* ORD-001: Order Lifecycle Management Policy
+* ORD-002: Order Cancellation Policy
+* SHIP-005: Delivery Delay Management Policy
+* SHIP-006: Lost Shipment Investigation Policy
+* PAY-001: Payment Processing SOP
+* PAY-003: Refund Payment Processing Policy
+* REF-002: Return & Exchange Policy
+* REF-005: Return Process Protocols
+* PROD-001: Warranty Validation Policy

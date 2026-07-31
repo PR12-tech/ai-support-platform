@@ -1,0 +1,205 @@
+﻿SHIP-001: Domestic Shipping Policy
+Document Header
+* Document Title: Domestic Shipping Policy
+* Document ID: SHIP-001
+* Version: 1.0.0
+* Document Category: Shipping
+* Classification: Internal
+* Department Owner: Logistics & Supply Chain
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Logistics, Operations Director, Customer Experience Director
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Domestic Shipping, Last-Mile Delivery, Carrier Selection, Proof of Delivery, Non-Delivery Report, Tamper-Evident Packaging, Logistics Operations
+Purpose
+This document establishes the official enterprise policy, operational standards, fulfillment workflows, and business rules governing domestic shipping operations within NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It defines service level tiers, service coverage parameters, carrier assignment logic, packaging protocols, dispatch handovers, delivery confirmation procedures, and non-delivery exception management.
+As a core operational document (SHIP-001) in the NovaCart Enterprise Knowledge Base (NEKB), SHIP-001 enforces deterministic execution across primary fulfillment centers (FCs), third-party logistics (3PL) carrier networks, and the Transportation Management System (api.novacart.internal/tms), maintaining complete consistency with COMP-001 through COMP-004, SUP-001 through SUP-005, and ORD-001 through ORD-005.
+Scope
+This policy applies to all domestic order shipments dispatched within NovaCart's primary operating territories: India (IN), Singapore (SG), and the United Arab Emirates (UAE).
+Coverage Includes
+* Domestic fulfillment across all service tiers (Standard, Express, Same-Day, Scheduled Delivery).
+* In-region logistics nodes including primary FCs (BLR-01, DEL-02, BOM-01, CCU-01, SIN-01, DXB-01, AUH-01).
+* Physical item categories requiring specialized handling (CAT-ELE, CAT-MOB, CAT-GAM, CAT-APP, CAT-SMT).
+* Last-mile carrier integration, proof of delivery verification, and non-delivery report (NDR) re-attempt handling.
+Domestic Shipping Overview
+NovaCart operates a multi-hub domestic shipping infrastructure designed to maximize delivery speed, minimize transit damage, and maintain end-to-end package visibility. The domestic logistics ecosystem combines NovaCart's direct last-mile fleet with contracted 3PL logistics carriers managed dynamically through tms.novacart.internal.
+Core Operational Principles
+1. Dynamic Carrier Selection: Automated assignment of delivery routes to optimal carriers based on real-time transit velocity, cost efficiency, and historical SLA compliance.
+2. Chain of Custody Verification: Strict barcode scan enforcement at every physical handover point, from warehouse dock dispatch to recipient doorstep delivery.
+3. Tamper-Evident Integrity: Mandatory application of category-specific tamper-evident packaging and serial number logging prior to carrier handover.
+4. Verifiable Delivery Confirmation: Mandatory collection of digital Proof of Delivery (POD) via One-Time Password (OTP) or digital signature for all delivered parcels.
+Service Coverage
+Domestic shipping coverage is categorized into three geographic delivery tiers:
+* Tier 1 (Metro & Primary Urban Zones): Full access to all shipping tiers (Standard, Express, Same-Day, Scheduled). Supported by primary FCs with multiple daily courier pickups.
+* Tier 2 (Regional Urban & Suburban Zones): Access to Standard and Express shipping tiers. Guaranteed delivery windows managed via regional sorting hubs.
+* Tier 3 (Remote & Special Coverage Zones): Access to Standard shipping tier via specialized regional surface carriers. Extended delivery windows apply.
+Shipping Service Matrix
+Service Tier Code
+	Service Name
+	Service Description
+	Targeted Order Cutoff Time
+	Eligible Customer Segments
+	Applicable Product Categories
+	SRV-STD
+	Standard Delivery
+	Cost-effective ground/air regional transport via contracted 3PL carriers.
+	23:59 Local Time
+	All Retail & B2B Accounts
+	All Physical Categories (CAT-ELE through CAT-APP)
+	SRV-EXP
+	Express Delivery
+	Fast-tracked priority air/surface routing via express courier networks.
+	14:00 Local Time
+	All Accounts; Free for NovaCart Prime
+	CAT-ELE, CAT-MOB, CAT-GAM, CAT-SMT
+	SRV-SDY
+	Same-Day Delivery
+	Local dark store or metro FC direct last-mile dispatch on the same calendar day.
+	11:00 Local Time
+	Metro Tier 1 Zones; NovaCart Prime / Corporate
+	CAT-ELE, CAT-MOB, CAT-SMT (Weight $< 10\text{ kg}$)
+	SRV-SCH
+	Scheduled Delivery
+	Customer-selected delivery time slot (Morning, Afternoon, Evening window).
+	18:00 Previous Day
+	Metro Tier 1 & 2 Zones; All Accounts
+	Large Appliances (CAT-APP), High-Value Electronics
+	Shipping Workflow
+Every domestic shipment progresses through an automated seven-stage operational workflow within tms.novacart.internal:
+1. Dispatch Manifesting: WMS completes packaging, generates shipping label, and updates sub-order status to READY_FOR_DISPATCH (Refer to ORD-001).
+2. Carrier Route Assignment: TMS evaluates destination postal code, service tier, package dimensions, and carrier SLAs to assign an active AWB waybill.
+3. FC Dock Handover: Courier driver performs physical barcode scan at FC dispatch loading dock. Status updates to PICKED_UP_BY_COURIER / SHIPPED (Refer to ORD-004).
+4. Linehaul Transit: Package moves through carrier middle-mile transport nodes. TMS ingests real-time webhook scan updates every 12 hours.
+5. Destination Hub Arrival: Package arrives at local destination sorting center and is scanned into ARRIVED_AT_SORTING_FACILITY status.
+6. Last-Mile Route Allocation: Package is assigned to a specific last-mile delivery rider. Status updates to OUT_FOR_DELIVERY.
+7. Doorstep Handover & POD: Rider validates customer OTP or signature, updating status to DELIVERED.
+Carrier Selection Process
+The TMS Carrier Selection Engine (api.novacart.internal/tms/select-carrier) selects the optimal carrier automatically upon manifest generation using a weighted scoring algorithm:
+* Historical Carrier SLA Weight ($40\%$): Real-time performance rating of the carrier on the target postal route over the trailing 30 days.
+* Transit Velocity Weight ($30\%$): Demonstrated transit speed relative to the target delivery SLA (Standard vs. Express).
+* Cost Optimization Weight ($20\%$): Contracted shipping rate per volumetric kilogram.
+* Capacity & Volume Allocation Weight ($10\%$): Active daily volume allocations committed to the carrier.
+Packaging Standards
+All items dispatched through NovaCart domestic shipping networks must adhere to strict packaging guidelines to prevent transit damage and tamper attempts.
+Packaging Requirement Guidelines
+* General Electronics & Hardware (CAT-ELE, CAT-MOB, CAT-GAM): Enclosed in double-walled corrugated boxes with internal bubble-wrap suspension (minimum $25\text{ mm}$ thickness). All outer carton seams sealed with NovaCart brand tamper-evident security tape.
+* Large Home Appliances (CAT-APP): Heavy-duty corrugated outer cartons reinforced with wooden corner edge protectors and high-density styrofoam bracing. Pallet strapping applied for items exceeding $30\text{ kg}$.
+* Tamper-Evident Security Seals: High-value items (Unit value $> \text{INR } 25,000$ / $\text{SGD } 400$ / $\text{AED } 1,100$) require serialized security tape applied across box openings. Serialized seal IDs are logged in WMS and printed on the shipping manifest.
+Shipment Handover
+1. Manifest Audit: FC dock supervisors verify physical package counts against the electronic carrier manifest in wms.novacart.internal.
+2. Scan Verification: The carrier driver scans every individual parcel barcode using a handheld terminal. Bulk un-scanned group handovers are strictly prohibited.
+3. Transfer of Custody: Upon scan completion, the driver signs a digital Manifest Transfer Receipt (MTR). Custody transfers legally to the logistics carrier, and TMS updates tracking status to PICKED_UP_BY_COURIER (Refer to ORD-004).
+Delivery Process
+1. Out for Delivery Notification: On the morning of delivery, TMS dispatches an automated SMS and WhatsApp notification containing rider details, estimated delivery window, and the mandatory 4-digit delivery OTP.
+2. Delivery Attempt Rules:
+   * The delivery rider must contact the recipient via phone upon arrival at the delivery address.
+   * The rider must wait a minimum of 5 minutes at the doorstep before logging a delivery attempt failure.
+3. Delivery Slot Re-scheduling: If the customer is unavailable, the rider logs a Non-Delivery Report (NDR) in the TMS app. The system automatically sends a link enabling the customer to reschedule delivery for the next business day (Refer to ORD-004, SHIP-005).
+Delivery Confirmation
+A shipment is legally recognized as completed only when valid Proof of Delivery (POD) is registered in tms.novacart.internal.
+Delivery Confirmation Standards
+* Standard OTP Verification (Primary): The customer provides the 4-digit OTP sent to their registered mobile device. The rider inputs the OTP into the TMS driver app, which validates the code against api.novacart.internal in real time.
+* Digital Signature POD (Secondary - B2B/Corporate): For corporate enterprise deliveries, the authorized receiving agent provides a digital signature and corporate stamp on the rider's handheld terminal.
+* Geo-Tagged Photographic POD: In designated leave-at-doorstep requests, the rider captures a geo-tagged, time-stamped photo showing the parcel placed at the customer's secure premises.
+Customer Notifications
+Automated notifications keep customers informed throughout the domestic delivery lifecycle:
+Delivery Timeline & Notification Matrix
+Service Tier Code
+	Target Transit Timeline (Metro Tier 1)
+	Target Transit Timeline (Regional Tier 2)
+	Target Transit Timeline (Remote Tier 3)
+	Triggered Customer Notifications
+	SRV-STD
+	$1\text{ to }2\text{ Business Days}$
+	$2\text{ to }4\text{ Business Days}$
+	$4\text{ to }7\text{ Business Days}$
+	Dispatch SMS/Email, Hub Arrival Email, Out for Delivery SMS, POD Email
+	SRV-EXP
+	$24\text{ Hours}$ (Next-Day)
+	$1\text{ to }2\text{ Business Days}$
+	$2\text{ to }3\text{ Business Days}$
+	Dispatch SMS/Email, Out for Delivery SMS + WhatsApp, POD Email
+	SRV-SDY
+	Same Day ($< 12\text{ Hours}$)
+	Not Applicable
+	Not Applicable
+	Real-time Map Link, Out for Delivery SMS, Pre-arrival Call, POD Email
+	SRV-SCH
+	Selected Time Window
+	Selected Time Window
+	Not Applicable
+	Slot Confirmation Email, Pre-arrival Call (30 mins prior), POD Email
+	Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Domestic Shipping Responsibilities
+	Primary Portal Used
+	Primary SLA Target
+	Logistics & Supply Chain
+	Manages 3PL carrier contracts; monitors linehaul velocity; audits delivery POD compliance.
+	tms.novacart.internal
+	On-Time Delivery (OTD) $\ge 96\%$
+	Warehouse Operations
+	Packs items to security standards; executes dock scans; manages carrier handover manifests.
+	wms.novacart.internal
+	FC Dock Dispatch $< 6\text{ Hours}$ from order
+	Customer Support
+	Assists customers with address changes, delivery rescheduling, and non-receipt disputes.
+	crm.novacart.internal
+	$< 2\text{ Mins}$ (Chat) / $< 15\text{ Mins}$ (Email)
+	Security Operations
+	Investigates tamper-evident seal breaches, high-value transit losses, and fake POD claims.
+	shield.novacart.internal
+	Real-time incident containment
+	Business Rules
+Rule 1: Mandatory OTP Verification for High-Value Shipments
+All orders containing items with a total value exceeding ₹5,000 / $80 / AED 220 strictly require OTP verification at the doorstep. Delivery riders are strictly prohibited from handing over high-value parcels without active OTP validation in the TMS app.
+Rule 2: Maximum Delivery Re-Attempt Limit
+3PL carriers and direct delivery fleets must attempt physical doorstep delivery a maximum of three (3) times on consecutive business days following an initial Non-Delivery Report (NDR). If un-delivered after 3 attempts, the parcel is flagged as RETURN_TO_ORIGIN (RTO) and returned to the dispatch FC (Refer to ORD-002, SHIP-005).
+Rule 3: Inspection Prior to Signature
+For large appliances (CAT-APP), the recipient has the right to inspect the outer packaging for visible structural damage before providing delivery confirmation. If visible carton damage exists, the recipient may note "Outer Box Damaged" on the digital POD form or refuse delivery (Refer to REF-003).
+Exception Handling
+* Address Unreachable / Incomplete: If a rider cannot locate a delivery address, the TMS app flags an NDR code ADDRESS_INCOMPLETE. The system sends an automated SMS/WhatsApp link requesting the customer drop a pin location or update delivery notes within 12 hours.
+* Refused Delivery at Doorstep: If a customer refuses parcel acceptance at the doorstep, the rider logs NDR code CUSTOMER_REFUSED. The parcel is routed to the local hub for Return to Origin (RTO) processing. Upon FC receipt, Finance issues a refund minus outbound shipping charges (Refer to ORD-002, REF-001).
+* Disputed Proof of Delivery (POD Investigation): If a customer reports non-receipt for a package marked DELIVERED, Customer Support initiates a P2 dispute ticket. Security verifies rider GPS logs and OTP submission records. If the POD is invalidated, a replacement order is dispatched immediately under SHIP-006.
+Practical Examples
+Scenario 1: Standard Domestic Express Delivery
+1. Customer in Mumbai orders a smartphone (CAT-MOB) at 10:00 AM selecting Express Delivery (SRV-EXP).
+2. FC BOM-01 packs item, logs IMEI serial number, applies tamper-evident seal, and updates status to READY_FOR_DISPATCH by 01:00 PM (Refer to ORD-001).
+3. Express courier picks up parcel at 03:00 PM dock run (SHIPPED).
+4. Parcel arrives at regional destination hub at 04:00 AM next morning (ARRIVED_AT_SORTING_FACILITY).
+5. Rider loads parcel at 08:30 AM (OUT_FOR_DELIVERY). Customer receives SMS with 4-digit OTP.
+6. Rider arrives at 11:30 AM, validates customer OTP in TMS app, and completes delivery (DELIVERED).
+Scenario 2: NDR Re-Attempt Workflow
+1. Rider attempts delivery of an office accessory in Singapore at 02:00 PM. Customer is not at home.
+2. Rider logs NDR code CUSTOMER_UNREACHABLE in TMS app (DELIVERY_ATTEMPTED).
+3. TMS automatically sends WhatsApp notification with a rescheduling link. Customer selects next-day afternoon slot.
+4. Rider re-attempts delivery next day at 03:00 PM, obtains digital signature POD, and updates status to DELIVERED.
+Frequently Asked Questions (FAQs)
+Q1: What happens if a customer is not available to receive a delivery?
+Answer: The rider logs a Non-Delivery Report (NDR). NovaCart attempts delivery up to 3 times on consecutive business days. The customer receives an SMS/WhatsApp link after each attempt to reschedule or update delivery instructions (Refer to SHIP-005).
+Q2: Can a customer inspect the contents of a package before providing the OTP to the rider?
+Answer: For standard small electronics and mobile devices, open-box inspection prior to OTP verification is not permitted to maintain carrier chain-of-custody security. For large appliances (CAT-APP) or designated Open-Box Delivery categories, outer packaging inspection and technician-assisted unboxing are permitted (Refer to PROD-004).
+Q3: How are shipping fees calculated for domestic deliveries?
+Answer: Shipping fees are calculated at checkout based on package weight, volumetric dimensions, destination zone (Tier 1/2/3), and selected service tier (Standard, Express, Same-Day). NovaCart Prime members receive free Express delivery on eligible items (Refer to COMP-001).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of SHIP-001. Established domestic service tiers, carrier selection logic, packaging standards, POD verification rules, and NDR re-attempt procedures.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* ORD-001: Order Lifecycle Management Policy
+* ORD-004: Order Tracking Policy
+* ORD-005: Split Order Management Policy
+* SHIP-005: Delayed Deliveries Protocol
+* SHIP-006: Lost Shipments Protocol
+* REF-001: Master Refund Eligibility Rules

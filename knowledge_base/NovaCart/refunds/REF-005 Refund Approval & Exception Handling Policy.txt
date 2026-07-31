@@ -1,0 +1,288 @@
+﻿REF-005: Refund Approval & Exception Handling Policy
+Document Header
+* Document Title: Refund Approval & Exception Handling Policy
+* Document ID: REF-005
+* Version: 1.0.0
+* Document Category: Refunds
+* Classification: Internal / Public Operational Standard
+* Department Owner: Customer Experience & Operations Governance
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Customer Support, VP of Operations, Director of Financial Governance
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Refund Approval, Authority Matrix, Policy Override, Exception Handling, Manual Review, High-Value Refund, Fraud Escalation, Audit Logging
+Purpose
+This document establishes the official enterprise policy, decision-making workflows, administrative authorization levels, exception management protocols, and governance standards for approving, overriding, or rejecting customer refund requests at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It defines the operational framework governing refund decisions after initial eligibility verification (REF-001) and physical Quality Inspection (REF-004) have been completed.
+As a core governance document (REF-005) in the Refunds module of the NovaCart Enterprise Knowledge Base (NEKB), REF-005 enforces financial control, operational accountability, and audit compliance across Customer Support, Fraud Operations, and Financial Systems (crm.novacart.internal, rma.novacart.internal, ledger.novacart.internal), maintaining complete consistency with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, and REF-001 through REF-004.
+Scope
+This policy applies universally to all monetary refund decisions, partial refund disbursements, policy overrides, and discretionary goodwill adjustments executed across NovaCart's operating regions (India, Singapore, UAE) across all commercial channels (B2C Retail, B2B SMB, Corporate Accounts, NovaCart Prime Memberships).
+Coverage Includes
+* Automated vs. manual refund decision thresholds.
+* Financial approval authority tiers and escalation workflows.
+* Partial refund calculations for missing accessories or unreturned items.
+* Discretionary policy exceptions for VIP customers, logistics failures, and goodwill gestures.
+* Fraud containment holds, disputed inspection reviews, and legal/regulatory compliance refunds.
+* Audit logging, decision documentation, and refund case closure criteria.
+Out of Scope
+* Defining general refund eligibility limits or product return windows (governed by REF-001).
+* Physical receiving, unboxing, and Quality Inspection (QI) grading procedures (governed by REF-004).
+* Technical clearing, bank gateway reversals, and electronic fund transfers (governed by PAY-003).
+Refund Approval Overview
+Refund approval represents the formal administrative authorization that commits enterprise funds to a customer prior to electronic clearing. NovaCart balances automated, frictionless customer resolutions for low-risk transactions with rigorous multi-tier managerial oversight for high-value, ambiguous, or exception-based claims.
+
+
+
+
+
+
+<ElicitationsGroup message="To explore related refund eligibility, quality assessment, or payment clearing policies further:">
+{/* Reason: Offers structured paths to navigate deeper into related domain policies. */}
+ <Elicitation label="Review REF-001 Refund Eligibility Policy" query="Show REF-001 Refund Eligibility Policy detailing initial claim qualifications." />
+ <Elicitation label="Review REF-004 Quality Assessment Policy" query="Show REF-004 Quality Assessment Policy detailing physical inspection grading." />
+ <Elicitation label="Examine PAY-003 Refund Payment Processing Policy" query="Show PAY-003 Refund Payment Processing Policy governing financial clearing." />
+</ElicitationsGroup>
+
+Core Operational Principles
+1. Segregation of Duties & Financial Control: Financial approval thresholds are strictly bound to user roles in crm.novacart.internal to prevent single-agent fraud or unauthorized disbursements.
+2. Automated-First Authorization: System algorithms approve $100\%$ compliant, low-risk refund transactions instantly upon trigger events (pre-dispatch cancellations, lost shipments, passed QI inspections).
+3. Evidence-Backed Exception Overrides: Discretionary policy overrides require documented operational justification, risk assessment co-signoff, and mandatory supervisory approval.
+4. Immutable Audit Governance: Every approval, override, rejection, and partial deduction is recorded permanently in system logs for financial control audits.
+Approval Workflow
+Refund decision-making follows a structured, three-tier operational pipeline:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        REFUND DECISION PIPELINE                                   |
++-----------------------------------------------------------------------------------+
+| PATH A: AUTOMATIC APPROVAL | System validates QI Pass / Pre-Dispatch Cancel $\rightarrow$ Instant.|
+| PATH B: STANDARD REVIEW    | L1/L2 CSR audits photos/logs $\rightarrow$ Approval within limits.|
+| PATH C: EXCEPTION / OVERRIDE| L3 Manager / Fraud / Legal co-signoff $\rightarrow$ Manual Commit. |
++-----------------------------------------------------------------------------------+
+
+1. Trigger Ingress: OMS or RMA portal emits a refund authorization request following a pre-dispatch cancellation (ORD-002), transit loss declaration (SHIP-006), or warehouse Quality Inspection pass (REF-004).
+2. System Rule Evaluation: The decision engine (api.novacart.internal/rma/evaluate) checks transaction value, risk score, claim history, and inspection grade.
+3. Route A - Automatic Approval: If all automated criteria are satisfied, the system updates claim status to REFUND_APPROVED and transmits a clearing payload to ledger.novacart.internal (PAY-003).
+4. Route B - Manual Review Queue: If the claim involves ambiguous evidence, missing accessories, or value exceeding auto-thresholds, the file routes to crm.novacart.internal for L1/L2 CSR review.
+5. Route C - Supervisory Escalation: Claims exceeding agent approval limits, flagged for fraud, or seeking out-of-policy overrides escalate to L3 Management, Fraud Operations, or Legal Counsel.
+Approval Authority Levels
+Financial authorization limits are enforced via Role-Based Access Control (RBAC) in crm.novacart.internal. Personnel may approve claims only up to their assigned monetary threshold.
+Approval Authority Matrix
+Role Tier
+	Staff Role Title
+	Maximum Per-Transaction Approval Limit
+	Permissible Approval Scope & Authority
+	Tier 0
+	System Engine (Automated)
+	$\le \text{INR } 5,000$ / $\text{SGD } 80$ / $\text{AED } 220$
+	Auto-approves pre-dispatch cancels, lost shipments, and Grade A/B QI passes.
+	Tier 1
+	Customer Support Rep (L1)
+	$\le \text{INR } 10,000$ / $\text{SGD } 150$ / $\text{AED } 440$
+	Approves verified claims with photo proof; issues standard partial refunds.
+	Tier 2
+	Support Senior Specialist (L2)
+	$\le \text{INR } 25,000$ / $\text{SGD } 400$ / $\text{AED } 1,100$
+	Approves complex claims, DOA replacements converted to refunds, and minor overrides.
+	Tier 3
+	Support Team Manager (L3)
+	$\le \text{INR } 75,000$ / $\text{SGD } 1,200$ / $\text{AED } 3,300$
+	Approves high-value claims, out-of-window VIP exceptions, and partial damage deductions.
+	Tier 4
+	Director of Operations / VP
+	$> \text{INR } 75,000$ / $\text{SGD } 1,200$ / $\text{AED } 3,300$
+	Approves executive claims, legal/regulatory mandates, and major bulk returns.
+	Manual Review Process
+When a claim flags for manual review, the assigned agent executes a standardized three-step evaluation:
+1. Cross-System Data Verification: Agent verifies Order ID in OMS (ORD-001), courier tracking logs in TMS (ORD-004), and physical unboxing photos/scale weights in rma.novacart.internal (REF-004).
+2. Account Risk & Claim Frequency Check: Agent reviews customer account history in shield.novacart.internal. Accounts displaying a high refund frequency ($> 30\%$ of total orders refunded) or linked fraud flags require L2 co-signoff (SEC-004).
+3. Decision Execution: Agent logs the decision code, enters mandatory justification notes, attaches supporting documents, and sets status to REFUND_APPROVED, PARTIAL_REFUND_APPROVED, or REFUND_REJECTED.
+Exception Handling Framework
+Discretionary policy overrides are managed through an explicit classification framework:
+Exception Classification Matrix
+Exception Class
+	Trigger Condition / Scenario
+	Justification Requirement
+	Mandatory Approval Authority
+	EXC-VIP
+	NovaCart Prime VIP or Enterprise Account claim $1\text{ to }3\text{ days}$ past window.
+	Account lifetime value $> \text{INR } 200,000$; zero prior return abuse flags.
+	L3 Support Manager (SUP-003)
+	EXC-LOG
+	Severe courier delay ($> 72\text{ hrs}$) or delivery damage with lost box proof.
+	Confirmed carrier failure logged in tms.novacart.internal.
+	L2 Senior Specialist
+	EXC-APP
+	Large appliance (CAT-APP) defect where brand technician delayed $> 5\text{ days}$.
+	Technician SLA breach ticket from PROD-004.
+	L3 Support Manager
+	EXC-EVI
+	Damaged item claimed but customer provided partial/blurry photo proof.
+	Unboxing weight log matches dispatch weight mismatch.
+	L2 Senior Specialist
+	EXC-LGL
+	Statutory consumer protection notice, legal demand, or regulatory order.
+	Written legal directive from Legal & Compliance.
+	Director of Operations / VP
+	Escalation Process
+When a claim exceeds operational limits or involves conflicting evidence, it escalates according to a standardized hierarchy:
+Escalation Matrix
+Escalation Level
+	Trigger / Conflict Condition
+	Escalation Target Unit
+	SLA for Resolution
+	Primary Outcome
+	Level 1
+	Claim value exceeds L1 agent limit OR missing unboxing photo proof.
+	L2 Senior Specialist
+	$< 4\text{ Business Hours}$
+	Secondary evidence review & approval/rejection.
+	Level 2
+	Customer appeals Quality Inspection rejection (REF-004) with new video.
+	Senior QA Specialist / Returns Lead
+	$< 12\text{ Business Hours}$
+	CCTV unboxing re-audit & final QI ruling.
+	Level 3
+	High-value claim ($> \text{INR } 25,000$) OR requested out-of-policy override.
+	L3 Support Manager
+	$< 24\text{ Business Hours}$
+	Managerial override co-signoff or rejection.
+	Level 4
+	Suspected fraud syndicate, serial mismatch, or legal escalation.
+	Fraud Ops / Legal Counsel
+	$< 24\text{ Business Hours}$
+	Account freeze, legal response, or payout block.
+	Customer Communication
+Customers receive transparent, professional notifications detailing approval outcomes and financial timelines:
+* Full Approval Alert: Email/SMS confirming 100% refund approval, specifying the original payment method, approved amount, and banking reflection window ($3\text{ to }5\text{ business days}$) (PAY-003).
+* Partial Approval Alert: Email/SMS detailing line-item breakdowns, deductions for missing accessories or re-stocking fees, attached inspection photos, and net approved refund value.
+* Rejection Alert: Formal written communication detailing specific rejection reasons (e.g., serial mismatch, physical damage, window expiry), attaching inspection photo evidence, and providing formal appeal instructions (SUP-001).
+Decision Documentation Requirements
+Every refund decision file must maintain an immutable audit trail in crm.novacart.internal:
+1. Decision Record Parameters: Linked Master Order ID, Sub-Order ID, RMA ID, Agent User ID, Timestamp, and Financial Transaction Reference (RFT-XXXXX).
+2. Mandatory Justification String: Free-text narrative explaining the operational justification for manual approvals or policy overrides (minimum 25 words).
+3. Evidence Attachments: Copies of customer photos, technician reports, CCTV footage screen captures, or carrier weight audit receipts.
+4. Co-Signoff Digital Stamp: Dual-token approval stamp for decisions requiring L2/L3 or Fraud co-signoff.
+Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Refund Approval Responsibilities
+	Primary System Portal
+	SLA Target
+	Customer Support
+	Evaluates L1/L2/L3 refund claims; manages customer communications and appeals.
+	crm.novacart.internal
+	Manual review SLA $< 12\text{ Hours}$
+	Returns & Quality Assurance
+	Conducts CCTV re-audits for disputed inspections; provides technical grading evidence.
+	rma.novacart.internal
+	Disputed QI re-audit $< 12\text{ Hours}$
+	Information Security & Fraud
+	Reviews high-risk refund holds; investigates serial mismatches and return fraud rings.
+	shield.novacart.internal
+	Fraud audit SLA $< 24\text{ Hours}$
+	Finance Operations
+	Audits managerial overrides; executes clearing payouts; reconciles ledger balances.
+	ledger.novacart.internal
+	Clearing commitment $< 24\text{ Hours}$
+	Business Rules
+Rule 1: Automated Approval Triggers
+The system decision engine must automatically approve a 100% full refund without manual human intervention when any of the following deterministic events occur:
+* Order cancelled prior to FC dispatch (PACKED or earlier) under ORD-002.
+* Shipment declared lost in transit by Logistics (CANCELLED_LOST_IN_TRANSIT) under SHIP-006.
+* Inbound return receives a Grade A or Grade B Quality Inspection pass (INSPECTION_PASSED) under REF-004.
+Rule 2: Dual-Control Managerial Override Mandate
+No individual agent or manager may approve a refund exceeding ₹25,000 / $400 / AED 1,100 that violates standard policy rules (e.g., claim lodged past return window or missing original packaging) without explicit, system-logged co-signoff from two authorized Tier 3 or Tier 4 managers.
+Rule 3: Partial Refund Deduction Rules
+When an item is returned with missing non-essential accessories or light packaging wear (Grade D under REF-004), the approving agent must apply standardized deduction formulas:
+* Missing minor accessory (cables, manuals): Deduct fixed retail accessory value ($\text{INR } 500\text{--}1,500$).
+* Missing primary component (remote, power brick): Deduct $20\%$ of line-item gross value.
+* Damaged/missing original display box: Deduct $10\%$ re-stocking fee.
+Refund Decision Matrix
+Claim Scenario
+	Primary Inspection / Claim Status
+	Approval Decision
+	Financial Outcome
+	Authority Level Required
+	Pre-Dispatch Cancel
+	Order PACKED or earlier
+	Auto-Approved
+	100% Full Refund
+	Tier 0 (System)
+	Transit Loss Declared
+	Status LOST_IN_TRANSIT
+	Auto-Approved
+	100% Full Refund
+	Tier 0 (System)
+	Standard Return (Pass)
+	Quality Inspection Passed
+	Auto-Approved
+	100% Full Refund
+	Tier 0 (System)
+	Missing Charger Cable
+	QI Passed (Missing Cable)
+	Partial Approval
+	Item Price minus $\text{INR } 500$
+	Tier 1 (CSR L1)
+	VIP Window Override
+	Claim $2\text{ days}$ late (NovaCart Prime)
+	Exception Approval
+	100% Full Refund
+	Tier 3 (Manager L3)
+	Serial Mismatch
+	Serial Number Mismatched
+	REJECTED
+	Zero Refund (RTC)
+	Tier 2 (Senior L2)
+	Customer Misuse
+	Physical Liquid Damage
+	REJECTED
+	Zero Refund (RTC)
+	Tier 1 (CSR L1)
+	Practical Examples
+Scenario 1: Automated Refund Approval (Lost Shipment)
+1. Laptop order #NC-IN-88201 (₹55,000) shows no carrier tracking updates for 96 hours in Delhi transit.
+2. Logistics declares the shipment lost and sets status to CANCELLED_LOST_IN_TRANSIT (SHIP-006).
+3. System decision engine evaluates Rule 1, approves a 100% full refund automatically (REFUND_APPROVED), and transmits clearing payload to ledger.novacart.internal (PAY-003).
+4. Customer receives automated Email/SMS confirmation containing original payment clearing details within 60 seconds.
+Scenario 2: Managerial Override for VIP Customer Exception
+1. NovaCart Prime VIP member (lifetime spend > ₹300,000) requests a return for a smartwatch (₹18,000) 9 days after delivery (2 days past the 7-day REF-001 claim window).
+2. L1 agent flags claim as out-of-window and routes file to L3 Support Manager via Escalation Level 3.
+3. Manager reviews account history in shield.novacart.internal, confirms high lifetime value and zero prior return abuse flags, and executes an EXC-VIP policy override.
+4. Manager inputs mandatory narrative justification in crm.novacart.internal, applies dual-token co-signoff, and sets status to REFUND_APPROVED.
+Frequently Asked Questions (FAQs)
+Q1: How long does it take for NovaCart to approve a refund after an item is returned?
+Answer: Returns received at our fulfillment center undergo physical Quality Inspection (QI) within 24 hours. If the item passes inspection, your refund is approved automatically within 1 hour of inspection completion (Refer to REF-002, REF-004).
+Q2: Why was a partial deduction made from my approved refund amount?
+Answer: Partial deductions occur if a returned item is missing original inbox accessories (e.g., power adapters, remote controls) or if the original manufacturer packaging is severely damaged or missing. The exact deduction reflects the standard replacement value of the missing component (Refer to REF-004).
+Q3: Can a customer appeal a rejected refund decision?
+Answer: Yes. If your refund request is rejected, you may file a formal appeal within 7 calendar days through Customer Support by providing additional evidence (e.g., clear unboxing video or official brand service technician report). A Senior QA Lead will review the file for a final ruling (Refer to SUP-001).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of REF-005. Established refund approval decision pipelines, approval authority matrices (Tiers 0–4), exception frameworks (EXC-VIP through EXC-LGL), partial deduction rules, and audit documentation standards.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* ORD-001: Order Lifecycle Management Policy
+* ORD-002: Order Cancellation Policy
+* SHIP-006: Lost Shipment Investigation Policy
+* PAY-003: Refund Payment Processing Policy
+* REF-001: Master Refund Eligibility Rules
+* REF-002: Return & Exchange Policy
+* REF-003: Replacement Policy
+* REF-004: Return Inspection & Quality Assessment Policy
+* SEC-001: Account Security & Access Control
+* SEC-004: Fraud Detection Framework

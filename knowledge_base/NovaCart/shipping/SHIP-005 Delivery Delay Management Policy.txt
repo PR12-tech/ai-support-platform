@@ -1,0 +1,214 @@
+﻿SHIP-005: Delivery Delay Management Policy
+Document Header
+* Document Title: Delivery Delay Management Policy
+* Document ID: SHIP-005
+* Version: 1.0.0
+* Document Category: Shipping
+* Classification: Internal / Public Operational Standard
+* Department Owner: Logistics & Supply Chain
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Logistics, Operations Director, Customer Experience Director
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Delivery Delay, Delay Detection, Carrier Trace, Estimated Time of Arrival, ETA Recalculation, Delay Compensation, Proactive Notification, Non-Delivery Report
+Purpose
+This document establishes the official enterprise policy, operational detection standards, carrier trace workflows, customer communication protocols, and compensation guidelines governing shipment delays within NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It defines delay classifications, severity thresholds, automated tracking exception triggers, carrier SLA auditing, and resolution options for shipments exceeding their projected Estimated Time of Arrival (ETA) windows.
+As a core operational document (SHIP-005) in the NovaCart Enterprise Knowledge Base (NEKB), SHIP-005 enforces proactive delay intervention across fulfillment centers (FCs), third-party logistics (3PL) partners, Customer Support teams, and the Transportation Management System (api.novacart.internal/tms), maintaining complete consistency with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, and SHIP-001 through SHIP-004.
+Scope
+This policy applies to all active domestic and international shipments managed by NovaCart across India (IN), Singapore (SG), and the United Arab Emirates (UAE) across all service tiers (Standard, Express, Same-Day, Scheduled) and fulfillment models (1P Direct Distribution and 3P Marketplace Merchants).
+Coverage Includes
+* Automated delay identification and telemetry monitoring within tms.novacart.internal.
+* Proactive customer alert dispatch and dynamic ETA recalculation algorithms.
+* Carrier trace escalation protocols and linehaul bottleneck investigations.
+* Goodwill compensation authorization, shipping fee refunds, and order replacement/cancellation pathways.
+Delivery Delay Overview
+NovaCart defines a Delivery Delay as any operational scenario where an active shipment fails to achieve doorstep delivery within the original committed delivery window displayed to the customer at order checkout and recorded in the Order Management System (api.novacart.internal/oms).
+Core Operational Principles
+1. Automated Early Interception: Detecting transit stalls, missed carrier hub scans, and operational bottlenecks using automated algorithms before the customer reports a delay.
+2. Proactive Customer Transparency: Informing customers automatically regarding revised delivery expectations, operational root causes, and updated ETAs.
+3. Structured Carrier Accountability: Auditing carrier transit performance against contractual SLAs and penalizing recurring lane delays.
+4. Fair Financial Remediation: Providing automatic fee waivers, goodwill wallet credits, or cancellation options when delays exceed strict operational thresholds.
+Types of Delivery Delays
+Delivery delays are categorized by origin root cause and operational severity:
+* Warehouse Processing Delays (Pre-Dispatch): Inability to pick, pack, or dispatch an order from an FC within the mandated SLA window due to inventory mismatches, peak volume surges, or packaging station downtime.
+* Carrier Logistics Delays (In-Transit): Linehaul transport breakdowns, airport sorting hub backlogs, route mis-sorts, or driver shortages encountered within 3PL networks.
+* Environmental & Force Majeure Delays: Severe weather events (monsoons, sandstorms), natural disasters, civic disruptions, highway closures, or airport ground stops.
+* Regulatory & Customs Delays: Cross-border customs holds, import document checks, or tax payment verification halts (Refer to SHIP-002).
+* Address & Access Delays: Incomplete delivery addresses, incorrect phone numbers, security gate entry refusals, or recipient unreachability at the doorstep (Refer to SHIP-001).
+Delay Classification Matrix
+Severity Level
+	Delay Threshold Criteria
+	Typical Root Causes
+	Primary System Action
+	Target Resolution SLA
+	Level 1 (Minor)
+	$12\text{ to }24\text{ Hours}$ past original ETA
+	Local sorting hub mis-sort, traffic gridlock, minor FC packaging backlog.
+	Automated ETA recalculation; customer SMS alert.
+	$< 24\text{ Hours}$
+	Level 2 (Moderate)
+	$24\text{ to }72\text{ Hours}$ past original ETA
+	Linehaul vehicle breakdown, severe weather, courier NDR re-attempt sequence.
+	Auto-assigns DELIVERY_DELAYED status; opens carrier trace ticket.
+	$< 12\text{ Hours}$ (Trace)
+	Level 3 (Severe)
+	$> 72\text{ Hours}$ past original ETA OR $> 96\text{ Hours}$ without scan
+	Major weather disaster, lost linehaul parcel, unhandled customs hold, FC stock-out.
+	Escalates to P2 High Priority support queue; auto-triggers compensation.
+	$< 4\text{ Hours}$ (Resolution)
+	Delay Detection Process
+Shipment telemetry is monitored continuously by the TMS Exception Tracking Module (api.novacart.internal/tms/exceptions):
+1. Telemetry Stream Audit: TMS continuously ingests 3PL carrier webhooks and FC dispatch logs (Refer to ORD-004).
+2. Milestone SLA Evaluation: The system evaluates active package progress against standard transit milestones.
+3. Automated Delay Exception Trigger:
+   * If an Express (SRV-EXP) or Same-Day (SRV-SDY) parcel misses a intermediate milestone by $> 2\text{ hours}$, TMS flags a Level 1 exception.
+   * If a Standard (SRV-STD) parcel shows no scan activity for $> 24\text{ hours}$ (Domestic) or $> 48\text{ hours}$ (International), TMS flags a Level 2 exception.
+4. Status Tag Update: TMS automatically updates parcel tracking status to DELIVERY_DELAYED and recalculates a dynamic new ETA.
+Customer Notification Process
+Proactive notification prevents unnecessary customer support inquiries and maintains trust:
+1. System Event Trigger: Upon state update to DELIVERY_DELAYED, an automated payload is sent to api.novacart.internal/notify.
+2. Multi-Channel Dispatch: The system dispatches personalized notifications across Email, SMS, WhatsApp, and In-App Push alerts.
+3. Content Standards: Alerts must state the specific delay reason, revised delivery window, direct tracking link, and available resolution options.
+Customer Notification Matrix
+Delay Level
+	Trigger Condition
+	Notification Channels
+	Message Content Summary
+	Level 1 (Minor)
+	ETA extended by $12\text{ to }24\text{ hrs}$
+	SMS + In-App Push
+	"Update on Order #[ID]: Your shipment is slightly delayed in transit. Revised ETA: [New Date]. Track live: [Link]"
+	Level 2 (Moderate)
+	ETA extended by $> 24\text{ hrs}$
+	Email + SMS + WhatsApp
+	"Important update on Order #[ID]: Your parcel has encountered a transit delay at [Hub]. New ETA: [New Date]. We are actively tracing your shipment."
+	Level 3 (Severe)
+	ETA extended by $> 72\text{ hrs}$
+	Email + Phone Call (CSR)
+	"Apology for severe delay on Order #[ID]: We are actively investigating your shipment. You may opt for an immediate replacement, full refund, or goodwill credit."
+	Internal Investigation Process
+When a shipment reaches Level 2 or Level 3 delay severity, an internal investigation is initiated automatically:
+1. Carrier Trace Ticket Generation: TMS automatically creates an urgent trace ticket in the carrier management portal (tms.novacart.internal/carrier-traces).
+2. Physical Location Audit: The 3PL carrier must perform a physical package scan at the last known sorting hub or vehicle location within 4 hours of ticket issuance.
+3. Trace Outcomes & Next Steps:
+   * Parcel Located: Carrier expedites package on the next direct linehaul vessel; TMS updates tracking status and alerts customer.
+   * Parcel Unlocated ($> 96\text{ Hours}$ No Scan): Logistics declares the shipment lost, transitioning status to CANCELLED_LOST_IN_TRANSIT (Refer to SHIP-006).
+Carrier Coordination
+* Carrier SLA Penalties: Contracted 3PL carriers that exceed agreed transit SLAs on $> 3\%$ of monthly lane volume incur a 10% shipping fee deduction on affected waybills.
+* Linehaul Re-Routing: If a primary 3PL carrier experiences a major sorting hub breakdown, TMS automatically re-routes subsequent outbound FC dispatch volume to secondary carrier networks.
+Customer Support Responsibilities
+Customer Support Representatives (CSRs) managing delay inquiries in crm.novacart.internal must follow strict handling rules:
+1. Identity Verification: Perform standard identity verification prior to disclosing shipment details (Refer to SUP-001).
+2. Check TMS Carrier Logs: Review real-time carrier trace notes and internal hub logs before responding.
+3. Apply Approved Language: Utilize empathetic, professional phrasing from SUP-002; never make speculative delivery promises.
+4. Issue Authorized Compensation: Execute fee waivers or goodwill credits within authorized financial limits (Refer to SUP-001, SUP-003).
+Resolution Options
+When a delivery delay exceeds Level 2 severity ($> 24\text{ hours}$ past ETA), customers are entitled to specific operational remedies:
+Resolution Options Matrix
+Delay Scenario
+	Customer Option 1
+	Customer Option 2
+	Customer Option 3
+	Policy Reference
+	Express / Priority Delay ($> 2\text{ Hours}$)
+	Full Express Fee Refund + ₹250 Wallet Credit
+	Free Reschedule to Next Slot
+	Order Cancellation & 100% Refund
+	SHIP-003, SUP-005
+	Standard Delay ($24\text{ to }72\text{ Hours}$)
+	₹100 Goodwill Credit + Dynamic Tracking Update
+	Address / Slot Modification
+	Standard In-Transit Wait
+	ORD-003, SHIP-001
+	Severe Delay ($> 72\text{ Hours}$)
+	Free Priority Replacement Dispatch
+	Order Cancellation & 100% Full Refund
+	₹500 Goodwill Credit + Extended Wait
+	ORD-002, REF-001
+	Lost in Transit ($> 96\text{ Hours}$ No Scan)
+	Immediate Replacement Dispatch
+	Order Cancellation & 100% Full Refund
+	Not Applicable
+	SHIP-006, REF-001
+	Compensation Guidelines
+To remediate customer frustration caused by delivery delays, NovaCart enforces standardized compensation parameters:
+* Automatic Express Fee Refund: Any Express (SRV-EXP), Same-Day (SRV-SDY), or Scheduled (SRV-SCH) order delivered past its committed window automatically receives a 100% refund of the shipping fee charged at checkout (Refer to SHIP-003, SHIP-004).
+* Goodwill Wallet Credits:
+   * Standard Delivery delay $> 48\text{ hours}$: ₹100 / $3 / AED 10 credit deposited to NovaCart Wallet.
+   * Standard Delivery delay $> 72\text{ hours}$: ₹250 / $5 / AED 15 credit deposited to NovaCart Wallet.
+   * Severe / High-Value item delay $> 72\text{ hours}$: ₹500 / $10 / AED 30 credit deposited to NovaCart Wallet.
+Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Delay Management Responsibilities
+	Primary Portal Used
+	Primary SLA Target
+	Logistics & Supply Chain
+	Monitors exception dashboards; manages 3PL trace tickets; executes carrier SLA penalties.
+	tms.novacart.internal
+	Carrier trace response $< 4\text{ Hours}$
+	Warehouse Operations
+	Clears FC packing backlogs; fast-tracks re-pick requests for lost/damaged delayed items.
+	wms.novacart.internal
+	FC processing queue $< 2\text{ Hours}$
+	Customer Support
+	Handles customer delay inquiries; issues authorized credits; executes cancellations.
+	crm.novacart.internal
+	Priority Chat FRT $< 15\text{ Secs}$
+	Finance Operations
+	Reconciles shipping fee refunds, wallet credits, and carrier penalty deductions.
+	ledger.novacart.internal
+	Auto-credit processing $< 24\text{ Hours}$
+	Business Rules
+Rule 1: Mandatory Delay Notification SLA
+Customers must be notified via SMS/Email of a revised delivery ETA within 2 hours of the system flagging a Level 2 (DELIVERY_DELAYED) exception in TMS. Unnotified delays constitute an operational SLA breach.
+Rule 2: Unconditional Cancellation Right for Severe Delays
+If a domestic shipment's ETA is extended by more than 72 hours past the original commitment (or 14 days for international shipments), the customer gains the non-discretionary right to cancel the order for a 100% full refund, even if the parcel is actively in transit. Logistics handles carrier recall (RTO) upon cancellation execution (Refer to ORD-002, REF-001).
+Rule 3: Force Majeure Declaration
+During major natural disasters, civic shutdowns, or airport closures, the Chief Operating Officer may declare a "Force Majeure Delay Event." During such events, public banners display updated delivery expectations, automated compensation rules are suspended, and dedicated customer update broadcasts are initiated.
+Exception Handling
+* Carrier Intercept Failure During Cancellation: If a customer cancels an order delayed by $> 72\text{ hours}$, but the carrier fails to intercept the parcel and attempts doorstep delivery, the customer is instructed to refuse delivery. Upon rider NDR logging, Finance processes a full refund (Refer to ORD-002, REF-001).
+* Customs Hold Exceeding 5 Days: If an international shipment is held in customs due to regulatory inspection (and not customer document non-compliance), Support proactively offers the customer an immediate replacement or full refund under SHIP-002.
+Practical Examples
+Scenario 1: Proactive Delay Management for Standard Transit
+1. A laptop shipped from Bangalore to Delhi encounters a highway linehaul vehicle breakdown.
+2. TMS Exception Module detects missing hub scan at 24 hours. Status updates to DELIVERY_DELAYED.
+3. System recalculates ETA (+24 hours) and dispatches automated SMS and Email to the customer explaining the transit delay.
+4. Carrier resolves breakdown; package arrives at destination hub next morning. Package delivers 24 hours past original ETA.
+5. System auto-deposits a ₹100 goodwill credit into customer's NovaCart Wallet upon POD registration.
+Scenario 2: Severe Delay Cancellation & Full Refund
+1. An express order for a smartphone in Dubai is delayed at the airport sorting hub due to a carrier system failure.
+2. The delay reaches 72 hours past the guaranteed ETA window. TMS escalates ticket to Customer Support.
+3. Customer contacts Support requesting order cancellation.
+4. CSR verifies delay exceeds 72 hours, executes immediate 100% refund (AED 1,200) in crm.novacart.internal, and issues a carrier recall command (RTO) in TMS (Refer to ORD-002, SUP-001).
+Frequently Asked Questions (FAQs)
+Q1: How can I check why my delivery is delayed?
+Answer: Log into your NovaCart account and select My Orders. Click Track Package to view real-time carrier trace notes, specific delay root causes, and updated Estimated Delivery Dates (Refer to ORD-004).
+Q2: What happens if my express order arrives later than the guaranteed delivery date?
+Answer: If an Express or Priority order arrives past its committed delivery window, NovaCart automatically refunds your express shipping fee in full and deposits a ₹250 / $5 / AED 15 goodwill credit into your account wallet (Refer to SHIP-003, SUP-005).
+Q3: Can I change my delivery address if my order is delayed in transit?
+Answer: Yes. If an order encounters a Level 2 delay ($> 24\text{ hours}$), you may request a delivery address update within the same regional postal zone via Customer Support (Refer to ORD-003, SHIP-007).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of SHIP-005. Established delay classification levels, automated detection protocols, customer alert matrices, carrier trace SLAs, and compensation guidelines.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-005: Customer Support SLA Policy
+* ORD-001: Order Lifecycle Management Policy
+* ORD-002: Order Cancellation Policy
+* ORD-004: Order Tracking Policy
+* SHIP-001: Domestic Shipping Policy
+* SHIP-002: International Shipping Policy
+* SHIP-003: Express & Priority Shipping Policy
+* SHIP-006: Lost Shipments Protocol
+* REF-001: Master Refund Eligibility Rules

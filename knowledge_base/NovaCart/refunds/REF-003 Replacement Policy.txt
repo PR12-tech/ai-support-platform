@@ -1,0 +1,278 @@
+﻿REF-003: Replacement Policy
+Document Header
+* Document Title: Replacement Policy
+* Document ID: REF-003
+* Version: 1.0.0
+* Document Category: Refunds
+* Classification: Internal / Public Operational Standard
+* Department Owner: Returns & Reverse Logistics
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Reverse Logistics, Operations Director, Customer Experience Director
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Replacement Policy, Dead on Arrival, DOA, Defective Unit, Physical Transit Damage, Inventory Verification, Fast-Track Fulfillment, Reverse Pickup, Quality Inspection
+Purpose
+This document establishes the official enterprise policy, operational standards, inventory reservation workflows, replacement fulfillment procedures, and business rules governing product replacement requests at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It defines the end-to-end lifecycle of a replacement transaction after initial eligibility is confirmed under REF-001.
+As a core operational document (REF-003) in the Refunds category of the NovaCart Enterprise Knowledge Base (NEKB), REF-003 enforces standardized replacement execution across Customer Support tools, reverse logistics networks, and warehouse fulfillment engines (api.novacart.internal/oms), maintaining complete consistency with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, REF-001, and REF-002.
+Scope
+This policy applies universally to all physical merchandise replacement requests across NovaCart operating regions (India, Singapore, UAE), commercial channels (B2C Retail, B2B SMB, Corporate Accounts, NovaCart Prime Memberships), and product categories (CAT-ELE, CAT-MOB, CAT-GAM, CAT-APP, CAT-SMT).
+Coverage Includes
+* Replacement authorization for Dead on Arrival (DOA) units, manufacturing defects, transit damage, incomplete shipments, and wrong SKUs.
+* Inventory availability verification, soft-locking, and automated re-sourcing algorithms.
+* Replacement dispatch pipelines (Standard Replacement, Simultaneous Swap, Advance Replacement).
+* Inbound Quality Inspection (QI) of defective/damaged original units and serial number matching.
+* Resolution pathways for depleted replacement inventory, repeated replacements, and reverse transit loss.
+Out of Scope
+* Direct monetary refund processing (governed by PAY-003 and REF-001).
+* General preference-based size/color variant exchanges (governed by REF-002).
+* Post-window manufacturer warranty claims managed directly by brand service centers (governed by PROD-001).
+Replacement Policy Overview
+NovaCart prioritizes product replacements over order cancellations to restore customer utility rapidly when orders arrive damaged, defective, incomplete, or incorrect.
+
+
+
+
+
+
+<ElicitationsGroup message="To explore related refund eligibility, return workflows, or shipping policies further:">
+{/* Reason: Offers structured paths to navigate deeper into related domain policies. */}
+ <Elicitation label="Review REF-001 Refund Eligibility Policy" query="Show REF-001 Refund Eligibility Policy detailing initial claim qualifications." />
+ <Elicitation label="Review REF-002 Return & Exchange Policy" query="Show REF-002 Return & Exchange Policy detailing variant swaps." />
+ <Elicitation label="Examine SHIP-003 Express Shipping Policy" query="Show SHIP-003 Express Shipping Policy detailing priority replacement fulfillment." />
+</ElicitationsGroup>
+
+Core Operational Principles
+1. Fulfillment Priority: Replacement orders receive priority warehouse picking and fast-track courier dispatch (SRV-EXP) to minimize customer resolution time.
+2. Serial & Part Integrity: Replacement units must be identical factory-sealed SKUs possessing full manufacturer warranties, accessories, and documentation.
+3. Inventory Soft-Reservation: Automated soft-locking of replacement stock during the request authorization phase to guarantee availability before customer handover.
+4. Validation-Driven Resolution: Physical or digital evidence verification (technical logs, damage photos, or technician reports) is mandatory prior to replacement dispatch.
+Replacement Eligibility Criteria
+Product replacement qualification requires satisfying both claim time-window constraints (REF-001) and condition verification criteria.
+Replacement Eligibility Matrix
+Failure Condition
+	Product Scope
+	Valid Claim Window
+	Mandatory Evidence / Verification
+	Authorized Replacement Action
+	Dead on Arrival (DOA)
+	CAT-ELE, CAT-MOB, CAT-GAM, CAT-SMT
+	Within 7 Calendar Days of Delivery
+	Technical diagnostic log / video showing power failure
+	Priority Replacement Dispatch
+	Physical Transit Damage
+	All Physical Categories
+	Within 48 Hours of Delivery
+	Clear photos/videos of damaged box & item
+	Priority Replacement Dispatch
+	Manufacturing Defect
+	CAT-ELE, CAT-MOB, CAT-APP
+	Within 7–10 Calendar Days
+	Remote diagnostic ticket or technician report
+	Standard / Technician Replacement
+	Wrong Item Delivered
+	All Physical Categories
+	Within 7 Calendar Days of Delivery
+	Photo of outer box label & incorrect barcode
+	Immediate Swap & Collect Dispatch
+	Missing Components
+	All Physical Categories
+	Within 48 Hours of Delivery
+	Unboxing video / photos of open box contents
+	Component Dispatch or Full Replacement
+	Customer Misuse / Water
+	All Physical Categories
+	Any Timeframe
+	Physical inspection / liquid indicator triggered
+	REJECTED (Item returned to user)
+	Expired Claim Window
+	All Physical Categories
+	Past REF-001 Limits
+	None
+	REJECTED (Referred to Warranty)
+	Replacement Request Process
+When an eligible issue occurs, the replacement request lifecycle operates through structured system stages:
+1. Request Submission: The customer logs into My Orders, selects the affected Sub-Order ID, chooses Request Replacement, selects the defect/damage reason code, and uploads required media proof.
+2. Automated Evidence Verification: The Returns Engine (rma.novacart.internal) validates image metadata, delivery timestamps in api.novacart.internal/tms, and account history.
+3. Technical Assessment (where required):
+   * For CAT-SMT / CAT-ELE, Support executes a 5-minute remote diagnostic call (SUP-001).
+   * For CAT-APP (Large Appliances), an on-site technician visit is scheduled within 24 hours (PROD-004).
+4. Approval & Order Creation: Upon claim validation, OMS creates a child Replacement Sub-Order (e.g., NC-IN-88201-R1) linked permanently to the Parent Master Order (ORD-001, ORD-005).
+5. Reverse Collection & Dispatch Synchronization: Reverse courier pickup and replacement dispatch execute according to the assigned replacement model (Standard, Simultaneous Swap, or Advance Dispatch).
+Inventory Verification Process
+To prevent fulfillment delays caused by stock-outs, OMS executes a multi-stage inventory verification protocol:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        INVENTORY VERIFICATION PROTOCOL                            |
++-----------------------------------------------------------------------------------+
+| 1. REGIONAL HUB SEARCH | Query active stock at local FC within destination zone. |
+| 2. NATIONAL HUB SEARCH | Query primary FCs nationwide if local FC is depleted.     |
+| 3. SOFT-LOCK ALLOCATE  | Reserve 1 unit for 72 hours; emit WMS pick priority.     |
+| 4. UN-AVAILABLE ROUTE  | Trigger Out-of-Stock protocol if stock = 0 nationwide.    |
++-----------------------------------------------------------------------------------+
+
+Inventory Availability Matrix
+Stock Verification Result
+	Primary Inventory Source
+	Order Allocation SLA
+	Secondary System Action
+	Local FC Stock Available
+	Nearest Regional FC (BLR-01, DXB-01)
+	Immediate Soft-Lock ($< 1\text{ Min}$)
+	Dispatches via local Express Fleet (SRV-EXP).
+	National FC Stock Available
+	Secondary FC (DEL-02, BOM-01)
+	Soft-Lock within 15 Mins
+	Dispatches via priority surface/air linehaul.
+	3P Merchant Stock Available
+	Marketplace Merchant Inventory
+	Merchant SLA Ack $< 12\text{ Hrs}$
+	Emits mandatory pickup order to 3P seller.
+	Nationwide Stock Depleted
+	Out of Stock Nationwide
+	Immediate Alert to Customer
+	System offers: [1] Alternate Color/Model, [2] Full Refund.
+	Replacement Approval Workflow
+System authorization rules govern approval permissions based on item valuation:
+* Level 1 (Auto-Approval): Items valued $\le \text{INR } 2,500$ / $\text{SGD } 40$ / $\text{AED } 110$ with valid photo proof are approved automatically by rma.novacart.internal without human intervention.
+* Level 2 (CSR Approval): Items valued up to $\text{INR } 25,000$ / $\text{SGD } 400$ / $\text{AED } 1,100$ require L1 Customer Support Representative (CSR) verification of damage photos or diagnostic logs (SUP-001).
+* Level 3 (Management Approval): High-value electronics (CAT-ELE, CAT-MOB, CAT-APP) exceeding $\text{INR } 25,000$ / $\text{SGD } 400$ / $\text{AED } 1,100$ require L2 Support Specialist co-signoff and technician diagnostic verification (SUP-003, PROD-004).
+Replacement Shipment Process
+NovaCart operates three distinct replacement shipping models tailored to item category, customer tier, and risk level:
+1. Standard Replacement (Default): Reverse courier collects the defective/damaged original item. Upon warehouse receipt and Quality Inspection (QI) pass at the FC (INSPECTION_PASSED), the replacement unit dispatches automatically via Express Shipping (SRV-EXP).
+2. Simultaneous "Swap & Collect" (Express Delivery): The courier rider arrives with the replacement package, verifies the original item's physical condition and serial number at the doorstep, hands over the replacement box, and collects the original unit in a single visit.
+3. Advance Replacement (NovaCart Prime VIPs & Corporate Accounts): The replacement unit dispatches immediately prior to return collection. The customer agrees to hand over the original defective unit within 5 business days, failing which the customer's payment method is charged for the replacement unit value (PAY-001).
+Replacement Timeline Matrix
+Replacement Model
+	Reverse Pickup SLA
+	Inbound QI SLA
+	Replacement Dispatch SLA
+	Target Total Resolution Window
+	Simultaneous Swap & Collect
+	$< 48\text{ Hours}$
+	Doorstep Verification
+	Immediate Handover
+	$24\text{ to }48\text{ Hours}$ Total
+	Advance Replacement (VIP)
+	$< 5\text{ Days}$
+	Post-Receipt Audit
+	Immediate Dispatch
+	$24\text{ to }36\text{ Hours}$ Total
+	Standard Replacement
+	$< 48\text{ Hours}$
+	$< 24\text{ Hours}$ post-receipt
+	$< 12\text{ Hours}$ post-QI
+	$3\text{ to }5\text{ Business Days}$
+	Large Appliance On-Site
+	Technician Visit $< 24\text{ hrs}$
+	On-Site Assessment
+	$< 48\text{ Hours}$ post-report
+	$3\text{ to }4\text{ Business Days}$
+	Customer Responsibilities
+Customers requesting a product replacement must comply with the following operational mandates:
+1. Accurate Defect Disclosures: Provide truthful descriptions and clear photo/video evidence of the defect or damage. False claims trigger account warning flags (SEC-004).
+2. Data & Lock Removal: Completely erase personal data, accounts (iCloud, Google, Samsung Account), and security PINs/passwords from mobile devices (CAT-MOB) and laptops (CAT-ELE) prior to return collection.
+3. Inclusion of Original Accessories: Hand over the defective item complete with its original manufacturer box, power adapters, cables, remote controls, manuals, and free promotional items.
+4. Doorstep Presence: Ensure an authorized adult is present during the scheduled pickup/swap window with the original item ready for courier inspection.
+Merchant Responsibilities
+Marketplace merchants (3P sellers) fulfilling replacement requests must adhere to strict service levels:
+1. Inventory Reservation SLA: Reserve replacement stock within 6 business hours of receiving an automated replacement notification from rma.novacart.internal.
+2. Dispatch SLA: Pack and dispatch approved replacement units within 24 hours of reverse item dock arrival.
+3. Depletion Notification: If replacement stock is depleted, the merchant must notify NovaCart Support within 6 hours to enable immediate customer conversion to a full refund (REF-001, PAY-003).
+Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Replacement Responsibilities
+	Primary System Portal
+	SLA Target
+	Customer Support
+	Validates claim evidence; conducts remote troubleshooting; authorizes replacement orders.
+	crm.novacart.internal
+	Claim decision $< 12\text{ Hours}$
+	Returns & Reverse Logistics
+	Conducts inbound Quality Inspection (QI); verifies serial numbers; manages doorstep swaps.
+	rma.novacart.internal
+	Inbound QI $< 24\text{ Hours}$
+	Warehouse Operations
+	Fast-tracks replacement picks; logs replacement serial numbers; handles priority staging.
+	wms.novacart.internal
+	FC Pick & Pack $< 12\text{ Hours}$
+	Logistics & Fleet
+	Executes doorstep Swap & Collect runs; manages priority express dispatch (SRV-EXP).
+	tms.novacart.internal
+	On-Time Delivery $\ge 98\%$
+	Business Rules
+Rule 1: Serial Number Matching Mandate
+No replacement order file shall be closed, nor shall an advance replacement hold be released, if the serial number or IMEI of the returned unit fails to match the outbound dispatch log stored in wms.novacart.internal. Mismatched units are rejected and re-routed back to the customer (REF-001, REF-005).
+Rule 2: Maximum Replacement Cap
+An individual order item may be replaced a maximum of two (2) times for consecutive defects. If the second replacement unit also exhibits a manufacturing defect, the system automatically blocks further replacements and converts the resolution to a 100% Full Refund including all shipping fees (REF-001, PAY-003).
+Rule 3: Product Condition Verification Standards
+Returned original units must satisfy strict condition parameters during Quality Inspection (QI) at the FC:
+Product Condition Matrix
+Inspection Parameter
+	Pass Criteria (Eligible for Replacement File Closure)
+	Fail Criteria (Replacement Fee Charged / Refund Reverted)
+	Defect Verification
+	Reported defect or transit damage confirmed by FC testing.
+	Item fully functional; "defect" was user configuration error.
+	Serial / IMEI Match
+	Serial matches outbound dispatch log in WMS.
+	Serial number altered, removed, or mismatched (REF-001).
+	Account Locks
+	All cloud accounts and screen security locks removed.
+	Device locked with user password or iCloud/Google lock.
+	Physical Integrity
+	No customer-induced liquid, drop, or structural damage.
+	Evidence of unauthorized repair, broken seals, or liquid exposure.
+	Exception Handling
+* Replacement Inventory Depletion: If a replacement request is approved but inventory depletes across all FCs and merchants before dispatch, OMS halts fulfillment automatically. Support contacts the customer within 2 hours to offer: (1) an upgraded model at no additional charge, (2) an alternate color variant, or (3) an immediate 100% full refund via PAY-003.
+* Replacement Order Lost in Transit: If a replacement shipment is declared lost in transit by carrier trace under SHIP-006, OMS automatically dispatches a second replacement unit via Express Shipping (SRV-EXP) without awaiting carrier insurance claims.
+* Inspection Rejection (User-Induced Damage): If a returned original unit fails Quality Inspection due to liquid damage or serial mismatch, the replacement order is cancelled (or charged to the customer if advance dispatched). The original item is shipped back to the customer with an inspection report attached.
+Practical Examples
+Scenario 1: Dead on Arrival (DOA) Smartphone Replacement
+1. Customer in Bangalore receives a smartphone (CAT-MOB) at 11:00 AM. The device fails to power on or take a charge.
+2. Customer submits a replacement request via the app at 01:00 PM, attaching a video demonstrating power failure.
+3. Support verifies evidence, confirms order is within 7 days, and approves a "Swap & Collect" replacement (NC-IN-88201-R1).
+4. Next day at 02:00 PM, express rider arrives with new sealed smartphone box, verifies original device IMEI, hands over new box, and collects original unit. Total resolution time: 25 hours.
+Scenario 2: Large Appliance On-Site Technician Replacement
+1. Customer in Dubai receives a washing machine (CAT-APP) that displays a drum motor error upon first cycle.
+2. Customer logs a replacement request. OMS schedules an on-site technician visit for next morning.
+3. Brand technician visits, inspects unit, confirms factory motor fault, and issues digital DOA Certificate DOA-DXB-99201.
+4. System verifies report in crm.novacart.internal, approves replacement, and dispatches a new washing machine from FC DXB-01 along with free removal of the defective unit (PROD-004).
+Frequently Asked Questions (FAQs)
+Q1: Will I be charged extra shipping fees for a product replacement?
+Answer: No. All approved product replacements for damaged, defective, wrong, or incomplete items are processed completely free of charge, including reverse collection and express outbound delivery of the replacement unit (Refer to SHIP-001, SHIP-003).
+Q2: What happens if the item I need replaced is out of stock?
+Answer: If replacement stock is depleted nationwide, Customer Support will contact you to offer an upgraded model at no extra charge, an alternate color variant, or an immediate 100% full refund to your original payment method (Refer to REF-001, PAY-003).
+Q3: Can I request a refund instead of a replacement if my item arrives defective?
+Answer: Yes. If your item arrives Dead on Arrival (DOA), damaged, or defective within the valid claim window, you have the absolute right to choose between a free product replacement or a 100% full refund (Refer to REF-001).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of REF-003. Established replacement eligibility criteria, inventory soft-locking workflows, Swap & Collect rules, DOA timelines, and condition verification matrices.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* ORD-001: Order Lifecycle Management Policy
+* ORD-005: Split Order Management Policy
+* SHIP-001: Domestic Shipping Policy
+* SHIP-003: Express & Priority Shipping Policy
+* SHIP-006: Lost Shipment Investigation Policy
+* PAY-003: Refund Payment Processing Policy
+* REF-001: Master Refund Eligibility Rules
+* REF-002: Return & Exchange Policy
+* PROD-001: Warranty Validation Policy
+* PROD-004: Product Installation SOP

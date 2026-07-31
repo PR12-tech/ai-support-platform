@@ -1,0 +1,275 @@
+﻿ORD-002: Order Cancellation Policy
+Document Header
+* Document Title: Order Cancellation Policy
+* Document ID: ORD-002
+* Version: 1.0.0
+* Document Category: Orders
+* Classification: Internal
+* Department Owner: Operations & Customer Support
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Logistics, VP of Finance Operations, Customer Experience Director
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Order Cancellation, Eligibility Matrix, Auto-Cancellation, System Cancellation, Pre-Dispatch, Post-Dispatch, Refund Triggers, Split Order Cancellation
+Purpose
+This document defines the official enterprise policy and operational rules governing order cancellations at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes customer eligibility criteria, seller cancellation parameters, automated system cancellation triggers, pre-dispatch vs. post-dispatch handling, approval hierarchies, refund execution, and departmental responsibilities.
+As an essential operational document (ORD-002) in the NovaCart Enterprise Knowledge Base (NEKB), ORD-002 ensures deterministic execution across customer self-service portals, Customer Support Representative (CSR) tooling, and automated backend Order Management System (api.novacart.internal/oms) services, working in strict alignment with ORD-001, PAY-001, REF-001, SHIP-001, and SUP-001.
+Scope
+This policy applies to all purchase cancellations across NovaCart operating regions (India, Singapore, UAE), customer tiers (B2C Retail, B2B SMB, Corporate Enterprise Accounts, NovaCart Prime Memberships), and product categories (CAT-ELE, CAT-MOB, CAT-GAM, CAT-APP, CAT-SMT, CAT-SFT, CAT-GFT, CAT-SUB).
+Coverage Includes
+* Customer-initiated cancellations via self-service web/app portals or Customer Support.
+* Merchant/seller-initiated cancellations due to stock mismatches or fulfillment failures.
+* System-initiated automatic cancellations driven by payment time-outs, fraud risk, or unverified Cash on Delivery (COD) orders.
+* Partial cancellations for Split Orders and multi-item purchases.
+* Approval authorization thresholds for high-value and non-standard cancellation claims.
+Cancellation Objectives
+NovaCart manages order cancellations under four primary operational objectives:
+1. Customer Empowerment: Provide seamless, instant self-service cancellation options for pre-dispatch orders without mandatory CSR intervention.
+2. Inventory Reclaim Velocity: Instantly release locked inventory back to active sales channels upon cancellation to maintain catalog precision.
+3. Automated Refund Processing: Eliminate administrative delays by triggering automated payment reversals immediately upon cancellation verification.
+4. Fulfillment Cost Containment: Intercept packaging and logistics operations prior to carrier handover to eliminate unrecoverable shipping expenses.
+Customer Cancellation Eligibility
+A customer's right to cancel a transaction depends on the order's active status within the Order Management System (OMS) and the product category purchased.
+Cancellation Eligibility Matrix
+Product Category Code
+	Category Description
+	Pre-Dispatch Eligibility (PENDING_PAYMENT to READY_FOR_DISPATCH)
+	Post-Dispatch Eligibility (SHIPPED / OUT_FOR_DELIVERY)
+	Post-Delivery Eligibility (DELIVERED)
+	CAT-ELE
+	Consumer Electronics
+	Eligible (Self-Service / CSR)
+	Ineligible (Must refuse delivery or request return)
+	Ineligible for Cancellation (Governed by REF-001 Return Policy)
+	CAT-MOB
+	Mobile & Accessories
+	Eligible (Self-Service / CSR)
+	Ineligible (Must refuse delivery or request return)
+	Ineligible for Cancellation (Governed by REF-001 Return Policy)
+	CAT-GAM
+	Gaming & Entertainment
+	Eligible (Self-Service / CSR)
+	Ineligible (Must refuse delivery or request return)
+	Ineligible for Cancellation (Governed by REF-001 Return Policy)
+	CAT-APP
+	Home Appliances
+	Eligible (Self-Service / CSR)
+	Ineligible (Must refuse delivery or request return)
+	Ineligible for Cancellation (Governed by REF-001 Return Policy)
+	CAT-SMT
+	Smart Home Devices
+	Eligible (Self-Service / CSR)
+	Ineligible (Must refuse delivery or request return)
+	Ineligible for Cancellation (Governed by REF-001 Return Policy)
+	CAT-SFT
+	Digital Software Keys
+	Ineligible once key is revealed; Eligible if key remains unrevealed.
+	Not Applicable (Instant Digital Activation)
+	Ineligible (Non-Refundable per REF-006)
+	CAT-GFT
+	Digital Gift Cards
+	Ineligible once voucher code is generated and issued to account.
+	Not Applicable (Instant Digital Activation)
+	Ineligible (Non-Refundable per REF-006)
+	CAT-SUB
+	Prime Subscriptions
+	Eligible within 48 hours if no membership benefits have been utilized.
+	Not Applicable
+	Pro-rated refund rules apply (Refer to ORD-001)
+	Merchant Cancellation Policy
+Third-party marketplace merchants and direct 1P fulfillment centers must adhere to strict cancellation guidelines to maintain catalog integrity and prevent buyer disappointment.
+Merchant Cancellation Rules
+1. Out-of-Stock Mandatory Cancellation: If a merchant cannot fulfill an order due to an inventory mismatch, they must initiate a merchant cancellation within 6 business hours of order placement.
+2. Cancellation Penalty Fee: Merchants that cancel an order due to stock-outs or pricing errors are assessed a merchant penalty fee equal to 5% of the item GMV (minimum ₹200 / $5 / AED 15), automatically deducted from their next payout settlement.
+3. Seller Reliability Index Impact: Frequent merchant-initiated cancellations ($> 1.5\%$ of monthly order volume) trigger an automated account review by Sales and may result in catalog suspension.
+System-Initiated Cancellation
+The NovaCart platform executes automated system cancellations (CANCELLED_SYSTEM) under explicit, deterministic risk and operational conditions:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        AUTOMATED SYSTEM CANCELLATION TRIGGERS                     |
++-----------------------------------------------------------------------------------+
+| Trigger Event            | System Timeout / Criteria     | Target Status Updated  |
++--------------------------+-------------------------------+------------------------+
+| Payment Authorization Drop| 15 Minutes Unpaid            | CANCELLED_PAYMENT_TIMEOUT|
+| Fraud Risk Override      | High SIEM / Shield Fraud Score| CANCELLED_FRAUD_PREVENTION|
+| Unverified COD Order     | 24 Hours Unconfirmed OTP      | CANCELLED_UNVERIFIED_COD|
+| Carrier Transit Loss     | 96 Hours No Scan / Declared   | CANCELLED_LOST_IN_TRANSIT|
+| Warehouse Stock-Out      | Physical Pick Failure         | CANCELLED_NO_STOCK     |
++-----------------------------------------------------------------------------------+
+
+Cancellation Rules by Order Status
+The operational execution of a cancellation varies according to the exact lifecycle state of the order in api.novacart.internal/oms.
+Order Status vs. Cancellation Rules
+Active Order Status Tag
+	Cancellation Permissible?
+	Execution Channel
+	Operational Workflow & System Action
+	Primary Impact on Inventory & Shipping
+	PENDING_PAYMENT
+	Yes
+	Self-Service / System
+	Payment soft lock released instantly. Order record marked CANCELLED.
+	Inventory soft reservation released to live catalog. No shipping impact.
+	PAYMENT_CONFIRMED
+	Yes
+	Self-Service / CSR
+	OMS revokes fulfillment instruction. Financial ledger triggers 100% refund.
+	Inventory lock released in WMS. No shipping impact.
+	INVENTORY_RESERVED
+	Yes
+	Self-Service / CSR
+	WMS cancels wave pick task. Financial ledger triggers 100% refund.
+	Bin lock removed in WMS. No shipping impact.
+	PROCESSING
+	Yes
+	Self-Service / CSR
+	WMS alerts picking operator to drop item at returns staging station.
+	Item returned to FC active storage bin. No shipping impact.
+	PACKED
+	Yes
+	Self-Service / CSR
+	WMS flags barcode as cancelled. De-palletizes parcel at shipping dock.
+	Packaging dismantled; item returned to FC bin. No shipping impact.
+	READY_FOR_DISPATCH
+	Yes
+	Self-Service / CSR / L2
+	WMS revokes manifest; prevents driver pickup. FC unpacks parcel.
+	Item returned to FC bin. Shipping manifest updated.
+	SHIPPED
+	No (Direct Cancel)
+	L2 Logistics Override
+	Direct cancellation locked. Agent requests carrier "Intercept / Return to Origin (RTO)."
+	Carrier returns parcel to FC. Refund issued upon physical FC receipt minus shipping fees.
+	OUT_FOR_DELIVERY
+	No (Direct Cancel)
+	Customer / Rider
+	Direct cancellation locked. Customer must refuse parcel at doorstep.
+	Delivery rider logs NDR (Refused). Parcel returned to FC. Refund issued upon receipt.
+	DELIVERED
+	No
+	Not Applicable
+	Order phase concluded. Customer must initiate a formal Return (RMA) under REF-001.
+	Governed by REF-001 Return Policy rules.
+	Refund Processing After Cancellation
+Financial refunds resulting from order cancellations are processed back to the customer's original payment method in accordance with PAY-001 and REF-001 guidelines.
+Refund Trigger Matrix
+Cancellation Initiator
+	Cancellation Stage
+	Refund Percentage
+	Processing Timeline
+	Target Payment Destination
+	Customer
+	Pre-Dispatch (PENDING_PAYMENT to READY_FOR_DISPATCH)
+	100% Full Refund (Includes item price, taxes, and shipping fees)
+	Instant Wallet / 3–5 Business Days Card/Bank
+	Original Payment Instrument / Platform Wallet
+	Customer
+	Post-Dispatch Intercept / Doorstep Refusal
+	Item Price + Taxes (Outbound shipping fee non-refundable)
+	3–5 Business Days from FC Return Receipt
+	Original Payment Instrument / Platform Wallet
+	Merchant / 1P FC
+	Any Pre-Dispatch Stage (Stock-out / Pricing Error)
+	100% Full Refund + ₹200 Goodwill Voucher
+	Instant Wallet / 3–5 Business Days Card/Bank
+	Original Payment Instrument / Platform Wallet
+	System Auto-Cancel
+	Payment Timeout / Unverified COD / Fraud
+	100% Full Refund (If funds were debited)
+	Instant Wallet / 3–5 Business Days Card/Bank
+	Original Payment Instrument / Platform Wallet
+	System Auto-Cancel
+	Lost in Transit
+	100% Full Refund or Priority Replacement
+	Instant Wallet / 3–5 Business Days Card/Bank
+	Original Payment Instrument / Platform Wallet
+	Department Responsibilities
+Order cancellation execution requires coordinated action across multiple functional departments:
+Department Responsibility Matrix
+Department Unit
+	Primary Cancellation Responsibilities
+	Primary System Portal
+	Primary SLA Target
+	Customer Support
+	Processes customer cancellation requests; handles cancellation disputes and high-value approvals.
+	crm.novacart.internal
+	$< 5\text{ Mins}$ (Chat) / $< 1\text{ Hr}$ (Email)
+	Finance Operations
+	Reconciles cancelled order ledgers; executes electronic payment reversals and wallet top-ups.
+	ledger.novacart.internal
+	$< 24\text{ Hours}$ for manual reconciliation
+	Warehouse Operations
+	Halts active wave picks; intercepts staged/packed parcels; returns items to active storage bins.
+	wms.novacart.internal
+	Immediate ($< 15\text{ Mins}$ dock intercept)
+	Logistics & Fleet
+	Executes carrier transit intercepts (RTO) for shipped orders; processes doorstep delivery refusals.
+	tms.novacart.internal
+	$< 2\text{ Hours}$ for carrier intercept signal
+	Sales & Merchant Rel.
+	Audits seller cancellation rates; enforces merchant penalty fees and catalog suspensions.
+	seller-crm.novacart.internal
+	Weekly performance auditing
+	Customer Notification Process
+1. System Event Trigger: Upon state update to CANCELLED within OMS, an automated event payload is published to the notification service (api.novacart.internal/notify).
+2. Multi-Channel Dispatch: The customer receives instant notifications across three channels:
+   * In-App Push Notification: Real-time alert confirming cancellation and refund initiation.
+   * SMS Alert: Concise transaction summary containing Master Order ID, Cancellation Reason, and Refund Reference Number.
+   * Detailed Email: Formal credit memo detailing cancelled items, itemized refund breakdown, original payment instrument, and expected bank reflection window (Refer to PAY-001, REF-001).
+Business Rules
+Rule 1: Self-Service Pre-Dispatch Cancellation Authority
+Customers possess absolute, non-discretionary authority to cancel any order self-service via web or mobile apps while the order status remains in PENDING_PAYMENT, PAYMENT_CONFIRMED, INVENTORY_RESERVED, PROCESSING, or PACKED, without requiring CSR intervention or managerial approval.
+Rule 2: High-Value Cancellation Approval Threshold
+Any customer cancellation request for an order exceeding ₹100,000 / $1,500 / AED 4,000 in READY_FOR_DISPATCH or SHIPPED status requires digital approval from an L2 Support Specialist or Operations Manager before a manual refund instruction can be submitted to ledger.novacart.internal (Refer to SUP-003).
+Rule 3: Split Order Cancellation Isolation
+In a Split Order scenario containing multiple Sub-Order IDs (e.g., NC-IN-88201-A and NC-IN-88201-B), cancelling one sub-order isolates the cancellation event strictly to that child record. Remaining sub-orders continue through fulfillment without interruption (Refer to ORD-005).
+Exception Handling
+* Carrier Intercept Failure: If an L2 Logistics agent issues a transit intercept command for a SHIPPED parcel, but the carrier fails to intercept and completes doorstep delivery, the customer is instructed to refuse delivery upon arrival. If accepted accidentally, NovaCart issues a free reverse pickup label under REF-005.
+* System Outage Intercept Delay: If WMS offline caching prevents a real-time cancellation signal from reaching the packing station, and a cancelled item is handed to a courier, TMS flags the tracking barcode upon first carrier hub scan and auto-routes the parcel back to the FC (Return to Origin).
+Practical Examples
+Scenario 1: Immediate Pre-Dispatch Cancellation
+* Details: Customer purchases a gaming monitor (₹28,999) at 02:00 PM. At 02:15 PM, the customer decides to cancel via the mobile application.
+* Workflow: OMS verifies order status is INVENTORY_RESERVED. Cancellation executes instantly. WMS releases bin lock. Financial ledger initiates an automated 100% refund (₹28,999) to the customer's credit card. SMS/Email notifications are sent within 30 seconds.
+Scenario 2: Merchant Inventory Stock-Out
+* Details: Customer orders a smartphone (CAT-MOB). The seller identifies physical stock damage during wave picking.
+* Workflow: Merchant logs inventory failure in wms.novacart.internal. System updates status to CANCELLED_NO_STOCK. OMS triggers an immediate 100% refund, issues an automated ₹200 goodwill credit to the customer's account wallet, and assesses a 5% penalty fee against the merchant's payout account.
+Scenario 3: Cancellation Request After Dispatch (SHIPPED)
+* Details: Customer contacts Live Chat requesting cancellation of a laptop shipped 12 hours prior, currently in transit via air freight.
+* Workflow: CSR explains that direct cancellation is locked for SHIPPED status (Refer to SUP-002). CSR initiates a carrier transit intercept request in tms.novacart.internal. The carrier holds the parcel at the destination hub and routes it back to the FC (RTO). Once FC receives the parcel, Finance issues a refund minus outbound shipping charges.
+Scenario 4: Partial Cancellation of a Split Order
+* Details: Master Order NC-SG-50021 contains a mechanical keyboard (Sub-Order A) and a desktop monitor (Sub-Order B). Sub-Order A is SHIPPED, while Sub-Order B is PROCESSING. Customer requests cancellation of the monitor.
+* Workflow: CSR cancels Sub-Order B in crm.novacart.internal. Sub-Order B status updates to CANCELLED, releasing its warehouse lock and triggering a full refund for the monitor's value. Sub-Order A remains SHIPPED and continues normal last-mile delivery (Refer to ORD-005).
+Frequently Asked Questions (FAQs)
+Q1: Can a customer cancel an order after it has reached READY_FOR_DISPATCH status?
+Answer: Yes. Customers can cancel orders in READY_FOR_DISPATCH status via self-service or CSR. WMS revokes the shipping manifest, prevents courier pickup, unpacks the parcel back to warehouse storage, and Finance issues a 100% refund (Refer to ORD-001, REF-001).
+Q2: What happens if a customer attempts to cancel a digital software key (CAT-SFT)?
+Answer: Digital software activation keys cannot be cancelled or refunded once the digital code has been revealed or displayed in the customer's account portal. If the key remains unrevealed in system logs, Customer Support can process a cancellation (Refer to REF-006).
+Q3: How long does it take for a cancellation refund to reflect in a customer's bank account?
+Answer: Refunds issued to NovaCart Wallet reflect instantly. Refunds to Credit Cards, Debit Cards, Net Banking, or UPI instruments are processed by Finance within 24 hours and reflect in the customer's bank account within 3 to 5 business days, depending on issuing bank processing cycles (Refer to PAY-001, REF-002).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of ORD-002. Established eligibility matrices, merchant cancellation penalties, system auto-cancellation rules, pre/post-dispatch workflows, and refund triggers.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* ORD-001: Order Lifecycle Management Policy
+* ORD-005: Split Orders Procedure
+* SHIP-001: Domestic Shipping Policy
+* PAY-001: Payment Processing SOP
+* REF-001: Master Refund Eligibility Rules
+* REF-002: Refund Timeline Standards
+* REF-006: Non-Refundable Category Policies

@@ -1,0 +1,283 @@
+﻿REF-004: Return Inspection & Quality Assessment Policy
+Document Header
+* Document Title: Return Inspection & Quality Assessment Policy
+* Document ID: REF-004
+* Version: 1.0.0
+* Document Category: Refunds
+* Classification: Internal / Public Operational Standard
+* Department Owner: Returns & Quality Assurance
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Reverse Logistics, Quality Assurance Director, Customer Experience Director
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Return Inspection, Quality Assessment, Product Grading, Functional Testing, Serial Number Matching, Condition Verification, Fraudulent Returns, Reverse Logistics
+Purpose
+This document establishes the official enterprise policy, operational standards, physical receiving procedures, testing protocols, product grading frameworks, and decision rules governing the inspection and quality assessment of returned physical merchandise at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It defines the multi-tier inspection pipeline executed upon inbound receipt at fulfillment centers (FCs) to evaluate returned items prior to approving or rejecting monetary refunds, replacements, or exchanges.
+As a core operational document (REF-004) in the Refunds category of the NovaCart Enterprise Knowledge Base (NEKB), REF-004 enforces systematic quality gatekeeping across warehouse processing bays, reverse logistics hubs, and quality control microservices (rma.novacart.internal), maintaining complete consistency with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, and REF-001 through REF-003.
+Scope
+This policy applies to all inbound physical merchandise returns, exchanges, and warranty drop-offs processed across NovaCart's primary distribution nodes (BLR-01, BOM-01, DEL-02, SIN-01, DXB-01) and 3P marketplace merchant facilities across India (IN), Singapore (SG), and the United Arab Emirates (UAE).
+Coverage Includes
+* Inbound receiving, outer carton verification, and Return Merchandise Authorization (RMA) barcode scanning.
+* Physical condition assessment, serial/IMEI number matching, and component completeness audits.
+* Category-specific functional testing (Consumer Electronics, Mobile Devices, Gaming, Appliances, Apparel).
+* Photographic evidence logging, tamper-indicator checks, and counterfeit/substitution detection.
+* Final quality grading dispositioning, ledger clearing triggers, and rejected return routing.
+Out of Scope
+* Initial customer return eligibility authorization and claim time-limit rules (governed by REF-001).
+* Customer-facing exchange selection and reverse logistics scheduling (governed by REF-002).
+* Financial ledger reversals and payment gateway transaction clearing (governed by PAY-003).
+Return Inspection Overview
+Physical return inspection is the authoritative quality control gatekeeper within NovaCart's reverse supply chain. Every item returned by a customer or collected by reverse couriers undergoes rigorous inspection to verify claim validity, prevent return fraud, protect catalog integrity, and determine accurate financial remediation.
+Core Operational Principles
+1. Mandatory Un-Biased Verification: Every inbound return is assessed objectively against standardized condition rubrics without advance assumption of customer or merchant fault.
+2. Serial Number & Identity Lock: Absolute matching of physical serial numbers, IMEIs, and MAC addresses against outbound warehouse dispatch records stored in wms.novacart.internal.
+3. Photographic & Audit Trail Integrity: High-resolution digital photographic capture of all unboxing stages, damaged areas, serial tags, and missing accessories logged permanently in rma.novacart.internal.
+4. Time-Bound Quality SLAs: Inspection and quality grading must conclude within 24 hours of inbound warehouse dock receipt to ensure compliance with customer refund and replacement timelines.
+Product Receiving Process
+1. Inbound Dock Receipt: Reverse courier vehicles deliver consolidated return shipments to the designated FC Reverse Logistics Bay.
+2. Outer Package Barcode Scan: Receiving staff scan the outer shipping label barcode using handheld terminals connected to wms.novacart.internal. The system cross-references the waybill against active RMA records (RMA-XXXXX).
+3. Carton Integrity Inspection: Staff inspect the external shipping container for transit crush damage, water exposure, or un-authorized tamper tape breaches. External damage is logged with photos before opening.
+4. Unboxing & Weight Verification: The outer package is opened under overhead high-definition CCTV cameras. Gross parcel weight is measured on calibrated digital scales and compared against the recorded outbound dispatch weight.
+5. RMA System Induction: Upon successful barcode match, the item status updates from RETURN_IN_TRANSIT to RECEIVED_AT_FC, initiating the 24-hour Quality Assessment SLA timer.
+Inspection Workflow
+Inspection follows a structured, multi-stage assessment pipeline in rma.novacart.internal:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        PHYSICAL INSPECTION PIPELINE                               |
++-----------------------------------------------------------------------------------+
+| STAGE 1: IDENTITY MATCH  | Verify physical Serial/IMEI against outbound WMS log.  |
+| STAGE 2: CONDITION GRADE | Assess physical wear, scratches, dents, or liquid seals.|
+| STAGE 3: BUNDLE AUDIT    | Check for missing accessories, chargers, or manuals.  |
+| STAGE 4: FUNCTION TEST   | Execute technical diagnostic / power-on test cycles.   |
+| STAGE 5: DISPOSITION     | Assign final Grade (Pass/Fail) & notify OMS / Ledger.  |
++-----------------------------------------------------------------------------------+
+
+Stage 1: Identity & Serial Number Verification
+Inspectors locate the physical serial number, IMEI barcode, or manufacturer security tag on the product and scan it into rma.novacart.internal.
+* Match: System proceeds to Stage 2.
+* Mismatch / Tampered: System immediately flags INSPECTION_FAILED_SERIAL_MISMATCH, generates a security alert, and halts further testing (Refer to REF-001, SEC-004).
+Stage 2: Physical & Cosmetic Assessment
+Inspectors evaluate the product housing, glass panels, fabric, or finish under standardized 1,000-lux LED inspection lighting, logging cosmetic condition grades.
+Stage 3: Accessory & Packaging Audit
+Inspectors verify the presence of all original inbox components using category-specific bill-of-materials (BOM) checklists.
+Stage 4: Functional Testing & Diagnostics
+Technicians execute category-specific operational tests (e.g., power-on boot, charging cycle, wireless pairing, display pixel checks).
+Stage 5: Final Dispositioning
+The lead inspector assigns a final Quality Assessment Grade in rma.novacart.internal, triggering automated downstream actions (refund authorization, replacement dispatch, or return rejection).
+Product Condition Assessment
+Items are categorized into five standardized product condition grades during physical assessment:
+Product Condition Classification Matrix
+Condition Grade
+	Cosmetic & Physical Attributes
+	Functional & Operational State
+	Original Packaging & Accessories
+	Disposition Outcome
+	Grade A (Pristine / Unopened)
+	Brand new, unopened factory seal intact; zero signs of handling or wear.
+	$100\%$ functional; factory default settings.
+	$100\%$ complete original box, manuals, and accessories.
+	Full Refund Approved; Restocked to Live Inventory.
+	Grade B (Open-Box / Unused)
+	Factory seal broken; product immaculate with zero cosmetic blemishes or scratches.
+	$100\%$ functional; pass all diagnostic cycles.
+	Original box present; all inbox accessories complete.
+	Full Refund Approved; Routed to Open-Box Catalog.
+	Grade C (Minor Wear / Complete)
+	Light cosmetic handling marks or fingerprints; no deep scratches, cracks, or dents.
+	$100\%$ functional; pass all diagnostic cycles.
+	Original box present; minor accessory packaging wear.
+	Full Refund Approved; Routed to Refurbished Vault.
+	Grade D (Damaged / Missing Units)
+	Severe customer-induced scratches, broken glass, liquid exposure, or dented casing.
+	Fails functional test; liquid indicator triggered.
+	Missing primary accessories (charger, remote) or box.
+	Inspection Failed; Partial Refund or Rejection.
+	Grade F (Fraud / Mismatch)
+	Wrong item returned, counterfeit unit, or mismatched/removed serial number.
+	Non-functional or fake dummy unit.
+	Absent, incorrect, or heavily damaged third-party box.
+	Inspection Failed; Total Rejection & Security Alert.
+	Functional Testing Requirements
+Testing protocols vary by catalog vertical to ensure rigorous operational validation:
+Functional Testing Matrix
+Catalog Category
+	Required Inspection Checklist & Diagnostic Tests
+	Specialized Test Equipment / Software
+	Pass Threshold Criteria
+	CAT-ELE / CAT-MOB
+	1. Serial/IMEI barcode match.
+
+
+2. Cloud/Account lock check (iCloud/Google).
+
+
+3. Power-on boot & touch display audit.
+
+
+4. Battery charging cycle & port test.
+	Automated Diagnostic Suite / ADB Testing Software
+	Serial matches WMS; accounts unlocked; boots to setup screen; charging port functional.
+	CAT-GAM
+	1. Optical disc drive / cartridge slot audit.
+
+
+2. Wireless controller pairing & drift test.
+
+
+3. Factory software reset validation.
+	Test Display / Diagnostic Console Station
+	Zero disc read errors; controller buttons $100\%$ responsive; factory reset confirmed.
+	CAT-APP
+	1. Structural casing & drum alignment audit.
+
+
+2. Power connection & motor cycle test.
+
+
+3. Water inlet/drain valve leakage check.
+	On-Site FC Electrical Test Rig / Safety Multi-Meter
+	Motor engages cleanly; zero electrical short circuits or water seal leaks (PROD-004).
+	CAT-SMT
+	1. Wi-Fi / Bluetooth mesh pairing audit.
+
+
+2. Firmware reset & factory un-linking.
+
+
+3. Sensor trigger responsiveness test.
+	Isolated QA Test Network Router
+	Device pairs to test network; factory un-linked from user profile; sensors trigger.
+	Apparel / Softgoods
+	1. Fabric tear, stain, and odor inspection.
+
+
+2. Zipper, button, and seam integrity test.
+
+
+3. Security / Price tag attachment check.
+	UV Light Chamber / Fabric Inspection Table
+	Zero stains, body odors, or tears; original brand price tags attached.
+	Documentation & Evidence Collection
+Every quality assessment file must maintain an immutable photographic and data record in rma.novacart.internal:
+Photography Requirements
+Inspectors must capture a minimum of five (5) high-resolution digital photographs for every inspected item:
+1. Photo 1: Clear shot of the outer shipping carton showing shipping label and RMA barcode.
+2. Photo 2: Overview shot of the unboxed item alongside all included accessories and packaging.
+3. Photo 3: Macro close-up shot of the product serial number, IMEI plate, or model barcode.
+4. Photo 4: Close-up shot of the specific defect, physical damage, or liquid indicator (if applicable).
+5. Photo 5: Final packaged state after inspection completion.
+Documentation Retention
+All digital inspection files, CCTV unboxing video feeds, diagnostic log exports, and scale weight logs are archived in secure cloud storage for a mandatory period of seven (7) years to support financial audits, chargeback representments (PAY-004), and legal investigations.
+Quality Assessment Decision Process
+The final inspection outcome determines downstream financial and inventory actions:
+Inspection Outcome Matrix
+Quality Assessment Outcome
+	Customer Claim Status
+	Inventory & Warehouse Routing Action
+	Financial Ledger Action (PAY-003)
+	Customer Notification
+	PASSED (Grade A / B / C)
+	Claim Verified & Approved
+	Item routed to Live Stock, Open-Box, or Refurbished Vault.
+	Triggers $100\%$ Full Refund or Replacement Dispatch.
+	Email + SMS: "Inspection Complete - Refund Approved."
+	FAILED (Missing Accessories)
+	Claim Partially Approved
+	Item held in FC Problem Bay pending accessory receipt.
+	Triggers Partial Refund (Deducting accessory cost).
+	Email + SMS: "Inspection Update - Missing Accessories."
+	FAILED (Customer Damage)
+	Claim Rejected
+	Item packaged and staged for Return-to-Customer (RTC).
+	Zero Refund Issued; RMA closed as REJECTED.
+	Email + SMS with Photos: "Inspection Failed - Item Damaged."
+	FAILED (Serial Mismatch)
+	Fraud Claim Rejected
+	Item impounded in FC Security Vault; CCTV flagged.
+	Zero Refund Issued; Account locked (SEC-001/SEC-004).
+	Email + SMS: "Inspection Failed - Fraud Discrepancy."
+	Customer Communication Process
+Customers receive automated updates immediately upon quality assessment completion:
+1. Inspection Initiation Alert: Sent when the package is unboxed at the FC (RECEIVED_AT_FC).
+2. Passed Inspection Notice: Dispatched upon Grade A/B/C verification, confirming that refund clearing (PAY-003) or replacement dispatch (REF-003) has been initiated.
+3. Failed Inspection Notice: Dispatched if the item fails inspection due to customer damage, missing parts, or serial mismatch. The communication includes high-resolution photos, specific failure reason codes, and reverse tracking links for items being returned to the customer.
+Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Inspection Responsibilities
+	Primary System Portal
+	SLA Target
+	Returns & Quality Assurance
+	Conducts physical unboxing, serial checks, cosmetic grading, and functional testing.
+	rma.novacart.internal
+	Inbound inspection $< 24\text{ Hours}$
+	Warehouse Operations
+	Manages dock receiving, outer carton scanning, weight checks, and physical inventory routing.
+	wms.novacart.internal
+	Dock to QA Bay transfer $< 4\text{ Hours}$
+	Information Security
+	Reviews serial mismatch alerts, CCTV fraud logs, and counterfeit impound files.
+	shield.novacart.internal
+	Fraud audit $< 24\text{ Hours}$
+	Customer Support
+	Handles customer appeals for failed inspections; explains rejection reports and photo proof.
+	crm.novacart.internal
+	Response SLA per SUP-005
+	Business Rules
+Rule 1: Zero Tolerance for Serial Mismatches
+If a returned item's physical serial number or IMEI does not match the outbound dispatch record in wms.novacart.internal, the inspection status must be set to INSPECTION_FAILED_SERIAL_MISMATCH. No refund, store credit, or exchange may be issued under any circumstances without written co-signoff from the Head of Security (Refer to REF-001, SEC-004).
+Rule 2: Account Lock Exclusion
+Mobile devices (CAT-MOB), laptops (CAT-ELE), or smart home hubs (CAT-SMT) returned with active user cloud accounts (e.g., Apple iCloud, Google Account, Samsung Account) or screen lock PINs cannot pass inspection. The inspection status is set to QI_FAIL_ACCOUNT_LOCKED. The customer is given 48 hours to remove the lock remotely, failing which the item is returned to the customer without a refund (Refer to REF-002).
+Rule 3: Missing Accessory Fee Deduction
+If a returned item passes functional testing but is missing non-essential inbox accessories (e.g., USB cable, power brick, remote control), NovaCart deducts the standardized replacement cost of the missing accessory from the final refund amount as detailed in the master accessory price table in rma.novacart.internal.
+Exception Handling
+* Inspection Rejection Appeals: If a customer disputes a failed inspection decision (INSPECTION_FAILED), Customer Support creates an appeal ticket in crm.novacart.internal. A Senior QA Specialist conducts a secondary audit of unboxing CCTV footage, scale weight logs, and inspection photographs. The Senior QA Specialist's ruling is final.
+* Inbound Transit Damage (Reverse Courier Fault): If an item arrives at the FC with severe physical damage, but reverse courier pickup logs confirm the item was accepted intact from the customer, QA flags REVERSE_TRANSIT_DAMAGE. The customer is granted full refund eligibility under REF-001, and Logistics files a damage claim against the 3PL carrier.
+Practical Examples
+Scenario 1: Approved Inspection (Grade A - Full Refund)
+1. Customer returns an unopened wireless headphones box (CAT-ELE) within the valid 7-day window under REF-001.
+2. FC BLR-01 receives package; inspector scans RMA barcode and verifies original factory cellophane seal is intact.
+3. Serial number matches WMS dispatch logs. Scale weight matches original outbound weight ($0.45\text{ kg}$).
+4. Inspector assigns Grade A (INSPECTION_PASSED). System automatically notifies OMS, triggering a 100% full refund via PAY-003 and routing the item back to live sellable stock.
+Scenario 2: Rejected Inspection (Serial Mismatch / Fraud)
+1. Customer requests a return for a high-end graphics card (₹85,000) claiming "Defective Unit."
+2. Package arrives at FC DEL-02. Inspector opens container under CCTV and scans the graphics card serial number tag.
+3. System alerts: Serial Number SN-998201 does not match outbound dispatch serial SN-110288 recorded during initial packing.
+4. Close inspection reveals the customer returned an older, broken graphics card model inside the new product box.
+5. Inspector sets status to INSPECTION_FAILED_SERIAL_MISMATCH. System auto-locks customer account (SEC-001/SEC-004), rejects refund, and impounds the item in the Security Vault.
+Frequently Asked Questions (FAQs)
+Q1: How long does it take for NovaCart to inspect my returned item after it arrives at the warehouse?
+Answer: Inbound items are inspected and functionally tested within 24 hours of arriving at our fulfillment center. You will receive an automated email and SMS notification as soon as the Quality Assessment is complete (Refer to REF-002).
+Q2: What happens if I forget to include a cable or charger when returning an item?
+Answer: If an item is returned missing inbox accessories, our QA team will notify you. You may either ship the missing accessory to the FC at your expense or opt to have the standard retail value of the missing accessory deducted from your total refund amount (Refer to REF-001).
+Q3: Why was my return rejected and shipped back to me?
+Answer: Returns are rejected if the item shows customer-induced physical or liquid damage, has active user account locks (e.g., iCloud/Google lock), is missing serial number tags, or if the returned item's serial number does not match our outbound dispatch records (Refer to REF-001, REF-002).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of REF-004. Established receiving processes, 5-stage inspection pipelines, condition grading standards (Grades A–F), category functional testing matrices, and serial mismatch fraud enforcement.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* ORD-001: Order Lifecycle Management Policy
+* SHIP-001: Domestic Shipping Policy
+* PAY-003: Refund Payment Processing Policy
+* REF-001: Master Refund Eligibility Rules
+* REF-002: Return & Exchange Policy
+* REF-003: Replacement Policy
+* SEC-001: Account Security & Access Control
+* SEC-004: Fraud Detection Framework

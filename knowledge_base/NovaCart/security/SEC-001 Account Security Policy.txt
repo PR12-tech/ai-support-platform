@@ -1,0 +1,283 @@
+﻿SEC-001: Account Security Policy
+Document Header
+* Document Title: Account Security Policy
+* Document ID: SEC-001
+* Version: 1.0.0
+* Document Category: Security
+* Classification: Internal / Public Operational Standard
+* Department Owner: Information Security & Fraud Operations
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Chief Information Security Officer, Head of Cyber Security, VP of Customer Experience, General Counsel
+* Approved By: Chief Technology Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Account Security, Authentication, Identity Verification, Password Policy, Multi-Factor Authentication, Account Takeover, Credential Theft, Account Recovery, Security Logs
+Purpose
+This document defines the official Account Security Policy of NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes standardized security controls, identity verification procedures, credential management standards, threat monitoring protocols, account recovery workflows, customer obligations, support responsibilities, and business rules governing the protection of customer accounts from unauthorized access, compromise, account takeover (ATO), and identity theft.
+As the foundational security governance document (SEC-001) in the Security module of the NovaCart Enterprise Knowledge Base (NEKB), SEC-001 governs user access controls within the Identity and Access Management platform (auth.novacart.internal) and Security Telemetry Engine (shield.novacart.internal), operating in strict alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, REF-001 through REF-006, and PROD-001 through PROD-006.
+Scope
+This policy applies universally across all customer account types—B2C Retail Accounts, NovaCart Prime Memberships, B2B Merchant Accounts, and Corporate Enterprise Accounts—registered across NovaCart’s operating regions (India, Singapore, UAE) across all web, mobile, desktop, and API interfaces.
+Coverage Includes
+* Customer account registration controls, email/phone verification, and identity binding.
+* Authentication mechanisms, password complexity standards, and Multi-Factor Authentication (MFA).
+* Real-time login risk scoring, anomaly detection, geo-velocity monitoring, and device fingerprinting.
+* Account lockout parameters, temporary security restrictions, and administrative suspensions.
+* Standardized account recovery, identity re-verification, credential updates, and ATO remediation.
+* Incident escalation, support agent verification rules, security event logging, and audit retention.
+Out of Scope
+* Detailed cryptographic tokenization algorithms for stored payment methods (governed by PAY-006).
+* Fraud investigation procedures for payment chargebacks and financial representment (governed by PAY-004).
+* Internal corporate employee access governance and infrastructure IAM policies.
+Account Security Overview
+NovaCart prioritizes the security and privacy of customer accounts. Every customer profile serves as an access vault to sensitive personal data, physical delivery addresses, stored payment method tokens (PAY-006), order histories (ORD-001), platform wallet balances (REF-006), and digital software activation keys (PROD-006). Preventing unauthorized account access is critical to maintaining user trust and operational integrity.
+Core Security Principles
+1. Absolute Ownership Non-Transferability: An account belongs strictly to the individual or legal corporate entity linked to the primary verified email address and mobile phone number provided during registration. Accounts cannot be sold, shared, or transferred.
+2. Zero Trust Authentication: Every login session and sensitive account update (e.g., password change, email change, shipping address modification) is evaluated dynamically for risk based on device fingerprint, location telemetry, and historical behavioral baselines.
+3. Least Privilege Data Exposure: Customer Support agents evaluating account security issues can view only masked account data string values (e.g., j***n@email.com, +91 ***** **210) in crm.novacart.internal until high-level identity verification is satisfied.
+4. Defense in Depth Control: Combining strong password enforcement, mandatory or risk-triggered Multi-Factor Authentication (MFA), automated threat containment in shield.novacart.internal, and mandatory audit trails.
+Security Principles
+NovaCart's account protection framework relies on four operational security controls:
+Account Security Control Matrix
+Security Layer
+	Primary Mechanism
+	Technical Operational Function
+	Enforcement Scope
+	Identity Binding
+	Primary Contact Verification
+	Verifies email and phone via 6-digit cryptographic OTPs during registration.
+	$100\%$ of new account registrations
+	Credential Hardening
+	Dynamic Complexity & Breach Check
+	Enforces password length, character variation, and cross-checks against breach databases.
+	All password creations and updates
+	Risk-Based Step-Up
+	Multi-Factor Authentication (MFA)
+	Triggers step-up OTP authentication upon detecting unfamiliar device or location.
+	Adaptive score-based triggering
+	Automated Containment
+	Suspicious Lock & Token Invalidation
+	Revokes active session JWT tokens and freezes wallet/stored payment methods upon ATO flag.
+	Automated via shield.novacart.internal
+	Account Registration Security
+1. Contact Information Validation: A new account cannot transition to active status without two-way verification of the customer's primary email address and mobile phone number via time-sensitive, single-use One-Time Passwords (OTPs) valid for 10 minutes.
+2. Duplicate Registration Prevention: The identity engine (auth.novacart.internal) checks mobile numbers and email addresses against active databases. Attempting to register using an existing email or phone number blocks registration and prompts the user to initiate account recovery.
+3. Bot & Automated Registration Suppression: Registration endpoints integrate CAPTCHA challenges, IP rate-limiting, and device reputation screening to block automated account creation attacks.
+Login Security Controls
+Every login attempt processed by auth.novacart.internal undergoes continuous risk scoring:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        LOGIN RISK EVALUATION PIPELINE                             |
++-----------------------------------------------------------------------------------+
+| 1. CREDENTIAL CHECK | Validate email/password hash or OAuth SSO token.            |
+| 2. TELEMETRY AUDIT  | Evaluate IP geofence, device fingerprint, and velocity.     |
+| 3. RISK CALCULATION | Assign Risk Score: Low (0-29), Medium (30-69), High (70-100)|
+| 4. ENFORCEMENT ACTION| Low = Pass; Medium = Step-up MFA; High = Lock & Security Alert|
++-----------------------------------------------------------------------------------+
+
+Login Risk Matrix
+Risk Level
+	Risk Score Range
+	Detection Criteria / Event Indicators
+	System Enforcement Action
+	Low Risk
+	0 to 29
+	Known device fingerprint; familiar IP subnet; normal velocity.
+	Login granted; standard session token issued.
+	Medium Risk
+	30 to 69
+	Unfamiliar device; new geographical city; 2–4 prior failed attempts.
+	Step-Up MFA Required: 6-digit OTP sent to registered phone/email.
+	High Risk
+	70 to 100
+	Impossible travel velocity (e.g., Delhi to Dubai in 30 mins); known proxy/TOR; $\ge 5$ failed logins.
+	Login Blocked & Temporary Lock: Session killed; security alert dispatched.
+	Account Verification Process
+Identity verification standards depend on the sensitivity of the requested operational action:
+Verification Method Matrix
+Operational Action
+	Required Identity Verification Level
+	Permissible Verification Tokens
+	Standard Session Login
+	Level 1 (Basic)
+	Primary Password OR SSO OAuth Token + Low Risk Score.
+	View Saved Cards / Wallet
+	Level 2 (Step-Up)
+	Password + SMS/Email 6-Digit OTP OR Biometric Auth.
+	Change Email or Phone
+	Level 3 (High Security)
+	Dual-OTP (Current Email + New Contact) + Password Re-auth.
+	Compromised Account Recovery
+	Level 4 (Identity Audit)
+	Government ID Photo (Aadhaar/Passport/Emirates ID) + Live Selfie.
+	Password & Credential Management
+NovaCart enforces strict credential complexity and lifecycle rules within auth.novacart.internal:
+Password Security Standards
+* Minimum Length: Must be at least 12 characters (maximum 128 characters).
+* Character Diversity: Must contain at least one uppercase letter, one lowercase letter, one numerical digit, and one special symbol (!@#$%^&*).
+* Pwned Password Audit: New passwords are checked against known breached password databases using zero-knowledge k-Anonymity API queries.
+* Prohibited Attributes: Passwords must not contain the user's name, primary email prefix, or common sequential character strings (e.g., Password123!).
+Password Reset Workflow
+1. User clicks Forgot Password on the login interface and submits their registered email or mobile number.
+2. System dispatches a cryptographically signed, single-use password reset link valid for 15 minutes.
+3. Clicking the link prompts entry of a new password meeting complexity standards.
+4. Upon successful password reset, all active session tokens across all devices are immediately revoked (LOGOUT_ALL_DEVICES), and a security alert is dispatched via email and SMS.
+Account Recovery Process
+When a customer loses access to their registered email address, mobile phone number, or both, account recovery proceeds through a secure verification hierarchy:
+Secure Account Recovery Workflow
+1. Initiation: Customer logs a recovery request via the portal or contacts Customer Support (SUP-001).
+2. Identity Verification (Level 4): Customer submits secure verification proof via auth.novacart.internal/verify:
+   * A clear photo of a government-issued photo ID (Aadhaar, Passport, Driving License, or Emirates ID).
+   * A live selfie capturing a dynamic 4-digit code displayed on the screen.
+3. Manual Agent Audit: A trained Security Operations Agent audits the submitted documentation against historical account records within 12 business hours.
+4. Contact Record Update: Upon positive match, the agent updates the primary contact info in auth.novacart.internal, triggers an automated password reset, and logs an audit trail.
+Account Recovery Matrix
+Lost Contact Credentials
+	Primary Recovery Method
+	Secondary Recovery Option
+	Target SLA
+	Lost Password Only
+	Self-service email reset link
+	SMS OTP reset link
+	Instant ($< 2\text{ Mins}$)
+	Lost Mobile Number Only
+	Email OTP step-up verification
+	Level 4 Government ID submission
+	$< 1\text{ Hour}$
+	Lost Email Access Only
+	SMS OTP step-up verification
+	Level 4 Government ID submission
+	$< 1\text{ Hour}$
+	Lost Both Email & Phone
+	Level 4 Government ID submission
+	In-person verification at primary service hub
+	$< 12\text{ Business Hours}$
+	Suspicious Activity Detection
+The Security Telemetry Engine (shield.novacart.internal) monitors account behavior in real time to detect indicators of compromise:
+Monitored Suspicious Indicators
+* High-Velocity Failed Logins: More than 5 failed login attempts within a 5-minute window targeting a single account.
+* Credential Stuffing Patterns: Distributed login attempts across multiple accounts originating from a single IP address or subnet.
+* Impossible Travel Anomalies: Consecutive successful logins from geographic locations requiring travel speeds exceeding $900\text{ km/h}$.
+* Post-Login High-Risk Actions: Immediate modification of shipping address, primary email, and high-value electronics purchase (CAT-ELE/CAT-MOB) within 10 minutes of a password reset.
+Account Locking & Temporary Restrictions
+To contain potential security breaches, shield.novacart.internal automatically applies account restrictions based on severity:
+Account Status Matrix
+Account Status Tag
+	Operational System Restrictions
+	Triggering Condition
+	Unlocking / Resolution Requirement
+	STATUS_ACTIVE
+	Unrestricted full account access.
+	Standard operational state.
+	Not applicable.
+	STATUS_TEMP_LOCK
+	Login blocked for 30 minutes; active sessions maintained.
+	5 consecutive failed login attempts within 5 mins.
+	Auto-unlock after 30 mins OR self-service password reset.
+	STATUS_SUSPENDED_SEC
+	Login blocked; session tokens killed; checkout disabled.
+	High-risk ATO flag, credential theft report, or Level 4 recovery.
+	Identity re-verification (Level 4 audit) by Security.
+	STATUS_CLOSED_USER
+	Login blocked; profile archived; tokens purged.
+	Customer explicit account closure request (SEC-003).
+	Manual reactivation request within 30 days (SUP-001).
+	Compromised Account Management
+When an account is reported as compromised or flagged for Account Takeover (ATO):
+1. Immediate Automated Containment:
+   * Invalidation of all active JWT session tokens (LOGOUT_ALL_DEVICES).
+   * Transition account status to STATUS_SUSPENDED_SEC.
+   * Suspension of stored payment method tokens (PAY-006) and NovaCart Wallet balances (REF-006).
+   * Placement of temporary shipping holds on active pending orders (PROCESSING/PACKED) awaiting dispatch (ORD-001).
+2. Investigation & Cleansing: Security specialists audit recent order placements, address updates, and wallet transfers. Fraudulent orders placed during the compromise window are cancelled and fully refunded (PAY-003).
+3. Restoration: Once identity is re-verified (Level 4), Customer Support issues a secure account restoration link, requiring the customer to establish new credentials and re-enable MFA.
+Customer Responsibilities
+Customers share operational responsibility for protecting their accounts and must adhere to the following rules:
+1. Maintain Credential Confidentiality: Never share account passwords, login OTPs, or session links with third parties. NovaCart staff will never ask for a customer's password or full payment card credentials.
+2. Use Unique Passwords: Avoid reusing passwords across multiple websites to prevent cross-site credential stuffing vulnerability.
+3. Enable Multi-Factor Authentication: Maintain active MFA settings and secure registered email accounts and mobile devices.
+4. Prompt Incident Reporting: Notify NovaCart Customer Support immediately upon receiving unexpected password reset emails, login notifications from unfamiliar locations, or unauthorized order confirmations.
+Customer Support Responsibilities
+Customer Support Representatives (CSRs) must adhere to strict security protocols when handling account inquiries:
+1. Mandatory Identity Verification: CSRs must verify customer identity using Level 2 or Level 3 standards prior to disclosing account details, modifying order delivery addresses, or issuing account information.
+2. Zero Knowledge of Passwords: CSRs cannot view, manually enter, or override customer passwords. Password assistance is limited to dispatching automated reset links to registered contact details.
+3. Escalation to Security Operations: CSRs must immediately escalate suspected ATO incidents, fake account ownership claims, or Level 4 identity verifications to Level 2 Security Specialists via crm.novacart.internal (SUP-003).
+Department Responsibilities
+Account security operational management is distributed across functional units:
+Department Responsibility Matrix
+Department Unit
+	Primary Account Security Responsibilities
+	Primary System Portal
+	SLA / Performance Target
+	Information Security
+	Operates IAM architecture, monitors threat telemetry, manages ATO investigations, conducts Level 4 audits.
+	shield.novacart.internal
+	Level 4 identity audit $< 12\text{ Business Hours}$
+	Customer Support
+	Validates basic customer identities, assists with password resets, escalates account compromises.
+	crm.novacart.internal
+	Priority Chat FRT $< 15\text{ Secs}$ (SUP-005)
+	Fraud Operations
+	Audits high-risk orders, cancels unauthorized orders during ATO holds, coordinates chargeback defense.
+	chargeback.novacart.internal
+	High-risk order audit $< 2\text{ Hours}$ (PAY-004)
+	Software Engineering
+	Maintains IAM API security, OAuth integrations, rate-limiting rules, and session encryption.
+	auth.novacart.internal
+	Authentication API Uptime $\ge 99.99\%$
+	Business Rules
+Rule 1: Mandatory Session Invalidation on Security Events
+Any modification to an account's primary password, primary email address, or primary phone number must automatically revoke all active authentication session tokens across all devices (LOGOUT_ALL_DEVICES) and require fresh authentication.
+Rule 2: Shared Account Prohibitions
+NovaCart retail and Prime accounts are designed for individual use. Shared access across multiple unlinked individuals is prohibited. Corporate Enterprise accounts requiring multi-user access must utilize multi-seat enterprise structures with individual employee SSO credentials.
+Rule 3: Comprehensive Audit Logging Standards
+All security-relevant account events—including login successes, login failures, password resets, MFA challenges, contact information updates, account locks, and admin overrides—must be logged permanently in shield.novacart.internal with timestamp, source IP, device fingerprint, and User ID, retained for a minimum of 7 years to support regulatory and legal investigations.
+Exception Handling
+* Emergency Customer Account Freeze: If a customer contacts Support reporting active ATO (e.g., unauthorized order notifications arriving), the CSR is authorized to execute an immediate "Emergency Freeze" button in crm.novacart.internal, transitioning the account to STATUS_SUSPENDED_SEC instantly without waiting for Level 4 audit documentation.
+* Account Closure with Active Orders or Wallet Balances: If a customer requests permanent account closure (STATUS_CLOSED_USER) while active orders are in transit or an unexpired NovaCart Wallet balance exists, the system blocks automated closure. Support assists the customer in completing order deliveries and executing a wallet balance bank transfer prior to finalizing closure (REF-006).
+Practical Examples
+Scenario 1: Step-Up MFA Triggered by Unfamiliar Device
+1. Customer in Mumbai logs into their account from a newly purchased laptop.
+2. auth.novacart.internal detects an unrecognized device fingerprint and calculates a Medium Risk Score (Score: 45).
+3. System prompts a Step-Up MFA challenge: *"Unfamiliar device detected. A 6-digit verification code has been sent to +91 ***** *210."
+4. Customer inputs the SMS OTP correctly. System issues a standard session token and registers the new device fingerprint.
+Scenario 2: Compromised Account Containment and Recovery (ATO)
+1. Customer's credentials are leaked on a third-party website, enabling an attacker to log in from an IP address in Eastern Europe.
+2. shield.novacart.internal detects impossible travel velocity (login from Delhi 1 hour ago) and flags a High Risk Score (Score: 95).
+3. System automatically transitions account to STATUS_SUSPENDED_SEC, revokes active sessions, and places shipping holds on a newly placed smartphone order (#NC-IN-99201).
+4. Customer receives a security alert, contacts Support, and submits a Level 4 Government ID photo + selfie verification.
+5. Security Specialist verifies identity within 4 hours, cancels the fraudulent smartphone order with a 100% refund (PAY-003), restores account access, and guides the customer to establish new credentials.
+Frequently Asked Questions (FAQs)
+Q1: Why was my account temporarily locked after entering my password?
+Answer: Accounts automatically lock for 30 minutes (STATUS_TEMP_LOCK) after 5 consecutive incorrect password attempts to protect against automated brute-force attacks. You can wait 30 minutes for the lock to expire automatically or click "Forgot Password" to trigger an immediate password reset via your registered email or phone number.
+Q2: What should I do if I receive a password reset email that I did not request?
+Answer: If you receive an unsolicited password reset notification, do not click the link inside the email. Your account remains secure as long as your email inbox is protected. We recommend logging into your NovaCart account directly, updating your password, and ensuring Multi-Factor Authentication is enabled in your security settings.
+Q3: How do I recover my account if I lost access to both my registered email and phone number?
+Answer: If you have lost access to both registered contact methods, you must complete our Level 4 Identity Verification process. Submit a support request online, where you will be prompted to upload a clear photo of a government-issued photo ID (Aadhaar, Passport, Driving License, or Emirates ID) and a live selfie. A Security Specialist will review your documentation within 12 business hours.
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of SEC-001. Established account security frameworks, risk-based login matrices, credential complexity standards, account recovery workflows, ATO containment protocols, and 7-year security audit retention standards.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* SUP-005: Customer Support SLA Policy
+* ORD-001: Order Lifecycle Management Policy
+* PAY-003: Refund Payment Processing Policy
+* PAY-004: Chargeback & Payment Dispute Policy
+* PAY-006: Stored Payment Methods & Tokenization Policy
+* REF-006: Store Credit & Promotional Refund Policy
+* PROD-001: Product Catalog Management Policy
+* PROD-006: Digital Products & Licensing Policy

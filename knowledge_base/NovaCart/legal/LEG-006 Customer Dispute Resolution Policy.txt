@@ -1,0 +1,321 @@
+﻿LEG-006: Customer Dispute Resolution Policy
+Document Header
+* Document Title: Customer Dispute Resolution Policy
+* Document ID: LEG-006
+* Version: 1.0.0
+* Document Category: Legal
+* Classification: Internal / Public Operational Standard
+* Department Owner: Customer Advocacy & Dispute Governance
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: General Counsel, Head of Customer Experience, VP of Risk & Fraud Operations, Chief Operating Officer
+* Approved By: Chief Executive Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Customer Dispute, Dispute Resolution, Case Investigation, Escalation Workflow, Dispute Appeal, Fair Settlement, Dispute Closure, Customer Advocacy
+Purpose
+This document defines the official Customer Dispute Resolution Policy of NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes standardized procedures, dispute handling principles, registration workflows, evidence collection standards, internal escalation paths, appeal mechanisms, operational responsibilities, and business rules governing the fair, transparent, timely, and consistent resolution of customer disputes arising from NovaCart's products, services, policy decisions, or business operations.
+As a core operational policy (LEG-006) in the Legal category of the NovaCart Enterprise Knowledge Base (NEKB), LEG-006 governs formal customer grievance management across all operational channels (crm.novacart.internal), operating in strict operational alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, REF-001 through REF-006, PROD-001 through PROD-006, SEC-001 through SEC-006, and LEG-001 through LEG-005.
+Scope
+This policy applies universally across all customer account classifications—B2C Retail Users, NovaCart Prime VIP members, B2B Corporate Accounts, and Guest Shoppers—seeking formal administrative review or dispute resolution across NovaCart's operating territories (India, Singapore, UAE).
+Coverage Includes
+* Disagreements regarding order fulfillment, product quality, or shipping delays (ORD-001, SHIP-001).
+* Appeals of rejected return requests, replacement denials, or refund decisions (REF-001, REF-005).
+* Disputes over rejected warranty claims or unserviceable technical repairs (PROD-003).
+* Appeals regarding account suspensions, feature restrictions, or acceptable use enforcement (SEC-001, LEG-003).
+* Disagreements over promotional credit eligibility, wallet balances, or payment billing errors (PAY-001, REF-006).
+* Customer grievances regarding privacy requests or data handling disclosures (SEC-003, LEG-002).
+Out of Scope
+* Formal bank chargeback representment and credit card network arbitration files (governed by PAY-004).
+* External litigation, court proceedings, and statutory legal notices (governed by internal Legal Counsel protocols).
+Customer Dispute Resolution Overview
+Customer disputes arise when a customer disagrees with an initial operational decision, policy enforcement action, or service outcome across NovaCart's commerce ecosystem. NovaCart views dispute resolution not merely as a risk containment function, but as a critical driver of customer trust, operational fairness, and continuous platform improvement.
+Core Guiding Principles
+1. Fairness & Objectivity: Every customer dispute is evaluated impartially based on factual evidence, system telemetry logs, and enterprise policy standards rather than rigid operational bias.
+2. Accessibility & Frictionless Intake: Customers can easily initiate a formal dispute through self-service web/app portals (crm.novacart.internal) or guided customer support channels without paying administrative fees.
+3. Transparent Operational SLAs: Disputes are tracked against strict time-bound SLAs for registration, initial assessment, investigation, resolution, and appeal review.
+4. Data-Driven Continuous Improvement: Recurring dispute patterns and root causes are analyzed systematically to refine operational procedures, improve product quality, and update enterprise policies (LEG-005).
+Guiding Principles
+The Customer Dispute Resolution framework is built upon four operational pillars:
+* Impartial Investigation Mandate: Case investigators must gather and audit evidence from both customer submissions and internal system logs (SEC-006, wms.novacart.internal, tms.novacart.internal) prior to issuing a final ruling.
+* Presumption of Good Faith: Customers submitting grievances are treated as honest platform users seeking resolution, provided their interactions comply with acceptable communication standards (LEG-003).
+* Proportional Settlement Authority: Designated Resolution Officers and Escalation Managers possess flexible financial and operational settlement authority to resolve valid customer grievances fairly (REF-005).
+* Single Source of Case Truth: All evidence, communications, internal notes, and decision justifications must be logged centrally within the Dispute Vault (dispute.novacart.internal) to ensure auditability and continuity across escalation tiers.
+Types of Customer Disputes
+Customer disputes governed by this policy are categorized into six functional domains:
+Dispute Category Matrix
+Category Code
+	Dispute Category Name
+	Triggering Operational Scenario
+	Primary Reference Policy
+	DSP-CAT-ORD
+	Order & Fulfillment Disputes
+	Claim of incorrect SKU delivered, missing inbox accessories, or excessive transit delay.
+	ORD-001, SHIP-001
+	DSP-CAT-REF
+	Refund & Return Appeals
+	Disagreement with a rejected return request, RMA quality grading, or refund deduction.
+	REF-001, REF-005
+	DSP-CAT-WRN
+	Warranty & Service Claims
+	Dispute over an ASC warranty claim rejection, 3-strike repair limit, or unserviceable SKU.
+	PROD-003, PROD-004
+	DSP-CAT-PAY
+	Payment & Wallet Disputes
+	Billing calculation disagreement, double charge error, or expired promotional wallet credit.
+	PAY-001, REF-006
+	DSP-CAT-ACC
+	Account & Security Appeals
+	Appeal against account suspension, feature restriction, or promo abuse flag.
+	SEC-001, LEG-003
+	DSP-CAT-PRV
+	Privacy & Data Grievances
+	Dissatisfaction with a data access export, profile correction, or account deletion timeline.
+	SEC-003, LEG-002
+	Dispute Submission Process
+Customers may initiate a formal dispute within 30 calendar days of receiving an initial operational decision or service outcome:
+1. Submission Channels:
+   * Self-Service Portal: Navigate to My Account $\rightarrow$ Order History / Support Tickets $\rightarrow$ File Formal Dispute in the mobile app or web storefront.
+   * Support-Assisted Intake: Contact Customer Support (SUP-001) via live chat, email (disputes@novacart.com), or phone to request formal case registration.
+2. Mandatory Intake Information: To register a valid dispute file, the submission must include:
+   * Master Order ID, Ticket Reference ID, or RMA Return ID.
+   * Primary Account Email address and verified mobile phone number.
+   * Clear statement of the grievance detailing why the initial decision or outcome is disputed.
+   * Desired resolution option (e.g., full refund, replacement dispatch, account reinstatement, goodwill credit).
+   * Supporting evidence attachments (e.g., photos of received item, unboxing video, repair receipts, courier delivery slips).
+Case Registration & Initial Assessment
+Upon receipt, the Dispute Intake Engine (dispute.novacart.internal) automatically registers and prioritizes the case file:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        DISPUTE INGESTION & TRIAGE PIPELINE                        |
++-----------------------------------------------------------------------------------+
+| 1. CASE INTAKE      | Customer submits formal grievance via Portal or Support.     |
+| 2. AUTO-REGISTRATION| System issues unique Dispute ID (DSP-XXXXX) & logs timestamp.|
+| 3. PRIORITY TRIAGE  | Risk Engine assigns Priority Score (P1 to P4) based on value.|
+| 4. AGENT ASSIGNMENT | Case routed to Tier 1 Dispute Specialist per skill matrix.   |
++-----------------------------------------------------------------------------------+
+
+Dispute Priority Matrix
+Priority Tier
+	Customer & Account Context
+	Financial / Risk Value Scope
+	Initial Assessment SLA
+	Investigation SLA
+	P1 - Critical
+	NovaCart Prime VIP Member / High Risk
+	Dispute Value $> \text{INR } 50,000$ (or AED/SGD equivalent) OR Safety/Legal risk.
+	$\le 1$ Hour
+	$\le 24$ Hours
+	P2 - High
+	Standard B2C Customer
+	Dispute Value $\text{INR } 15,000\text{ to }50,000$.
+	$\le 4$ Hours
+	$\le 48$ Hours
+	P3 - Medium
+	Standard B2C Customer
+	Dispute Value $\text{INR } 2,000\text{ to }14,999$.
+	$\le 8$ Hours
+	$\le 3$ Business Days
+	P4 - Low
+	Standard B2C / Guest User
+	Dispute Value $< \text{INR } 2,000$.
+	$\le 12$ Hours
+	$\le 5$ Business Days
+	Investigation Process
+Dispute investigations execute according to strict evidentiary standards managed by assigned Dispute Specialists:
+Investigation Workflow
+1. Evidentiary Gathering: The investigator audits both customer-provided attachments and internal system records:
+   * Warehouse Telemetry: Intake dock inspection CCTV, WMS packing weight logs (wms.novacart.internal), unboxing photos (REF-004).
+   * Logistics Telemetry: Courier GPS coordinates, doorstep delivery photo proof, verified delivery OTP timestamps (tms.novacart.internal, SHIP-001).
+   * System Telemetry: User login IP histories (SEC-001), payment gateway transaction logs (PAY-001), chat transcripts (SUP-001).
+2. Cross-Departmental Inquiry: If required, the investigator submits technical verification requests to Warehouse QA, Field Service Engineering (PROD-004), or Fraud Operations (SEC-004).
+3. Evaluating Against Policy Standards: The investigator compares the factual findings against enterprise policy criteria (REF-001, PROD-003, LEG-001) to determine if the initial decision was operational error or policy compliant.
+Investigation Responsibility Matrix
+Dispute Domain
+	Primary Investigation Systems
+	Required System Evidence Package
+	Lead Investigator Group
+	Order & Delivery
+	wms.novacart.internal / tms.novacart.internal
+	Packing weight logs, courier GPS, 4-digit Delivery OTP.
+	Fulfillment Audit Specialist
+	Return & Refund
+	rma.novacart.internal / ledger.novacart.internal
+	RMA photo grading, serial scan logs, refund ledger receipts.
+	Return Resolution Specialist
+	Warranty & Repair
+	warranty.novacart.internal
+	ASC diagnostic reports, LCI water ingress photos, repair logs.
+	Technical Claims Specialist
+	Account & Security
+	shield.novacart.internal / auth.novacart.internal
+	Device fingerprints, IP velocity logs, ATO investigation files.
+	Security Risk Specialist
+	Internal Escalation Workflow
+If a dispute cannot be resolved at Tier 1 or involves complex policy exceptions, it escalates through a structured management hierarchy:
+Escalation Matrix
+Escalation Level
+	Assigned Operational Role
+	Financial Settlement Authority Limit
+	Target Case SLA
+	Tier 1: Frontline
+	Senior Dispute Specialist
+	Up to $\text{INR } 10,000$ (or AED 400 / SGD 150)
+	$\le 48\text{ Hours}$
+	Tier 2: Supervisory
+	Dispute Resolution Manager
+	Up to $\text{INR } 50,000$ (or AED 2,000 / SGD 750)
+	$\le 3\text{ Business Days}$
+	Tier 3: Executive
+	Customer Advocacy Panel (Director Level)
+	Up to $\text{INR } 250,000$ (or AED 10,000 / SGD 3,750)
+	$\le 5\text{ Business Days}$
+	Tier 4: C-Suite Review
+	General Counsel & Chief Operating Officer
+	Full Enterprise Authority
+	$\le 7\text{ Business Days}$
+	Resolution Options
+Following investigation, the Dispute Specialist or Manager issues a formal Resolution Order selected from five standardized outcomes:
+Resolution Outcome Matrix
+Outcome Code
+	Resolution Type
+	Operational Description
+	Execution System SLA
+	RES-FULL_SETTLE
+	Full Customer Claim Approval
+	Initial decision overturned; 100% full monetary refund or replacement authorized.
+	Dispatched within $< 1 \text{ Hour}$ (PAY-003, REF-003).
+	RES-PART_SETTLE
+	Partial Compromise Settlement
+	Partial monetary refund, partial store credit, or free accessory replacement authorized.
+	Cleared within $< 24 \text{ Hours}$ (REF-005).
+	RES-GOODWILL
+	Policy Exception + Goodwill
+	Claim technically ineligible, but store credit (CRD-GDW) granted for customer retention.
+	Wallet deposit within $< 1 \text{ Hour}$ (REF-006).
+	RES-UPHELD
+	Decision Upheld (Claim Denied)
+	Initial decision affirmed; claim denied due to clear policy compliance or fraud proof.
+	Case closed; decision notice sent (SEC-004).
+	RES-INFO_NEEDED
+	Suspended - Evidence Needed
+	Case suspended pending additional evidence requested from customer.
+	Holds for 7 calendar days before closure.
+	Appeal Process
+If a customer disagrees with a Tier 1 or Tier 2 dispute resolution outcome, they possess the right to submit a single formal Dispute Appeal:
+Appeal Eligibility Matrix
+Condition
+	Appeal Eligibility Status
+	Requirement / Criteria
+	New Material Evidence Provided
+	Eligible
+	Customer submits previously unprovided photos, video, or official receipts.
+	Demonstrated Procedural Error
+	Eligible
+	Investigator failed to review submitted logs or misapplied policy criteria.
+	Repeated Same Evidence
+	Ineligible
+	Customer re-submits identical arguments without new factual documentation.
+	Expired Appeal Timeline
+	Ineligible
+	Appeal filed past the mandatory 14-day appeal window.
+	Appeal Handling Workflow
+1. Appeal Submission: Customer clicks Appeal Decision inside dispute.novacart.internal within 14 calendar days of receiving the initial dispute ruling.
+2. Tier 2/3 Re-Audit: The case file is reassigned to an independent Supervisory Manager or Customer Advocacy Panel member who was not involved in the initial Tier 1 ruling.
+3. Final Ruling: The Appeal Manager conducts a comprehensive review of all evidence and issues a Final Appeal Determination. The appeal decision is final within NovaCart's internal administrative structure.
+Customer Communication Standards
+All customer communications during the dispute lifecycle must adhere to strict professional standards:
+* Timely Status Notifications: Customers receive automated SMS, email, and portal notifications at every milestone: Case Ingestion, Investigator Assignment, Evidence Request, Resolution Issued, and Appeal Review.
+* Empathetic & Objective Tone: Written dispute notices must maintain an empathetic, respectful, and objective tone, explaining the factual basis for rulings without using defensive or argumentative language.
+* Detailed Narrative Explanations: Resolution notices (especially claim denials) must provide clear, itemized justifications citing relevant evidence evaluated (e.g., "Courier GPS coordinates and 4-digit OTP match confirmed delivery at 10:14 AM").
+Department Responsibilities
+Accountability for managing disputes and maintaining advocacy standards is shared across operational teams:
+Department Responsibility Matrix
+Department Unit
+	Primary Dispute Responsibilities
+	Primary System Portal
+	Target KPI SLA
+	Customer Advocacy Group
+	Manages dispute intake, investigates grievances, executes Tier 1/2 settlements.
+	dispute.novacart.internal
+	Overall Dispute SLA compliance $\ge 98\%$
+	Customer Support (L1/L2)
+	Identifies potential disputes, assists customers with intake, logs ticket details.
+	crm.novacart.internal
+	Intake Routing FRT $< 15\text{ Secs}$ (SUP-005)
+	Fraud & Risk Operations
+	Investigates account suspension appeals, reviews chargeback overlap files (PAY-004).
+	shield.novacart.internal
+	Risk Audit SLA $< 12\text{ Hours}$ (SEC-004)
+	Legal & Compliance
+	Oversees Tier 3/4 escalations, reviews regulatory grievances, conducts root-cause audits.
+	compliance.novacart.internal
+	Legal Escalation SLA $< 24\text{ Hours}$ (LEG-005)
+	Business Rules
+Rule 1: Instant Hold on Duplicate Ticket Generation
+Submitting multiple simultaneous support tickets or dispute requests regarding the exact same order or grievance automatically consolidates duplicate files into the primary active Dispute ID (DSP-XXXXX), preventing queue fragmentation and conflicting agent rulings (SUP-001).
+Rule 2: Mandatory Wallet Credit Disbursement for Goodwill
+All non-monetary goodwill settlements (RES-GOODWILL) authorized during dispute resolution must be disbursed as non-transferable NovaCart Store Credit (CRD-GDW) directly into the customer's verified platform wallet, valid for 12 months (REF-006).
+Rule 3: Dispute Closure upon Insufficient Evidence
+If a dispute requires customer-provided evidence (e.g., photo of damaged packaging) and the customer fails to submit the requested documentation within 7 calendar days of written request, the case status updates automatically to CLOSED_INSUFFICIENT_EVIDENCE.
+Rule 4: Mandatory 7-Year Dispute Archive Retention
+All dispute case files, evidence attachments, internal investigation notes, courier GPS logs, and written resolution notices must be archived in immutable WORM storage (audit.novacart.internal) for a mandatory period of 7 years (SEC-003, SEC-006).
+Exception Handling
+* Parallel Chargeback Ingestion: If a customer initiates a formal credit card chargeback with their issuing bank (PAY-004) while an internal NovaCart dispute file is actively open, dispute.novacart.internal automatically pauses the internal dispute, attaches existing evidence to the bank representment package, and shifts governance to PAY-004 rules.
+* Repeated Disapproved Grievances: If a customer submits repeated, unsubstantiated disputes ($> 5 \text{ denied files}$ within 6 months) for fraudulent gain, the system flags the profile for fraud review (SEC-004) and requires Tier 2 Supervisory sign-off prior to opening future dispute files.
+Practical Examples
+Scenario 1: Reversal of Rejected Return Claim via Dispute Evidence
+1. A customer receives a high-end laptop (CAT-ELE), but the outer box displays transit crushing. Return request is initially auto-rejected by RMA software due to an incomplete photo upload.
+2. Customer files a formal dispute (DSP-88210), uploading an unboxing video capturing the crushed box and sealed inner unit.
+3. Tier 1 Dispute Specialist audits the video, checks WMS packing weight logs, and confirms carrier transit damage.
+4. Specialist issues RES-FULL_SETTLE, approves immediate free replacement dispatch under REF-003, and dispatches a prepaid return waybill within 2 hours.
+Scenario 2: Decision Upheld for False Non-Receipt Claim
+1. Customer files a dispute claiming a smartphone package (#NC-IN-99201) was never delivered, demanding a 100% full refund.
+2. Dispute Specialist audits logistics telemetry: Courier GPS confirms driver was within 5 meters of customer door, doorstep photo captures package delivery, and courier system logged the customer's verified 4-digit Delivery OTP (SHIP-001).
+3. Specialist issues RES-UPHELD, attaching courier delivery proof in the written decision notice. Case closes as CLOSED_DECISION_UPHELD.
+Frequently Asked Questions (FAQs)
+Q1: How do I file a formal dispute if I am unhappy with a support agent's decision?
+Answer: If your initial support request or return claim was rejected and you believe the decision was incorrect, you can file a formal dispute directly in your account under My Account $\rightarrow$ Support Tickets $\rightarrow$ File Formal Dispute. Alternatively, ask any Customer Support agent to escalate your ticket to the Customer Advocacy Group (Refer to SUP-001).
+Q2: How long does it take for NovaCart to investigate and resolve a formal dispute?
+Answer: Case investigation timelines depend on dispute priority. Critical high-value disputes (P1) are investigated within 24 hours. Standard retail disputes (P2/P3) are resolved within 2 to 3 business days. You will receive automated status notifications via SMS, email, and portal tracking throughout the investigation (Refer to Dispute Priority Matrix).
+Q3: What happens if I disagree with the outcome of my formal dispute?
+Answer: If you disagree with the initial dispute ruling, you have the right to submit a formal Dispute Appeal within 14 calendar days of the decision notice. Appeals are reassigned to an independent Supervisory Manager or Customer Advocacy Panel who re-evaluates all evidence and issues a final administrative determination (Refer to Appeal Eligibility Matrix).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of LEG-006. Established dispute intake categories, P1–P4 priority matrices, 4-tier internal escalation hierarchies, settlement outcome options, 14-day appeal workflows, and 7-year audit retention standards.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* SUP-005: Customer Support SLA Policy
+* ORD-001: Order Lifecycle Management Policy
+* SHIP-001: Domestic Shipping Policy
+* PAY-001: Payment Processing SOP
+* PAY-003: Refund Payment Processing Policy
+* PAY-004: Chargeback & Payment Dispute Policy
+* REF-001: Master Refund Eligibility Rules
+* REF-005: Refund Approval & Exception Handling Policy
+* REF-006: Store Credit & Promotional Refund Policy
+* PROD-001: Product Catalog Management Policy
+* PROD-003: Product Warranty Policy
+* PROD-004: Product Installation & Setup Policy
+* SEC-001: Account Security Policy
+* SEC-003: Data Protection & Privacy Policy
+* SEC-004: Fraud Prevention & Risk Management Policy
+* SEC-006: Security Monitoring & Audit Logging Policy
+* LEG-001: Terms & Conditions Policy
+* LEG-002: Privacy Notice & Customer Rights Policy
+* LEG-003: Acceptable Use Policy
+* LEG-005: Compliance & Regulatory Governance Policy

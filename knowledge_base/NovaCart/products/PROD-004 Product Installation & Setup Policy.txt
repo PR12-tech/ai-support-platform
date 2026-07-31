@@ -1,0 +1,307 @@
+﻿PROD-004: Product Installation & Setup Policy
+Document Header
+* Document Title: Product Installation & Setup Policy
+* Document ID: PROD-004
+* Version: 1.0.0
+* Document Category: Products
+* Classification: Internal / Public Operational Standard
+* Department Owner: Field Operations & Technical Services
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Field Operations, Customer Experience Director, Director of Logistics
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Product Installation, Field Service, On-Site Setup, Appliance Installation, Smart Device Pairing, Technician Scheduling, Site Readiness, Installation Acceptance
+Purpose
+This document defines the official Product Installation & Setup Policy of NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes standardized operational procedures, installation service guidelines, technician SLAs, site readiness parameters, scheduling workflows, customer obligations, and business rules governing physical on-site installation, smart device activation, and technical initial setup services.
+As a core operational document (PROD-004) in the Products category of the NovaCart Enterprise Knowledge Base (NEKB), PROD-004 governs field service execution within the Field Service Management System (fieldservice.novacart.internal), operating in strict operational alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, REF-001 through REF-006, PROD-001, PROD-002, and PROD-003.
+Scope
+This policy applies universally across all product installation and setup operations conducted across NovaCart’s primary operating regions (India, Singapore, UAE) across all sales channels and product verticals.
+Coverage Includes
+* Free bundled installation services for eligible high-complexity catalog categories.
+* Optional paid add-on installation services booked at checkout or post-delivery.
+* Self-installation product guidelines and remote technical activation assistance.
+* Field service appointment scheduling, customer rescheduling, and technician dispatch.
+* Pre-installation site readiness checks, electrical/plumbing parameter validation, and civil work limits.
+* On-site unboxing, physical mounting, functional calibration, software activation, and customer demonstration.
+* Handling installation exceptions, including site unreadiness, transit damage discovered during unboxing, and defective Dead-On-Arrival (DOA) units.
+Out of Scope
+* Major civil masonry, wall demolition, building structural modification, or primary electrical main line wiring.
+* Post-installation hardware warranty repairs and component replacements (governed by PROD-003).
+* Reverse logistics courier returns and fulfillment center quality inspections (governed by REF-002 and REF-004).
+Product Installation Overview
+For complex product categories such as Large Home Appliances (CAT-APP), Consumer Electronics (CAT-ELE), and Smart Home Hardware (CAT-SMT), delivery to the customer’s doorstep represents only the first phase of customer fulfillment. Proper installation, physical mounting, safe electrical connection, and functional activation are essential to ensure user safety, optimal performance, and valid warranty standing (PROD-003).
+Core Operational Principles
+1. Safety and Compliance First: All electrical, plumbing, and structural mounting work must comply with regional municipal codes and manufacturer safety parameters.
+2. Synchronized Fulfillment Integration: Installation scheduling integrates dynamically with order delivery tracking (tms.novacart.internal) to ensure technicians arrive after parcel handover.
+3. Certified Workforce Mandate: On-site installation work is restricted strictly to certified NovaCart Field Engineers or OEM-authorized service personnel.
+4. Mandatory Proof of Acceptance: Installation files close only upon digital signature verification and functional test video capture uploaded to fieldservice.novacart.internal.
+Installation Eligibility
+Product eligibility for installation services is configured in catalog.novacart.internal (PROD-001) and displayed transparently on storefront Product Display Pages (PDP):
+Product Installation Eligibility Matrix
+Category Code
+	Product Vertical Scope
+	Installation Service Status
+	Default Service Model
+	Included Standard Work Scope
+	CAT-APP
+	Large Appliances (Washers, Refrigerators, ACs)
+	Mandatory / Free Included
+	On-Site Field Service
+	Unboxing, leveling, inlet/drain connection, power-on test.
+	CAT-ELE
+	Large Displays (Television panels $\ge 43"$)
+	Free Included
+	On-Site Field Service
+	Wall-bracket mounting, cable routing, channel/app setup.
+	CAT-SMT
+	Smart Locks, Security Cameras, Video Doorbells
+	Optional Paid / Free Add-on
+	On-Site or Remote Assistance
+	Door fitting, Wi-Fi mesh pairing, mobile app activation.
+	CAT-ELE
+	Audio Systems, Desktop PCs, Monitors
+	Self-Installation
+	Remote Setup Assistance
+	Self-assembly guided via mobile app / phone support.
+	CAT-MOB
+	Smartphones, Tablets, Wearables
+	Self-Installation
+	Remote Activation Assistance
+	SIM activation, cloud data migration via phone/chat.
+	CAT-SFT
+	Digital Software & Licenses
+	Self-Activation
+	Remote Technical Triage
+	Digital key activation and portal download (REF-001).
+	Installation Service Types
+NovaCart provides four standardized installation service models based on product complexity and customer selection:
+1. Integrated Delivery & Installation (Del+Install): For designated high-priority SKUs, delivery and field installation occur simultaneously in a single visit by a specialized two-person logistics crew.
+2. Standard On-Site Field Installation: Delivery occurs via standard logistics (SHIP-001). Upon delivery confirmation, a certified field technician visits the customer location in a separate, pre-scheduled 2-hour service window.
+3. Remote Guided Installation & Activation: A dedicated Technical Service Specialist guides the customer through self-assembly, cable configuration, Wi-Fi pairing, or software activation via interactive video call or remote desktop session (SUP-001).
+4. Self-Installation with In-Box Quick Start: The product includes standardized, multilingual assembly manuals and QR code links to video tutorials. Field dispatch is unavailable unless converted to a paid service request.
+Installation Service Matrix
+Service Model Code
+	Service Model Name
+	Execution Lead Time SLA
+	Primary Technical Provider
+	Standard Billing Structure
+	SRV-INS-DEL
+	Del+Install Simultaneous
+	Delivery Slot Match
+	Specialized Logistics Crew
+	Free / Bundled in Retail Price
+	SRV-INS-ONS
+	Standard On-Site Field
+	Within $24\text{ to }48\text{ Hours}$ post-delivery
+	NovaCart Field Engineer / OEM ASC
+	Free (Appliance/TV) / Paid (Smart Home)
+	SRV-INS-RMT
+	Remote Guided Setup
+	Within $2\text{ Hours}$ of request
+	Customer Technical Support
+	Free for all registered users
+	SRV-INS-SLF
+	Self-Installation
+	Instant upon delivery
+	Customer Self-Execution
+	Free (User Self-Service)
+	Installation Scheduling Process
+Installation appointments are managed automatically by the Field Service Scheduling Engine (fieldservice.novacart.internal):
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        INSTALLATION SCHEDULING WORKFLOW                           |
++-----------------------------------------------------------------------------------+
+| 1. CHECKOUT BOOKING | Customer selects preferred date/slot during checkout (ORD-001).|
+| 2. DELIVERY SYNC   | System holds slot until order moves to DELIVERED status in TMS.  |
+| 3. FIELD DISPATCH  | Technician assigned 12 hrs prior; dispatch alert sent to user.  |
+| 4. PRE-CALL AUDIT  | Technician calls customer 60 mins prior to confirm site readiness|
+| 5. APPOINTMENT EXEC| On-site execution within 2-hour window; completion sign-off.   |
++-----------------------------------------------------------------------------------+
+
+1. Checkout Slot Selection: During order placement (ORD-001), the customer selects a 2-hour field appointment window (e.g., 10:00 AM – 12:00 PM) starting at least 24 hours after estimated parcel delivery (SHIP-001).
+2. Automated Tracking Lock: The scheduling engine monitors delivery progress (tms.novacart.internal). If delivery is delayed (SHIP-005), the appointment auto-reschedules to the next available slot, and the customer is notified via SMS/WhatsApp.
+3. Technician Assignment: 12 hours prior to the appointment, the system assigns a local, certified field engineer based on proximity, skill certification (e.g., HVAC, electrical, smart lock), and current route optimization.
+4. Customer Rescheduling Rights: Customers may reschedule an appointment up to 2 hours prior to the slot start time penalty-free via the mobile app or web portal.
+5. Missed Appointment Handling: If the technician arrives within the confirmed 2-hour window but the customer is unreachable after 15 minutes of arrival, the technician logs CUSTOMER_UNAVAILABLE. A missed appointment alert dispatches, and the customer must reschedule via the portal.
+Pre-Installation Requirements
+To prevent installation failures and safety hazards, customers must ensure site readiness prior to technician arrival:
+Site Readiness Parameters
+* Space & Clearance: Adequate physical space at the intended location, including doorway and hallway passage clearance for large appliances (PROD-001).
+* Electrical Provisioning: Functioning, grounded power outlets with appropriate amperage rating (e.g., 16A dedicated socket for air conditioners and washing machines) within 1.5 meters of the installation point.
+* Plumbing & Water Connections: Functioning water inlet tap with standard threading and adequate water pressure, plus a dedicated drain outlet within 1 meter for washing machines and dishwashers.
+* Structural Wall Mounting: Solid concrete, brick, or reinforced wall structures for mounting televisions panel displays or heavy smart locks. Hollow drywall installations require specialized customer-provided anchor reinforcement.
+* Network Readiness: Active 2.4GHz / 5GHz Wi-Fi network with known SSID credentials and adequate signal strength ($> -65\text{ dBm}$) at the mounting location for smart devices (CAT-SMT).
+Customer Responsibility Matrix
+Preparation Domain
+	Customer Site Obligation
+	Minimum Technical Parameter
+	Failure Consequence
+	Power Socket
+	Provide grounded electrical outlet
+	16A 3-pin socket within $1.5\text{ m}$
+	Installation aborted; electrical referral logged.
+	Water Connection
+	Provide inlet tap & drain pipe
+	Standard $\frac{3}{4}"$ threaded tap within $1.0\text{ m}$
+	Installation aborted; plumbing referral logged.
+	Wall Integrity
+	Ensure solid concrete/brick wall
+	Min $100\text{ mm}$ solid wall depth for wall mounts
+	Wall mount suspended; tabletop setup offered.
+	Network Credentials
+	Provide Wi-Fi SSID & Password
+	Active internet connection ($> 5\text{ Mbps}$)
+	Smart features unconfigured; basic setup done.
+	Premises Access
+	Secure building entry permits
+	Visitor permission from building security
+	Appointment marked missed after $15\text{ mins}$.
+	Installation Workflow
+Field service appointments follow a standardized 6-phase operational workflow:
+1. Technician Arrival & Credential Verification: The technician arrives in uniform, presents a digital NovaCart ID badge, and verifies customer identity using the Master Order ID or 4-digit Service OTP sent to the customer’s phone.
+2. Unboxing & Inspection: The technician unboxes the sealed product in the customer’s presence, inspecting the outer chassis for transit damage or missing inbox accessories (REF-004).
+   * If transit damage or missing parts are discovered, the technician logs UNBOXING_DAMAGE_FOUND in fieldservice.novacart.internal and triggers an immediate fast-track replacement request under REF-003.
+3. Site & Safety Validation: The technician tests socket voltage, earthing, water pressure, and wall structural strength using certified diagnostic tools.
+4. Physical Installation & Mounting: The technician fits mounting brackets, levels appliances using bubble levels, secures inlet/drain pipes, or installs smart lock hardware according to manufacturer specifications.
+5. Functional Power-On & Calibration: The unit is connected to power and executed through a standardized 10-minute diagnostic cycle (e.g., test wash cycle for washers, cooling check for ACs, channel scan for TVs, lock/unlock cycle for smart locks).
+6. Customer Demonstration & Acceptance: The technician demonstrates core operational features, explains routine maintenance, provides quick-start guidance, and collects the customer's digital signature on the job sheet.
+Product Activation & Initial Setup
+Initial technical setup and digital feature activation ensure products are fully operational before job completion:
+* Smart Device App Pairing (CAT-SMT): Technicians assist customers in downloading the official management app, creating a secure user profile, pairing the device to local Wi-Fi, and setting up initial admin credentials or biometric templates (fingerprints/passcodes).
+* Television Smart OS Calibration (CAT-ELE): Technicians execute initial firmware updates, configure display aspect ratios, pair remote controls, and assist the customer in accessing built-in smart TV streaming interfaces.
+* Appliance Cycle Testing (CAT-APP): Technicians execute initial calibration runs to purge manufacturing factory residue, verify leak-free water inlet seals, and confirm noise/vibration insulation.
+* Software License Activation (CAT-SFT): Remote specialists verify digital product keys, execute online server handshakes, and confirm digital license registration within the customer's portal account (REF-001).
+Post-Installation Verification
+Job completion requires satisfying explicit validation criteria logged in fieldservice.novacart.internal:
+Installation Completion Criteria
+1. Physical Integrity: Product is securely mounted, leveled, and free of scratches or installation-induced blemishes.
+2. Operational Functionality: Product successfully passes its mandatory 10-minute diagnostic test cycle without throwing error codes or water/electrical faults.
+3. Digital Documentation Upload: The technician uploads four compulsory photos to the job file:
+   * Photo 1: Installed product showing operational screen/power indicator.
+   * Photo 2: Serial number / IMEI tag on the installed chassis.
+   * Photo 3: Plumbing/electrical connection point.
+   * Photo 4: Customer digital signature on the mobile Field Service app.
+4. Customer Acceptance OTP: The customer provides the 4-digit Completion OTP to the technician, confirming satisfactory job execution and closing the field ticket.
+Customer Responsibilities
+Customers participating in installation services must adhere to the following operational duties:
+1. Presence of Authorized Adult: Ensure an adult (aged 18 or older) is present at the service location throughout the 2-hour appointment window.
+2. Site Preparation: Complete all required electrical socket installations, plumbing connections, and space clearing prior to technician arrival.
+3. Provision of Building Approvals: Secure required building management (HOA/Society) entry permits, elevator access reservations, and drilling permissions.
+4. Timely Inspection & Sign-off: Inspect the installed product alongside the technician, report immediate cosmetic concerns, and provide the digital completion sign-off upon successful testing.
+Technician Responsibilities
+Field service technicians representing NovaCart must maintain professional service standards:
+1. Punctuality & Communication: Arrive within the assigned 2-hour slot and make a pre-arrival phone call 60 minutes prior to arrival.
+2. Professional Identification: Wear clean NovaCart technical uniform, display digital ID credentials, and wear protective shoe covers inside customer residences.
+3. Tool & Safety Compliance: Use calibrated professional tools (e.g., insulated screwdrivers, digital multimeters, laser levels, masonry drill bits with dust catchers).
+4. Clean Work Area: Remove all installation debris, drill dust, packaging wire ties, and protective films, leaving the service area clean.
+5. Zero Disallowed Work: Refrain strictly from performing unauthorized structural civil work, main circuit breaker modifications, or requesting cash tips/unauthorized side payments from customers.
+Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Installation Responsibilities
+	Primary System Portal
+	SLA Target
+	Field Operations
+	Manages technician dispatches, monitors slot fulfillment, audits job quality, manages field safety.
+	fieldservice.novacart.internal
+	Slot fulfillment SLA $\ge 98\%$
+	Customer Support
+	Handles installation scheduling queries, manages customer rescheduling, escalates failed setups.
+	crm.novacart.internal
+	Priority Chat FRT $< 15\text{ Secs}$ (SUP-005)
+	Quality Assurance
+	Conducts random customer post-installation phone audits, investigates installation complaints.
+	quality.novacart.internal
+	Post-job CSAT $\ge 92\%$
+	Logistics & Warehousing
+	Coordinates simultaneous delivery + installation runs; stages wall brackets and fitting kits.
+	tms.novacart.internal
+	Del+Install sync SLA $\ge 99\%$
+	Business Rules
+Rule 1: Mandatory Unboxing by Authorized Technician Rule
+For product categories marked "Field Installation Required" (e.g., Televisions $\ge 55"$, Air Conditioners, Front-Load Washing Machines), packaging unboxing must be executed exclusively by the authorized technician. If a customer opens the sealed factory box prior to technician arrival, any subsequently claimed physical screen cracks or cosmetic blemishes are classified as customer-induced damage, voiding immediate transit loss replacement claims (REF-001, REF-003, REF-004).
+Rule 2: Free Standard Installation Scope
+Free standard installation covers connection to existing compliant power sockets, connection to standard threaded water taps within 1 meter, mounting using included manufacturer wall brackets, and operational testing. Additional materials (e.g., extra copper piping, wall bracket upgrades, outdoor unit AC mounting frames, electrical wiring extensions) incur standardized add-on charges according to the official NovaCart Rate Card.
+Rule 3: Aborted Installation Due to Unready Site
+If an installation cannot be completed due to unready customer site conditions (e.g., missing power socket, lack of water pressure, hollow wall), the technician logs SITE_NOT_READY. The ticket holds for 7 calendar days to allow the customer to rectify site conditions. The first re-visit is free; subsequent visits incur a service fee of $\text{INR } 350$ / $\text{SGD } 15$ / $\text{AED } 40$.
+Exception Handling
+Installation Status Matrix
+Status Code
+	Status Name
+	Exception Trigger Condition
+	Resolution Workflow
+	INS_SCHEDULED
+	Scheduled
+	Appointment confirmed; awaiting dispatch window.
+	Standard field dispatch pipeline.
+	INS_IN_PROGRESS
+	In Execution
+	Technician on-site; unboxing & mounting active.
+	Real-time GPS tracking active.
+	INS_SITE_UNREADY
+	Site Not Ready
+	Electrical, plumbing, or space parameters non-compliant.
+	Job suspended; customer given 7 days to rectify site.
+	INS_DOA_FOUND
+	Defective Unit
+	Product fails power-on test during technician calibration.
+	Technician logs DOA; fast-track replacement dispatched (REF-003).
+	INS_DAMAGED
+	Transit Damage
+	Unboxing reveals broken display screen or structural dent.
+	Technician uploads photos; fast-track swap triggered (REF-003).
+	INS_COMPLETED
+	Completed
+	Product installed, calibrated, and sign-off OTP verified.
+	Ticket closed; warranty countdown activated (PROD-003).
+	Practical Examples
+Scenario 1: Standard Appliance Installation & Defect Discovery (CAT-APP)
+1. Customer in Bangalore purchases a front-load washing machine (CAT-APP) with free standard installation.
+2. Order delivers on Tuesday (DELIVERED). Field Service Engine assigns a technician for Wednesday, 10:00 AM – 12:00 PM slot.
+3. Technician arrives at 10:30 AM, presents ID, and unboxes unit in customer's utility area.
+4. Technician checks water inlet tap thread, connects inlet pipe, levels machine using bubble tool, and executes a 10-minute test cycle.
+5. Machine operates flawlessly. Technician explains detergent dosing, collects customer's digital signature and 4-digit OTP, and updates status to INS_COMPLETED (PROD-003).
+Scenario 2: Unboxing Transit Damage Discovered by Technician (CAT-ELE)
+1. Customer in Dubai receives a $65"$ Smart TV panel (CAT-ELE). Box outer carton appears undamaged.
+2. Per Rule 1, customer leaves box sealed until technician arrival on Thursday afternoon.
+3. Technician unboxes unit and discovers a spiderweb glass fracture on the inner display panel.
+4. Technician logs INS_DAMAGED, takes 4 photos in fieldservice.novacart.internal, and flags the job file.
+5. Because the box was opened by an authorized technician, OMS validates immediate transit loss, approves a priority replacement under REF-003, and schedules express delivery of a new sealed unit within 24 hours.
+Frequently Asked Questions (FAQs)
+Q1: Is product installation automatically included with my purchase?
+Answer: Standard installation is included free of charge for Large Home Appliances (CAT-APP) and Televisions $\ge 43"$ (CAT-ELE). For Smart Home devices (CAT-SMT), installation can be added as an optional paid service during checkout. Smaller electronics, audio equipment, and mobile devices are designated for self-installation with free remote video setup support (Refer to PDP listing details).
+Q2: What happens if I open the box before the installation technician arrives?
+Answer: For major electronics and appliances, factory unboxing must be conducted by the technician. If you open a sealed box prior to arrival and the screen or unit is physically damaged, it becomes difficult to establish carrier transit liability, which may delay or invalidate immediate free replacement coverage (Refer to Rule 1, REF-003, REF-004).
+Q3: What additional costs might I incur during an air conditioner or TV installation?
+Answer: Standard installation covers mounting with included box brackets and basic connections. Extra charges apply if your setup requires additional copper piping beyond standard lengths, specialized outdoor compressor mounting brackets, core wall cutting, or extended electrical cabling. All add-on material prices are governed by the official NovaCart Fixed Rate Card shown by the technician prior to work.
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of PROD-004. Established installation eligibility matrices, site readiness standards, 6-phase technician workflows, Rule 1 unboxing enforcement, and exception handling protocols.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-005: Customer Support SLA Policy
+* ORD-001: Order Lifecycle Management Policy
+* SHIP-001: Domestic Shipping Policy
+* SHIP-005: Delivery Delay Management Policy
+* PAY-001: Payment Processing SOP
+* REF-002: Return & Exchange Policy
+* REF-003: Replacement Policy
+* REF-004: Return Inspection & Quality Assessment Policy
+* PROD-001: Product Catalog Management Policy
+* PROD-002: Product Availability & Inventory Policy
+* PROD-003: Product Warranty Policy

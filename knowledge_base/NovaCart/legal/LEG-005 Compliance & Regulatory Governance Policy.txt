@@ -1,0 +1,323 @@
+﻿LEG-005: Compliance & Regulatory Governance Policy
+Document Header
+* Document Title: Compliance & Regulatory Governance Policy
+* Document ID: LEG-005
+* Version: 1.0.0
+* Document Category: Legal
+* Classification: Internal / Public Operational Standard
+* Department Owner: Legal, Regulatory & Corporate Governance
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: General Counsel, Head of Corporate Governance, Chief Information Security Officer, VP of Quality & Internal Audit
+* Approved By: Chief Executive Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Compliance Governance, Policy Administration, Internal Audit, CAPA, Corrective Actions, Policy Lifecycle, Non-Compliance Management, Compliance Training
+Purpose
+This document defines the official Compliance & Regulatory Governance Policy of NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes standardized governance principles, compliance management frameworks, policy development lifecycles, internal auditing protocols, non-compliance escalation paths, Corrective and Preventive Action (CAPA) workflows, operational responsibilities, and business rules governing organizational adherence to internal policies, contractual commitments, and operational standards.
+As the capstone document (LEG-005) in the Legal category of the NovaCart Enterprise Knowledge Base (NEKB), LEG-005 establishes overarching governance and policy administration across all enterprise operations, operating in strict operational alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, REF-001 through REF-006, PROD-001 through PROD-006, SEC-001 through SEC-006, LEG-001, LEG-002, LEG-003, and LEG-004.
+Scope
+This policy applies universally across all operational departments, executive units, regional fulfillment centers, technical engineering teams, customer support operations, 3P marketplace merchant frameworks, and third-party vendor relationships managed by NovaCart across India, Singapore, and the United Arab Emirates.
+Coverage Includes
+* Enterprise compliance principles, policy ownership, accountability frameworks, and governance structures.
+* End-to-end policy lifecycle management: draft creation, stakeholder review, executive approval, publication, and annual review cycles.
+* Internal compliance monitoring schedules, operational audits, sampling methodologies, and compliance reporting pipelines.
+* Non-compliance identification, severity categorization, investigation, escalation, and Corrective and Preventive Action (CAPA) tracking.
+* Mandatory employee compliance training, policy acknowledgment tracking, and policy exception governance.
+* Auditing vendor contractual compliance, managing policy version controls, and maintaining WORM compliance record archives.
+Out of Scope
+* Technical SIEM log ingestion standards, real-time SOC alert thresholds, and security telemetry monitoring (governed by SEC-006).
+* Direct litigation defense, court representation, and formal statutory court filings (governed by internal legal department guidelines).
+Compliance & Regulatory Governance Overview
+Demonstrating consistent operational compliance across all corporate business units is fundamental to maintaining NovaCart’s operational integrity, brand reputation, customer trust, and partner relationships. As NovaCart scales its digital commerce operations, standardized compliance governance ensures that operational practices align seamlessly with published policies, contractual obligations, and internal quality standards.
+
+
+
+
+
+
+<ElicitationsGroup message="To explore related terms, privacy, acceptable use, or intellectual property policies further:">
+ <Elicitation label="Review LEG-001 Terms & Conditions Policy" query="Show LEG-001 Terms & Conditions Policy detailing platform rules." />
+ <Elicitation label="Review LEG-002 Privacy Notice Policy" query="Show LEG-002 Privacy Notice & Customer Rights Policy detailing privacy commitments." />
+ <Elicitation label="Examine LEG-003 Acceptable Use Policy" query="Show LEG-003 Acceptable Use Policy detailing prohibited conduct." />
+ <Elicitation label="Review LEG-004 Intellectual Property Policy" query="Show LEG-004 Intellectual Property Policy detailing IP governance." />
+</ElicitationsGroup>
+
+Core Governance Principles
+1. Uncompromised Accountability: Every department head, operational manager, employee, and contractor is individually and collectively responsible for maintaining strict compliance with established enterprise policies.
+2. Policy Transparency & Accessibility: All enterprise policies must be published in clear, unambiguous language, made easily accessible to employees via policy.novacart.internal, and maintained under strict version control.
+3. Proactive Audit & Monitoring: Compliance is verified continuously through structured internal audits, operational sampling, and real-time monitoring rather than relying solely on reactive incident discovery.
+4. Closed-Loop Remediation: Identified compliance gaps, policy violations, or audit findings must drive formal Corrective and Preventive Actions (CAPA) to eliminate root causes and prevent recurrence.
+Governance Principles
+NovaCart’s compliance infrastructure operates under four non-negotiable governance principles:
+Governance Responsibility Matrix
+Governance Tier
+	Executive Unit / Role Scope
+	Operational Governance Responsibility
+	System Control Portal
+	Tier 1: Executive Steering
+	Chief Executive Officer & Executive Committee
+	Approves core enterprise policies (NEKB); oversees enterprise risk strategy.
+	governance.novacart.internal
+	Tier 2: Policy Oversight
+	General Counsel & Data Protection Officer
+	Oversees policy drafts, legal reviews, regulatory alignments, and exception requests.
+	policy.novacart.internal
+	Tier 3: Audit Execution
+	Head of Internal Audit & QA
+	Executes scheduled operational audits, logs compliance findings, tracks CAPA files.
+	audit.novacart.internal
+	Tier 4: Operational Execution
+	Department Directors & Operational Leads
+	Enforces daily policy compliance, ensures team training, executes corrective actions.
+	ops.novacart.internal
+	Compliance Management Framework
+The Compliance Management Framework structures how policies are developed, monitored, enforced, and continuously improved across the enterprise:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                     COMPLIANCE MANAGEMENT FRAMEWORK WORKFLOW                     |
++-----------------------------------------------------------------------------------+
+| 1. POLICY CREATION  | Need identified; Document drafted using NEKB architecture. |
+| 2. REVIEW & APPROVE | Cross-functional review; C-Suite / Executive approval.       |
+| 3. PUBLISH & TRAIN  | Published on policy portal; employee training & ACK logged.  |
+| 4. MONITOR & AUDIT  | Scheduled internal audits measure operational compliance.    |
+| 5. CAPA REMEDIATION | Audit findings drive Corrective & Preventive Action (CAPA). |
++-----------------------------------------------------------------------------------+
+
+Policy Development & Approval Process
+All enterprise documents within the NovaCart Enterprise Knowledge Base Architecture must follow a strict, standardized development lifecycle:
+Policy Lifecycle Matrix
+Lifecycle Stage
+	Stage Code
+	Functional Description & Operational Action
+	Gatekeeper / Approver
+	Drafting
+	STAGE-DFT
+	Policy author compiles document using NEKB architecture guidelines.
+	Enterprise Architecture Team
+	Stakeholder Review
+	STAGE-REV
+	Cross-functional review by Legal, Security, Ops, and CX leads.
+	Department Owners
+	Executive Approval
+	STAGE-APP
+	Formal sign-off by C-Suite Executive Sponsor (COO/CTO/CEO).
+	Executive Committee
+	Active Publication
+	STAGE-ACT
+	Published to policy.novacart.internal; active operational standard.
+	Document Owner
+	Under Revision
+	STAGE-UPD
+	Scheduled annual review or emergency revision active.
+	Legal & Governance
+	Archived / Retired
+	STAGE-ARC
+	Superceded by new version; retained in WORM archive (SEC-003).
+	Legal & Governance
+	Policy Review & Update Process
+1. Mandatory Annual Review Cycle: All published enterprise policies (NEKB-001 through LEG-005) undergo formal review every 12 months from their effective date.
+2. Trigger-Based Emergency Updates: Out-of-cycle policy revisions are initiated immediately upon:
+   * Significant changes in enterprise operational structure, fulfillment models, or payment gateways.
+   * Discovery of critical compliance gaps during internal audits or security incidents (SEC-005).
+   * Major platform updates affecting customer rights, privacy (LEG-002), or acceptable use (LEG-003).
+3. Version Control Mechanics: Policy revisions utilize semantic versioning (X.Y.Z). Minor administrative fixes advance minor numbers (v1.0.1), while material policy updates advance major version numbers (v2.0.0).
+Compliance Monitoring & Internal Audits
+To verify operational compliance, the Internal Audit Team executes structured audits across all operating departments according to a published schedule:
+Compliance Monitoring Matrix
+Operational Focus Area
+	Monitoring Mechanism
+	Sample Size / Scope
+	Monitoring Frequency
+	Primary System Portal
+	Customer Support SOPs (SUP)
+	Ticket resolution sampling & chat review
+	$2\%$ of closed support tickets (SUP-001)
+	Bi-Weekly Sampling
+	crm.novacart.internal
+	Payment & Refunds (PAY/REF)
+	Ledger reconciliation & approval audit
+	$100\%$ of refunds $> \text{INR } 10,000$ (REF-005)
+	Daily Automated Audit
+	ledger.novacart.internal
+	Inventory & FCs (PROD/SHIP)
+	Physical cycle counts & dock intake SLA
+	$5\%$ of active warehouse bin locations
+	Monthly On-Site Audit
+	wms.novacart.internal
+	Security & Privacy (SEC)
+	Access grant review & PII unmasking logs
+	$100\%$ of privileged JIT access (SEC-002)
+	Monthly SIEM Audit
+	shield.novacart.internal
+	3P Merchant Compliance
+	Catalog listing audit & IP claim check
+	$100\%$ of flagged merchant accounts
+	Continuous Automated
+	catalog.novacart.internal
+	Internal Audit Process
+Internal compliance audits follow a rigorous 4-step operational procedure:
+1. Audit Initiation & Scoping: The Audit Lead issues a formal Audit Notification to the target department head 7 calendar days prior to audit commencement, detailing scope, system access required, and sampling criteria.
+2. Evidence Field Sampling: Auditors review system logs (SEC-006), inspect physical facilities (PROD-004), evaluate support ticket trails (SUP-001), and verify transaction records (PAY-001).
+3. Audit Finding Classification: Discrepancies between operational practice and published policy are classified into severity levels:
+Compliance Issue Severity Matrix
+Severity Level
+	Issue Description & Impact
+	Example Compliance Finding
+	Remediation SLA Target
+	CRITICAL
+	Severe policy breach; risk of systemic financial, operational, or security failure.
+	Unencrypted storage of Class 4 restricted data (SEC-003); unverified refund approvals $> \text{INR } 50,000$.
+	Immediate Hold; CAPA complete $\le 3\text{ Days}$.
+	MAJOR
+	Significant process deviation; failure to enforce core operational controls.
+	Support staff skipping identity verification on address changes (SEC-001); FC unboxing damage untracked.
+	CAPA complete $\le 14\text{ Days}$.
+	MINOR
+	Minor administrative discrepancy; inconsistent documentation or logging gap.
+	Outdated training logs for 2 team members; delayed ticket categorization in crm.novacart.internal.
+	CAPA complete $\le 30\text{ Days}$.
+	Compliance Reporting & Escalation
+Audit findings and compliance metrics are reported through a structured escalation hierarchy:
+1. Draft Audit Report: Submitted to the Department Director within 3 business days of audit completion.
+2. Corrective Action Plan: The Department Director submits a formal CAPA plan within 5 business days of receiving the report.
+3. Executive Escalation: If a Critical finding is identified, or if a Major finding remains unaddressed past its remediation SLA, the issue escalates according to the Customer Support Escalation Matrix principles (SUP-003) and Legal Governance rules:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        COMPLIANCE ESCALATION HIERARCHY                            |
++-----------------------------------------------------------------------------------+
+| LEVEL 1 | Audit Lead notifies Department Operational Manager (Day 1).             |
+| LEVEL 2 | Unresolved finding escalates to Department Director (Day 3).            |
+| LEVEL 3 | Critical finding or missed SLA escalates to General Counsel (Day 5).    |
+| LEVEL 4 | Systemic risk escalates to Chief Executive Officer & Audit Board.       |
++-----------------------------------------------------------------------------------+
+
+Employee Awareness & Training
+Policies are effective only when employees understand and actively apply their requirements:
+* Mandatory Onboarding Training: Every newly hired employee and long-term contractor must complete the Enterprise Compliance & Security Training module within 14 calendar days of joining NovaCart.
+* Annual Refresher Certification: All active employees must complete annual compliance recertification covering Data Privacy (SEC-003), Account Security (SEC-001), Acceptable Use (LEG-003), and Customer Support Standards (SUP-001).
+* Automated Acknowledgment Tracking: Completion of training modules and digital policy acknowledgments are tracked automatically in hr.novacart.internal and logged permanently in audit.novacart.internal (SEC-006).
+Non-Compliance Management
+Failure to comply with published enterprise policies, intentional bypass of operational controls, or failure to execute mandatory CAPA tasks triggers formal administrative actions:
+Corrective Action Matrix
+Violation Type
+	Severity Profile
+	Administrative & Operational Resolution
+	Management Tracking
+	Accidental Operational Deviation
+	Minor / First Occurrence
+	Retraining requirement; mandatory 1-on-1 manager coaching session.
+	Logged in HR record; 30-day review.
+	Negligent Policy Non-Compliance
+	Major / Repeated
+	Formal Written Warning; temporary privilege restriction (SEC-002).
+	Logged in HR record; impact on annual review.
+	Intentional Control Bypass / Fraud
+	Critical / Malicious
+	Immediate suspension (STATUS_SUSPENDED); HR investigation for termination.
+	HR & Legal joint file; potential legal action.
+	3P Vendor Non-Compliance
+	Contractual Breach
+	Contractual penalty, escrow hold, or vendor termination (LEG-001).
+	Vendor Management file (scm.novacart.internal).
+	Continuous Improvement
+NovaCart embeds continuous improvement into its compliance framework using the Plan-Do-Check-Act (PDCA) methodology:
+1. Plan: Establish policies, operational standards, and control thresholds (NEKB Architecture).
+2. Do: Train staff, execute business operations, and log operational telemetry (SUP-001, PAY-001).
+3. Check: Conduct continuous SIEM monitoring (SEC-006), internal audits, and customer feedback reviews.
+4. Act: Execute CAPA remediations, update outdated procedures, and refine policies during annual reviews.
+Department Responsibilities
+Accountability for compliance governance is distributed across enterprise departments:
+Department Responsibility Matrix
+Department Unit
+	Primary Governance Responsibilities
+	Primary System Portal
+	SLA / Target KPI
+	Legal & Governance
+	Manages policy architecture, processes exception requests, leads regulatory compliance.
+	policy.novacart.internal
+	Annual policy review $100\%$ on-time
+	Internal Audit & QA
+	Executes operational compliance audits, logs findings, tracks CAPA completion.
+	audit.novacart.internal
+	Audit plan execution SLA $\ge 98\%$
+	Information Security
+	Operates technical compliance monitoring, SIEM logging, access certifications (SEC-002).
+	shield.novacart.internal
+	Critical finding CAPA $\le 3\text{ Days}$
+	Human Resources (HR)
+	Tracks employee compliance training, manages policy acknowledgments, enforces disciplinary steps.
+	hr.novacart.internal
+	Onboarding training completion $\ge 99\%$
+	Business Rules
+Rule 1: Mandatory Policy Acknowledgment Rule
+All full-time, part-time, and contracted employees must digitally sign and acknowledge all active enterprise policies within 14 calendar days of employment or publication of a major policy update. Failure to complete acknowledgment blocks access to internal administrative portals (SEC-002).
+Rule 2: Absolute Dual Sign-Off for Policy Exceptions
+No individual operational manager or department head may unilaterally grant an exception to an enterprise policy. All policy exception requests require dual digital sign-off from the Department Director and General Counsel in policy.novacart.internal.
+Rule 3: Zero-Tolerance for Retaliation
+Employees who report suspected policy violations, non-compliance incidents, or security concerns in good faith are strictly protected against retaliation. Whistleblower reports are investigated confidentially by Legal & Internal Audit.
+Rule 4: Mandatory 7-Year Compliance Record Retention
+All internal audit reports, CAPA files, employee training completion logs, policy exception approvals, and compliance escalation records must be retained in immutable WORM storage (audit.novacart.internal) for a mandatory period of 7 years (SEC-003, SEC-006).
+Exception Handling
+* Operational Policy Exception Requests: If an operational team requires a temporary deviation from an enterprise policy (e.g., temporary workflow change during a emergency logistics disruption), the manager submits a formal request in policy.novacart.internal. The request must specify the business rationale, risk mitigation plan, and proposed end date ($\le 90\text{ days}$). Upon dual sign-off (Rule 2), the temporary exception is granted and logged.
+* Third-Party Vendor Policy Alignment: Key third-party logistics carriers (SHIP-001), payment acquirers (PAY-001), and technical vendors must undergo an annual Vendor Compliance Review. Vendors exhibiting non-compliance with data privacy (SEC-003) or security baselines (SEC-002) are given 30 days to remediate before contract suspension.
+Practical Examples
+Scenario 1: Discovery of Compliance Gap During Internal Audit
+1. Internal Audit conducts a monthly audit of customer refund processing in crm.novacart.internal.
+2. Auditor discovers that 3 support agents approved manual refunds exceeding $\text{INR } 10,000$ without obtaining required Level 2 Manager co-signatures (REF-005).
+3. Audit Lead logs a Major compliance finding in audit.novacart.internal and issues a CAPA request to the Customer Support Director.
+4. Support Director executes CAPA: re-configures hard system authorization blocks in crm.novacart.internal preventing single-agent refund overrides, conducts retraining for support staff, and completes CAPA within 10 days.
+Scenario 2: Successful Policy Exception Approval
+1. Logistics team requires a temporary 14-day exception to standard delivery signature collection rules (SHIP-001) due to a localized health lockdown in a specific delivery zone.
+2. Logistics Lead submits a formal exception request in policy.novacart.internal, specifying compensating controls (contactless delivery photo proof + SMS OTP confirmation).
+3. General Counsel and Director of Logistics review and grant dual sign-off (Rule 2). The exception is logged, monitored, and auto-expires on Day 14.
+Frequently Asked Questions (FAQs)
+Q1: Where can I access official NovaCart enterprise policies and operational guidelines?
+Answer: All active NovaCart enterprise policies (NEKB-001 through LEG-005) are published and accessible to employees via our internal Policy Portal at policy.novacart.internal. Customer-facing policies (Terms, Privacy, Acceptable Use, Warranty) are available on our public website (Refer to LEG-001, LEG-002).
+Q2: What happens if an employee accidentally violates an internal policy?
+Answer: NovaCart distinguishes between accidental operational errors and intentional non-compliance. First-time accidental errors prompt manager coaching, retraining, and CAPA remediation. Repeated negligence or intentional control bypass triggers formal HR disciplinary steps, up to and including account suspension or employment termination (Refer to Corrective Action Matrix).
+Q3: How often are NovaCart enterprise policies updated?
+Answer: All enterprise policies undergo mandatory formal review every 12 months. Emergency updates may occur out-of-cycle if major operational, technical, or regulatory changes occur. Registered users are notified 14 calendar days in advance of material changes affecting customer terms (Refer to LEG-001).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of LEG-005. Established compliance governance principles, policy lifecycle matrices, internal audit schedules, issue severity classification, CAPA workflows, dual sign-off exception rules, and 7-year audit retention standards.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* SUP-005: Customer Support SLA Policy
+* ORD-001: Order Lifecycle Management Policy
+* SHIP-001: Domestic Shipping Policy
+* PAY-001: Payment Processing SOP
+* PAY-003: Refund Payment Processing Policy
+* REF-001: Master Refund Eligibility Rules
+* REF-005: Refund Approval & Exception Handling Policy
+* PROD-001: Product Catalog Management Policy
+* PROD-002: Product Availability & Inventory Policy
+* SEC-001: Account Security Policy
+* SEC-002: Authentication & Access Control Policy
+* SEC-003: Data Protection & Privacy Policy
+* SEC-004: Fraud Prevention & Risk Management Policy
+* SEC-005: Incident Response & Security Breach Policy
+* SEC-006: Security Monitoring & Audit Logging Policy
+* LEG-001: Terms & Conditions Policy
+* LEG-002: Privacy Notice & Customer Rights Policy
+* LEG-003: Acceptable Use Policy
+* LEG-004: Intellectual Property Policy

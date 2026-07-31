@@ -1,0 +1,267 @@
+﻿PAY-006: Stored Payment Methods & Tokenization Policy
+Document Header
+* Document Title: Stored Payment Methods & Tokenization Policy
+* Document ID: PAY-006
+* Version: 1.0.0
+* Document Category: Payments
+* Classification: Internal / Public Operational Standard
+* Department Owner: Information Security & Finance Operations
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Payment Operations, Chief Information Security Officer, Data Protection Officer
+* Approved By: Chief Technology Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Tokenization, Stored Payment Methods, Saved Cards, PCI-DSS Level 1, Payment Tokens, UPI AutoPay Mandates, Customer Consent, Token Lifecycle
+Purpose
+This document establishes the official enterprise policy, security architecture, token lifecycle standards, customer consent requirements, and compliance rules governing stored payment credentials at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It defines the protocols for tokenizing credit cards, debit cards, UPI mandates, and digital wallets, ensuring zero storage of raw primary account numbers (PANs) or sensitive authentication data while providing friction-free, one-click checkout experiences.
+As a core security and financial governance policy (PAY-006) in the NovaCart Enterprise Knowledge Base (NEKB), PAY-006 enforces technical controls across checkout microservices (api.novacart.internal/pay), the Identity and Access Management portal (auth.novacart.internal), and certified Payment Gateway (PG) token vaults, operating in strict alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, and PAY-001 through PAY-005.
+Scope
+This policy applies universally across all customer interfaces (Web, Mobile Applications), payment gateways (Razorpay, Stripe, PayU, Telr), and operating jurisdictions (India, Singapore, UAE) where customers save, manage, or execute transactions using stored payment credentials.
+Coverage Includes
+* Card-On-File (COF) tokenization for Credit and Debit cards (Visa, Mastercard, American Express, RuPay).
+* Tokenization of recurring payment mandates (UPI AutoPay, e-Mandates, BNPL auto-debit).
+* Customer explicit consent capture, management, and revocation workflows.
+* Token creation, validation, lifecycle maintenance, automated renewal, and secure deletion.
+* PCI-DSS Level 1 compliance, token vault isolation, and role-based access control (RBAC).
+Out of Scope
+* Direct transaction clearing and authorization workflows (governed by PAY-001).
+* Stored platform store credits, digital gift cards, and NovaCart Wallet balances (governed by PAY-001).
+Stored Payment Methods Overview
+To optimize checkout conversion and streamline repeat purchases, NovaCart allows registered customers to securely save payment credentials. To protect customer financial data and comply with global regulatory mandates (such as RBI Card-on-File Tokenization rules in India, PCI-DSS Level 1 globally, and regional privacy statutes), NovaCart strictly prohibits storing raw, unencrypted payment credentials on any internal server or database.
+
+
+
+
+
+
+<ElicitationsGroup message="To explore related payment execution, account security, or privacy policies further:">
+{/* Reason: Offers structured paths to navigate deeper into related security and payment policies. */}
+ <Elicitation label="Review PAY-001 Payment Processing Policy" query="Show PAY-001 Payment Processing Policy detailing transaction authorization and capture." />
+ <Elicitation label="Review PAY-002 Payment Failure & Retry Policy" query="Show PAY-002 Payment Failure & Retry Policy detailing transaction recovery." />
+ <Elicitation label="Examine SEC-001 Account Security & Access Control" query="Show SEC-001 Account Security & Access Control detailing RBAC and IAM protocols." />
+</ElicitationsGroup>
+
+Core Operational Principles
+1. Absolute Tokenization Mandate: No raw Primary Account Numbers (PANs), Card Verification Values (CVV/CVC), or bank account PINs are ever received, processed, or stored on NovaCart infrastructure.
+2. Explicit Informed Consent: Credentials are saved exclusively when a customer provides explicit, active opt-in consent during checkout or within account settings.
+3. Issuer-Backed Cryptographic Tokens: Saved payment instruments are represented solely by surrogate, algorithmically generated tokens supplied directly by card networks or certified gateway vaults.
+4. Unconditional Customer Control: Customers retain absolute authority to view masked saved instruments, update billing metadata, or instantly delete saved payment tokens at any time.
+Tokenization Overview
+Tokenization is a security process that replaces sensitive payment credential data (such as a 16-digit credit card PAN) with a mathematically un-linkable, surrogate alphanumeric string known as a Payment Token.
+Token vs. Raw Card Data Architecture
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        TOKENIZATION vs. RAW CARD DATA                             |
++-----------------------------------------------------------------------------------+
+| Attribute / Feature    | Raw Card Data (PAN)          | Payment Token (Surrogate) |
++------------------------+------------------------------+---------------------------+
+| Value Format           | 16-Digit Numerical PAN       | Alphanumeric String       |
+| Storage Location       | Certified PG Vault ONLY      | NovaCart App Database     |
+| Reversibility          | Reversible (Decryptable)     | Irreversible (No Cipher)  |
+| Security Impact        | Extreme High Risk (PCI Scope)| Zero Value to Attacker    |
+| Transaction Utility    | Global Card Network Clearing | Domain-Locked to NovaCart |
++------------------------+------------------------------+---------------------------+
+
+Domain-Locked Token Security
+Tokens generated for NovaCart are Domain-Locked and Merchant-Locked. A token created for NovaCart cannot be utilized by any third party or used on any other e-commerce platform, rendering stolen tokens completely valueless to malicious actors.
+Supported Stored Payment Methods
+NovaCart supports tokenization across major regional and international payment instruments:
+Supported Payment Method Matrix
+Payment Instrument Category
+	Instrument Types Supported
+	Tokenization Provider / Vault
+	Max Saved per Customer
+	Supported Regional Markets
+	Credit / Debit Cards
+	Visa, Mastercard, American Express, RuPay
+	Card Networks (Visa Token Service, Mastercard Digital Enablement, CyberSource)
+	10 Saved Cards
+	Global (IN, SG, UAE)
+	UPI AutoPay Mandates
+	PhonePe, Google Pay, Paytm, BHIM UPI
+	NPCI UPI AutoPay Node / Razorpay Gateway
+	5 Active Mandates
+	India (IN)
+	Digital Wallets
+	Paytm Wallet, GrabPay, Careem Pay
+	Direct Partner API Token Vaults
+	1 Wallet per Partner
+	IN, SG, UAE
+	BNPL Auto-Debit
+	Tabby, LazyPay
+	BNPL Partner Vault Integration
+	1 Active Account
+	UAE, IN
+	Customer Consent Requirements
+Saving a payment method requires unambiguous, affirmative customer action. Pre-checked consent boxes or implied consent mechanisms are strictly forbidden.
+Customer Consent Matrix
+Consent Type
+	Capture Point
+	Required Affirmative Action
+	Consent Record Logging
+	Revocation Path
+	Save Card for Future Use
+	Checkout Screen / Payment Page
+	Active checkbox selection ("Save this card securely for faster checkout")
+	Customer ID, IP, Timestamp, Masked Card BIN logged in auth
+	Account Settings $\rightarrow$ Saved Payments $\rightarrow$ Delete
+	Recurring Subscriptions
+	NovaCart Prime Checkout
+	Active agreement click ("Authorize recurring auto-debit for Prime membership")
+	Mandate ID, Amount Limit, Frequency, IP logged in ledger
+	Account Settings $\rightarrow$ Subscriptions $\rightarrow$ Cancel
+	UPI AutoPay Mandate
+	UPI Mobile App Popup
+	Pin entry in UPI App validating mandate terms
+	NPCI Mandate ID, Expiry Date logged in pay
+	UPI App / NovaCart Settings $\rightarrow$ Revoke
+	Payment Method Registration Process
+The end-to-end tokenization registration workflow executes seamlessly during transaction processing:
+1. Consent & Input: During checkout, the customer enters card details in an encrypted, PCI-DSS compliant client-side iframe hosted directly by the certified Payment Gateway. The customer checks "Save this card."
+2. Gateway Handshake & Tokenization Call: Upon 3D Secure / OTP authorization, the Payment Gateway transmits the raw card payload to the relevant Card Network Token Service (e.g., Visa Token Service).
+3. Token Generation: The Card Network generates a unique Merchant-Locked Payment Token (TKN-XXXXX) along with masked display metadata (Card Brand, Last 4 Digits, Expiry Month/Year).
+4. Token Persistence: The Payment Gateway returns the token and display metadata to api.novacart.internal/pay. NovaCart writes the token and display metadata to auth.novacart.internal. Raw card data never touches NovaCart databases.
+5. Customer Confirmation: The checkout screen updates, displaying the saved card card-face graphic (e.g., Visa ending in 4821, Exp 08/28).
+Token Lifecycle Management
+Tokens maintain an explicit operational status throughout their lifecycle within auth.novacart.internal:
+Token Lifecycle Matrix
+Token Status Tag
+	Status Description
+	Permissible System Actions
+	Transition Event Trigger
+	TOKEN_ACTIVE
+	Token valid, verified, and ready for one-click checkout.
+	Available for transaction authorization.
+	Successful registration or automated renewal.
+	TOKEN_EXPIRED
+	Underlying physical card expired (Expiry Month/Year passed).
+	Blocked for checkout; queued for auto-update.
+	Calendar expiration or card lifecycle update.
+	TOKEN_SUSPENDED
+	Account flagged for security review or suspicious login.
+	Temporary checkout block.
+	Security alert logged in shield.novacart.internal.
+	TOKEN_DELETED
+	Customer revoked consent or closed NovaCart account.
+	Permanently purge token from system.
+	Customer deletion action or account closure.
+	Payment Method Update & Removal Process
+1. Card Expiry & Automated Account Updater (AAU)
+NovaCart integrates with Card Network Automated Account Updater (AAU) services (e.g., Visa Account Updater, Mastercard AB) managed via gateway partners:
+* When a saved card expires or a issuing bank issues a replacement card (due to expiration or lost card replacement), AAU services automatically push the updated token and expiry date to api.novacart.internal/pay.
+* The saved card details update seamlessly in the customer's account without requiring manual re-entry.
+2. Manual Removal Process
+A customer may delete any saved payment method at any time:
+1. Customer navigates to Account Settings $\rightarrow$ Saved Payment Methods.
+2. Customer clicks Remove next to the targeted payment instrument.
+3. System prompts confirmation: "Are you sure you want to delete Visa ending in 4821?"
+4. Upon confirmation, api.novacart.internal/pay sends an asynchronous API revocation request (POST /v1/tokens/revoke) to the Payment Gateway vault and permanently deletes the token record from auth.novacart.internal.
+5. The saved card graphic disappears from the user interface immediately.
+Security Controls
+NovaCart maintains strict technical security controls to ensure stored payment credentials comply with global privacy and security standards:
+Security Control Matrix
+Security Control
+	Implementation Standard
+	Compliance Requirement
+	Responsible Unit
+	PCI-DSS Compliance
+	Annual PCI-DSS Level 1 On-Site Audit & Certification
+	PCI-DSS Requirement 3 & 4
+	Security Operations
+	Encryption at Rest
+	Token metadata encrypted using AES-256 GCM encryption
+	ISO/IEC 27001 / Internal Policy
+	Software Engineering
+	Encryption in Transit
+	TLS 1.3 encryption forced on all checkout API endpoints
+	PCI-DSS Requirement 4.1
+	Software Engineering
+	Role-Based Access (RBAC)
+	System access to token vaults restricted strictly to automated payment microservices. Human access prohibited.
+	SEC-001 / RBAC Mandate
+	Information Security
+	Masking Standards
+	Customer UI displays maximum First 6 Digits (BIN) and Last 4 Digits only. CVV never stored.
+	PCI-DSS Requirement 3.3
+	Software Engineering
+	Customer Communication
+Transparent communication ensures customers remain aware of saved payment instrument activity:
+1. Registration Confirmation: Automated email dispatched whenever a new payment method is saved or a UPI AutoPay mandate is registered (stating card brand, last 4 digits, timestamp, and IP address).
+2. Expiration Reminder: Automated email dispatched 30 days prior to a saved card's expiration date, inviting the customer to verify or update details.
+3. Deletion Notification: Confirmation email sent immediately upon successful deletion of a saved payment token or mandate cancellation.
+Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Stored Payment Responsibilities
+	Primary Portal Used
+	Primary SLA Target
+	Information Security
+	Audits PCI-DSS Level 1 compliance; manages token vault RBAC; monitors token misuse alerts.
+	shield.novacart.internal
+	Zero PCI non-compliance findings
+	Finance Operations
+	Manages gateway token vault relationships; audits AAU card updater success rates.
+	ledger.novacart.internal
+	Monthly token vault audit ($100\%$)
+	Software Engineering
+	Maintains tokenization APIs, client-side encryption iframes, and token lifecycle worker queues.
+	api.novacart.internal
+	$99.99\%$ token API availability
+	Customer Support
+	Assists customers with saved card display issues or manual mandate cancellation queries.
+	crm.novacart.internal
+	Response SLA per SUP-005
+	Business Rules
+Rule 1: Absolute Prohibition of CVV/CVC Storage
+Card Verification Values (CVV/CVC/CVV2) or bank PINs must never be stored under any circumstances, even temporarily after transaction authorization. CVV entry is required for individual one-click checkouts unless regional card network rules explicitly permit frictionless CVV-less tokenized transactions.
+Rule 2: Account Deletion Token Purge Rule
+When a customer closes their NovaCart user account, auth.novacart.internal triggers an automated batch job that issues API revocation commands for all associated payment tokens across all gateway vaults and permanently purges local token metadata within 24 hours.
+Rule 3: Security Freeze Token Lock
+If an account is flagged for suspicious login activity or account takeover (ATO) by shield.novacart.internal, all associated saved payment tokens transition immediately to TOKEN_SUSPENDED status, blocking one-click checkout until identity verification is satisfied (Refer to SEC-001, SEC-004).
+Exception Handling
+* Gateway Token Vault Migration: If NovaCart transitions or adds a primary Payment Gateway provider, tokens are migrated between PCI-DSS Level 1 certified vaults using secure server-to-server bulk token migration protocols, ensuring zero disruption to customer saved cards.
+* Revoked Token Transaction Attempt: If a customer attempts a checkout using a token that was recently revoked or invalidated at the issuing bank, the gateway returns error code TOKEN_INVALID. The checkout screen seamlessly prompts the customer to re-enter card details or select an alternate payment method (Refer to PAY-002).
+Practical Examples
+Scenario 1: Saving a Credit Card During Checkout
+1. Customer in Singapore purchases an item selecting Credit Card (PAY-CARD).
+2. On the encrypted payment iframe, the customer enters card details and actively checks "Save this card for future purchases."
+3. Customer completes 3DS OTP verification. Payment authorizes successfully (PAYMENT_CONFIRMED).
+4. Visa Token Service generates a domain-locked token (TKN-SG-882109) and returns display metadata (Visa ending in 1102, Exp 11/29).
+5. auth.novacart.internal saves the token record. Next checkout displays "Visa ending in 1102" as a one-click payment option.
+Scenario 2: Customer Revoking Saved Payment Consent
+1. Customer in Dubai opens Account Settings $\rightarrow$ Saved Payment Methods.
+2. Customer clicks Delete next to "Mastercard ending in 9940."
+3. System displays confirmation prompt; customer confirms deletion.
+4. api.novacart.internal/pay sends an instant API token revocation call to Telr PG vault and purges the token record from auth.novacart.internal.
+5. Email confirmation is sent to the customer: "Your Mastercard ending in 9940 has been removed from NovaCart."
+Frequently Asked Questions (FAQs)
+Q1: Does NovaCart store my actual 16-digit credit card number on its servers?
+Answer: No. NovaCart strictly complies with PCI-DSS Level 1 and regional card tokenization regulations. Your actual 16-digit card number is converted into an encrypted, surrogate "Payment Token" by card networks (Visa, Mastercard, Amex, RuPay). NovaCart stores only this secure token and masked display information (e.g., Last 4 digits) (Refer to PAY-001).
+Q2: What happens to my saved cards if I delete my NovaCart account?
+Answer: When you close your NovaCart account, our system automatically issues revocation commands to all payment gateway vaults to cancel your stored tokens and permanently purges all associated display metadata from our servers within 24 hours (Refer to SEC-001).
+Q3: Can a saved token be stolen and used on another website?
+Answer: No. Payment tokens generated for NovaCart are cryptographically "Domain-Locked" and "Merchant-Locked." A token created for NovaCart is completely invalid and unusable on any other website or platform.
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of PAY-006. Established tokenization architecture, domain-locking rules, supported payment method matrices, customer consent standards, token lifecycle states, and PCI-DSS security controls.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* ORD-001: Order Lifecycle Management Policy
+* PAY-001: Payment Processing SOP
+* PAY-002: Payment Failure & Retry Policy
+* PAY-005: Payment Reconciliation Policy
+* SEC-001: Account Security & Access Control

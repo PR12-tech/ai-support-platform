@@ -1,0 +1,228 @@
+﻿REF-002: Return & Exchange Policy
+Document Header
+* Document Title: Return & Exchange Policy
+* Document ID: REF-002
+* Version: 1.0.0
+* Document Category: Refunds
+* Classification: Internal / Public Operational Standard
+* Department Owner: Returns & Reverse Logistics
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Reverse Logistics, Operations Director, Customer Experience Director
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Return Merchandise Authorization, RMA, Reverse Logistics, Product Exchange, Variant Swap, Reverse Pickup, Quality Inspection, Replacement Dispatch
+Purpose
+This document establishes the official enterprise policy, reverse logistics workflows, packaging standards, exchange fulfillment procedures, and business rules governing product returns and exchanges at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It defines the operational lifecycle of a physical return or exchange after initial eligibility has been authorized under REF-001.
+As a core operational document (REF-002) in the Refunds category of the NovaCart Enterprise Knowledge Base (NEKB), REF-002 governs the reverse logistics execution pipeline across automated RMA web/mobile portals, fulfillment center (FC) return processing bays, and reverse courier networks, operating in strict alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, and REF-001.
+Scope
+This policy applies universally across all physical product return and exchange operations executed within NovaCart’s operating regions (India, Singapore, UAE) across all sales channels (B2C Retail, B2B SMB, Corporate Accounts, NovaCart Prime Memberships).
+Coverage Includes
+* Return Merchandise Authorization (RMA) generation and reverse waybill assignment.
+* Doorstep reverse pickup scheduling, packaging checks, and chain of custody tracking.
+* Exchange workflows for variant swaps (size, color) and defective product replacements.
+* Inbound warehouse receipt, physical Quality Inspection (QI), and serial number validation.
+* Handling price variances on exchanges, partial order returns, and reverse transit loss claims.
+Out of Scope
+* Evaluating initial customer refund eligibility parameters or category claim limits (governed by REF-001).
+* Executing bank ledger credit reversals or payment gateway refund transfers (governed by PAY-003).
+Return & Exchange Overview
+Once a return or exchange request qualifies under REF-001 business rules, NovaCart provides streamlined reverse logistics to collect the item, perform a physical Quality Inspection (QI), and either initiate monetary refund processing or dispatch an exchange unit.
+
+
+
+
+
+
+<ElicitationsGroup message="To explore related refund eligibility, replacement, or reverse logistics policies further:">
+{/* Reason: Offers direct navigational paths to related domain policies. */}
+ <Elicitation label="Review REF-001 Refund Eligibility Policy" query="Show REF-001 Refund Eligibility Policy detailing initial claim qualifications." />
+ <Elicitation label="Review REF-003 Replacement Policy" query="Show REF-003 Replacement Policy detailing Dead on Arrival (DOA) replacements." />
+ <Elicitation label="Examine PAY-003 Refund Payment Processing Policy" query="Show PAY-003 Refund Payment Processing Policy governing financial clearing." />
+</ElicitationsGroup>
+
+Core Operational Principles
+1. RMA System Enforcement: No physical return package is accepted at any NovaCart fulfillment center or merchant warehouse without an active, system-generated Return Merchandise Authorization (RMA) barcode label.
+2. Reverse Chain of Custody: Reverse logistics couriers must inspect outer packaging and verify item presence before executing doorstep pickup and issuing a physical or digital Proof of Pickup (POP).
+3. Quality Inspection (QI) Mandate: Returned items undergo physical verification against strict condition standards prior to closing an RMA file or releasing replacement inventory.
+4. Isolated Line-Item Processing: Returns and exchanges on multi-item or split orders process independently per Sub-Order ID without affecting non-returned line items (Refer to ORD-005).
+Return Request Process
+When a customer opts for a return leading to a monetary refund, the operational workflow proceeds as follows:
+1. RMA Generation: Upon claim authorization under REF-001, the system generates an explicit RMA number (e.g., RMA-IN-88201) in rma.novacart.internal.
+2. Waybill & Pickup Allocation: The Transportation Management System (api.novacart.internal/tms) creates a reverse waybill and assigns a reverse courier route.
+3. Prepaid Shipping Label Generation: An automated prepaid reverse shipping label and packing slip are generated and sent to the customer via email and in-app portal.
+4. Doorstep Reverse Pickup: The reverse courier arrives at the customer's location within 48 hours, performs a physical condition check, scans the RMA barcode, and collects the package.
+5. Inbound Transit & Inspection: The package is transported to the assigned processing hub (BLR-01, BOM-01, SIN-01, DXB-01), where warehouse staff conduct a Quality Inspection (QI) within 24 hours of receipt.
+6. RMA Closure & Refund Trigger: Upon QI pass, the RMA status updates to INSPECTION_PASSED. OMS automatically triggers refund processing under PAY-003.
+Exchange Request Process
+Customers may request an exchange for an alternate size, color, or replacement unit of the same model:
+1. Exchange Request Submission: The customer selects Exchange Item under My Orders, specifying the reason (e.g., "Size Too Small" or "Defective Unit") and choosing the target replacement variant.
+2. Inventory Soft-Lock: The Order Management System (api.novacart.internal/oms) checks real-time inventory at the nearest FC. If stock is available, OMS soft-locks the replacement unit for 7 calendar days pending return pickup.
+3. Price Variance Evaluation:
+   * Equal Value Swap: No additional payment or credit required.
+   * Higher Value Variant: Customer pays the price difference via instant digital payment (PAY-UPI, PAY-CARD) before RMA generation.
+   * Lower Value Variant: System calculates the price difference and queues an automated partial refund via PAY-003 upon return receipt.
+4. Dual Track Fulfillment:
+   * Standard Exchange: Reverse courier collects the original item. Upon FC dock scan (RETURN_IN_TRANSIT), OMS automatically releases and dispatches the replacement unit.
+   * Instant Exchange (NovaCart Prime VIPs): The replacement unit is dispatched immediately via Express Shipping (SRV-EXP), and the courier performs a simultaneous doorstep "Swap & Collect" (Refer to SHIP-003).
+Return Shipping Process
+Reverse logistics is managed through NovaCart's direct fleet or contracted 3PL logistics partners in accordance with geographic service tiers:
+Return Shipping Responsibility Matrix
+Return / Exchange Reason
+	Reverse Shipping Fee Charged To
+	Pickup Method Provided
+	Target Reverse Transit SLA
+	Defective Product / DOA
+	NovaCart (100% Free)
+	Doorstep Courier Pickup
+	$2\text{ to }4\text{ Business Days}$
+	Damaged in Transit
+	NovaCart (100% Free)
+	Doorstep Courier Pickup
+	$2\text{ to }4\text{ Business Days}$
+	Wrong Item Dispatched
+	NovaCart (100% Free)
+	Doorstep Courier Pickup
+	$2\text{ to }4\text{ Business Days}$
+	Size / Color Exchange
+	NovaCart (Free for 1st Swap)
+	Doorstep Courier Pickup
+	$2\text{ to }4\text{ Business Days}$
+	Buyer’s Remorse (Preference)
+	Customer ($\text{INR } 150$ / $\text{AED } 10$ deducted)
+	Doorstep Courier Pickup / Drop-off Hub
+	$3\text{ to }5\text{ Business Days}$
+	Exchange Fulfillment Process
+Exchange Processing Matrix
+Exchange Scenario
+	Stock Availability
+	Price Variance Handling
+	Fulfillment Action Trigger
+	Same Variant / Defect Replacement
+	In Stock
+	Zero Variance
+	Dispatched upon reverse courier dock scan.
+	Variant Swap (Equal Value)
+	In Stock
+	Zero Variance
+	Dispatched upon reverse courier dock scan.
+	Variant Swap (Higher Value)
+	In Stock
+	Customer pays difference upfront
+	Dispatched upon payment + reverse dock scan.
+	Variant Swap (Lower Value)
+	In Stock
+	Pro-rated partial refund issued
+	Dispatched upon reverse dock scan; refund via PAY-003.
+	Replacement Out of Stock
+	Out of Stock
+	Full refund issued
+	RMA converted to monetary refund under REF-001 / PAY-003.
+	Return Packaging Requirements
+To prevent damage during reverse transit, customers must package returned items according to enterprise standards:
+* Original Manufacturer Box: Items must be enclosed in their original brand packaging, including inner protective trays, styrofoam bracing, and display boxes.
+* Inclusion of All Accessories: All inbox accessories—including power adapters, remote controls, cables, instruction manuals, warranty cards, and free promotional bundles—must be included.
+* Outer Protective Packaging: The manufacturer box must be placed inside a protective corrugated shipping carton or polybag. Shipping labels must never be affixed directly onto the original manufacturer display box.
+* RMA Barcode Labeling: The system-generated RMA shipping label must be affixed clearly to the outer transit packaging.
+Customer Responsibilities
+Customers initiating a return or exchange must fulfill the following operational duties:
+1. Adherence to Pickup Schedule: Ensure an authorized adult is present at the delivery address during the scheduled 2-hour reverse pickup window.
+2. Device Account Lock Removal: For Consumer Electronics (CAT-ELE) and Mobile Devices (CAT-MOB), completely remove all personal cloud accounts (e.g., iCloud, Google Account, Samsung Account), screen lock PINs, and personal data prior to handover.
+3. Physical POP Retention: Retain the physical or digital Proof of Pickup (POP) receipt provided by the reverse courier until the return file is closed and refunded/exchanged.
+Merchant Responsibilities
+Marketplace merchants (3P sellers) fulfilling direct orders must adhere to reverse processing SLAs:
+1. Inbound Inspection SLA: Merchant warehouse staff must complete physical Quality Inspection (QI) of returned items within 24 hours of reverse courier delivery.
+2. Exchange Inventory Commitment: Merchants must reserve replacement inventory for approved exchanges. If stock depletes, the merchant must notify Support within 12 hours to convert the request to a full customer refund.
+Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Return & Exchange Responsibilities
+	Primary System Portal
+	SLA Target
+	Returns & Reverse Logistics
+	Oversees reverse courier routes, conducts warehouse Quality Inspection (QI), processes serial checks.
+	rma.novacart.internal
+	Inbound QI $< 24\text{ Hours}$ from receipt
+	Logistics & Fleet
+	Manages reverse pickup SLAs, assigns AWB tracking, investigates reverse transit losses.
+	tms.novacart.internal
+	Doorstep reverse pickup $< 48\text{ Hours}$
+	Customer Support
+	Generates RMA labels, assists customers with variant selections, collects price variance payments.
+	crm.novacart.internal
+	Priority Chat FRT $< 15\text{ Secs}$ (SUP-005)
+	Finance Operations
+	Reconciles partial exchange refunds, collects higher-variant payments, audits reverse shipping fees.
+	ledger.novacart.internal
+	Financial adjustment $< 24\text{ Hours}$
+	Business Rules
+Rule 1: Product Condition Standards
+Returned items are evaluated against strict condition criteria during Quality Inspection (QI) at the fulfillment center:
+Product Condition Matrix
+Inspection Parameter
+	Pass Criteria (Eligible for Full Refund/Exchange)
+	Fail Criteria (Return Rejected / Returned to Sender)
+	Physical Appearance
+	Pristine; no scratches, dents, or signs of customer wear.
+	Scratched casing, cracked screen, liquid damage, or heavy wear.
+	Serial / IMEI Number
+	Serial number matches outbound dispatch log in WMS.
+	Serial number missing, tampered, or mismatched (REF-001).
+	Account Locks / Data
+	Account locks removed; factory reset executed.
+	Active iCloud/Google account, lock pattern, or password present.
+	Packaging & Bundles
+	Original box intact; all inbox accessories present.
+	Missing charger/cables, torn manufacturer box, missing freebies.
+	Rule 2: Handling Rejected Returns
+If a returned item fails Quality Inspection due to customer-induced damage, missing internal components, or active account locks:
+* The RMA status updates to INSPECTION_FAILED.
+* The customer is notified via email/SMS with photo evidence attached.
+* The item is shipped back to the customer at NovaCart’s expense. No refund or exchange is issued.
+Rule 3: Single Free Exchange Limit
+NovaCart provides one (1) free size/color exchange per item. Subsequent exchange requests for the same line item incur a standard reverse logistics processing fee of $\text{INR } 150$ / $\text{AED } 10$.
+Exception Handling
+* Reverse Shipment Lost in Transit: If a reverse courier collects a package (verified via POP receipt), but the package is lost in transit before reaching the FC, Logistics opens a trace under SHIP-006. If unlocated after 96 hours, the customer is deemed fully compliant, and the refund or replacement is released immediately.
+* Unavailable Replacement Variant: If an exchange request is approved, but the target size/color variant becomes out of stock before dispatch, Support contacts the customer to offer an alternate color, store credit, or an immediate 100% full refund via PAY-003.
+Practical Examples
+Scenario 1: Size Exchange for Apparel/Footwear
+1. Customer purchases running shoes (Size 9) for $\text{INR } 4,999$. Upon delivery, the shoes are too small.
+2. Customer opens mobile app, selects Exchange Item, chooses Size 10 (same price), and submits the request.
+3. System generates RMA RMA-IN-99201 and assigns doorstep pickup.
+4. Reverse courier collects Size 9 shoes next day (RETURN_IN_TRANSIT).
+5. Upon reverse dock scan, OMS automatically dispatches Size 10 shoes from FC BLR-01 via Express Shipping (SRV-EXP).
+Scenario 2: Return Rejected Due to Active Account Lock
+1. Customer returns a smartphone (CAT-MOB) claiming minor software freezing.
+2. Package arrives at FC BOM-01. Quality Inspection reveals the customer did not remove their Google Account lock, preventing factory diagnostics.
+3. Inspector logs QI_FAIL_ACCOUNT_LOCKED in rma.novacart.internal.
+4. System dispatches automated SMS/Email detailing the issue. Customer is offered instructions to remove the lock remotely via cloud console within 48 hours.
+5. Customer fails to remove lock remotely. The smartphone is repackaged and shipped back to the customer. The RMA is closed without refund.
+Frequently Asked Questions (FAQs)
+Q1: How do I prepare my package for a reverse courier pickup?
+Answer: Place the item in its original manufacturer display box with all cables, manuals, and accessories. Place the display box inside a protective shipping carton and seal it securely. Do not stick shipping labels directly onto the product's original display box (Refer to SUP-001).
+Q2: Is there any charge for exchanging an item for a different size or color?
+Answer: NovaCart provides one free size/color exchange per line item. Outbound express shipping for the replacement unit is free. If you select a replacement variant that has a higher price, you only pay the retail price difference (Refer to REF-001).
+Q3: What happens if I miss my scheduled reverse pickup window?
+Answer: The reverse courier will attempt doorstep pickup up to two (2) times on consecutive business days. If both attempts fail, the RMA is auto-cancelled. You may re-apply for a return portal pickup provided your order remains within the valid REF-001 claim timeframe.
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of REF-002. Established return and exchange operational workflows, reverse shipping matrices, Quality Inspection (QI) condition standards, packaging rules, and price variance rules.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* ORD-001: Order Lifecycle Management Policy
+* ORD-005: Split Order Management Policy
+* SHIP-003: Express & Priority Shipping Policy
+* SHIP-006: Lost Shipment Investigation Policy
+* PAY-003: Refund Payment Processing Policy
+* REF-001: Master Refund Eligibility Rules
+* REF-003: Replacement Policy
+* REF-005: Return Process Protocols

@@ -1,0 +1,280 @@
+﻿PAY-004: Chargeback & Payment Dispute Policy
+Document Header
+* Document Title: Chargeback & Payment Dispute Policy
+* Document ID: PAY-004
+* Version: 1.0.0
+* Document Category: Payments
+* Classification: Internal / Public Operational Standard
+* Department Owner: Finance Operations & Legal
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Payment Operations, Chief Information Security Officer, General Counsel
+* Approved By: Chief Financial Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Chargeback, Payment Dispute, Friendly Fraud, Evidence Compelling, Representment, Arbitration, Acquirer Defense, Fraud Operations, PCI-DSS
+Purpose
+This document establishes the official enterprise policy, investigation workflows, evidence representment criteria, banking response timelines, and legal dispute parameters governing payment chargebacks and payment service provider disputes at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It defines operational protocols for identifying, contesting, managing, and resolving payment disputes initiated by cardholders through issuing banks, acquiring banks, or payment gateways.
+As a core risk and financial governance document (PAY-004) in the NovaCart Enterprise Knowledge Base (NEKB), PAY-004 enforces systematic defense against unauthorized claims and friendly fraud across ledger.novacart.internal, chargeback.novacart.internal, and shield.novacart.internal, operating in strict alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, and PAY-001 through PAY-003.
+Scope
+This policy applies universally to all financial payment disputes, credit card chargebacks, debit card reversals, UPI dispute notices, and payment gateway claims raised across all NovaCart operating entities (India, Singapore, UAE), customer categories (B2C Retail, B2B SMB, Corporate Enterprise Accounts), and payment instruments (PAY-CARD, PAY-UPI, PAY-WAL, PAY-BNPL).
+Coverage Includes
+* Managing card brand chargebacks (Visa, Mastercard, American Express, RuPay).
+* Managing payment gateway disputes and claims (Razorpay, Stripe, PayU, Telr, Tabby).
+* Compelling evidence collection, representment file preparation, and submission workflows.
+* Handling "Friendly Fraud" (legitimate purchases falsely claimed as unauthorized or unreceived).
+* Managing pre-arbitration, card brand arbitration, and final financial adjustments.
+* Account containment actions for high-risk accounts generating fraudulent disputes.
+Out of Scope
+* Direct customer refund processing for valid order cancellations or authorized returns managed via merchant channels (governed by PAY-003, REF-001, and REF-005).
+Chargeback & Payment Dispute Overview
+A Chargeback is a formal financial dispute initiated by an account holder directly through their card issuing bank, payment gateway, or financial institution, bypassing merchant customer support channels. The issuing bank executes a provisional reversal of transaction funds from NovaCart’s acquiring account while the claim undergoes formal investigation.
+
+
+
+
+
+
+<ElicitationsGroup message="To explore related payment execution, fraud prevention, or refund policies further:">
+{/* Reason: Offers structured paths to navigate deeper into related payment and security policies. */}
+ <Elicitation label="Review PAY-001 Payment Processing Policy" query="Show PAY-001 Payment Processing Policy detailing transaction authorizations." />
+ <Elicitation label="Review PAY-003 Refund Payment Processing Policy" query="Show PAY-003 Refund Payment Processing Policy governing internal merchant refunds." />
+ <Elicitation label="Examine SEC-004 Fraud Detection Framework" query="Show SEC-004 Fraud Detection Framework detailing transaction screening." />
+</ElicitationsGroup>
+
+Key Differences: Merchant Refund vs. Bank Chargeback
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        REFUND vs. CHARGEBACK COMPARISON                           |
++-----------------------------------------------------------------------------------+
+| Feature Element        | Merchant Refund (PAY-003)    | Bank Chargeback (PAY-004) |
++------------------------+------------------------------+---------------------------+
+| Initiated By           | Customer via NovaCart CS     | Cardholder via Issuing Bank|
+| Execution Route        | Internal Ledger / OMS        | Card Network / Acquiring PG|
+| Operational Cost       | Zero Processing Fees         | Non-Refundable Disputed Fee|
+| Dispute Contesting     | Not Applicable (Voluntary)   | Representment File Defense|
+| Target Resolution SLA  | Instant to 3–5 Days          | 30 to 90 Days (Bank SLA)  |
++-----------------------------------------------------------------------------------+
+
+Common Reasons for Chargebacks
+Disputes filed against NovaCart transactions are categorized according to card network reason codes (Visa, Mastercard, Amex, RuPay):
+Chargeback Reason Code Matrix
+Dispute Category
+	Network Reason Code Mapping
+	Common Claim Description
+	Primary Root Cause / Context
+	Fraudulent Transaction
+	Visa 10.4 / MC 4837 / Amex F29
+	"I did not authorize or make this transaction."
+	Stolen card credentials, ATO, or friendly fraud by cardholder family member.
+	Merchandise Not Received
+	Visa 13.1 / MC 4855 / Amex C08
+	"I paid for the order, but the package was never delivered."
+	In-transit shipment loss, delivery delay, or false non-receipt claim (Fake POD).
+	Defective / Not as Described
+	Visa 13.3 / MC 4853 / Amex C53
+	"Product received was damaged, defective, or counter-feit."
+	Physical transit damage, incorrect SKU dispatched, or unreturned RMA item.
+	Duplicate Processing
+	Visa 12.6 / MC 4834 / Amex P08
+	"My account was debited multiple times for one order."
+	Gateway network latency or customer multiple checkout clicks (PAY-003).
+	Paid by Other Means
+	Visa 12.6 / MC 4830 / Amex P05
+	"Order paid via alternative card/UPI, but this card was debited."
+	Split payment ledger error or unlinked transaction capture (PAY-001).
+	Canceled Recurring Transaction
+	Visa 13.2 / MC 4841 / Amex C28
+	"I canceled my subscription, but was charged auto-renewal."
+	Prime subscription cancellation delay or unacknowledged terms (COMP-001).
+	Chargeback Lifecycle
+Every chargeback notice passes through an explicit six-stage financial lifecycle managed within chargeback.novacart.internal:
+1. Dispute Ingress & Provisional Debit: Issuing bank notifies acquiring gateway; funds are provisionally debited from NovaCart’s escrow account along with a non-refundable dispute processing fee ($\text{INR } 500$ / $\text{SGD } 25$ / $\text{AED } 50$).
+2. System Alert & Intake: Gateway transmits webhook alert to chargeback.novacart.internal. Status updates to DISPUTE_RECEIVED.
+3. Internal Case Investigation: Finance Operations & Fraud Specialists evaluate transaction logs, delivery PODs, and IP logs to decide whether to Accept or Contest (Representment).
+4. Representment File Submission: If contested, Finance compiles a compelling evidence package and submits it to the acquiring bank prior to the network deadline. Status updates to REPRESENTMENT_SUBMITTED.
+5. Bank Re-Evaluation: Issuing bank reviews evidence file ($30\text{ to }60\text{ days}$).
+6. Final Adjudication:
+   * Dispute Won (Reversal): Issuing bank rules in favor of NovaCart; provisionally debited funds are returned to NovaCart’s bank account. Status updates to DISPUTE_WON.
+   * Dispute Lost: Issuing bank rules in favor of cardholder; provisional debit becomes permanent. Status updates to DISPUTE_LOST.
+Dispute Investigation Process
+When a dispute notification is received, Finance Operations executes a structured investigation workflow within 48 hours:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        DISPUTE INVESTIGATION WORKFLOW                             |
++-----------------------------------------------------------------------------------+
+| 1. RECORD LOOKUP  | Retrieve Master Order ID, IP address, delivery address in OMS. |
+| 2. POD AUDIT      | Fetch OTP timestamp, rider GPS map, signature in TMS.         |
+| 3. CS / RMA LOGS  | Check if customer contacted support or initiated RMA return.  |
+| 4. MERIT DECISION | Evaluate representment win probability (Accept vs. Contest).  |
++-----------------------------------------------------------------------------------+
+
+Decision Criteria: Accept vs. Contest
+* Accept Dispute: Executed if internal logs show clear merchant error (e.g., wrong item sent, confirmed lost parcel without replacement, or duplicate debit un-refunded). Provisional debit accepted; case closed as DISPUTE_ACCEPTED.
+* Contest Dispute (Representment): Executed if logs show valid delivery POD (OTP verified), 3DS/MFA authorization, active user account usage, or unreturned merchandise. Representment file compiled.
+Evidence Collection & Submission
+To successfully contest a chargeback, Finance Operations compiles a standardized "Compelling Evidence Package" tailored to the specific dispute reason.
+Evidence Requirement Matrix
+Dispute Claim Category
+	Mandatory Evidence Documents Required
+	Primary Source Portal
+	Fraudulent Transaction
+	3D Secure / OTP authentication logs; IP address geofence match; device fingerprint ID; order confirmation delivery receipt; match between billing and shipping address.
+	auth.novacart.internal / shield.novacart.internal
+	Merchandise Not Received
+	Carrier waybill manifest; digital Proof of Delivery (POD) displaying time-stamped 4-digit OTP or digital signature; GPS coordinates of delivery rider at doorstep ($< 200\text{ m}$).
+	tms.novacart.internal (SHIP-001)
+	Not as Described / Defective
+	FC pre-dispatch CCTV packaging verification notes; serial number scan log (CAT-ELE/CAT-MOB); customer support transcripts showing unreturned RMA or refusal to ship item back.
+	wms.novacart.internal / crm.novacart.internal
+	Duplicate Transaction
+	Financial ledger proof showing two distinct orders placed, or proof that the secondary debit was fully refunded via PAY-003 prior to dispute filing.
+	ledger.novacart.internal (PAY-003)
+	Canceled Subscription
+	System access logs showing user utilized Prime membership benefits after auto-renewal date; digital click-wrap acceptance of non-refundable subscription terms.
+	api.novacart.internal/oms
+	Customer Communication Process
+While formal disputes are arbitrated through banking networks, Customer Support maintains communication rules to resolve legitimate customer confusion:
+1. Information Verification Contact: If a dispute appears to be "Friendly Fraud" (e.g., customer forgot a purchase or family member used card), Support contacts the account holder to clarify order details.
+2. Withdrawal Request: If the customer acknowledges the purchase, Support provides instructions for the customer to issue a formal "Dispute Withdrawal Request" to their issuing bank.
+3. Professional Neutrality: CSRs must adhere to SUP-002 guidelines, avoiding hostile accusations while explaining that banking disputes freeze account privileges pending resolution.
+Payment Gateway & Banking Coordination
+NovaCart coordinates with acquiring partners to ensure representment files meet card network formatting standards:
+* Acquirer Response SLAs: Representment evidence files must be transmitted to acquiring gateways within strict business day deadlines.
+* Electronic File Transmission: Evidence packages are uploaded as secure, unified PDF documents via gateway portal APIs ([https://chargeback.novacart.internal/api/v1/submit-evidence](https://chargeback.novacart.internal/api/v1/submit-evidence)).
+Investigation Timeline Matrix
+Dispute Lifecycle Milestone
+	Target Operational SLA
+	Responsible Unit
+	Primary Platform Portal
+	Dispute Ingress & Triage
+	$< 24\text{ Hours}$ from webhook alert
+	Finance Operations
+	chargeback.novacart.internal
+	Evidence Collection
+	$< 48\text{ Hours}$ from triage
+	Finance & Security
+	tms / wms / shield
+	Representment File Submission
+	$< 5\text{ Business Days}$ from ingress
+	Finance Operations
+	Acquiring Gateway Portal
+	Issuing Bank Review Window
+	$30\text{ to }60\text{ Calendar Days}$
+	Card Network / Issuing Bank
+	Card Network Arbitration
+	Ledger Final Adjustment
+	$< 24\text{ Hours}$ from adjudication
+	Finance Operations
+	ledger.novacart.internal
+	Resolution Outcomes
+The financial and operational outcomes of a payment dispute are recorded systematically across enterprise systems:
+Resolution Outcome Matrix
+Adjudication Outcome
+	Financial Impact on NovaCart
+	Account Impact on Customer
+	System Record Update
+	Dispute Won (DISPUTE_WON)
+	Provisionally debited funds returned to NovaCart account. Dispute fee retained by PG.
+	Account status restored to Active standing.
+	Ledger marks transaction DISPUTE_RESOLVED_WON.
+	Dispute Lost (DISPUTE_LOST)
+	Provisional debit becomes permanent loss ($\text{GMV} + \text{Dispute Fee}$).
+	Account flagged for high risk; payment methods restricted.
+	Ledger marks transaction DISPUTE_RESOLVED_LOST.
+	Dispute Accepted (ACCEPTED)
+	Provisional debit accepted as permanent loss.
+	Account status evaluated based on root cause.
+	Ledger marks transaction DISPUTE_ACCEPTED.
+	Pre-Arbitration / Arbitration
+	Additional network arbitration fees ($\approx \$500\text{ USD}$) at risk if lost.
+	Account suspended pending Legal determination.
+	Flagged for Executive Legal Review (LGL-001).
+	Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Chargeback Responsibilities
+	Primary Portal Used
+	Primary SLA Target
+	Finance Operations
+	Manages dispute intake, compiles representment files, tracks bank SLAs, executes ledger adjustments.
+	chargeback.novacart.internal
+	Representment submission $< 5\text{ Days}$
+	Information Security
+	Provides 3DS logs, IP geofence data, and fraud risk scores; executes risk containment freezes.
+	shield.novacart.internal
+	Fraud evidence export $< 24\text{ Hours}$
+	Logistics & Warehousing
+	Supplies courier manifests, digital POD signatures, OTP logs, and packaging CCTV notes.
+	tms.novacart.internal
+	POD evidence export $< 24\text{ Hours}$
+	Legal & Compliance
+	Oversees high-value representments, pre-arbitration cases, card network policy compliance.
+	contracts.novacart.internal
+	Legal review $< 48\text{ Hours}$
+	Customer Support
+	Identifies dispute withdrawal letters; explains account restrictions to customers.
+	crm.novacart.internal
+	Response SLA per SUP-005
+	Business Rules
+Rule 1: Automatic High-Risk Account Containment
+Any customer account associated with a payment chargeback initiated under reason code "Fraudulent Transaction" (FAIL-FRD) is automatically placed on temporary administrative hold by shield.novacart.internal. Active orders in PROCESSING or PACKED status are placed on shipping hold, and future Cash on Delivery (COD) options are restricted pending dispute resolution (Refer to SEC-001, SEC-004).
+Rule 2: Non-Contesting Threshold
+To optimize operational efficiency, disputes with a total value less than ₹500 / $10 / AED 30 where representment costs exceed potential recovery value may be auto-accepted by Finance Operations, unless part of a broader pattern of friendly fraud.
+Rule 3: Single Recovery Rule
+NovaCart will not pursue representment for a chargeback if internal logs confirm that a 100% refund was already executed for the transaction via PAY-003 prior to dispute filing. In such cases, Finance submits proof of the prior refund to the gateway for immediate dispute dismissal.
+Exception Handling
+* Card Brand Pre-Arbitration: If an issuing bank rejects initial representment evidence and files for Pre-Arbitration, Finance Operations conducts a cost-benefit review with Legal Counsel. If the transaction value exceeds $500 USD and evidence is conclusive (valid OTP + signed delivery), Legal authorizes filing for formal Card Brand Arbitration.
+* Multiple Disputes Across Accounts: If Security identifies an organized "Friendly Fraud" syndicate generating multiple chargebacks across linked accounts, the case escalates to Level 3 Legal Review. Evidence is compiled for formal referral to law enforcement authorities and cybercrime divisions (Refer to SEC-005).
+Practical Examples
+Scenario 1: Representment Won for Friendly Fraud (Merchandise Not Received)
+1. Customer purchases a laptop (₹65,000) delivered to Bangalore. Delivery rider verifies 4-digit OTP at doorstep (DELIVERED).
+2. Two weeks later, customer files a chargeback with their issuing bank claiming "Merchandise Not Received" (Visa 13.1).
+3. Gateway provisionally debits ₹65,000 from NovaCart. chargeback.novacart.internal flags dispute ingress.
+4. Finance compiles evidence package: OMS order confirmation, 3DS authentication logs, TMS rider GPS map match, and time-stamped OTP verification log (Refer to SHIP-001).
+5. Representment file submitted. Issuing bank reviews evidence, rules in favor of NovaCart (DISPUTE_WON), and returns ₹65,000 to NovaCart's bank account.
+Scenario 2: Acceptance of Valid Dispute (Merchant Error)
+1. Customer orders a TV (AED 2,500) in Dubai. Package is lost during middle-mile transit (Refer to SHIP-006).
+2. Customer contacts bank and files a chargeback before Customer Support completes processing an internal refund.
+3. Finance receives chargeback alert. Verification confirms parcel was declared lost by Logistics.
+4. Finance auto-accepts the dispute (DISPUTE_ACCEPTED) to avoid unnecessary representment fees, updating ledger logs.
+Frequently Asked Questions (FAQs)
+Q1: Why was my NovaCart account suspended after I filed a chargeback with my bank?
+Answer: When a bank chargeback is filed under a fraudulent transaction claim, our security systems automatically lock the account to prevent further unauthorized activity while the dispute is investigated. Once the dispute is resolved or a formal withdrawal letter is provided, account standing is evaluated (Refer to SEC-001).
+Q2: What is "Friendly Fraud"?
+Answer: Friendly fraud occurs when a legitimate customer or someone in their household makes an authorized purchase, receives the items, but subsequently files a chargeback with their bank claiming the transaction was unauthorized or unreceived. NovaCart aggressively defends against friendly fraud using digital Proof of Delivery (OTP) and device logs.
+Q3: How long does a chargeback investigation take to resolve?
+Answer: Banking chargeback rules allow card issuing banks 30 to 60 calendar days to evaluate representment evidence and issue a final ruling. You will receive email notifications when major milestones or final decisions occur (Refer to PAY-001).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of PAY-004. Established dispute reason code matrices, representment workflows, evidence collection requirements, resolution matrices, and high-risk account containment rules.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* ORD-001: Order Lifecycle Management Policy
+* ORD-004: Order Tracking Policy
+* SHIP-001: Domestic Shipping Policy
+* SHIP-006: Lost Shipment Investigation Policy
+* PAY-001: Payment Processing SOP
+* PAY-002: Payment Failure & Retry Policy
+* PAY-003: Refund Payment Processing Policy
+* SEC-001: Account Security & Access Control
+* SEC-004: Fraud Detection Framework

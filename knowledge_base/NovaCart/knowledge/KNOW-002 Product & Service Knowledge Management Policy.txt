@@ -1,0 +1,318 @@
+﻿KNOW-002: Product & Service Knowledge Management Policy
+Document Header
+* Document Title: Product & Service Knowledge Management Policy
+* Document ID: KNOW-002
+* Version: 1.0.0
+* Document Category: Knowledge Management
+* Classification: Internal Operational Standard
+* Department Owner: Knowledge Management & Product Information Governance
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Knowledge Management, Director of Product Management, Head of Catalog Operations, VP of Quality Assurance
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Product Knowledge, Service Documentation, Knowledge Management, Catalog Synchronisation, Product Launch, Version Control, Knowledge Archiving, Technical Specifications
+Purpose
+This document defines the official Product & Service Knowledge Management Policy of NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes standardized enterprise procedures, governance principles, asset ownership responsibilities, product documentation standards, validation workflows, product launch documentation protocols, quality controls, and business rules governing the creation, validation, publication, maintenance, and retirement of knowledge assets related to NovaCart's physical merchandise, digital offerings, and commercial service programs.
+As a core operational document (KNOW-002) in the Knowledge Management category of the NovaCart Enterprise Knowledge Base (NEKB), KNOW-002 governs product and service knowledge lifecycle management within know.novacart.internal and catalog.novacart.internal, operating in strict operational alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, REF-001 through REF-006, PROD-001 through PROD-006, SEC-001 through SEC-006, LEG-001 through LEG-006, and KNOW-001.
+Scope
+This policy applies universally across all technical specifications, user manuals, installation guides, warranty terms, digital product licensing rules, troubleshooting trees, service tier descriptions, and merchant product documentation generated for or hosted on NovaCart platforms across India, Singapore, and the United Arab Emirates.
+Coverage Includes
+* Classification and structural standards for physical product, digital software (CAT-SFT), subscription (CAT-SUB), and service knowledge assets.
+* Ownership assignment across Merchandising, Product Management, Quality Assurance, and Knowledge Management teams.
+* Product launch knowledge preparation timelines, pre-launch validation, and synchronized Go-Live workflows.
+* Change management protocols for price adjustments, feature upgrades, specification updates, and warranty modifications.
+* Drift detection, conflict resolution, and emergency documentation correction procedures.
+* Product retirement, SKU archive structures, historical document retrieval, and compliance log retention.
+Out of Scope
+* Master catalog SKU attribute ingestion, taxonomy hierarchy creation, and merchant listing uploads (governed by PROD-001).
+* Customer support ticket routing, macro template management, and agent CRM interface navigation (governed by KNOW-001 and SUP-001).
+Product & Service Knowledge Overview
+In an omnichannel e-commerce environment, accurate, comprehensive, and up-to-date product and service knowledge is vital to commercial success and operational efficiency. Frontline Customer Support Representatives (CSRs) in crm.novacart.internal (SUP-001), automated chatbot engines, field installation technicians (PROD-004), and self-service customers relying on public storefront listings (PROD-001) require a single, synchronized source of truth.
+Discrepancies in product dimensions, compatibility parameters, warranty terms (PROD-003), or digital activation workflows (PROD-006) cause customer friction, higher return rates (REF-002), order disputes (LEG-006), and compliance failures (LEG-005).
+Core Knowledge Management Principles
+1. Single Source of Product Truth: All customer-facing product specifications, internal troubleshooting guides, and service SLAs must synchronize directly from validated NEKB records in know.novacart.internal. Disconnected spreadsheets or local documentation hubs are strictly prohibited.
+2. Synchronized Commercial Readiness: No new physical product, digital SKU, or service program may be enabled for customer purchase (STAGE-ACT in PROD-001) until all associated technical and operational knowledge assets are validated and published.
+3. Continuous Drift Control: Product and service knowledge assets are audited continuously against manufacturer specification updates, customer return reason trends (REF-004), and warranty claim logs (PROD-003).
+4. Immutable Version Traceability: Every modification to product specifications, compatibility matrices, or warranty terms must maintain full semantic version history and audit log logging in audit.novacart.internal (SEC-006).
+Knowledge Management Principles
+NovaCart's product and service information architecture adheres to four foundational operational mandates:
+* Accuracy & Precision: Technical parameters (e.g., operating voltage, dimensions, weight capacity, OS compatibility) must be verified against original manufacturer spec sheets or formal QA lab reports prior to publication.
+* Completeness Across the Lifecycle: Knowledge documentation must cover the full product journey: pre-purchase specifications, unboxing guidelines, installation requirements (PROD-004), operational troubleshooting, warranty terms (PROD-003), and end-of-life disposal.
+* Role-Gated Accessibility: While customer-facing specifications are published openly on Product Display Pages (PDP), sensitive internal troubleshooting procedures, supplier cost structures, and technical escalation contacts are restricted to authorized internal agent views (KNOW-INT under KNOW-001).
+* Proactive Change Management: When a product or service undergoes revision (e.g., firmware update, packaging change, accessory bundle alteration), corresponding knowledge assets must be updated simultaneously across all channels.
+Product & Service Knowledge Categories
+Product and service information within know.novacart.internal is structured into six functional knowledge domains:
+Product Knowledge Category Matrix
+Category Code
+	Knowledge Domain Name
+	Primary Scope & Content Elements
+	Target Audience Scope
+	Primary Source System
+	KN-CAT-SPEC
+	Technical Specifications
+	Dimensions, weight, power ratings, material composition, inbox contents, compatibility.
+	PublicPDP & Internal Agents
+	catalog.novacart.internal
+	KN-CAT-INST
+	Setup & Installation
+	Physical mounting steps, electrical requirements, app pairing, initial calibration (PROD-004).
+	Public PDP & Field Engineers
+	fieldservice.novacart.internal
+	KN-CAT-WRN
+	Warranty & Service
+	OEM vs. Seller terms, claim drop-off locations, coverage limits, 3-strike repair rules (PROD-003).
+	Public PDP & Support Agents
+	warranty.novacart.internal
+	KN-CAT-DIG
+	Digital Licensing
+	System requirements, activation key retrieval, device limits, EULA terms (PROD-006).
+	Public PDP & Support Agents
+	digital.novacart.internal
+	KN-CAT-TSH
+	Troubleshooting Trees
+	Diagnostic decision flows, error code lookup, component replacement workflows.
+	Internal Agents & Field Techs
+	know.novacart.internal
+	KN-CAT-SVC
+	Service Tier Guides
+	NovaCart Prime benefits, Express delivery SLAs (SHIP-003), installation rate cards.
+	Public Help Center & Agents
+	know.novacart.internal
+	Knowledge Ownership & Accountability
+Accountability for creating, validating, and maintaining product and service knowledge is shared across specialized enterprise roles:
+Knowledge Ownership Matrix
+Operational Role
+	Primary Assigned Responsibilities
+	Department Unit
+	System Approval Authority
+	Product Category Manager
+	Owns commercial specifications, pricing tiers, and manufacturer spec sheets.
+	Merchandising / Product Management
+	ROLE_PROD_OWNER
+	QA Technical Specialist
+	Validates physical specs, compatibility, inbox accessories, and safety parameters.
+	Quality Assurance & Testing
+	ROLE_QA_VALIDATOR
+	Service Program Owner
+	Defines service SLAs, eligibility criteria, installation scope, and rate cards.
+	Field Operations / Logistics
+	ROLE_SVC_OWNER
+	Product Knowledge Manager
+	Audits documentation formatting, cross-references policies, publishes final assets.
+	Knowledge Management
+	ROLE_KNOW_APPROVER
+	Knowledge Creation Process
+Knowledge asset creation follows a structured authoring standard in know.novacart.internal:
+1. Initiation & Template Selection: The author selects the appropriate NEKB product knowledge template matching the product vertical (CAT-ELE, CAT-MOB, CAT-APP, CAT-SFT, or CAT-SUB).
+2. Metadata Binding: The draft is bound to the specific Master SKU ID, Category Code, Brand Name, and Model Number registered in catalog.novacart.internal (PROD-001).
+3. Mandatory Content Sections:
+   * Technical Overview: Concise summary of core features and intended usage.
+   * Verified Specification Table: Structural grid of technical parameters.
+   * Compatibility & Requirements: Explicit list of supported hardware/software/environment requirements.
+   * Installation & Setup Overview: Step-by-step unboxing and setup instructions (PROD-004).
+   * Warranty & Return Summary: Cross-references to REF-001, REF-003, and PROD-003.
+   * Internal Troubleshooting Tree: Gated diagnostic steps for customer support agents.
+4. NEKB Policy Cross-Referencing: Every product knowledge document must link explicitly to governing policies (e.g., "Returns handled per REF-001 Grade A guidelines" or "Installation governed by PROD-004 Site Readiness rules").
+Knowledge Validation & Approval
+Before publication, every product and service knowledge asset must pass a rigorous multi-stage validation pipeline:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                  PRODUCT KNOWLEDGE VALIDATION PIPELINE                            |
++-----------------------------------------------------------------------------------+
+| 1. DRAFT SUBMISSION | Author submits completed spec & troubleshooting draft.      |
+| 2. QA & SPEC AUDIT  | QA Specialist verifies spec sheet against physical sample/report.|
+| 3. POLICY & WRN CHECK| Legal/Warranty Lead confirms PROD-003 & REF-001 compliance.    |
+| 4. EDITORIAL AUDIT  | Knowledge Manager reviews taxonomy, search tags, & formatting. |
+| 5. PUBLICATION      | Knowledge asset published; SKU unlocked for purchase.       |
++-----------------------------------------------------------------------------------+
+
+Quality Validation Checklist
+Assessment Dimension
+	Mandatory Verification Standard
+	Audit Failure Indicator
+	Specification Accuracy
+	Specs match manufacturer official sheet or QA lab test report 100%.
+	Mismatched dimensions, incorrect power wattage.
+	Policy Compliance
+	Warranty terms align perfectly with PROD-003 and catalog metadata.
+	Mismatched warranty duration or exclusion terms.
+	Inbox Verification
+	Inbox accessory list verified against physical unboxing sample.
+	Missing cables or adapters in published spec.
+	Compatibility Matrix
+	Supported OS versions, socket types, or dimension limits verified.
+	Ambiguous "universal compatibility" claims.
+	Product Launch Documentation Process
+To ensure seamless commercial product launches, knowledge documentation executes under strict time-bound SLAs prior to official market release:
+Product Documentation Lifecycle Matrix
+Launch Milestone
+	Target Timeline
+	Required Knowledge Deliverable
+	Gatekeeper / Approver
+	T-14 Days to Launch
+	14 Days Prior
+	Initial Spec Draft & Manufacturer Spec Sheet uploaded.
+	Category Manager
+	T-7 Days to Launch
+	7 Days Prior
+	QA Lab Unboxing Verification & Setup Guide completed.
+	QA Technical Lead
+	T-3 Days to Launch
+	3 Days Prior
+	Internal Agent Troubleshooting Tree & Warranty Guide published.
+	Knowledge Manager
+	T-24 Hours to Launch
+	24 Hours Prior
+	Final Sign-off; PDP Public Spec Sync executed.
+	Launch Committee Lead
+	Launch Day (T-0)
+	Go-Live Moment
+	Public PDP Spec Live; SKU status updated to ST-IN_STOCK (PROD-002).
+	Automated System Sync
+	Knowledge Maintenance & Updates
+Product and service information must be updated promptly when commercial, technical, or operational parameters change:
+Review & Update Frequency Standards
+* Scheduled Specification Audits: All active product knowledge assets undergo scheduled periodic reviews based on product velocity and category complexity:
+Knowledge Review Frequency Matrix
+Product Category / Vertical
+	Scheduled Review Frequency
+	Primary Focus Area
+	Responsible Unit
+	Mobile & Consumer Electronics (CAT-MOB/CAT-ELE)
+	Quarterly (90 Days)
+	Software compatibility, OS updates, accessory bundles.
+	Category Specialist
+	Large Appliances (CAT-APP)
+	Semi-Annual (180 Days)
+	Installation rate cards, site readiness rules (PROD-004).
+	Field Service Lead
+	Digital Software & Subscriptions (CAT-SFT/CAT-SUB)
+	Quarterly (90 Days)
+	Activation API URLs, licensing term changes (PROD-006).
+	Digital Product Lead
+	Core Catalog & Household Items
+	Annual (365 Days)
+	General specification accuracy, packaging updates.
+	Catalog Operations
+	Handling Conflicting or Inaccurate Information
+1. Emergency Drift Flagging: If a customer, support agent, or warehouse inspector discovers conflicting product information (e.g., PDP states "2-year warranty" while package states "1-year warranty"), the discovering party logs an EMERGENCY_KNOW_DRIFT ticket in know.novacart.internal.
+2. Temporary Deprecation Hold: The Knowledge Manager places the affected knowledge section on temporary deprecation hold (STAGE-SPD under KNOW-001) within 1 hour.
+3. Corrective Investigation: The Category Manager contacts the OEM or verifies physical inventory in FC storage within 4 business hours.
+4. Synchronized Update: Corrected data is published simultaneously across know.novacart.internal and catalog.novacart.internal.
+Product Retirement & Knowledge Archiving
+When a product or service is discontinued, its associated knowledge assets undergo structured retirement:
+Product Status Matrix
+Product Status Tag
+	Knowledge Base Visibility State
+	Operational Action Required
+	ST-IN_STOCK / ST-LOW_STOCK
+	Full Active Visibility (STAGE-ACT)
+	Normal search indexing across internal and public channels (PROD-002).
+	ST-OUT_OF_STOCK / ST-BACKORDER
+	Active Visibility with Stock Advisory
+	PDP displays estimated backorder shipping dates (PROD-002).
+	ST-DISCONTINUED
+	Public PDP Read-Only; Internal Active
+	Public PDP displays "Discontinued Product"; internal troubleshooting remains active for warranty claims (PROD-003).
+	ST-ARCHIVED
+	Archived State (STAGE-ARC)
+	Removed from public view; archived in internal vault for 7-year audit retention.
+	Retrieval of Archived Documentation
+Archived product documentation (STAGE-ARC) remains accessible to Senior Customer Support Representatives, Quality Assurance Auditors, and Legal Specialists within know.novacart.internal/archive. This ensures that post-discontinuation warranty repairs (PROD-003), customer disputes (LEG-006), or regulatory audits (LEG-005) can be evaluated against the exact product specifications active at the original order timestamp.
+Department Responsibilities
+Accountability for product and service knowledge management is distributed across enterprise operational units:
+Department Responsibility Matrix
+Department Unit
+	Primary Knowledge Management Responsibilities
+	Primary System Portal
+	Operational Target KPI
+	Knowledge Management
+	Governs KNOW-002 policy, manages approval pipelines, audits spec quality, maintains archives.
+	know.novacart.internal
+	Spec Accuracy Index $\ge 99.0\%$
+	Merchandising & Product
+	Authors technical spec sheets, provides OEM documentation, manages launch timelines.
+	catalog.novacart.internal
+	Launch Readiness SLA $100\%$
+	Quality Assurance (QA)
+	Conducts physical unboxing checks, verifies setup steps, validates compatibility matrices.
+	quality.novacart.internal
+	Pre-launch QA SLA $\le 48\text{ Hours}$
+	Field Operations
+	Authors appliance installation guides, verifies rate cards, updates setup troubleshooting.
+	fieldservice.novacart.internal
+	Installation Guide Accuracy $\ge 98\%$
+	Business Rules
+Rule 1: Mandatory Knowledge Gate for Commercial Launch
+No Master SKU may transition to ST-IN_STOCK or ST-PREORDER in catalog.novacart.internal without an approved, published product knowledge document (STAGE-ACT) linked in know.novacart.internal. The catalog management software automatically blocks checkout enablement if the knowledge link is missing or in STAGE-DFT status.
+Rule 2: Absolute Specification Priority Rule
+In the event of a discrepancy between marketing promotional banners and the verified technical specification table in know.novacart.internal, the verified technical specification table takes absolute operational precedence. Support agents and dispute officers must resolve customer claims based strictly on the verified specification table (LEG-006).
+Rule 3: Mandatory Sync upon Specification or Warranty Revisions
+Any modification to physical inbox contents, technical compatibility, or warranty duration must be updated simultaneously in know.novacart.internal and catalog.novacart.internal within 2 hours of formal approval. Asynchronous or partial documentation updates are strictly prohibited.
+Rule 4: Mandatory 7-Year Retention for Product Knowledge Archives
+All product knowledge assets, historical version revisions, QA unboxing logs, and specification approval sign-offs must be retained in immutable WORM storage for a mandatory period of 7 years post-product discontinuation (SEC-003, SEC-006).
+Exception Handling
+* Emergency Pre-Launch Documentation Bypass: In rare cases where a strategic manufacturer embargo prevents full technical spec release prior to launch day (e.g., major smartphone launch CAT-MOB), the Director of Product Management may authorize an "Embargoed Pre-Launch Knowledge Draft." The core specifications are validated under strict NDA, held in encrypted staging, and published automatically at the exact second the global embargo lifts.
+* Supplier Discontinued Part Substitution: If an OEM substitutes a non-critical internal component (e.g., screen panel supplier change) without changing the Master SKU or model number, QA must execute an immediate delta specification audit. The product knowledge asset is updated to Version X.Y+1, logging the serial number range where the component change applies.
+Practical Examples
+Scenario 1: Knowledge Preparation for a New Smart Home Product Launch (CAT-SMT)
+1. Merchandising creates a new Master SKU for a Smart Security Lock in catalog.novacart.internal set for launch in 14 days ($T-14$).
+2. Category Manager drafts initial specification and setup documentation in know.novacart.internal.
+3. At $T-7$ days, QA receives physical samples, conducts unboxing verification, tests Wi-Fi pairing, and validates door thickness requirements.
+4. QA updates setup troubleshooting steps and approves the technical draft at $T-3$ days.
+5. Knowledge Manager publishes the complete knowledge asset (STAGE-ACT) at $T-24$ hours. System unlocks the SKU for commercial checkout on launch day.
+Scenario 2: Emergency Correction of Inaccurate Compatibility Information
+1. A customer contacts support claiming a purchased monitor (CAT-ELE) does not support 120Hz display refresh rates over HDMI as claimed on the PDP, logging a dispute (LEG-006).
+2. CSR flags an EMERGENCY_KNOW_DRIFT ticket in know.novacart.internal.
+3. Executing Rule 3, Knowledge Manager places the HDMI specification section on temporary deprecation hold (STAGE-SPD) within 30 minutes.
+4. QA lab re-tests the monitor and confirms 120Hz is supported exclusively over DisplayPort connections, while HDMI supports max 60Hz.
+5. Documentation is corrected to Version 1.1.0 across know.novacart.internal and catalog.novacart.internal within 2 hours. Customer is provided a free DisplayPort adapter or eligible return under REF-001 rules.
+Frequently Asked Questions (FAQs)
+Q1: What should I do if I find conflicting product information between the storefront PDP and internal support guides?
+Answer: If you discover mismatched information, log an EMERGENCY_KNOW_DRIFT ticket immediately in know.novacart.internal or flag the article in crm.novacart.internal. The Knowledge Management team will place the affected section on a temporary deprecation hold (STAGE-SPD), verify the correct specifications with QA or the manufacturer within 4 hours, and push a synchronized update across all channels (Refer to SUP-001).
+Q2: Why can't a new product be enabled for sale before its knowledge documentation is complete?
+Answer: In accordance with Rule 1, system software blocks SKU checkout enablement until an approved, validated knowledge document is linked in know.novacart.internal. This ensures that customer support agents, chatbot engines, and installation technicians have verified troubleshooting and setup information available the moment the first order is placed (Refer to PROD-001).
+Q3: How long is product documentation kept after an item is discontinued?
+Answer: When a product is discontinued (ST-DISCONTINUED), its public PDP displays a read-only "Discontinued" notice, but its internal technical documentation remains active for customer support and warranty servicing (PROD-003). After full end-of-life retirement (ST-ARCHIVED), the complete knowledge record is stored securely in read-only WORM archives for 7 years to support historical disputes, legal inquiries, and regulatory audits (Refer to SEC-003, SEC-006).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of KNOW-002. Established product knowledge categories, ownership matrices, 5-stage quality validation pipelines, $T-14$ product launch documentation lifecycles, emergency drift correction SLAs, discontinued SKU archive structures, and 7-year WORM retention standards.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* SUP-005: Customer Support SLA Policy
+* ORD-001: Order Lifecycle Management Policy
+* SHIP-001: Domestic Shipping Policy
+* PAY-001: Payment Processing SOP
+* REF-001: Master Refund Eligibility Rules
+* REF-002: Return & Exchange Policy
+* REF-003: Replacement Policy
+* REF-004: Return Inspection & Quality Assessment Policy
+* PROD-001: Product Catalog Management Policy
+* PROD-002: Product Availability & Inventory Policy
+* PROD-003: Product Warranty Policy
+* PROD-004: Product Installation & Setup Policy
+* PROD-005: Product Recall & Safety Policy
+* PROD-006: Digital Products & Licensing Policy
+* SEC-001: Account Security Policy
+* SEC-003: Data Protection & Privacy Policy
+* SEC-006: Security Monitoring & Audit Logging Policy
+* LEG-001: Terms & Conditions Policy
+* LEG-005: Compliance & Regulatory Governance Policy
+* LEG-006: Customer Dispute Resolution Policy
+* KNOW-001: Customer Support Knowledge Base Governance Policy

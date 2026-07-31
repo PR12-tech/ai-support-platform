@@ -1,0 +1,317 @@
+﻿SUP-005: Customer Support Service Level Agreement (SLA) Policy
+Document Header
+* Document Title: Customer Support Service Level Agreement (SLA) Policy
+* Document ID: SUP-005
+* Version: 1.0.0
+* Document Category: Customer Support
+* Classification: Internal
+* Department Owner: Customer Support
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Operations Manager, Customer Support Director, Quality Assurance Lead
+* Approved By: VP of Customer Experience, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Service Level Agreement, SLA, First Response Time, Target Resolution Time, Maximum Resolution Time, SLA Pause, SLA Breach, Performance Metrics
+Purpose
+This document establishes the binding Service Level Agreement (SLA) performance standards, operational timelines, and compliance requirements for NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It defines mandatory First Response Times (FRT), Target Resolution Times (TRT), Maximum Resolution Times (MRT), pause/restart logic, and breach escalation pathways for all customer support operations.
+As a core operational policy (SUP-005) in the NovaCart Enterprise Knowledge Base (NEKB), SUP-005 works in direct alignment with SUP-001, SUP-003, and SUP-004 to guarantee operational velocity, accountability, and consistent service delivery across all supported operating regions (India, Singapore, UAE).
+Scope
+This SLA policy applies universally to:
+* All Level 1 (L1), Level 2 (L2), and Level 3 (L3) Customer Support Representatives (CSRs) and automated conversational agents.
+* Cross-functional resolution units in Logistics, Warehouse Operations, Returns & Refunds, Finance, Information Security, Product Management, Legal & Compliance, and Engineering.
+* All customer interaction channels integrated within the Omni-Channel Support Portal (crm.novacart.internal).
+SLA Objectives
+NovaCart enforces strict SLAs across customer service workflows to achieve four strategic objectives:
+1. Predictable Velocity: Maintain binding performance thresholds so customers receive timely initial responses and definitive resolutions.
+2. Operational Accountability: Track time-to-resolution metrics dynamically across every department and functional queue.
+3. Proactive Breach Interception: Automate system alerts to escalate aging tickets before compliance breaches occur.
+4. Data-Driven Optimization: Analyze SLA compliance metrics to eliminate operational bottlenecks in logistics, payments, software engineering, and partner carrier workflows.
+Service Hours
+Customer support channels operate under standardized regional operating windows:
+* Live Chat & App Messaging (Digital): 24/7 / 365 across all operating regions (IN, SG, UAE).
+* Voice Telephony: 08:00 to 22:00 Local Regional Time (IST, SGT, GST), Monday through Sunday.
+* Web Ticket & Email Queue (Asynchronous): 24/7 / 365 intake; queue processing active 24/7 for P1/P2 incidents, and 08:00 to 20:00 Local Regional Time for P3/P4 tickets.
+Support Channels Covered
+The SLA standards defined in this policy govern five primary customer ingress and execution channels:
+1. Live Chat (Web and Mobile App)
+2. Voice Telephony (Inbound Customer Calls)
+3. Web Tickets & Email Support
+4. In-App Mobile Messaging
+5. Cross-Departmental Internal Escalation Queues
+First Response Time Standards
+First Response Time (FRT) is measured from the exact timestamp a ticket is logged in crm.novacart.internal until an authorized CSR or automated system agent issues a substantive, personalized response. Automated generic system auto-acknowledgments do not satisfy FRT requirements.
+Channel-wise Response Time Matrix
+Channel Name
+	Priority Level
+	Target First Response Time
+	Maximum Allowable FRT
+	Primary Operating SLA Goal
+	Live Chat
+	P1 / P2
+	$< 30\text{ Seconds}$
+	$60\text{ Seconds}$
+	Immediate queue assignment
+	Live Chat
+	P3 / P4
+	$< 2\text{ Minutes}$
+	$5\text{ Minutes}$
+	Rapid intake and triage
+	Voice Telephony
+	P1 / P2 / P3
+	$< 20\text{ Seconds}$ (Answer)
+	$45\text{ Seconds}$
+	Low call-abandonment rate
+	In-App Messaging
+	P1 / P2
+	$< 5\text{ Minutes}$
+	$15\text{ Minutes}$
+	Priority queue processing
+	In-App Messaging
+	P3 / P4
+	$< 30\text{ Minutes}$
+	$1\text{ Hour}$
+	Standard queue processing
+	Web Ticket / Email
+	P1 - Urgent
+	$< 15\text{ Minutes}$
+	$30\text{ Minutes}$
+	Fast-track triage
+	Web Ticket / Email
+	P2 - High
+	$< 30\text{ Minutes}$
+	$1\text{ Hour}$
+	Priority triage
+	Web Ticket / Email
+	P3 - Standard
+	$< 2\text{ Hours}$
+	$4\text{ Hours}$
+	Regular queue processing
+	Web Ticket / Email
+	P4 - Low
+	$< 4\text{ Hours}$
+	$8\text{ Hours}$
+	Low-priority background processing
+	Resolution Time Standards
+Resolution SLA performance is governed by two distinct metrics:
+* Target Resolution Time (TRT): The operational timeframe within which $90\%$ of tickets in a given category must be fully resolved under standard business conditions.
+* Maximum Resolution Time (MRT): The absolute, non-negotiable upper limit for ticket closure before a mandatory SLA breach is logged and executive escalation is triggered.
+Priority-wise SLA Targets
+Ticket priority codes assigned under SUP-004 dictate the applicable resolution timers within crm.novacart.internal.
+SLA Matrix by Priority
+Priority Level
+	Severity Description
+	Target First Response (FRT)
+	Target Resolution Time (TRT)
+	Maximum Resolution Time (MRT)
+	P1 - Urgent
+	Critical threat, account compromise, platform outage, severe financial risk.
+	$< 2\text{ Mins}$ (Chat) / $< 15\text{ Mins}$ (Email)
+	$< 2\text{ Hours}$
+	$4\text{ Hours}$
+	P2 - High
+	Severe operational disruption, delivery delay $> 48\text{ hrs}$, damaged high-value item.
+	$< 15\text{ Mins}$ (Chat) / $< 30\text{ Mins}$ (Email)
+	$< 12\text{ Hours}$
+	$24\text{ Hours}$
+	P3 - Standard
+	Routine transaction query, return request, address update pre-dispatch.
+	$< 1\text{ Hour}$ (Chat) / $< 2\text{ Hours}$ (Email)
+	$< 24\text{ Hours}$
+	$48\text{ Hours}$
+	P4 - Low
+	General catalog query, feedback submission, feature request, general policy question.
+	$< 4\text{ Hours}$ (Chat) / $< 8\text{ Hours}$ (Email)
+	$< 48\text{ Hours}$
+	$72\text{ Hours}$
+	Category-Specific Resolution Time Matrix
+The following table establishes specific operational SLA expectations across common functional support domains:
+Support Domain / Issue Category
+	Priority Code
+	Target Resolution Time (TRT)
+	Maximum Resolution Time (MRT)
+	Primary Handling Squad
+	Reference SOP
+	Account Compromise / Fraud
+	P1
+	$< 2\text{ Hours}$
+	$4\text{ Hours}$
+	Security Operations Center
+	SEC-001, SEC-005
+	Systemic Payment Failure
+	P1
+	$< 2\text{ Hours}$
+	$4\text{ Hours}$
+	Finance / FinTech Squad
+	PAY-002
+	Duplicate Payment Debit
+	P2
+	$< 12\text{ Hours}$
+	$24\text{ Hours}$
+	Finance Operations
+	PAY-003
+	Delivery Delay Investigation
+	P2
+	$< 12\text{ Hours}$
+	$24\text{ Hours}$
+	Logistics Hub Squad
+	SHIP-005
+	Lost Shipment Claim
+	P2
+	$< 24\text{ Hours}$
+	$48\text{ Hours}$
+	Logistics / Insurance Lead
+	SHIP-006
+	Damaged Product / Wrong Item
+	P2
+	$< 12\text{ Hours}$
+	$24\text{ Hours}$
+	Reverse Logistics / RMA
+	REF-003, REF-005
+	Standard Refund Processing
+	P3
+	$< 24\text{ Hours}$
+	$48\text{ Hours}$
+	Returns & Refunds Squad
+	REF-001, REF-002
+	Warranty Claim Validation
+	P3
+	$< 24\text{ Hours}$
+	$48\text{ Hours}$
+	Product Quality Squad
+	PROD-001, PROD-002
+	General Product Enquiry
+	P4
+	$< 48\text{ Hours}$
+	$72\text{ Hours}$
+	L1 Customer Support
+	KB-001
+	SLA Monitoring Process
+SLA tracking is managed automatically by crm.novacart.internal via continuous real-time monitoring:
+1. Timer Activation: The SLA clock starts immediately upon ticket creation and timestamp logging.
+2. Visual SLA Indicator: Support agent dashboards display color-coded countdown indicators for active tickets:
+   * Green: SLA consumption $< 50\%$ of target time.
+   * Yellow: SLA consumption between $50\%$ and $75\%$ of target time (Warning threshold).
+   * Orange: SLA consumption between $76\%$ and $99\%$ of target time (Imminent breach alert).
+   * Red: SLA consumed $\ge 100\%$ (Active breach state).
+3. Automated Interception Alerts: When a ticket reaches $75\%$ SLA consumption without resolution, the system issues an automated priority alert to the floor supervisor and domain squad lead.
+SLA Breach Management
+When a ticket breaches its allowable Target Resolution Time, it transitions to an active breach state and triggers the mandatory escalation workflow outlined below.
+SLA Breach Escalation Matrix
+Breach Stage
+	Condition / Consumption Threshold
+	Automated System Action
+	Required Management Intervention
+	Level 1 Alert (Warning)
+	$75\%$ of Target Resolution Time
+	Visual dashboard alert highlighted orange; supervisor SMS notification.
+	Floor Supervisor reviews ticket and assigns dedicated agent.
+	Level 2 Alert (Target Breach)
+	$100\%$ of Target Resolution Time
+	Ticket auto-promoted in queue; notification sent to Department Manager.
+	L2/L3 Domain Manager overrides queue and takes direct case custody.
+	Level 3 Alert (Max Breach)
+	$100\%$ of Maximum Resolution Time
+	Ticket escalated to Customer Support Director & VP of Customer Experience.
+	Executive review mandatory; discretionary customer credit authorized.
+	Customer Notification Standards
+To preserve trust during extended investigations, CSRs must issue proactive status updates at defined intervals:
+* P1 Incidents: Mandatory customer progress updates every 1 hour until resolution.
+* P2 Incidents: Mandatory customer progress updates every 4 hours until resolution.
+* P3/P4 Tickets: Mandatory customer progress updates every 24 hours until resolution.
+Department Responsibilities
+Maintaining SLA compliance is a shared cross-functional obligation across NovaCart:
+Department
+	Operational SLA Responsibility
+	Performance Target
+	Customer Support
+	Front-line intake, initial triage, prompt customer updates, FRT compliance.
+	$\ge 95\%$ FRT compliance across all channels.
+	Logistics
+	Rapid execution of transit trace requests, carrier loss declarations, address changes.
+	$\ge 92\%$ TRT compliance on logistics queues.
+	Finance Operations
+	Timely payment gateway reconciliations, duplicate payment reversals, ledger updates.
+	$\ge 95\%$ TRT compliance on payment queues.
+	Returns & Refunds
+	Timely physical return inspections at FCs, RMA approvals, refund triggers.
+	$\ge 94\%$ TRT compliance on return queues.
+	Information Security
+	Fast-track resolution of P1 account compromise and fraud alerts.
+	$\ge 98\%$ TRT compliance on security queues.
+	Engineering
+	Immediate hotfix deployment for P1/SEV-1 platform bugs.
+	$\ge 95\%$ TRT compliance on system bug fixes.
+	Performance Metrics
+Customer Support operational performance is evaluated monthly against five Key Performance Indicators (KPIs):
+1. First Response Time (FRT) Compliance Rate: Percentage of incoming contacts receiving an authorized first response within channel SLA limits (Target: $\ge 95\%$).
+2. Target Resolution Time (TRT) Compliance Rate: Percentage of tickets fully resolved within applicable TRT targets (Target: $\ge 90\%$).
+3. SLA Breach Rate: Percentage of total volume exceeding Maximum Resolution Times (Target: $< 2\%$).
+4. First Contact Resolution (FCR) Rate: Percentage of tickets resolved during initial contact without secondary follow-up (Target: $\ge 75\%$).
+5. Customer Satisfaction Score (CSAT): Post-interaction survey rating across resolved tickets (Target: $\ge 88\%$).
+Business Rules
+Rule 1: SLA Pause Conditions
+The SLA resolution timer within crm.novacart.internal may be placed in a PAUSED state only under the following verified conditions:
+* Pending Customer Action (WAITING_ON_CUSTOMER): The agent has formally requested necessary evidence (e.g., photo of damaged goods, bank statement proof) and is awaiting customer response.
+* Pending Third-Party Vendor / Courier Action (WAITING_ON_CARRIER): The ticket requires physical carrier trace logs from external 3PL logistics partners (Refer to SHIP-006).
+* Pending Technical Diagnostic (WAITING_ON_TECHNICIAN): On-site technician inspection is scheduled for large home appliances (CAT-APP) (Refer to PROD-004).
+Rule 2: SLA Restart Conditions
+The SLA timer resumes immediately upon receipt of requested customer evidence, carrier update logging, or technician report submission. The system recalculates remaining resolution allowance automatically without resetting the initial creation timestamp.
+Rule 3: Unilateral SLA Alteration Prohibited
+Agents and squad leads are strictly forbidden from manually modifying ticket creation dates, altering SLA timers, or switching ticket status to PAUSED without logged evidence. Unauthorized timer manipulation constitutes a serious compliance violation audited by Quality Assurance.
+Exception Handling
+* Force Majeure & Major Outages: During severe weather disruptions, national logistics strikes, or major cloud infrastructure outages, the Chief Operating Officer (COO) may authorize a temporary "Global SLA Relaxation State." During this period, public system banners notify customers of extended response windows, and SLA breach penalties are suspended for affected regions.
+* Customer Non-Responsiveness: If a ticket remains in WAITING_ON_CUSTOMER status for 72 consecutive hours despite three automated reminder notifications, the system automatically marks the ticket as RESOLVED_NO_RESPONSE. The SLA timer closes without logging a breach.
+SLA Examples
+The following practical scenarios illustrate SLA application and timer behavior:
+Example 1: P1 Account Compromise
+* Event: A customer reports an unauthorized login and altered delivery address via live chat at 10:00 AM.
+* SLA Execution:
+   * FRT Target: $< 30\text{ seconds}$ (Achieved at 10:00:20 AM).
+   * TRT Target: $< 2\text{ hours}$ (Target: 12:00 PM).
+   * Action: L1 CSR freezes account instantly and escalates to QUEUE_SECURITY_SOC. Security analyst revokes active tokens, cancels fraudulent shipment, and issues password reset by 11:15 AM (Resolved in 1 hour 15 minutes; TRT met).
+Example 2: P2 Duplicate Payment (SLA Pause Event)
+* Event: Customer submits an email ticket at 08:00 AM stating card was debited twice (₹15,000 each) for one order.
+* SLA Execution:
+   * FRT Target: $< 30\text{ minutes}$ (Achieved at 08:18 AM).
+   * TRT Target: $< 12\text{ hours}$ (Target: 08:00 PM).
+   * Action: Finance Specialist reviews gateway logs at 09:00 AM but requires customer's bank reference number. Status updated to WAITING_ON_CUSTOMER at 09:15 AM (Timer PAUSED at 1 hour 15 minutes consumption). Customer replies with bank reference at 01:15 PM (Timer RESUMES). Refund executed and ticket resolved at 04:15 PM (Total active SLA time consumed: 4 hours 15 minutes; TRT met).
+Example 3: P2 Delivery Delay Breach Management
+* Event: A customer submits a chat ticket regarding a shipment 48 hours past ETA.
+* SLA Execution:
+   * FRT Target: $< 30\text{ seconds}$ (Achieved).
+   * TRT Target: $< 12\text{ hours}$; MRT: $24\text{ hours}$.
+   * Execution Path: Ticket assigned to Logistics at 09:00 AM. Carrier trace encounters delays. At 06:00 PM (75% of TRT), Level 1 Alert alerts floor supervisor. At 09:00 PM (100% of TRT), Level 2 Alert auto-promotes ticket to Logistics Hub Manager. Manager issues immediate replacement order from local FC at 11:30 PM (Resolved in 14 hours 30 minutes; TRT breached, MRT met).
+Frequently Asked Questions (FAQs)
+Q1: Does the SLA clock reset if a ticket is transferred between departments?
+Answer: No. The SLA clock relies strictly on the original ticket creation timestamp. Departmental transfers move ticket custody within crm.novacart.internal but do not reset or extend the overarching TRT/MRT countdown timers.
+Q2: How do customer response delays affect SLA compliance reporting?
+Answer: Placing a ticket in WAITING_ON_CUSTOMER status pauses the SLA clock. Time spent waiting for customer evidence is excluded from agent handling calculations, ensuring SLA compliance metrics reflect active operational work accurately.
+Q3: What happens if an agent incorrectly pauses an SLA timer to prevent a breach?
+Answer: Quality Assurance regularly audits paused tickets (WAITING_ON_CUSTOMER / WAITING_ON_CARRIER). If an audit reveals an agent paused a ticket without logging an outbound customer inquiry or carrier trace request, the pause is revoked, the SLA is logged as breached, and the event is recorded as a quality non-compliance finding.
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial operational baseline release of SUP-005. Established mandatory FRT/TRT/MRT standards, channel matrices, SLA pause/restart rules, breach escalation matrices, and KPI targets.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-002: Customer Communication Guidelines
+* SUP-003: Escalation Matrix
+* SUP-004: Priority Matrix
+* ORD-001: Order Lifecycle Framework
+* SHIP-001: Domestic Shipping Policy
+* SHIP-005: Delayed Deliveries Protocol
+* SHIP-006: Lost Shipments Protocol
+* PAY-001: Payment Processing SOP
+* PAY-002: Payment Failure Handling
+* PAY-003: Duplicate Payment Procedures
+* REF-001: Master Refund Eligibility Rules
+* SEC-001: Account Security & Access Control
+* PROD-001: Warranty Validation Policy

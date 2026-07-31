@@ -1,0 +1,255 @@
+﻿SHIP-002: International Shipping Policy
+Document Header
+* Document Title: International Shipping Policy
+* Document ID: SHIP-002
+* Version: 1.0.0
+* Document Category: Shipping
+* Classification: Internal / Public Operational Standard
+* Department Owner: Logistics & Supply Chain
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Global Logistics, VP of Legal & Compliance, Finance Operations Manager
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: International Shipping, Cross-Border Logistics, Customs Clearance, Import Duties, Incoterms, DDP, DDU, Restricted Goods, International Tracking, Return to Origin
+Purpose
+This document establishes the official enterprise policy, customs protocols, international carrier operational requirements, and compliance standards governing cross-border shipping at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It defines supported destination regions, customs duty processing models, import/export regulatory compliance, cross-border tracking protocols, customer statutory obligations, and exception handling for international shipments.
+As a foundational operational policy (SHIP-002) in the NovaCart Enterprise Knowledge Base (NEKB), SHIP-002 enforces standardized cross-border logistics execution across international fulfillment hubs, global 3PL carrier partners, and the Transportation Management System (api.novacart.internal/tms), maintaining strict consistency with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, and SHIP-001.
+Scope
+This policy applies to all cross-border order fulfillments initiated from or delivered to NovaCart’s primary operating regions: India (IN), Singapore (SG), and the United Arab Emirates (UAE), as well as designated secondary international destination zones across South Asia, Southeast Asia, and the Gulf Cooperation Council (GCC).
+Coverage Includes
+* Cross-border transport of physical merchandise categories (CAT-ELE, CAT-MOB, CAT-GAM, CAT-APP, CAT-SMT).
+* International logistics hubs including primary dispatch centers (BLR-01, BOM-01, SIN-01, DXB-01).
+* Customs brokerage coordination, commercial invoice generation, and duty payment processing (DDP vs. DDU/DAP).
+* International tracking telemetry, customs hold management, regulatory product restrictions, and international Return to Origin (RTO) execution.
+International Shipping Overview
+NovaCart operates an integrated cross-border logistics network connecting regional distribution hubs in Bangalore, Singapore, and Dubai to international destinations. Cross-border fulfillment combines direct commercial air freight linehauls with global express courier integrations managed via tms.novacart.internal.
+Core Operational Principles
+1. Regulatory Strictness: Absolute compliance with export control laws, regional customs regulations, trade sanctions, and statutory product safety declarations across origin and destination countries.
+2. Duty Transparency: Explicit presentation of estimated or finalized import duties, tariffs, and customs processing fees prior to order payment authorization.
+3. Chain of Custody Continuity: Continuous international tracking telemetry from origin warehouse dispatch through export customs clearance, international linehaul transit, import customs clearance, and final last-mile handover.
+4. Customs Documentation Integrity: Automated generation of compliant commercial invoices, packing lists, harmonized system (HS) tariff codes, and country-of-origin certificates.
+Supported Countries & Regions
+NovaCart categorizes international shipping destinations into three distinct operating zones based on carrier network density, customs clearance integration, and transit predictability.
+Country Service Matrix
+Destination Zone
+	Supported Countries / Regions
+	Primary Linehaul Hubs
+	Clearance Model Supported
+	Target Transit SLA
+	Zone 1: Primary Hub Network
+	India, Singapore, United Arab Emirates
+	BLR-01, BOM-01, SIN-01, DXB-01
+	Delivered Duty Paid (DDP)
+	$2\text{ to }4\text{ Business Days}$
+	Zone 2: GCC & ASEAN Regional
+	Saudi Arabia, Qatar, Oman, Kuwait, Bahrain, Malaysia, Thailand, Vietnam
+	SIN-01, DXB-01
+	DDP / Delivered at Place (DAP)
+	$4\text{ to }7\text{ Business Days}$
+	Zone 3: Extended International
+	Australia, United Kingdom, European Union Member States, United States
+	SIN-01, BLR-01
+	Delivered at Place (DAP) / DDU
+	$7\text{ to }12\text{ Business Days}$
+	International Shipping Workflow
+Every cross-border order follows a strict nine-stage operational workflow managed through api.novacart.internal/tms:
+1. Order Checkout & Duty Calculation: OMS validates destination address, screens item HS codes against destination import rules, calculates applicable duties/taxes, and records selected Incoterm model.
+2. Export Packing & Documentation: FC packs item to international transit standards, affixes international waybill, and attaches a 3-copy pouch containing commercial invoice, packing list, and HS code declarations.
+3. FC Dock Dispatch: Parcel is handed to global linehaul carrier; tracking status updates to PICKED_UP_BY_COURIER / SHIPPED (Refer to ORD-004, SHIP-001).
+4. Export Customs Clearance: Carrier submits electronic manifest to origin customs authority; parcel clears export control.
+5. International Linehaul Freight: Parcel moves via commercial air freight to destination gateway airport.
+6. Import Customs Inspection & Tax Processing: Destination customs broker processes entry documentation, assesses physical inspection needs, and clears import tariffs.
+7. Destination Sorting Hub Handover: Parcel enters local destination courier network; tracking updates to ARRIVED_AT_SORTING_FACILITY.
+8. Last-Mile Out for Delivery: Local delivery agent receives parcel; tracking updates to OUT_FOR_DELIVERY.
+9. Doorstep Handover & International POD: Recipient completes passport/national ID verification or OTP entry, updating status to DELIVERED.
+Customs & Regulatory Compliance
+Cross-border shipments must comply with origin export regulations and destination import statutory mandates.
+1. Harmonized System (HS) Code Classification
+Every product listed in the NovaCart master catalog is assigned an 8-digit HS Tariff Code in catalog.novacart.internal. OMS utilizes these codes to determine accurate customs duty rates, import restrictions, and statutory documentation requirements automatically.
+2. Export Declarations & Commercial Invoices
+Every international parcel must be accompanied by an automated, system-generated Commercial Invoice displaying:
+* Master Order ID and Sub-Order Tracking ID.
+* Shipper and Consignee legal names, tax IDs, and physical addresses.
+* Detailed item description, unit quantity, net weight, country of origin, and 8-digit HS Code.
+* Transaction currency, declared unit value, total invoice value, and applicable Incoterms (DDP or DAP).
+Duties and Taxes
+Customs duties, Value Added Tax (VAT), Goods and Services Tax (GST), and administrative customs clearance fees are determined by destination national laws. NovaCart operates two distinct cross-border financial clearing models:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        CUSTOMS DUTY CLEARING MODELS                               |
++-----------------------------------------------------------------------------------+
+| Model 1: Delivered Duty Paid (DDP)                                                |
+| - Duties & taxes calculated and collected at checkout.                             |
+| - NovaCart's broker settles customs directly; customer pays zero at doorstep.     |
+| - Standard model for Zone 1 and primary Zone 2 routes.                            |
++-----------------------------------------------------------------------------------+
+| Model 2: Delivered at Place (DAP / DDU)                                           |
+| - Product price at checkout excludes destination import duties and local VAT.     |
+| - Recipient pays assessed duties directly to local customs/carrier prior to delivery.|
+| - Applied to Zone 3 and select high-value Zone 2 routes.                          |
++-----------------------------------------------------------------------------------+
+
+Customs Responsibility Matrix
+Cost / Action Element
+	Delivered Duty Paid (DDP) Responsibility
+	Delivered at Place (DAP / DDU) Responsibility
+	Outbound International Freight
+	NovaCart
+	NovaCart
+	Export Customs Clearance (Origin)
+	NovaCart
+	NovaCart
+	Import Customs Duties & Tariffs
+	NovaCart (Collected at checkout)
+	Customer / Recipient
+	Destination Local VAT / GST
+	NovaCart (Collected at checkout)
+	Customer / Recipient
+	Brokerage Processing Fees
+	NovaCart
+	Customer / Recipient
+	Customs Inspection Delays
+	NovaCart & Partner Carrier
+	Customer / Recipient
+	Destruction / RTO Fees (Refusal)
+	NovaCart
+	Customer / Recipient
+	International Carrier Coordination
+International shipments are assigned to tier-1 global express networks (e.g., DHL Express, FedEx Express, Aramex) or specialized commercial linehaul consolidators integrated into tms.novacart.internal.
+* Automated Carrier Dispatch: TMS assigns linehaul allocations based on real-time transit performance, customs clearance efficiency per lane, and negotiated volumetric freight rates.
+* Webhook Integration & Telemetry: Partner carriers push milestone events to api.novacart.internal/tms/telemetry. Status strings are mapped to standardized NovaCart tracking states (IN_TRANSIT, CUSTOMS_HOLD, OUT_FOR_DELIVERY) within 5 seconds of receipt (Refer to ORD-004).
+Delivery Timeline Standards
+International transit timelines represent estimated business days from FC dispatch dock handover to physical doorstep delivery.
+Delivery Timeline Matrix
+Destination Region
+	Standard International Freight
+	Express International Freight
+	Maximum Allowable Customs Clearance Window
+	Singapore $\leftrightarrow$ Malaysia / ASEAN
+	$3\text{ to }5\text{ Business Days}$
+	$1\text{ to }2\text{ Business Days}$
+	$24\text{ Hours}$
+	India $\leftrightarrow$ UAE / GCC Hubs
+	$4\text{ to }6\text{ Business Days}$
+	$2\text{ to }3\text{ Business Days}$
+	$48\text{ Hours}$
+	SE Asia / India $\rightarrow$ Australia / EU
+	$7\text{ to }10\text{ Business Days}$
+	$3\text{ to }5\text{ Business Days}$
+	$72\text{ Hours}$
+	SE Asia / India $\rightarrow$ USA / Canada
+	$8\text{ to }12\text{ Business Days}$
+	$4\text{ to }6\text{ Business Days}$
+	$72\text{ Hours}$
+	Customer Responsibilities
+Customers purchasing items for cross-border delivery must fulfill specific statutory and operational obligations:
+1. Accurate Identity Verification Data: Provide a valid, government-issued Tax ID, Civil ID, National ID, or Passport number at checkout when required by destination import laws (e.g., Emirates ID in UAE, Aadhaar/PAN in India, National ID in KSA).
+2. Timely Duty Payment (DAP/DDU Shipments): For DAP/DDU orders, the recipient must settle assessed import duties and VAT with the local customs authority or carrier broker within 5 calendar days of notification.
+3. Customs Clearance Assistance: Respond promptly to requests from local customs brokers for additional documentation, import permits, or value clarifications.
+Shipment Restrictions
+Certain items listed in the general domestic catalog are restricted or strictly prohibited from cross-border shipment due to international aviation security laws (IATA), trade sanctions, or regional import bans.
+Restricted Product Matrix
+Category Code
+	Product Sub-Type
+	Cross-Border Restriction Status
+	Applicable Regulatory Mandate
+	CAT-ELE
+	Standalone Lithium Power Banks
+	PROHIBITED via International Air Freight
+	IATA Dangerous Goods Regulations (DGR)
+	CAT-SMT
+	Security Cameras with Encrypted Mesh
+	RESTRICTED (Requires destination import permit)
+	Local Telecommunications Authority (e.g., TDRA UAE)
+	CAT-GAM
+	VR Hardware with Dual-Band Radio
+	RESTRICTED (Subject to frequency approval)
+	Regional Spectrum Management Regulations
+	CAT-APP
+	Refrigerants containing Fluorinated Gas
+	PROHIBITED via Commercial Air Linehaul
+	Environmental Cross-Border Trade Protocols
+	CAT-SFT
+	Digital Software Licenses
+	Exempt from Physical Shipping
+	Instant Digital Delivery (Refer to REF-006)
+	Department Responsibilities
+Cross-border shipping operations require multi-departmental coordination:
+Department Unit
+	Primary International Shipping Responsibilities
+	Primary Portal Used
+	Primary SLA Target
+	Logistics & Supply Chain
+	Manages international linehaul contracts, customs broker SLAs, and cross-border transit velocity.
+	tms.novacart.internal
+	On-Time Delivery (OTD) $\ge 94\%$
+	Legal & Compliance
+	Audits HS code mappings, trade sanction lists, export control compliance, and import permit rules.
+	compliance.novacart.internal
+	Zero statutory compliance fines
+	Finance Operations
+	Audits international customs duty ledgers, DDP tax remittances, and carrier brokerage invoices.
+	ledger.novacart.internal
+	Daily duty ledger reconciliation
+	Customer Support
+	Assists customers with customs documentation requests, duty inquiries, and international delay traces.
+	crm.novacart.internal
+	$< 2\text{ Mins}$ (Chat) / $< 15\text{ Mins}$ (Email)
+	Business Rules
+Rule 1: Mandatory DDP Model for Primary Hub Lanes
+All cross-border transactions originating from and delivered between primary hub zones (India, Singapore, UAE) must process under the Delivered Duty Paid (DDP) model. Orders on these lanes must collect all estimated duties and taxes at checkout to ensure zero doorstep friction.
+Rule 2: Unpaid DAP Duty Abandonment Policy
+If a customer refuses to pay assessed import duties or provide mandatory customs identity documentation for a DAP/DDU shipment within 7 calendar days of destination arrival, the parcel is declared abandoned by customs. The customer forfeits eligibility for a standard order refund (Refer to REF-001).
+Rule 3: High-Value International Order Verification
+Any cross-border order exceeding $1,500 USD (or local currency equivalent) requires mandatory pre-dispatch review by Legal & Compliance to verify destination import permit requirements before FC picking authorization.
+Exception Handling
+* Customs Documentation Hold: If destination customs flags a parcel for missing invoice details or value verification, TMS auto-assigns status DELIVERY_DELAYED (Reason: CUSTOMS_HOLD). Support contacts the customer within 4 hours to collect required identity documents or value declarations.
+* Failed Customs Clearance & RTO: If a parcel is formally rejected by destination customs due to prohibited contents or customer non-compliance, carrier attempts Return to Origin (RTO). Upon FC return receipt, Finance issues a refund to the customer minus round-trip international freight expenses, customs brokerage fees, and return penalties (Refer to ORD-002, REF-001).
+* Transit Loss During International Linehaul: If an international shipment shows no carrier tracking updates for $> 72\text{ hours}$ while in air transit, Logistics opens a formal linehaul trace. If unlocated after 5 business days, the shipment is declared lost, and Support initiates an immediate full refund or replacement under SHIP-006.
+Practical Examples
+Scenario 1: DDP Shipment from Singapore to UAE
+1. Customer in Dubai orders a high-end camera (CAT-ELE, Value: $800 USD) from Singapore FC (SIN-01).
+2. OMS calculates UAE 5% VAT and applicable customs duty at checkout. Customer pays total inclusive amount (DDP model).
+3. FC SIN-01 packs camera, affixes international waybill, and attaches commercial invoice with HS Code 8525.80.00.
+4. Express linehaul carrier transports item to Dubai Airport (DXB). Customs broker submits electronic entry; parcel clears customs within 4 hours without customer contact.
+5. Local courier completes last-mile delivery, verifying customer Emirates ID. Status updates to DELIVERED (Refer to ORD-001, SHIP-001).
+Scenario 2: DAP Customs Duty Refusal in Zone 3
+1. Customer in Australia purchases a specialized gaming setup from India FC (BLR-01) under DAP terms.
+2. Parcel arrives at Sydney Airport. Australian Border Force assesses AUD $120 in import GST and processing fees.
+3. Carrier contacts customer to settle AUD $120. Customer refuses payment.
+4. Carrier holds parcel for 7 days, sending 3 reminder notices. Customer fails to respond.
+5. Customs declares parcel abandoned. Parcel is destroyed or returned under RTO. NovaCart issues a partial refund minus AUD $250 round-trip freight and destruction charges (Refer to REF-001).
+Frequently Asked Questions (FAQs)
+Q1: Why am I required to provide my National ID or Passport number during international checkout?
+Answer: Destination national customs authorities mandate individual importer identification (e.g., Emirates ID in UAE, Civil ID in KSA, PAN in India) to clear cross-border shipments through customs and verify personal import quotas.
+Q2: What happens if my international shipment is delayed in customs?
+Answer: Customs inspections are conducted by destination government authorities. When a hold occurs, NovaCart's logistics team collaborates with the carrier broker to submit required documentation. If additional info is needed from you, Support will contact you directly via email and SMS (Refer to SHIP-005).
+Q3: Are international shipping fees refundable if I return an item?
+Answer: No. Outbound international shipping fees, customs processing surcharges, and import duties paid to foreign governments are non-refundable for preference-based returns. Full refunds including shipping apply only if the return is due to a proven merchant error or defective product (Refer to REF-001).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of SHIP-002. Established international service zones, country matrices, DDP/DAP duty models, customs compliance standards, restricted products list, and cross-border exception workflows.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* ORD-001: Order Lifecycle Management Policy
+* ORD-004: Order Tracking Policy
+* SHIP-001: Domestic Shipping Policy
+* SHIP-005: Delayed Deliveries Protocol
+* SHIP-006: Lost Shipments Protocol
+* PAY-001: Payment Processing SOP
+* REF-001: Master Refund Eligibility Rules

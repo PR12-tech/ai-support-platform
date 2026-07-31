@@ -10,13 +10,22 @@ def observe(
         context: dict
 ):
 
+    observer_result = result
+
+    if tool_name == "knowledge_search":
+        observer_result = {
+            "success": result.get("success"),
+            "knowledge": result.get("data", {}).get("knowledge", ""),
+            "sources": result.get("data", {}).get("sources", [])
+        }
+
     observation_prompt = OBSERVATION_PROMPT.format(
 
         question=question,
 
         tool=tool_name,
 
-        result=result,
+        result=observer_result,
 
         context=context,
 
@@ -35,6 +44,10 @@ def observe(
         )
 
         return "FINISH"
+
+    logger.debug(
+        f"Observer raw response:\n{response}"
+    )
 
     decision = response.strip()
 

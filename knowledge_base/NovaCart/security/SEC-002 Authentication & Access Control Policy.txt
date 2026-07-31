@@ -1,0 +1,317 @@
+﻿SEC-002: Authentication & Access Control Policy
+Document Header
+* Document Title: Authentication & Access Control Policy
+* Document ID: SEC-002
+* Version: 1.0.0
+* Document Category: Security
+* Classification: Internal / Public Operational Standard
+* Department Owner: Information Security & Cyber Governance
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Chief Information Security Officer, Head of IAM Architecture, VP of Software Engineering, General Counsel
+* Approved By: Chief Technology Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Authentication, Access Control, Role-Based Access Control, RBAC, Multi-Factor Authentication, MFA, Session Management, Least Privilege, Privileged Access Management, PAM, OAuth 2.0, JWT
+Purpose
+This document defines the official Authentication & Access Control Policy of NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes standardized procedures, technical authentication mechanisms, authorization frameworks, session management policies, Role-Based Access Controls (RBAC), Privileged Access Management (PAM) standards, and business rules governing identity verification and access permissions across customer accounts, internal employee portals, support microservices, and infrastructure resources.
+As a core security document (SEC-002) in the Security module of the NovaCart Enterprise Knowledge Base (NEKB), SEC-002 governs technical access execution within the Identity & Access Management platform (auth.novacart.internal) and Central Directory Service, operating in strict operational alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, REF-001 through REF-006, PROD-001 through PROD-006, and SEC-001.
+Scope
+This policy applies universally across all authentication endpoints, user identity types (B2C Retail Customers, NovaCart Prime VIPs, B2B Merchants, Corporate Enterprise Users, Internal Employees, Third-Party Contractors, and System Service Accounts), API gateways (api.novacart.internal), and internal enterprise platforms operated by NovaCart across India, Singapore, and the United Arab Emirates.
+Coverage Includes
+* Authentication protocols for customer-facing interfaces, employee portals, and system-to-system APIs.
+* Multi-Factor Authentication (MFA) enrollment, step-up verification, and enforcement rules.
+* Cryptographic session token (JSON Web Token - JWT) issuance, renewal, inactivity timeouts, and revocation.
+* Authorization mechanics governed by Role-Based Access Control (RBAC) and Attribute-Based Access Control (ABAC).
+* Access request workflows, role changes, offboarding access revocations, and periodic access certification.
+* Privileged Access Management (PAM), Just-In-Time (JIT) access elevation, and secure API credential management.
+* Device trust scoring, geographic velocity controls, security logging, and SIEM audit retention.
+Out of Scope
+* Specific customer-facing account protection, recovery workflows, and password complexity criteria (governed by SEC-001).
+* Cardholder Data Environment (CDE) tokenization and payment gateway secrets management (governed by PAY-006).
+Authentication & Access Control Overview
+Authentication and access control form the foundational security perimeter of NovaCart's digital architecture. Authentication verifies "who an entity is," while Authorization enforces "what an authenticated entity is permitted to do."
+Core Security Principles
+1. Zero Trust Architecture (ZTA): No user, device, network interface, or microservice is inherently trusted. Every access request—whether originating externally or from within internal corporate subnets—must be explicitly authenticated, authorized, and cryptographically verified prior to granting resource access.
+2. Principle of Least Privilege (PoLP): Users, software agents, and service microservices are granted the absolute minimum level of access permissions necessary to perform their assigned job functions or operational duties.
+3. Segregation of Duties (SoD): High-risk administrative and financial actions (e.g., code deployment to production, manual refund disbursements exceeding threshold limits, database schema modifications) require dual-person authorization controls to prevent single-agent fraud or operational failure.
+4. Defense in Depth: Enforcing multi-layered security barriers comprising strong authentication, contextual risk scoring, network segmentation, role-based authorization, continuous session monitoring, and real-time anomaly detection.
+Authentication Principles
+All identity validation processing within NovaCart must adhere to three non-negotiable architectural mandates:
+* Centralized Identity Provider (IdP): All customer and enterprise employee authentication requests must route through auth.novacart.internal. Disconnected or localized password databases across individual microservices are strictly prohibited.
+* Cryptographic Credential Transport: Authentication transactions must execute exclusively over TLS 1.3 encrypted channels using secure cipher suites. Plain-text credential transmission is blocked at the edge API gateway.
+* Mutual API Authentication (mTLS): System-to-system microservice communications must utilize Mutual TLS (mTLS) with short-lived X.509 digital certificates issued by NovaCart’s internal Certificate Authority (CA).
+Supported Authentication Methods
+NovaCart supports distinct authentication methods tailored to user classifications and operational risk levels:
+Authentication Method Matrix
+User Category
+	Primary Authentication Method
+	Secondary / Step-Up Method
+	Protocol Standard
+	Target Use Case Scope
+	B2C Customer
+	Password / Passwordless Magic Link
+	Time-based OTP (SMS / Email)
+	OAuth 2.0 / OpenID Connect
+	Web & Mobile Storefront Access
+	B2C / VIP Customer
+	Social SSO (Google, Apple)
+	Time-based OTP / Authenticator App
+	OIDC / FIDO2 Passkeys
+	Frictionless One-Click Login
+	Internal Employee
+	Corporate Single Sign-On (SSO)
+	FIDO2 Hardware Key / TOTP
+	SAML 2.0 / OIDC + MFA
+	Internal Apps & Admin Portals
+	B2B / Merchant
+	Primary Credentials + API Key
+	Time-based OTP (TOTP App)
+	OAuth 2.0 + HMAC Signature
+	Merchant Portal & Bulk APIs
+	System Service
+	Managed Identity / X.509 Certificate
+	API Secret + IP Whitelist
+	mTLS / OAuth 2.0 Client Credentials
+	Inter-Microservice Telemetry
+	Multi-Factor Authentication (MFA)
+Multi-Factor Authentication (MFA) requires presenting two or more independent credential factors before granting access: Something You Know (Password/PIN), Something You Have (Hardware Key/Mobile App Token), or Something You Are (Biometric Fingerprint/Facial Scan).
+MFA Method Matrix
+MFA Factor Type
+	Implementation Standard
+	Security Level Rating
+	Permissible Scope
+	FIDO2 / WebAuthn
+	Physical Security Keys (YubiKey) / Device Passkeys
+	Extreme (Phishing-Resistant)
+	Mandatory for System Admins & Production Access
+	Authenticator App (TOTP)
+	Time-based One-Time Password (RFC 6238)
+	High
+	Mandatory for Internal Employees & B2B Merchants
+	SMS / WhatsApp OTP
+	Cryptographic 6-digit numeric token (10-min expiry)
+	Moderate
+	Permissible for B2C Retail Customers (SEC-001)
+	Email OTP
+	Cryptographic 6-digit numeric token (10-min expiry)
+	Moderate
+	Permissible for B2C Retail Customer Step-Up
+	MFA Enforcement Rules
+* Mandatory Employee MFA: $100\%$ of internal employee, contractor, and administrative logins require MFA completion via FIDO2 keys or TOTP apps upon every SSO session initiation.
+* Adaptive Step-Up Customer MFA: B2C customers are prompted for MFA when logging in from an unrecognized device, initiating high-value transactions, modifying contact details, or viewing stored payment card tokens (SEC-001, PAY-006).
+Session Management
+Upon successful authentication, auth.novacart.internal issues cryptographically signed JSON Web Tokens (JWTs) containing user claims, role scopes, and expiration metadata.
+Session Management Matrix
+Session Type
+	Token Type & Storage
+	Max Active Session Lifetime
+	Inactivity Timeout SLA
+	Session Renewal Mechanism
+	Customer Storefront
+	Short-lived JWT (HTTP-Only Secure Cookie)
+	24 Hours
+	30 Minutes
+	Refresh Token rotation
+	Customer Checkout
+	Ephemeral Transaction JWT
+	15 Minutes (PAY-002)
+	15 Minutes (SEC-001)
+	Non-renewable (Hard timeout)
+	Employee Admin Portal
+	Short-lived JWT (Memory Isolated)
+	8 Hours
+	15 Minutes
+	SSO re-authentication required
+	Privileged System Admin
+	Single-Use JIT Session Token
+	1 Hour
+	10 Minutes
+	Requires JIT re-approval
+	API Client Credentials
+	OAuth 2.0 Bearer Token
+	1 Hour
+	Non-Applicable
+	Client Credentials Grant flow
+	Session Termination & Revocation Protocols
+1. Explicit Logout: Triggering logout invalidates the client-side session token and broadcasts a revocation signal to the Redis Token Blacklist Cluster.
+2. Password / Credential Change: Modifying a user password, primary email, or MFA setting instantly revokes all active session tokens across all registered devices (LOGOUT_ALL_DEVICES) (SEC-001).
+3. Admin Revocation: Security Operations Agents can execute instant session termination for any compromised customer or employee account via shield.novacart.internal.
+Authorization & Role-Based Access Control (RBAC)
+NovaCart utilizes Role-Based Access Control (RBAC) layered with Attribute-Based Access Control (ABAC) to evaluate authorization requests at API edge gateways.
+Role-Based Access Matrix
+System Role Title
+	Assigned User Category
+	Permissible Data & System Scopes
+	Prohibited System Actions
+	ROLE_CUSTOMER
+	Registered B2C Users
+	Access own profile, place orders, view own wallet (REF-006).
+	Access other user profiles or internal admin APIs.
+	ROLE_SUPPORT_L1
+	Customer Support CSRs
+	View masked customer data, issue L1 refunds ($\le \text{INR } 10,000$).
+	View unmasked card data, approve high-value overrides.
+	ROLE_SUPPORT_L3
+	Support Managers
+	Approve policy overrides, execute Level 3 escalations (SUP-003).
+	Modify source code or system database schemas.
+	ROLE_QA_INSPECTOR
+	Warehouse QA Staff
+	Grade returned items, update RMA physical statuses (REF-004).
+	Authorize financial refunds or modify user passwords.
+	ROLE_MERCHANT_ADMIN
+	3P Marketplace Sellers
+	Manage seller catalog (PROD-001), view seller order queue.
+	Access NovaCart 1P corporate financial ledgers.
+	ROLE_SYS_ADMIN
+	Infrastructure Engineers
+	Manage infrastructure, configure deployment pipelines.
+	Directly view unmasked customer PII or card vaults.
+	Access Request & Approval Process
+Access permissions for internal enterprise systems follow a formal lifecycle:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        ACCESS REQUEST & APPROVAL WORKFLOW                         |
++-----------------------------------------------------------------------------------+
+| 1. REQUEST INITIATED | Employee submits request in Portal detailing business need. |
+| 2. MANAGER APPROVAL  | Direct Manager reviews job scope & verifies PoLP compliance. |
+| 3. OWNER SIGN-OFF   | Resource / Data Owner grants role approval in IdP system.    |
+| 4. PROVISIONING      | Automated IAM Engine assigns RBAC role and issues entitlement. |
+| 5. AUDIT LOGGING     | Grant event logged permanently for quarterly SOC2/ISO audit.  |
++-----------------------------------------------------------------------------------+
+
+Access Approval Matrix
+Target Access Scope
+	Minimum Requestor Level
+	Primary Approver
+	Secondary Approver
+	Audit Certification Frequency
+	Standard Employee Apps
+	Full-Time Employee
+	Direct Manager
+	IT Helpdesk Lead
+	Bi-Annual Access Review
+	Customer Support Admin
+	Support Representative
+	Support Team Lead
+	Security Ops Manager
+	Quarterly Access Review
+	Financial Ledgers (PAY)
+	Finance Specialist
+	Finance Director
+	VP of Operations
+	Monthly Access Review
+	Production DB / Infrastructure
+	Systems Engineer
+	DevOps Lead
+	Chief Information Security Officer
+	Monthly Access Review
+	Access Revocation & Employee Offboarding
+* Immediate Revocation: Upon employee termination or contractor contract completion, HR dispatches an automated offboarding webhook to auth.novacart.internal. All active SSO sessions, VPN tokens, and RBAC roles are revoked within $< 5 \text{ minutes}$.
+* Role Change Recalculation: When an employee transfers to a new department, old RBAC permissions are revoked automatically before new role entitlements are provisioned ("Zero Residual Rights").
+Privileged Access Management
+Privileged access (administrative access to production servers, cloud infrastructure, source code repositories, and core financial ledgers) is strictly governed through Privileged Access Management (PAM) controls:
+Privileged Access Matrix
+PAM Security Control
+	Technical Implementation Standard
+	Mandatory Operational Requirement
+	Just-In-Time (JIT) Elevation
+	Privileged roles remain inactive by default. Elevation granted for max 1 to 4 hours upon ticket match.
+	Requires active Jira ticket reference & Manager sign-off.
+	Session Session Recording
+	All SSH/RDP/KubeCTL administrative sessions recorded in real time.
+	Keystroke and video logs archived for 7 years.
+	Dual-Control (Four-Eyes)
+	Critical production changes require real-time second-engineer approval.
+	System blocks execution until secondary sign-off logged.
+	Vaulted Credentials
+	Root/Admin passwords stored in PAM Vault with automated 24-hour rotation.
+	Direct human knowledge of root credentials prohibited.
+	Device & Location-Based Access Controls
+Location telemetry and device trust scoring evaluated dynamically by auth.novacart.internal influence access decisions:
+* Device Trust Scoring: Internal enterprise portals assess client health (active corporate EDR agent, disk encryption status, OS patch level). Non-compliant or personal unmanaged devices are blocked from accessing production environments.
+* Geographic Velocity Verification: Access attempts exhibiting impossible travel velocity (e.g., login from Bangalore followed by a login from London 30 minutes later) trigger immediate session termination, account lock, and Security Operations notification (SEC-001).
+* Anonymizer & Proxy Blocking: Access requests originating from known TOR exit nodes, commercial VPN proxies, or malicious IP subnets identified by threat intelligence feeds are auto-rejected at the edge API gateway.
+Customer Responsibilities
+Customers accessing NovaCart digital services must uphold basic security hygiene:
+1. Protect Authentication Credentials: Keep passwords, PINs, and authentication tokens confidential. Never share OTPs or session magic links with third parties.
+2. Maintain Authenticator Security: Ensure mobile devices used for TOTP or SMS OTP reception are secured with screen lock PINs or biometrics.
+3. Secure Log Out on Shared Devices: Always execute explicit logout when accessing NovaCart accounts from public or shared computer terminals.
+Employee Responsibilities
+Internal NovaCart employees, contractors, and third-party staff must adhere to strict access rules:
+1. Zero Credential Sharing: Sharing corporate credentials, SSO passwords, VPN tokens, or physical FIDO2 security keys is strictly prohibited and constitutes grounds for immediate termination.
+2. Lock Unattended Workstations: Lock physical computer screens (Win + L / Cmd + Ctrl + Q) whenever leaving workstations unattended.
+3. Prompt Access Discrepancy Reporting: Report unexpected access entitlements or suspicious access requests to the IT Security Helpdesk immediately.
+Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Authentication & Access Responsibilities
+	Primary System Portal
+	SLA / Performance Target
+	Information Security
+	Operates IdP architecture, PAM vault, SIEM logging, and quarterly access certification reviews.
+	auth.novacart.internal
+	Identity System Uptime $\ge 99.99\%$
+	Software Engineering
+	Integrates OAuth 2.0 / mTLS standards, enforces RBAC checks on API gateways.
+	api.novacart.internal
+	API Auth Latency $< 10\text{ ms}$
+	Customer Support
+	Operates within assigned RBAC limits; verifies customer identities per Level 2/3 standards (SEC-001).
+	crm.novacart.internal
+	Zero RBAC policy violations
+	Human Resources (HR)
+	Dispatches real-time onboarding and offboarding webhooks to trigger access lifecycle automation.
+	hr.novacart.internal
+	Offboarding revocation $< 5\text{ Mins}$
+	Business Rules
+Rule 1: Mandatory Centralized Authentication Rule
+No software engineering team or third-party vendor may build, deploy, or maintain an independent user authentication table or password store. All user authentication must delegate strictly to auth.novacart.internal.
+Rule 2: Segregation of Production and Non-Production Access
+Development and testing environments must be completely isolated from Production environments. Developer accounts permitted in Staging environments are strictly blocked from accessing Production databases containing live customer PII or payment records.
+Rule 3: Comprehensive Authentication Audit Logging Standard
+All authentication attempts (successes and failures), MFA challenges, session creations, access elevation events, and authorization rejections must be logged continuously to SIEM storage with source IP, device fingerprint, timestamp, and User ID, retained for a minimum of 7 years.
+Exception Handling
+* Emergency Just-In-Time (JIT) Break-Glass Protocol: In the event of a catastrophic production outage where standard ticketing systems are unreachable, an engineer may trigger a "Break-Glass" emergency override. This action dispatches real-time alerts to the CISO, logs video recordings of all commands, and automatically expires after 1 hour.
+* Lost Employee MFA Token Procedure: An employee who loses their physical FIDO2 security key must complete in-person or video identity verification with IT Security before a temporary 8-hour bypass code is generated.
+Practical Examples
+Scenario 1: Customer Step-Up Authentication during Password Change
+1. B2C Customer attempts to change their account password inside My Account.
+2. System evaluates session context: Customer is on a recognized home Wi-Fi network, but password modification is classified as a Level 3 High Security action (SEC-001).
+3. auth.novacart.internal requires step-up MFA verification, dispatching a 6-digit OTP to the customer's verified mobile number.
+4. Customer enters the OTP successfully. Password updates, and all other active sessions across mobile apps and web browsers are immediately invalidated (LOGOUT_ALL_DEVICES).
+Scenario 2: Support Representative Role-Based Access Control (RBAC) Enforcement
+1. Customer Support Agent (assigned ROLE_SUPPORT_L1) attempts to view a customer's payment details in crm.novacart.internal.
+2. API Edge Gateway checks the agent's JWT token scope against the authorization policy.
+3. The gateway permits viewing masked transaction logs but blocks access to raw credit card numbers or unmasked token vault data, returning 403 Forbidden for unmasked endpoints (PAY-006).
+Frequently Asked Questions (FAQs)
+Q1: What is the difference between SEC-001 (Account Security) and SEC-002 (Authentication & Access Control)?
+Answer: SEC-001 focuses on customer-facing account protection, password complexity, identity recovery workflows, and account takeover containment. SEC-002 defines the technical identity infrastructure, authentication protocols (OAuth/SAML/mTLS), Multi-Factor Authentication (MFA) enforcement, session token architectures, Role-Based Access Control (RBAC), and internal Privileged Access Management (PAM).
+Q2: Why does my admin session log me out automatically after 15 minutes of inactivity?
+Answer: In accordance with our enterprise session management standards, administrative and employee portals enforce a strict 15-minute inactivity timeout to prevent unauthorized access in the event an administrative workstation is left unattended (SEC-001).
+Q3: How is privileged access granted to systems engineers during production emergencies?
+Answer: Production access is not granted permanently. Engineers must request Just-In-Time (JIT) access elevation through our PAM portal, linking a valid incident ticket. Upon approval by a DevOps Lead or CISO, temporary access is granted for a maximum window of 1 to 4 hours, during which all session activities are recorded for security auditing.
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of SEC-002. Established Zero Trust principles, authentication method matrices, MFA enforcement standards, JWT session lifecycle rules, RBAC/ABAC authorization structures, JIT privileged access controls, and 7-year audit logging standards.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* PAY-004: Chargeback & Payment Dispute Policy
+* PAY-006: Stored Payment Methods & Tokenization Policy
+* PROD-006: Digital Products & Licensing Policy
+* SEC-001: Account Security Policy

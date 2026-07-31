@@ -1,0 +1,204 @@
+﻿SUP-002: Customer Communication Guidelines
+Document Header
+* Document Title: Customer Communication Guidelines
+* Document ID: SUP-002
+* Version: 1.0.0
+* Document Category: Customer Support
+* Classification: Internal
+* Department Owner: Customer Support
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Customer Experience Director, Quality Assurance Lead
+* Approved By: VP of Customer Experience, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Communication Guidelines, Tone of Voice, Customer Interactions, Customer Service Email, Live Chat Scripting, De-escalation, Professional Writing Standards
+Purpose
+This document defines the official enterprise communication standards, writing rules, tone of voice, interaction principles, and channel-specific guidelines for all customer-facing personnel and automated conversational interfaces at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart").
+As a core operational document (SUP-002) in the NovaCart Enterprise Knowledge Base (NEKB), SUP-002 ensures that every customer interaction across email, live chat, voice, and messaging channels maintains consistency, brand integrity, clarity, empathy, and strict alignment with published company policies.
+Scope
+This policy applies universally to:
+* All Level 1 (L1), Level 2 (L2), and Level 3 (L3) Customer Support Representatives (CSRs) across all operating regions (India, Singapore, UAE).
+* Third-party contact center vendor personnel representing NovaCart.
+* Automated conversational AI agents, transactional notification engines, and email response templates maintained by Enterprise Knowledge Management and Engineering.
+Communication Principles
+All customer communications at NovaCart must adhere to four foundational principles:
+1. Clarity and Precision: Provide direct, factual, and actionable information without using confusing technical jargon or ambiguous timelines.
+2. Empathetic Neutrality: Acknowledge customer frustration authentically without making defensive claims, assigning internal blame, or offering false promises.
+3. Consistency: Deliver identical policy information across all channels, deriving answers directly from active Knowledge Base Articles (KBAs).
+4. Professional Ownership: Take personal responsibility for guiding the customer to a resolution, ensuring clear accountability at every stage of the interaction.
+Customer Interaction Standards
+Every interaction must maintain a structured, professional narrative from intake to closure. CSRs must ensure that:
+* Information provided is verified against backend engines (OMS, WMS, TMS, Ledger) before communicating statuses to the customer.
+* Customer identity is verified in accordance with the security protocols defined in SUP-001 and SEC-001 before disclosing sensitive account details.
+* Responses directly answer the customer's specific query before introducing necessary policy disclosures or next steps.
+Approved Tone of Voice
+NovaCart maintains a Professional, Respectful, Objective, and Solution-Oriented tone across all regions and communication formats.
+Tone Matrix
+Dimension
+	Approved Approach
+	Unapproved Approach
+	Formality
+	Professional and courteous
+	Overly casual, slang-heavy, or stiffly bureaucratic
+	Empathy
+	Grounded, respectful, and reassuring
+	Perfunctory, robotic, or overly dramatic
+	Authority
+	Confident and policy-aligned
+	Uncertain, hesitant, or overly apologetic
+	Perspective
+	Brand-centric and collaborative ("We," "NovaCart")
+	Fragmented or blame-shifting ("The warehouse failed," "They delayed it")
+	Professional Language Guidelines
+CSRs must choose vocabulary that reinforces competence, reliability, and security.
+Vocabulary Transformation Guide
+Prohibited / Weak Language
+	Approved Enterprise Language
+	Context / Reason
+	"I think," "Maybe," "Probably"
+	"I have verified in our system..."
+	Establishes accuracy and authority.
+	"That's not our fault"
+	"Let us review what occurred during transit."
+	Avoids defensiveness; focuses on resolution.
+	"You need to calm down"
+	"I am here to help resolve this for you."
+	De-escalates tension without patronizing.
+	"Our policy doesn't allow that"
+	"According to our Return Eligibility Policy (REF-001)..."
+	Replaces arbitrary refusal with transparent governance.
+	"I'll try to do it"
+	"I have initiated the trace with our logistics team..."
+	Commit to specific operational actions.
+	Greeting Standards
+All interactions must open with a standardized greeting containing the agent's name, the enterprise brand name, and an immediate offer of assistance.
+Channel-Specific Opening Standards
+* Live Chat / App Messaging: "Hello [Customer Name], thank you for reaching out to NovaCart Customer Support. My name is [Agent Name]. How may I assist you today?"
+* Voice Telephony: "Thank you for calling NovaCart Customer Support. My name is [Agent Name]. May I please have your name and Master Order ID or registered phone number?"
+* Email / Web Ticket: "Dear [Customer Name],\n\nThank you for contacting NovaCart Support regarding your inquiry [Ticket ID/Order ID]."
+Closing Standards
+Interactions must conclude only after confirming that the customer has no outstanding queries and providing a clear tracking reference when applicable.
+Channel-Specific Closing Standards
+* Live Chat / App Messaging: "Thank you for contacting NovaCart. If you need further assistance, please feel free to reach out. Have a great day!"
+* Voice Telephony: "Is there anything else I can assist you with today, [Customer Name]? Thank you for calling NovaCart. Goodbye."
+* Email / Web Ticket: "If you have additional questions, please reply directly to this email referencing Ticket ID [XXXXX].\n\nWarm regards,\n[Agent Name]\nCustomer Support Team\nNovaCart Technologies Pvt. Ltd."
+Email Communication Guidelines
+Email represents NovaCart's primary asynchronous channel for complex investigations, B2B queries, and high-tier escalations.
+Writing & Layout Mandates
+1. Subject Line: Must contain the Master Order ID or Ticket ID alongside a concise summary (e.g., Update on Order #NC-IN-99201 - Shipping Inquiry).
+2. Structure: Utilize short paragraphs (maximum 3–4 sentences per paragraph) and bulleted lists for multi-step instructions or itemized breakdowns.
+3. Hyperlinks: Link directly to official documentation or tracking portals. Raw URL strings are prohibited in email body text.
+4. Signatures: Standardized enterprise email signatures must be attached automatically; personal contact details or custom sign-offs are strictly forbidden.
+Live Chat Communication Guidelines
+Live Chat demands high resolution speed combined with precise, concise phrasing.
+Real-Time Interaction Rules
+1. Response Latency: Initial agent response post-assignment must occur within 30 seconds. Subsequent chat responses during an active session must not exceed 90 seconds.
+2. Pacing: Send short, complete sentences rather than wall-of-text paragraphs. Break complex procedures into numbered steps.
+3. Status Updates During Research: If backend verification requires time, inform the customer every 120 seconds (e.g., "I am currently checking the tracking logs with our logistics team. Thank you for holding.").
+Phone Support Communication Guidelines
+Voice communications require clear articulation, professional active listening, and calm authority.
+Voice Performance Standards
+1. Active Listening: Allow the customer to explain their issue without interruption. Acknowledge key points using neutral verbal affirmations ("I understand," "I see").
+2. Hold Protocol: Prior to placing a customer on hold, request explicit permission, state the reason for the hold, and specify the duration (e.g., "May I place you on a brief 2-minute hold while I verify this payment status with our Finance team?"). Refresh the hold every 120 seconds.
+3. Mute vs. Hold: Use the Mute function only for brief silent pauses ($< 15$ seconds). Always use formal Hold for operational research.
+Handling Difficult Customers
+When managing dissatisfied, frustrated, or aggressive customers, CSRs must follow the HEAR De-escalation Framework:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                            THE HEAR DE-ESCALATION FRAMEWORK                        |
++-----------------------------------------------------------------------------------+
+| 1. HEAR       | Allow the customer to speak fully without interruption.            |
+| 2. EMPATHIZE  | Validate their frustration using professional, respectful phrasing.|
+| 3. ACKNOWLEDGE| Restate the specific operational issue clearly to confirm focus.  |
+| 4. RESOLVE    | Present a clear, policy-aligned action plan with explicit SLAs.  |
++-----------------------------------------------------------------------------------+
+
+Abusive Conduct Handling
+CSRs are not required to tolerate personal abuse, profanity, or discriminatory language. Agents must issue up to two formal warnings before terminating an interaction:
+* First Warning: "I am fully committed to assisting you, but I must ask that we keep our conversation professional. Please refrain from using profanity."
+* Final Termination: "Since the abusive language has continued, I am ending this session. Your ticket has been logged and escalated to our Customer Experience Management team."
+Empathy and Professionalism Standards
+CSRs must validate customer frustration without taking ownership of operational blame or compromising enterprise integrity.
+Approved Empathy Expressions
+* "I understand how important it is to receive your shipment on time for your event, and I am reviewing the transit status right now."
+* "I recognize that an unexpected payment debit is concerning. Let me verify the gateway reconciliation log for you immediately."
+* "I appreciate you bringing this product condition issue to our attention. Let us process a replacement authorization for you."
+Prohibited Communication Practices
+The following communication practices are strictly forbidden across all channels and tiers:
+1. Guarantees Outside Policy: Promising precise courier delivery times or unauthorized cash compensations not supported by SUP-001 or REF-001.
+2. Internal Blame Transfer: Attributing failures to internal departments, third-party logistics (3PL) partners, or merchant sellers (e.g., "The warehouse made a mistake").
+3. Disclosure of Sensitive Information: Sharing internal employee contact details, raw database IDs, unmasked PII, or internal system links (.internal domains).
+4. Informal Channels: Communicating with customers via personal social media accounts, personal phone numbers, or unapproved messaging applications.
+Grammar and Writing Standards
+All written customer communication must maintain high standards of business literacy:
+* Spelling & Grammar: Utilize British English spelling standards for IN and SG regions, and International/US English for UAE operations, in alignment with regional localization rules.
+* Capitalization: Do not use ALL CAPS (which denotes shouting) or all-lowercase text. Capitalize proper nouns, Document IDs, Master Order IDs, and system status tags correctly.
+* Punctuation: Maintain professional punctuation. Exclamation marks must be used sparingly (maximum one per email/chat interaction, restricted to warm greetings).
+Escalation Communication Guidelines
+When a ticket must be escalated to Level 2, Level 3, or a specialized functional unit (as defined in SUP-003), the CSR must communicate the transition to the customer clearly before transferring the case.
+Customer Escalation Script
+"To ensure this issue is thoroughly investigated, I am escalating your case to our specialized [Department Name, e.g., Payments Resolution Team]. Your case file [Ticket ID] contains all details discussed today. A specialist will review your file and contact you via email within [SLA Timeframe, e.g., 4 hours]."
+Business Rules
+Rule 1: Canonical Source of Truth
+CSRs must never compose responses containing policy terms created from personal memory. All statements regarding timelines, refund eligibility, fees, or warranties must align verbatim with active KBAs in the NEKB.
+Rule 2: Multi-Channel Continuity
+If a customer switches communication channels (e.g., moving from Live Chat to Voice), the CSR handling the second interaction must review prior chat logs and open ticket notes before speaking to the customer to avoid requesting repetitive information.
+Rule 3: Verification Mandatory Before Action
+No shipping address modification, cancellation execution, or RMA authorization may be communicated as "Completed" to the customer until identity verification is fully satisfied per SUP-001 protocols.
+Common Communication Examples
+Example 1: Greeting a Customer
+Context: A customer initiates a live chat regarding a pending order.
+Agent: "Hello Mr. Sharma, thank you for reaching out to NovaCart Customer Support. My name is Ananya. I can certainly help you check the status of your order today. May I please verify your Master Order ID?"
+Example 2: Requesting Verification
+Context: An unauthenticated user requests an address change via email.
+Agent: "Dear Customer, thank you for contacting NovaCart Support. To protect your account security and ensure your parcel is delivered correctly, please reply with your registered phone number, Master Order ID, and the full original delivery address associated with this account."
+Example 3: Explaining Delivery Delays
+Context: A parcel is delayed in middle-mile transit (Refer to SHIP-005).
+Agent: "Dear Ms. Tan, I have reviewed your shipment tracking logs for Order #NC-SG-44012. Due to a temporary routing delay at our regional hub, your estimated delivery date has been updated to August 3, 2026. We are actively monitoring this parcel with our courier team to ensure prompt delivery, and you will receive automated SMS updates as it moves."
+Example 4: Explaining Refund Timelines
+Context: A customer inquires when money will arrive in their bank account following an approved return (Refer to REF-002).
+Agent: "Hello David, your returned item inspection was completed today and approved under RMA #RMA-88201. Your refund of AED 450 has been processed back to your original Visa card. Depending on your bank's processing cycles, the credit will reflect on your statement within 3 to 5 business days."
+Example 5: Handling an Angry Customer Professionally
+Context: A customer is shouting over the phone regarding a damaged delivery.
+Agent: "Mr. Kapoor, I completely understand how disappointing it is to open your parcel and find a damaged screen, especially when you were expecting to use it today. I am going to resolve this for you right now. I have opened an immediate high-priority case, and I am issuing a prepaid return label so we can dispatch a replacement unit to you immediately."
+Example 6: Escalating a Ticket
+Context: A duplicate payment debit requires manual reconciliation by Finance (Refer to PAY-003).
+Agent: "Thank you for providing your bank transaction reference, Ms. Al-Maktoum. I have verified your order status, and I am escalating this file to our Finance Operations Specialists for immediate ledger reconciliation. Your reference number is Ticket #TK-99302, and a finance team member will update you via email within 12 hours."
+Example 7: Closing a Resolved Case
+Context: A CSR finishes updating an address and confirms customer satisfaction.
+Agent: "I have successfully updated your delivery address in our system to 123 Orchard Road, Unit 04-12, and sent a confirmation to your email. Is there anything else I can assist you with today, Mr. Lee? ... Thank you for choosing NovaCart. Have a wonderful rest of your day!"
+Frequently Asked Questions (FAQs)
+Q1: May CSRs use emojis during live chat or messaging support interactions?
+Answer: Emojis are generally restricted to preserve brand professionalism. A single neutral, friendly emoji (such as a standard smile or handshake) is permitted in live chat greetings or closings only if the customer initiates an informal, friendly conversation style. Emojis are strictly prohibited in email, voice scripts, B2B interactions, or dispute handling.
+Q2: How should an agent respond if a customer asks for policy exceptions due to personal circumstances?
+Answer: Agents must express empathy while maintaining policy parameters (e.g., "I hear your situation, and I wish I could override this directly. However, to ensure fairness and regulatory compliance, our Return Eligibility Policy (REF-001) requires items in CAT-ELE to be reported within 7 days. I can, however, connect you with our authorized brand service center for warranty assistance.").
+Q3: What language standards apply when communicating with international customers in the UAE or Singapore?
+Answer: All written and verbal communications in SG and UAE default to professional International English. For UAE operations, bilingual CSRs or localized templates providing official Arabic responses must be utilized whenever requested by the customer.
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial operational baseline release of SUP-002. Established enterprise tone of voice, channel communication rules, writing standards, HEAR de-escalation framework, and communication scripts.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Escalation Matrix
+* SUP-004: Priority Matrix
+* SUP-005: SLA Policy
+* ORD-001: Order Lifecycle Framework
+* SHIP-001: Domestic Shipping Policy
+* SHIP-005: Delayed Deliveries Protocol
+* PAY-001: Payment Processing SOP
+* REF-001: Master Refund Eligibility Rules
+* SEC-001: Account Security & Access Control

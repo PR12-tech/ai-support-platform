@@ -1,0 +1,255 @@
+﻿REF-006: Store Credit & Promotional Refund Policy
+Document Header
+* Document Title: Store Credit & Promotional Refund Policy
+* Document ID: REF-006
+* Version: 1.0.0
+* Document Category: Refunds
+* Classification: Internal / Public Operational Standard
+* Department Owner: Customer Experience & Finance Operations
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Payment Operations, Loyalty & Promotions Manager, Customer Experience Director
+* Approved By: Chief Financial Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Store Credit, NovaCart Wallet, Promotional Refunds, Goodwill Compensation, Gift Cards, Loyalty Points, Non-Cash Refunds, Instant Refund
+Purpose
+This document establishes the official enterprise policy, issuance workflows, validity standards, customer communication protocols, and business rules governing non-cash refunds, platform store credits, promotional concessions, and goodwill compensations at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It defines the conditions under which refunds and customer resolutions are issued as digital wallet balances, promotional credits, gift card adjustments, or loyalty point reinstatements instead of direct monetary reversals to original payment instruments.
+As a core operational document (REF-006) in the Refunds category of the NovaCart Enterprise Knowledge Base (NEKB), REF-006 governs non-cash financial clearing within ledger.novacart.internal and auth.novacart.internal, operating in strict alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, and REF-001 through REF-005.
+Scope
+This policy applies to all non-monetary refund instruments, platform store credits, customer service goodwill vouchers, promotional coupon adjustments, and digital wallet credits issued across all operating regions (India, Singapore, UAE) and commercial channels (B2C Retail, B2B SMB, Corporate Accounts, NovaCart Prime Memberships).
+Coverage Includes
+* Issuance and lifecycle management of NovaCart Wallet balances and platform store credits.
+* Goodwill compensation vouchers issued for service level agreement (SLA) breaches (e.g., delivery delays, damaged packaging).
+* Reinstatement and recalculation of promotional discounts, coupon codes, and loyalty reward points on returned or cancelled orders.
+* Digital Gift Card refund processing and voucher re-issuance.
+* Non-cash refund rules regarding validity horizons, transferability, account closures, and anti-abuse security controls.
+Out of Scope
+* Direct electronic monetary refunds routed to external credit cards, debit cards, UPI, or bank accounts (governed by PAY-003).
+* General refund eligibility qualifications and claim time limits (governed by REF-001).
+Store Credit & Promotional Refund Overview
+NovaCart provides flexible, non-cash refund mechanisms designed to deliver instant customer resolution, eliminate banking processing delays, and incentivize platform retention. Store credit and promotional refunds allow customers to receive immediate credit for cancelled, returned, or delayed orders without awaiting external bank clearing cycles.
+
+
+
+
+
+
+<ElicitationsGroup message="To explore related payment processing, refund eligibility, or customer service SLA policies further:">
+{/* Reason: Offers structured paths to navigate deeper into related domain policies. */}
+ <Elicitation label="Review REF-001 Refund Eligibility Policy" query="Show REF-001 Refund Eligibility Policy detailing initial claim qualifications." />
+ <Elicitation label="Review PAY-003 Refund Payment Processing Policy" query="Show PAY-003 Refund Payment Processing Policy governing financial clearing." />
+ <Elicitation label="Examine SUP-005 Customer Support SLA Policy" query="Show SUP-005 Customer Support SLA Policy detailing delay goodwill credits." />
+</ElicitationsGroup>
+
+Core Operational Principles
+1. Customer Choice & Instant Settlement: Customers may elect to receive approved refunds as instant NovaCart Wallet credits, bypassing the 3-to-5 business day banking delay associated with external card reversals (Refer to PAY-003).
+2. Promotional Integrity Protection: Promotional credits and goodwill vouchers issued for customer concessions carry explicit expiration dates, non-transferability rules, and usage restrictions to prevent promotional gaming.
+3. Pro-Rated Promo Recalculation: Returns or cancellations on multi-item orders with cart-level promotional discounts automatically trigger pro-rated discount re-allocations to prevent unearned discount retention.
+4. Immutable Ledger Audit: Every store credit deposit, wallet deduction, promotional voucher issue, or expiry write-off is logged as a distinct cryptographic event in ledger.novacart.internal.
+Supported Refund Types
+NovaCart categorizes non-monetary refunds into four distinct credit types based on source origin and usage rules:
+Refund Method Comparison Matrix
+Credit Type Code
+	Credit Category Name
+	Primary Origin / Context
+	Instant Availability
+	Statutory Expiration Limit
+	Transferable / Encashable?
+	CRD-WAL
+	NovaCart Store Wallet
+	Customer-selected refund for returned/cancelled items or Cash on Delivery (COD) refunds.
+	Instant ($< 1\text{ Min}$)
+	365 Days from deposit date
+	Non-Transferable; Encashable via bank transfer if COD refund (PAY-003).
+	CRD-GDW
+	Goodwill Compensation
+	Support concession for SLA breaches (e.g., delivery delay, minor box damage).
+	Instant ($< 1\text{ Min}$)
+	90 Days from issue date
+	Non-Transferable; Non-Encashable.
+	CRD-PRO
+	Promotional Credit
+	Campaign refund, cashback promo, or promotional coupon adjustment.
+	Instant upon order cancel
+	30 to 60 Days (per campaign rules)
+	Non-Transferable; Non-Encashable.
+	CRD-GFT
+	Digital Gift Card
+	Refund for items originally purchased using a NovaCart Gift Card (PAY-GFT).
+	Instant upon RMA pass
+	365 Days from re-issue date
+	Re-issued as new digital gift voucher; Non-Encashable.
+	Eligibility Criteria
+Non-cash refunds and promotional compensation qualify under specific operational parameters:
+* Customer Opt-In for Instant Refund: Customer explicitly chooses NovaCart Wallet Credit during order cancellation (ORD-002) or return request creation (REF-002) to receive funds instantly upon approval.
+* Cash on Delivery (COD) Refunds: COD returns where the customer prefers instant platform wallet credit over providing external NEFT/RTGS bank details (Refer to PAY-001, PAY-003).
+* Service SLA Breaches: Delivery delays exceeding policy commitments (SHIP-005), missed scheduled delivery time-slots (SHIP-004), or minor transit packaging blemishes where the customer retains the item in exchange for a goodwill concession.
+* Promotional Order Returns: Returns of orders purchased using promotional discount codes, bundle pricing, or loyalty reward points.
+Store Credit Issuance Process
+When store credit is authorized by system automation or Customer Support, the issuance lifecycle operates within ledger.novacart.internal:
+1. Authorization Registration: OMS or crm.novacart.internal submits a credit deposit payload (POST /v1/wallet/credit) specifying Customer ID, Amount, Currency, Reason Code, and Expiration Rule.
+2. Ledger Commit: ledger.novacart.internal creates an atomic balance entry, updating the customer's active wallet balance and logging the transaction reference (WLT-XXXXX).
+3. Account Linkage: The credit links to the customer's authenticated profile in auth.novacart.internal.
+4. Customer Alert: System dispatches an instant SMS, WhatsApp, and Email notification detailing the credited amount, updated total balance, and validity period.
+Promotional Credit Management
+Promotional credits and coupon codes applied during order checkout operate under strict recalculation math during partial cancellations or partial returns:
+Pro-Rated Promotional Recalculation Formula
+When a customer purchases multiple items using a threshold discount (e.g., "Save ₹1,000 on orders over ₹5,000") and subsequently returns one item, the system recalculates eligibility:
+* If the retained items still satisfy the original promotional threshold, the refund matches the full line-item price.
+* If the retained items fall below the promotional threshold, the promotional discount is revoked or pro-rated proportionally across retained items, deducting the discount variance from the refund value.
+Promotional Credit Rules Matrix
+Promo Scenario
+	Example Condition
+	System Calculation Rule
+	Customer Impact
+	Full Order Cancellation
+	100% of order items cancelled pre-dispatch
+	Promotional coupon code fully restored to customer account; full monetary paid value refunded via PAY-003.
+	Coupon re-activated with original expiration window intact.
+	Partial Order Return
+	Order drops below promo threshold (e.g., cart value falls from ₹6,000 to ₹3,500)
+	System revokes the ₹1,000 threshold promo and recalculates retained items at standard retail price.
+	Refund value = Returned Item Price minus ₹1,000 promo variance.
+	Expired Promo Re-Issuance
+	Order cancelled after promo campaign ended
+	System issues a single-use replacement promo code valid for 14 days from cancellation date.
+	Replacement code issued directly to customer account portal.
+	Gift Card Refund Process
+In accordance with master payment processing rules (PAY-001, PAY-003):
+* Single Instrument Fidelity: Refunds for items purchased using a NovaCart Digital Gift Card (PAY-GFT) cannot be issued as physical cash or transferred to external bank cards.
+* Voucher Re-Issuance: Upon RMA approval (REF-005), ledger.novacart.internal generates a new, single-use Digital Gift Voucher code for the exact refunded value and dispatches it securely to the customer's registered email address.
+* Split Payment Reversal Order: For orders paid using a combination of Gift Card and Credit Card/UPI, refunds clear first to the external Credit Card/UPI instrument up to the original charged value, with any remaining balance credited to the NovaCart Digital Gift Voucher (Refer to PAY-001).
+Loyalty Reward Compensation
+NovaCart Prime members and loyalty tier subscribers earn platform reward points on qualified purchases:
+* Point Clawback on Returns: When an order is returned for a refund, any loyalty reward points earned on the returned items are automatically deducted from the customer's active loyalty point balance in auth.novacart.internal.
+* Point Reinstatement on Cancellations: If an order purchased using redeemed loyalty reward points is cancelled or returned, the spent loyalty points are reinstated to the customer's balance within 24 hours with a refreshed 180-day validity window.
+Customer Communication
+Customers receive transparent, automated updates regarding non-cash credits and promotional adjustments:
+Customer Communication Standards
+* Deposit Notification: Dispatched within 60 seconds of credit commit, displaying the exact credit amount, credit type (Wallet / Goodwill / Gift Voucher), updated account balance, and clear expiration date.
+* Pre-Expiration Reminder: Automated SMS and Email notification sent 14 days and 3 days prior to the expiration of any wallet credit or promotional voucher, urging utilization.
+* Transaction History Visibility: Complete transaction ledger visible under My Account $\rightarrow$ NovaCart Wallet & Credits, displaying itemized deposits, order usage, and expiration timestamps.
+Department Responsibilities
+Accountability for store credit and promotional refund management is distributed across functional teams:
+Department Responsibility Matrix
+Department Unit
+	Primary Store Credit Responsibilities
+	Primary System Portal
+	SLA / Target
+	Finance Operations
+	Audits wallet ledgers, manages month-end credit liability write-offs, reconciles COD wallet conversions.
+	ledger.novacart.internal
+	Daily zero-variance wallet balancing
+	Customer Support
+	Issues authorized goodwill compensation credits (SUP-005); assists customers with expired code re-issuances.
+	crm.novacart.internal
+	Priority Chat FRT $< 15\text{ Secs}$
+	Marketing & Promotions
+	Configures campaign credit limits, promotional coupon rules, and promotional expiration parameters.
+	promo.novacart.internal
+	Campaign rule setup SLA $< 24\text{ Hours}$
+	Information Security
+	Monitors wallet balances for account takeover (ATO) fraud, credit duplication attempts, and voucher abuse.
+	shield.novacart.internal
+	Real-time threat containment
+	Business Rules
+Rule 1: Non-Transferability & Anti-Encashment Mandate
+Platform store credits, goodwill vouchers, and promotional credits are non-transferable between customer accounts and cannot be sold, auctioned, or converted into physical cash, except for verified COD refund deposits where statutory encashment applies via electronic bank transfer (Refer to PAY-001, PAY-003).
+Rule 2: Goodwill Compensation Limits
+Customer Support Representatives (CSRs) may issue goodwill compensation vouchers for service SLA failures up to authorized limits defined in the Compensation Decision Matrix:
+Compensation Decision Matrix
+Service Failure Scenario
+	Impact Severity Criteria
+	Maximum Authorized Goodwill Credit
+	Approval Authority Level Required
+	Standard Delivery Delay
+	Delay $24\text{ to }48\text{ Hours}$ past ETA
+	₹100 / $3 / AED 10 Wallet Credit
+	Tier 0 (Automated / L1 CSR)
+	Express Delivery Delay
+	Express delivery missed commitment
+	100% Express Shipping Fee + ₹250 Credit
+	Tier 0 (Automated under SHIP-003)
+	Severe Delivery Delay
+	Delay $> 72\text{ Hours}$ past ETA
+	₹500 / $10 / AED 30 Wallet Credit
+	Tier 1 (L1 CSR under SHIP-005)
+	Minor Cosmetic Packaging Blemishes
+	Product intact; outer box dented
+	₹300 / $6 / AED 20 Wallet Credit
+	Tier 1 (L1 CSR under SUP-001)
+	Lost In-Transit Order (Confirmed)
+	Transit loss declared under SHIP-006
+	Free Replacement + ₹500 Credit
+	Tier 2 (L2 Senior Specialist)
+	Rule 3: Expiration Policy & Automatic Liability Write-off
+Platform credits carry binding validity periods based on credit type:
+Store Credit Validity Matrix
+Credit Type
+	Validity Period
+	Extension Policy
+	Expiration Outcome
+	NovaCart Store Wallet (CRD-WAL)
+	365 Calendar Days
+	Extendable once for 90 days upon customer request prior to expiration.
+	Unused balance expires; written off to corporate ledger.
+	Goodwill Vouchers (CRD-GDW)
+	90 Calendar Days
+	Non-extendable
+	Unused balance expires automatically.
+	Promotional Credits (CRD-PRO)
+	30 to 60 Days (Campaign)
+	Non-extendable
+	Unused balance expires automatically.
+	Re-issued Gift Vouchers (CRD-GFT)
+	365 Calendar Days
+	Non-extendable
+	Unused balance expires per statutory rules.
+	Exception Handling
+* Account Closure with Active Store Wallet Balance: If a customer requests permanent account closure under SEC-003 and holds an unexpired NovaCart Store Wallet balance (CRD-WAL) derived from returned goods or COD refunds, Finance Operations verifies identity and executes a direct electronic bank transfer (NEFT/RTGS/IMPS) to the customer's verified bank account prior to closing the account file (Refer to PAY-003).
+* Fraudulent Credit Generation Attempts: If Security detects systematic creation of fake accounts to exploit goodwill concessions or promotional referral credits, shield.novacart.internal freezes all associated accounts, revokes active wallet balances, and logs an abuse report (Refer to SEC-001, SEC-004).
+Practical Examples
+Scenario 1: Customer Selecting Instant Wallet Refund for COD Return
+1. Customer returns an apparel item (₹2,499) originally paid via Cash on Delivery (COD).
+2. Upon initiating the return request in the app, the customer selects Instant NovaCart Wallet Refund instead of entering bank details.
+3. Item is collected, arrives at FC BLR-01, and passes Quality Inspection (INSPECTION_PASSED) under REF-004.
+4. OMS issues a credit payload to ledger.novacart.internal. ₹2,499 is deposited to the customer's NovaCart Wallet within 30 seconds.
+5. Customer receives an SMS notification and uses the ₹2,499 wallet balance immediately to purchase a replacement item.
+Scenario 2: Goodwill Compensation for Express Delivery Delay
+1. Customer in Dubai pays AED 25 for Priority Same-Day Delivery (SRV-SDY) on a replacement monitor.
+2. Due to a courier vehicle breakdown, the delivery arrives the following morning (12 hours late) (Refer to SHIP-003, SHIP-005).
+3. System exception engine flags the late delivery SLA breach automatically.
+4. System executes Rule 2: AED 25 shipping fee is refunded to the customer's credit card via PAY-003, and an AED 15 Goodwill Wallet Credit (CRD-GDW) valid for 90 days is deposited to the customer's NovaCart Wallet.
+Frequently Asked Questions (FAQs)
+Q1: Why is a NovaCart Wallet refund faster than a refund to my credit card?
+Answer: NovaCart Wallet credits execute directly within our internal financial ledger (ledger.novacart.internal) in under 1 minute. Credit or debit card refunds require processing through external acquiring banks, payment gateways, card networks (Visa/Mastercard), and your issuing bank, which takes 3 to 5 business days (Refer to PAY-003).
+Q2: What happens to my store credit if I don't use it before it expires?
+Answer: Store credit balances resulting from returned items (CRD-WAL) remain active for 365 days. We send automated reminders 14 days and 3 days before expiration. If you are unable to use your store credit before it expires, you may contact Customer Support prior to the expiration date to request a one-time 90-day validity extension (Refer to SUP-001).
+Q3: Can I combine my store credit balance with a promotional discount code during checkout?
+Answer: Yes. Your NovaCart Store Wallet balance represents real monetary credit on your account and can be applied alongside promotional coupon codes, promotional discounts, and free shipping offers during checkout (Refer to PAY-001).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of REF-006. Established non-cash refund classifications, wallet deposit workflows, goodwill compensation rules, promotional recalculation formulas, and validity expiration matrices.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-005: Customer Support SLA Policy
+* ORD-001: Order Lifecycle Management Policy
+* ORD-002: Order Cancellation Policy
+* SHIP-003: Express & Priority Shipping Policy
+* SHIP-005: Delivery Delay Management Policy
+* PAY-001: Payment Processing SOP
+* PAY-003: Refund Payment Processing Policy
+* REF-001: Master Refund Eligibility Rules
+* REF-002: Return & Exchange Policy
+* REF-005: Refund Approval & Exception Handling Policy
+* SEC-001: Account Security & Access Control
+* SEC-004: Fraud Detection Framework

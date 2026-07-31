@@ -1,0 +1,316 @@
+﻿PROD-006: Digital Products & Licensing Policy
+Document Header
+* Document Title: Digital Products & Licensing Policy
+* Document ID: PROD-006
+* Version: 1.0.0
+* Document Category: Products
+* Classification: Internal / Public Operational Standard
+* Department Owner: Digital Commerce & Software Licensing Governance
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Digital Products, Chief Information Security Officer, Director of Software Licensing, General Counsel
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Digital Products, Software Licensing, Key Activation, License Key Vault, Digital Rights Management, DRM, Subscription Auto-Renewal, License Revocation, Device Limit
+Purpose
+This document defines the official Digital Products & Licensing Policy of NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes standardized enterprise procedures, licensing governance, digital content delivery protocols, activation verification mechanisms, device concurrency management, subscription lifecycles, customer responsibilities, security controls, and business rules governing the sale, delivery, activation, renewal, transfer, and revocation of digital products.
+As a core operational document (PROD-006) in the Products category of the NovaCart Enterprise Knowledge Base (NEKB), PROD-006 coordinates digital fulfillment across the Digital License Key Vault (digital.novacart.internal), Identity & Access Management (auth.novacart.internal), Order Management System (api.novacart.internal/oms), and Payment Ledgers (ledger.novacart.internal), operating in strict alignment with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, SHIP-001 through SHIP-007, PAY-001 through PAY-006, REF-001 through REF-006, and PROD-001 through PROD-005.
+Scope
+This policy applies universally across all digital product offerings, downloadable software, digital gaming keys, e-books, online educational content, digital gift card vouchers, and recurring SaaS subscriptions offered across NovaCart's operating regions (India, Singapore, UAE) across all commercial channels.
+Coverage Includes
+* Classification and master catalog setup for non-physical product verticals (CAT-SFT, CAT-GFT, CAT-SUB).
+* Digital Rights Management (DRM) standards, cryptographic key generation, and single-use activation tokens.
+* Immediate digital delivery pipelines, customer portal vault integration, and encrypted email dispatch.
+* License activation workflows, device registration concurrency locks, and device migration controls.
+* Subscription auto-renewal processing, grace periods, dunning retries, and cancellation protocols.
+* Digital license transfer restrictions, policy violation suspensions, anti-piracy controls, and security audit logging.
+Out of Scope
+* Physical delivery logistics, warehouse staging, or courier shipping workflows (governed by SHIP-001 and SHIP-003).
+* On-site hardware installation or physical device mounting services (governed by PROD-004).
+Digital Products Overview
+Digital products sold on NovaCart represent non-tangible, electronically delivered software licenses, media content, digital vouchers, and recurring service access rights. Unlike physical inventory, digital products do not require physical warehouse picking or parcel transit; fulfillment occurs via instantaneous, cryptographically secure digital key provisioning or online service entitlements.
+Core Operational Principles
+1. License Grant vs. Physical Ownership: Purchase of a digital product grants the customer a non-exclusive, non-transferable, revocable license or access entitlement to use the digital item under specific vendor terms. It does not transfer underlying intellectual property ownership.
+2. Instant Digital Provisioning: Digital product entitlements and activation keys must be provisioned to the customer's secure portal account (My Digital Library) within $< 60\text{ seconds}$ of payment confirmation (PAYMENT_CONFIRMED).
+3. Cryptographic Key Isolation: Raw activation keys and master vendor activation seeds are stored exclusively within the PCI-DSS and ISO/IEC 27001 compliant Digital License Key Vault (digital.novacart.internal). Human access to unmasked keys is strictly prohibited.
+4. Strict Refund Non-Eligibility Post-Reveal: In accordance with REF-001, digital license keys revealed to the customer portal or delivered via email are strictly non-refundable and non-exchangeable, unless proven defective prior to activation.
+Supported Digital Product Types
+NovaCart categorizes digital offerings into six standardized operational product verticals:
+Digital Product Category Matrix
+Category Code
+	Product Vertical Name
+	Primary Product Examples
+	Default Delivery Mechanism
+	Primary Fulfillment Engine
+	CAT-SFT-OS
+	Desktop Operating Systems & Utilities
+	OS Licenses, Antivirus, Utility Suites
+	Cryptographic Activation Key + ISO Link
+	digital.novacart.internal
+	CAT-SFT-APP
+	Productivity & Creative Software
+	Design Suites, Office Applications
+	Vendor OAuth Account Linking / Portal Key
+	External Vendor API / Vault
+	CAT-SFT-GAM
+	Digital Gaming Keys & DLCs
+	PC/Console Game Keys, In-Game Content
+	Single-Use Retail Activation Key
+	digital.novacart.internal
+	CAT-SUB-PRM
+	Platform Subscriptions
+	NovaCart Prime Membership, Cloud Storage
+	Instant Account Profile entitlement
+	auth.novacart.internal
+	CAT-GFT-DIG
+	Digital Gift Cards & Vouchers
+	Store Gift Vouchers, Partner Vouchers
+	Encrypted Voucher Code + PIN
+	ledger.novacart.internal
+	CAT-EDU-CRS
+	Online Courses & e-Books
+	E-learning access, Digital Literature
+	Single Sign-On (SSO) Portal Stream
+	External LMS Partner Integration
+	License Types & Models
+Digital software and content offered through NovaCart operate under four primary licensing models:
+License Type Matrix
+License Model Code
+	Licensing Model Name
+	Operational Duration & Scope
+	Device / seat Limit Standards
+	Re-activation Rights
+	LIC-PER-SGL
+	Single-Device Perpetual
+	Lifetime usage of purchased version
+	Bound to 1 physical device ID
+	Allowed (Max 3 device resets/yr)
+	LIC-PER-MLT
+	Multi-Device Perpetual
+	Lifetime usage of purchased version
+	Bound to 3 or 5 concurrent devices
+	Allowed across registered seats
+	LIC-SUB-TERM
+	Term Subscription
+	Time-bound access (Monthly / Annual)
+	Seat limit per active subscription tier
+	Active during paid billing term
+	LIC-EULA-ENT
+	Enterprise Floating License
+	Time-bound or perpetual multi-seat
+	Floating seat pool managed by KMS
+	Managed via enterprise console
+	Digital Product Delivery Process
+Digital product fulfillment executes automatically upon payment confirmation (PAYMENT_CONFIRMED) via api.novacart.internal/oms and digital.novacart.internal:
+
+
+
+
+
+
++-----------------------------------------------------------------------------------+
+|                        DIGITAL DELIVERY FULFILLMENT WORKFLOW                      |
++-----------------------------------------------------------------------------------+
+| 1. PAYMENT CONFIRM  | Gateway returns AUTHORIZATION_SUCCESS; OMS flags digital order.|
+| 2. VAULT PROVISION  | Vault checks key stock; assigns cryptographic key to User ID.  |
+| 3. PORTAL INJECTION | Unmasked key injected into customer's 'My Digital Library'.       |
+| 4. EMAIL DISPATCH   | Encrypted confirmation email sent with portal claim link.        |
+| 5. TELEMETRY LOG    | Fulfillment timestamp, IP, and Key ID logged for audit trail.   |
++-----------------------------------------------------------------------------------+
+
+1. Order Classification: OMS identifies the order as containing digital SKUs (CAT-SFT, CAT-GFT, CAT-SUB) and bypasses physical Warehouse Management System (wms.novacart.internal) picking queues (ORD-001).
+2. Vault Reservation & Token Generation: The Key Vault engine (digital.novacart.internal) selects an unassigned activation key matching the SKU, locks the record, and binds it permanently to the Customer's User ID and Master Order ID.
+3. Portal Ingress: The activation key, download URL, and setup instructions inject directly into the customer's secure web/app portal under My Account $\rightarrow$ My Digital Library.
+4. Encrypted Dispatch: An automated email dispatches to the customer's registered email address containing order confirmation, setup guidance, and a secure deep-link to the portal vault. Unmasked activation keys are never included in plain-text email bodies for security compliance.
+Digital Delivery Matrix
+Delivery Channel
+	Channel Type
+	Access Authentication Required
+	Security Control Standard
+	Primary Target SLA
+	Customer Portal Vault
+	Primary Delivery
+	Multi-Factor Authentication (MFA) / Password
+	AES-256 encrypted key display on-demand
+	$< 60\text{ Seconds}$
+	Direct API OAuth Handshake
+	Direct Activation
+	Vendor Account OAuth Token
+	Tokenized server-to-server handshake
+	$< 30\text{ Seconds}$
+	Encrypted Email Notice
+	Delivery Notice
+	Deep-link to Portal Auth Page
+	Plain-text key excluded; link expires in 7 days
+	$< 120\text{ Seconds}$
+	License Activation Process
+License activation validates customer entitlement and binds the software product to the user's hardware or vendor profile:
+1. Key Reveal Step: Customer accesses My Digital Library, completes a mandatory security re-authentication prompt (Password or SMS/Authenticator OTP), and clicks Reveal Activation Key.
+2. Vendor Activation Handshake:
+   * Local Activation Keys: Customer enters the revealed 25-digit alphanumeric key into the installed software application. The application validates the key against the vendor's cloud activation server.
+   * OAuth / Vendor Direct Activation: For products utilizing vendor account binding (e.g., Microsoft 365, Adobe Creative Cloud), the portal redirects the user to complete an OAuth handshake, binding the license directly to the customer's vendor account.
+3. Device Registration Lock: Upon successful activation, the vendor server logs the device hardware fingerprint (Hardware ID / MAC Address).
+4. Activation Limit Enforcement: If a customer attempts to activate a single-device perpetual license (LIC-PER-SGL) on a second physical machine without deactivating the first, the vendor server rejects activation with error code ACTIVATION_LIMIT_EXCEEDED.
+Subscription Management
+Subscription products (CAT-SUB) operate on recurring billing schedules managed by ledger.novacart.internal:
+Subscription Lifecycle Matrix
+Subscription State
+	System State Tag
+	Service Access Status
+	Billing Action Permitted
+	Transition Trigger Event
+	Active
+	SUB_ACTIVE
+	Full Service Entitlement Active
+	Auto-Renewal Active
+	Successful payment authorization (PAY-001).
+	Past Due (Grace)
+	SUB_PAST_DUE
+	Entitlement Maintained (Grace)
+	Retrying Billing (Dunning)
+	Payment retry active; 7-day grace period (PAY-002).
+	Suspended
+	SUB_SUSPENDED
+	Service Access Blocked
+	Billing Paused
+	Dunning exhausted after 7 days without payment.
+	Cancelled
+	SUB_CANCELLED
+	Entitlement Active until Term End
+	Auto-Renewal Disabled
+	Customer requested cancellation prior to term end.
+	Expired
+	SUB_EXPIRED
+	Entitlement Revoked
+	Zero Billing
+	Billing term ended; account moved to archived.
+	Auto-Renewal & Dunning Protocol
+* Billing Advance Notice: Customers receive an automated email notification 7 days prior to annual subscription auto-renewal dates detailing the upcoming charge amount and renewal date.
+* Failed Renewal Dunning: If an auto-renewal payment fails, the subscription enters SUB_PAST_DUE status for a 7-day grace period. The payment engine executes automated retry attempts on Day 1, Day 3, Day 5, and Day 7 (PAY-002).
+* Grace Period Service Retention: Customer access to subscription features is preserved during the 7-day grace period. If payment remains uncollected at Day 7, the status updates to SUB_SUSPENDED, and service access is revoked.
+License Renewal & Expiration
+* Manual Subscription Renewal: Customers may manually renew term subscriptions (LIC-SUB-TERM) up to 60 days prior to expiration within My Digital Library. Renewal extends the current expiration date by the purchased billing period.
+* Trial License Conversions: Free promotional trial licenses automatically expire at 11:59 PM local time on the designated trial end date unless the customer actively opts into a paid subscription model.
+License Transfer & Revocation
+1. License Transfer Eligibility
+To comply with vendor contractual agreements and prevent digital piracy, digital product licenses are strictly non-transferable between separate NovaCart user accounts.
+* Hardware Migration Exception: For perpetual licenses (LIC-PER-SGL), a customer may transfer their active license to a replacement physical computer up to three (3) times per calendar year by executing a Deactivate Device command within My Digital Library prior to activating the new machine.
+2. License Revocation Conditions
+NovaCart reserves the right to execute immediate, remote revocation of digital keys and service entitlements under the following operational conditions:
+* Fraudulent Transaction: Order determined to be fraudulent or paid using stolen payment credentials (SEC-004).
+* Payment Chargeback / Reversal: Cardholder initiates a bank chargeback (PAY-004) or payment reversal after digital keys have been revealed or provisioned.
+* Breach of End-User License Agreement (EULA): Vendor notifies NovaCart of systematic EULA violations, software reverse engineering, or unauthorized commercial resale.
+Customer Responsibilities
+Customers purchasing and utilizing digital products must fulfill the following operational duties:
+1. Account Credentials Security: Maintain robust password security and Multi-Factor Authentication (MFA) on their NovaCart account to prevent unauthorized access to My Digital Library (SEC-001).
+2. System Compatibility Verification: Verify minimum hardware specifications, operating system requirements, and regional software compatibility displayed on the Product Display Page (PROD-001) prior to completing checkout.
+3. Key Safeguarding: Store revealed activation keys securely. NovaCart is not responsible for activation keys compromised due to customer device malware or unauthorized third-party sharing.
+4. Compliance with EULA Terms: Adhere strictly to the vendor's End-User License Agreement (EULA), including device limits and non-commercial usage restrictions.
+Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Digital Products Responsibilities
+	Primary System Portal
+	SLA Target
+	Digital Commerce & Licensing
+	Manages key vault inventory, vendor API integrations, license tier setups, and SKU pricing.
+	digital.novacart.internal
+	Key stock replenishment SLA $< 4\text{ Hours}$
+	Information Security
+	Audits key vault encryption, monitors key scraping attempts, enforces MFA controls.
+	shield.novacart.internal
+	Zero unauthorized key vault breaches
+	Customer Support
+	Assists customers with activation failures, invalid key triage, and subscription cancellation queries.
+	crm.novacart.internal
+	Priority Chat FRT $< 15\text{ Secs}$ (SUP-005)
+	Finance Operations
+	Reconciles vendor digital key unit costs, manages auto-renewal dunning, processes chargeback revocations.
+	ledger.novacart.internal
+	Revocation processing $< 12\text{ Hours}$ (PAY-004)
+	Business Rules
+Rule 1: Master Vault Key Isolation Mandate
+Raw activation keys stored within digital.novacart.internal must be encrypted using AES-256 GCM encryption at rest and TLS 1.3 in transit. System administrative access to raw key databases is restricted to automated system microservices. Human customer support agents may view only masked key strings (e.g., XXXXX-XXXXX-XXXXX-11028) in crm.novacart.internal.
+Rule 2: Absolute Digital Key Refund Non-Eligibility Rule
+In accordance with REF-001 and REF-006, once a customer executes the Reveal Activation Key action within My Digital Library or once a direct vendor account OAuth binding is completed, the digital order is classified as DELIVERED_AND_REVEALED. Monetary refunds, store credit exchanges, or order cancellations are strictly prohibited unless the key is proven to be invalid or unactivatable by a formal technical audit (REF-005).
+Rule 3: Automated Key Revocation upon Payment Chargeback
+If an order containing digital SKUs is subjected to a bank chargeback (PAY-004) or payment reversal after key reveal, digital.novacart.internal automatically transmits an instantaneous API revocation payload (POST /v1/licenses/revoke) to the vendor's activation server, blacklisting the activation key globally and locking the customer's digital library access pending security audit (SEC-001, SEC-004).
+Exception Handling
+License Status Matrix
+License Status Code
+	Status Name
+	Operational Context
+	System Action
+	LIC_UNCLAIMED
+	Unclaimed
+	Key provisioned to vault; customer has not executed key reveal.
+	Eligible for order cancellation under ORD-002 / REF-001.
+	LIC_ACTIVE
+	Active / Revealed
+	Key revealed by customer or bound via OAuth API.
+	Non-refundable; active usage entitlement (REF-001).
+	LIC_SUSPENDED
+	Suspended
+	Payment chargeback active or suspicious ATO login detected.
+	Access blocked; pending fraud / chargeback review.
+	LIC_REVOKED
+	Revoked
+	Key invalidated due to confirmed chargeback or piracy violation.
+	Permanently blacklisted on vendor activation server.
+	LIC_EXPIRED
+	Expired
+	Term subscription or evaluation license completed.
+	Entitlement terminated; prompt renewal option offered.
+	Handling Invalid or Already-Redeemed Activation Keys
+If a customer claims a provisioned key returns an "Invalid Key" or "Already Redeemed" error during vendor activation:
+1. Customer Support opens a priority technical ticket in crm.novacart.internal.
+2. Customer provides screenshot proof displaying the exact vendor activation error code alongside device timestamp.
+3. Support verifies key provisioning logs in digital.novacart.internal.
+4. If key failure is verified (e.g., vendor batch allocation error), Support issues a immediate replacement key from the vault or processes a 100% full refund via PAY-003 / REF-005.
+Practical Examples
+Scenario 1: Purchase and Instant Delivery of Desktop Antivirus License (CAT-SFT-OS)
+1. Customer in Singapore purchases a 1-year, 3-device Antivirus license (CAT-SFT-OS) for SGD $45.
+2. Payment engine confirms payment (PAYMENT_CONFIRMED). OMS classifies order as digital.
+3. Within 15 seconds, digital.novacart.internal allocates an unassigned 25-digit key (TKN-SG-882109) and injects it into the customer's My Digital Library portal.
+4. Customer receives an email notice: "Your Antivirus license is ready in your account."
+5. Customer logs into portal, completes MFA re-authentication, reveals key, and activates 3 household devices. Total fulfillment time: 22 seconds.
+Scenario 2: Failed Subscription Renewal and Grace Period Execution (CAT-SUB-PRM)
+1. Customer in Dubai holds an annual NovaCart Prime membership (CAT-SUB-PRM) set for auto-renewal (AED 149).
+2. On renewal date, the primary credit card charge fails due to card expiration (PAY-002).
+3. System transitions subscription status to SUB_PAST_DUE and dispatches a notification email: "Payment failed. Update payment method within 7 days to maintain Prime benefits."
+4. Customer Prime benefits remain active during the 7-day grace period.
+5. On Day 3, customer updates credit card details in account settings. Payment engine processes charge successfully, updating status back to SUB_ACTIVE.
+Frequently Asked Questions (FAQs)
+Q1: Can I get a refund on a digital software license or gaming key if I change my mind?
+Answer: Digital products are eligible for cancellation and 100% full refund only if you have not yet revealed the key in your account portal. Once you click Reveal Activation Key or complete vendor account linking, the digital product is deemed fully delivered and consumed, making it strictly non-refundable under REF-001 and REF-006 rules.
+Q2: What should I do if my digital activation key shows "Already Redeemed" when I try to activate it?
+Answer: While our activation keys are sourced directly from authorized brand distributors, rare key allocation errors can occur. Please take a clear screenshot showing the error message, your system clock, and your account email, then contact Customer Support via Live Chat. Our technical team will verify key logs and issue a fresh replacement key immediately (Refer to SUP-001).
+Q3: How do I transfer my perpetual software license to a new computer?
+Answer: For single-device perpetual software licenses (LIC-PER-SGL), you must first open the software on your old computer and select Deactivate License or click Deactivate Device inside your NovaCart My Digital Library portal. Once deactivated, you can enter the same key on your new computer to complete activation (up to 3 device resets per year).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of PROD-006. Established digital product categories, licensing matrices, cryptographic key vault security standards, $< 60\text{ sec}$ delivery SLAs, subscription dunning protocols, device migration limits, and key revocation rules.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-005: Customer Support SLA Policy
+* ORD-001: Order Lifecycle Management Policy
+* PAY-001: Payment Processing SOP
+* PAY-002: Payment Failure & Retry Policy
+* PAY-003: Refund Payment Processing Policy
+* PAY-004: Chargeback & Payment Dispute Policy
+* REF-001: Master Refund Eligibility Rules
+* REF-005: Refund Approval & Exception Handling Policy
+* REF-006: Store Credit & Promotional Refund Policy
+* PROD-001: Product Catalog Management Policy
+* PROD-003: Product Warranty Policy
+* SEC-001: Account Security & Access Control
+* SEC-004: Fraud Detection Framework

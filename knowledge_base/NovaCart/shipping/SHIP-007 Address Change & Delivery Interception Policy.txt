@@ -1,0 +1,245 @@
+﻿SHIP-007: Address Change & Delivery Interception Policy
+Document Header
+* Document Title: Address Change & Delivery Interception Policy
+* Document ID: SHIP-007
+* Version: 1.0.0
+* Document Category: Shipping
+* Classification: Internal / Public Operational Standard
+* Department Owner: Logistics & Supply Chain
+* Prepared By: Enterprise Knowledge Architecture Team
+* Reviewed By: Head of Logistics, Operations Director, Customer Experience Director
+* Approved By: Chief Operating Officer, NovaCart Technologies Pvt. Ltd.
+* Effective Date: August 1, 2026
+* Last Review Date: July 28, 2026
+* Next Review Date: July 28, 2027
+* Keywords: Address Change, Delivery Interception, Address Correction, In-Transit Re-Routing, Return to Origin, Delivery Gatekeeper, Waybill Re-Consignment
+Purpose
+This document defines the official enterprise policy, security verification standards, carrier re-consignment protocols, operational limits, and business rules governing address changes and delivery interceptions for active orders at NovaCart Technologies Pvt. Ltd. (hereinafter referred to as "NovaCart"). It establishes clear conditions under which a delivery destination may be altered pre-dispatch or in-transit, specifies interception mechanisms to prevent misdelivery or fraud, outlines customer identity verification rules, and details 3PL carrier coordination.
+As a core operational document (SHIP-007) in the NovaCart Enterprise Knowledge Base (NEKB), SHIP-007 enforces controlled execution across Customer Support, Warehouse Operations, Logistics, and the Transportation Management System (api.novacart.internal/tms), maintaining complete consistency with COMP-001 through COMP-004, SUP-001 through SUP-005, ORD-001 through ORD-005, and SHIP-001 through SHIP-006.
+Scope
+This policy applies universally across all domestic and cross-border shipments managed by NovaCart across India (IN), Singapore (SG), and the United Arab Emirates (UAE) across all service tiers (Standard, Express, Same-Day, Scheduled) and fulfillment models (1P Direct Distribution and 3P Marketplace Merchants).
+Coverage Includes
+* Pre-dispatch address corrections and delivery instruction additions.
+* In-transit carrier re-consignment and regional sorting hub address modifications.
+* Active delivery interception, parcel hold-at-location requests, and Return to Origin (RTO) recalls.
+* Identity verification mandates to prevent account takeover and address redirection fraud.
+Policy Overview
+Accurate delivery address data is essential for maintaining shipping velocity and preventing parcel misdirection. NovaCart provides customers and support personnel with controlled mechanisms to correct minor address errors or intercept shipments when address details are invalid.
+To balance customer flexibility with security and fulfillment velocity, address changes and delivery interceptions are governed by strict lifecycle boundary rules, security verification mandates, and geographic geofencing constraints within api.novacart.internal/tms.
+Core Operational Principles
+1. Pre-Dispatch Self-Service First: Empowering customers to modify delivery details directly through self-service web/app portals prior to warehouse packaging (Refer to ORD-003).
+2. Security & Fraud Prevention: Enforcing mandatory identity verification before processing any post-order address alteration to prevent redirection fraud (Refer to SEC-001, SEC-004).
+3. Geofenced Re-Routing Constraints: Restricting in-transit address modifications strictly to destination addresses within the same regional fulfillment zone and postal code geofence.
+4. Decisive Carrier Interception: Intercepting and recalling parcels to the fulfillment center when in-transit address re-routing is technically or geographically impossible.
+Address Change Eligibility
+An order's eligibility for address modification depends on its active status tag in the Order Management System (api.novacart.internal/oms) and the geographic location of the new destination address.
+Address Change Eligibility Matrix
+Order Status Tag
+	Permissible Address Change Scope
+	Execution Channel
+	Fee / Charge
+	Primary Policy Reference
+	PENDING_PAYMENT
+	Full Address Change (Any Zone)
+	Customer Self-Service
+	Free
+	ORD-003
+	PAYMENT_CONFIRMED
+	Full Address Change (Any Zone)
+	Customer Self-Service
+	Free
+	ORD-003
+	INVENTORY_RESERVED
+	Full Address Change (Same Zone / Tax Jurisdiction)
+	Customer Self-Service / CSR
+	Free
+	ORD-003
+	PROCESSING
+	Minor Correction (Building / Apt / Phone Number)
+	Customer Support (CSR)
+	Free
+	ORD-003, SUP-001
+	PACKED / READY_FOR_DISPATCH
+	Minor Correction (Re-labeling at FC dock)
+	Customer Support (CSR)
+	Free
+	ORD-003, SHIP-001
+	SHIPPED (In-Transit)
+	In-Zone Re-Consignment (Same Postal Code / Hub)
+	L2 Logistics Specialist
+	Free (1st Attempt) / Fee Applies
+	SHIP-001, SHIP-005
+	OUT_FOR_DELIVERY
+	Rider Gatekeeper Note / Landmark Addition
+	Customer Support (CSR)
+	Free
+	SHIP-001
+	DELIVERED
+	Blocked (Order Concluded)
+	Not Applicable
+	Not Applicable
+	ORD-001
+	Delivery Interception Overview
+Delivery Interception is an operational procedure whereby NovaCart instructs the 3PL logistics carrier to halt the forward transit of an active shipment and execute one of two commands:
+1. In-Transit Re-Routing: Alter the destination waybill address to a new local address within the same carrier destination hub zone.
+2. Return to Origin (RTO) Recall: Abort transit immediately and return the package to the dispatch Fulfillment Center (FC).
+Delivery Interception Matrix
+Interception Trigger
+	Primary Initiator
+	Permissible Interception Action
+	Target System Command
+	Secondary Outcome
+	Customer Relocation / Error
+	Customer via Support
+	In-Zone Re-Routing OR RTO Recall
+	TMS Re-Consignment Signal
+	Delivery re-scheduled or refunded (ORD-002).
+	Invalid / Unroutable Address
+	Carrier / TMS Alert
+	Address Correction OR RTO Recall
+	TMS Address Exception Alert
+	Customer contacted for pin location (SHIP-005).
+	Fraud / Account Compromise
+	Security Operations
+	Immediate RTO Recall
+	TMS Security Lock Signal
+	Account frozen; order cancelled (SEC-004).
+	Pre-Dispatch Cancel Race
+	Customer / System
+	FC Loading Dock Interception
+	WMS Dock Hold Command
+	Package unpacked; 100% refund (ORD-002).
+	Request Submission Process
+Customers and internal teams submit address change or interception requests through structured operational channels:
+
+
+
+
+
+
+<ElicitationsGroup message="To examine related order modification, tracking, or fraud prevention policies further:">
+{/* Reason: Offers structured paths to explore related domain policies. */}
+ <Elicitation label="Review ORD-003 Order Modification Policy" query="Show ORD-003 Order Modification Policy detailing self-service editing rules." />
+ <Elicitation label="Review ORD-004 Order Tracking Policy" query="Show ORD-004 Order Tracking Policy governing milestone tracking updates." />
+ <Elicitation label="Examine SEC-004 Fraud Detection Framework" query="Show SEC-004 Fraud Detection Framework detailing account protection overrides." />
+</ElicitationsGroup>
+
+1. Pre-Dispatch Self-Service Submission: The customer accesses My Orders on the web or mobile app, selects Edit Address, inputs updated details, and submits. The system validates the input and updates OMS instantly.
+2. CSR-Assisted Submission: For orders in PROCESSING, PACKED, or SHIPPED status, the customer contacts Customer Support. The CSR verifies customer identity, inputs the request into crm.novacart.internal, and flags the ticket for logistics action.
+3. Automated Carrier Exception Submission: When a carrier rider logs an NDR code ADDRESS_INCOMPLETE or UNROUTABLE_DESTINATION in the TMS app, an automated exception ticket is created, and a self-service re-location link is dispatched to the customer via SMS/WhatsApp (Refer to SHIP-001, SHIP-005).
+Validation & Verification Process
+To prevent account takeover and address redirection fraud, all post-checkout address changes must undergo automated and manual verification:
+Identity Verification Protocols
+* Authenticated Self-Service: Allowed only when the user session is fully authenticated via Multi-Factor Authentication (MFA) or registered device tokens.
+* CSR-Assisted Verification: CSRs must verify two primary identity factors (Registered Mobile OTP + Billing Address or Master Order ID) before altering address fields (Refer to SUP-001).
+* High-Value Order Restriction: Orders containing items valued above ₹25,000 / $400 / AED 1,100 require L2 Support Team Lead co-signoff and mandatory OTP validation before an in-transit address re-routing command can be issued to tms.novacart.internal (Refer to SUP-003).
+Address Format Validation
+* The OMS/TMS Address Validation Engine (api.novacart.internal/tms/validate-address) verifies street name, building number, postal code format, and regional delivery zone boundaries using regional GIS mapping APIs.
+Carrier Coordination Process
+Executing an in-transit address change or delivery interception requires active communication with contracted 3PL carriers:
+1. API Interception Payload Dispatch: tms.novacart.internal transmits an encrypted electronic re-consignment payload (POST /v1/carrier/re-consign) to the carrier's dispatch API.
+2. Sorting Hub Interception: The carrier's automated sorting system flags the AWB waybill barcode upon arrival at the regional destination hub.
+3. Waybill Re-Labeling: Sorting hub personnel apply a revised address label and assign the parcel to the updated last-mile delivery route.
+4. Rider Notification: The carrier's last-mile rider app updates the delivery destination and displays updated customer delivery notes in real time.
+Request Processing Timeline Matrix
+Order Lifecycle Phase
+	Target Request Processing Time
+	Carrier Acknowledgment SLA
+	Customer Update SLA
+	Pre-Dispatch (PROCESSING)
+	Instant ($< 1\text{ Minute}$)
+	Real-time WMS Sync
+	Immediate Email/SMS
+	FC Dock (PACKED)
+	$< 15\text{ Minutes}$
+	FC Dock Hold $< 15\text{ Mins}$
+	Immediate Email/SMS
+	In-Transit (SHIPPED)
+	$< 2\text{ Hours}$
+	Carrier Hub Ack $< 4\text{ Hours}$
+	$< 2\text{ Hours}$ from Ack
+	Out for Delivery
+	$< 15\text{ Minutes}$
+	Rider App Sync $< 15\text{ Mins}$
+	Real-time Rider Update
+	Customer Communication
+Customers receive transparent, automated updates throughout the address change or interception lifecycle:
+* Request Acknowledgment: Immediate notification confirming receipt of the address change or interception request with a assigned tracking reference (e.g., REQ-99201).
+* Confirmation of Execution: Notification confirming that the address was successfully updated in OMS/TMS or that the carrier successfully executed in-transit re-routing.
+* Interception Failure Alert: If in-transit re-routing fails (e.g., parcel already delivered or outside carrier re-consignment zone), the customer is notified immediately with instructions for doorstep delivery or return handling.
+Operational Limitations
+Address modifications and delivery interceptions are subject to explicit technical and operational constraints:
+* Cross-Tax Jurisdiction Prohibition: An address change cannot cross regional tax or customs boundaries (e.g., changing a delivery address from Singapore to Dubai, or from Karnataka to Maharashtra). Such requests require cancelling the order under ORD-002 and placing a new order.
+* Single Re-Routing Limit: A maximum of one (1) in-transit address re-routing is permitted per sub-order parcel. Secondary re-routing requests are blocked by TMS.
+* Carrier Re-Consignment Restrictions: Certain 3PL express carriers do not support mid-transit address changes. In such cases, the shipment must be intercepted for Return to Origin (RTO), and a replacement order dispatched (Refer to SHIP-001, SHIP-003).
+Department Responsibilities
+Department Responsibility Matrix
+Department Unit
+	Primary Policy Responsibilities
+	Primary Portal Used
+	SLA Target
+	Logistics & Supply Chain
+	Manages carrier API integrations; authorizes in-transit re-consignments; monitors RTO flows.
+	tms.novacart.internal
+	Re-consignment processing $< 2\text{ Hours}$
+	Warehouse Operations
+	Re-labels packed parcels at FC docks upon address update signals; intercepts cancelled boxes.
+	wms.novacart.internal
+	Dock re-labeling $< 15\text{ Mins}$
+	Customer Support
+	Verifies customer identity; assists with CSR address edits; logs interception reason codes.
+	crm.novacart.internal
+	Priority Chat FRT $< 15\text{ Secs}$
+	Security Operations
+	Monitors address change requests on high-value orders for fraud signals; issues security locks.
+	shield.novacart.internal
+	Real-time fraud interception
+	Business Rules
+Rule 1: Free In-Zone Address Re-Routing
+Initial in-transit address re-routing requests within the same postal code geofence and destination hub zone are executed free of charge for the customer.
+Rule 2: Out-of-Zone Re-Routing Fee
+If an in-transit address change requires re-routing the parcel to a different carrier destination hub within the same state/country, a flat re-consignment fee of ₹150 / $3 / AED 10 is charged to cover additional carrier linehaul expenses.
+Rule 3: Absolute Lock Upon Delivery
+Once a shipment transitions to DELIVERED status in tms.novacart.internal, no address changes, interceptions, or re-consignments can be processed. The order lifecycle stage is concluded (Refer to ORD-001).
+Exception Handling
+* Rider Misses Interception Signal (OUT_FOR_DELIVERY): If a rider attempts delivery at the original address because an interception signal was received after route departure, the rider logs ADDRESS_CHANGED_NDR. The parcel returns to the local hub, is re-labeled, and is dispatched to the new address on the next business morning.
+* Fraudulent Redirection Attempt: If Security detects an unauthorized address change attempt on a compromised account, Security locks the order instantly, triggers an immediate RTO recall command in TMS, and alerts the legitimate account holder via verified phone call (Refer to SEC-001, SEC-004).
+Practical Examples
+Scenario 1: Pre-Dispatch Address Correction via Self-Service
+1. Customer orders a mechanical keyboard at 10:00 AM. At 10:15 AM, while the order is in INVENTORY_RESERVED status, the customer notices a missing apartment unit number in their profile.
+2. Customer accesses My Orders in the mobile app, edits the address line to add "Unit #04-12", and clicks save.
+3. OMS validates format, updates database, and syncs new details to WMS. Parcel is packed and labeled with the corrected address (Refer to ORD-003).
+Scenario 2: In-Transit Address Re-Routing (SHIPPED)
+1. Customer in Dubai realizes their delivery address on a shipped laptop (CAT-ELE) is their residential address, but they will be at their office address ($5\text{ km}$ away, same postal zone) on delivery day.
+2. Customer contacts Live Chat. CSR verifies identity via mobile OTP (Refer to SUP-001).
+3. CSR inputs office address in crm.novacart.internal. System checks postal code match (Same hub zone).
+4. TMS transmits re-consignment payload to local courier API. Destination hub re-labels parcel upon arrival, and delivery rider completes handover at the office address next morning.
+Frequently Asked Questions (FAQs)
+Q1: Can I change my delivery address after my package is marked "Out for Delivery"?
+Answer: While direct address changes are locked once a parcel is out for delivery, you can contact Customer Support or respond to the rider's pre-arrival call to provide landmark instructions or request that the rider leave the parcel with building security or a neighbor (Refer to SHIP-001).
+Q2: What happens if I move to a different city after placing an order?
+Answer: In-transit re-routing to a different city or state is not permitted due to regional tax and carrier routing constraints. If your order has not been shipped, you can cancel it under ORD-002 and place a new order to your new city address. If already shipped, Support can initiate an RTO recall and issue a refund upon FC receipt (Refer to ORD-002, REF-001).
+Q3: Why was my address change request rejected by Customer Support?
+Answer: Address change requests are rejected if: (1) the new address falls into a different tax/customs jurisdiction, (2) the shipment has already been delivered, (3) the request failed identity verification checks, or (4) the order contains high-value items undergoing security review (Refer to SEC-001, SEC-004).
+Revision History
+Version
+	Publication Date
+	Primary Author
+	Summary of Administrative Changes
+	1.0.0
+	August 1, 2026
+	Enterprise Knowledge Architecture Team
+	Initial baseline release of SHIP-007. Established address change eligibility matrices, in-transit re-consignment protocols, delivery interception procedures, security verification rules, and carrier API processing SLAs.
+	Related Documents
+* COMP-001: Company Overview
+* COMP-004: Enterprise Terminology & Glossary
+* SUP-001: Customer Support Standard Operating Procedure (SOP)
+* SUP-003: Customer Support Escalation Matrix
+* ORD-001: Order Lifecycle Management Policy
+* ORD-003: Order Modification Policy
+* ORD-004: Order Tracking Policy
+* SHIP-001: Domestic Shipping Policy
+* SHIP-005: Delivery Delay Management Policy
+* SHIP-006: Lost Shipment Investigation Policy
+* SEC-001: Account Security & Access Control
+* SEC-004: Fraud Detection Framework
