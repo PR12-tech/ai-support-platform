@@ -213,7 +213,18 @@ Available Tools:
 
 {tools}
 
-Decide whether another tool is required.
+Your only task is to decide whether the agent has enough information
+to generate the final answer.
+
+Reply FINISH immediately if the current tool result together with
+Current Context fully answers the user's question.
+
+Do NOT request another tool simply because another tool exists.
+
+Do NOT continue for additional verification or confirmation.
+
+Prefer FINISH whenever the available information is sufficient to
+answer the user's question.
 
 Rules:
 
@@ -223,8 +234,10 @@ Rules:
 
 3. Reply FINISH if all required information has already been collected, even if additional tools are available.
 
-4. Reply CONTINUE only if some part of the original user question is still unanswered AND another available tool can provide that missing information.
-
+4. Reply CONTINUE only if ALL of the following are true:
+- Some part of the original user question is still unanswered.
+- Another available tool can provide the missing information.
+- The current tool result is insufficient to generate the final answer.
 5. Never request a tool that has already been used successfully unless its previous result was incomplete.
 
 6. Do not continue simply because another tool exists. Continue only when it is necessary to answer the user's question.
@@ -237,6 +250,7 @@ and Previous Observations.
 Do not infer tool results that were not returned.
 
 8. Once the collected tool results are sufficient to generate the final response, always reply FINISH.
+9. If the last executed tool completed successfully and its result, together with Current Context, is sufficient to answer the user's question, always reply FINISH.
 
 Example:
 
@@ -253,7 +267,9 @@ After knowledge_search:
 FINISH
 
 Reason:
-The order status and refund policy together completely answer the user's question.
+All required information has been collected.
+No additional tool can improve the answer.
+The agent should now generate the final response.
 
 Do not explain your reasoning.
 

@@ -13,6 +13,8 @@ from app.api.messages import router as message_router
 from app.api.rag import router as rag_router
 from app.core.exception_handlers import register_exception_handlers
 from app.api.health import router as health_router
+from app.logger import logger
+from app.services.rag_service import load_documents
 
 
 @asynccontextmanager
@@ -20,9 +22,15 @@ async def lifespan(app: FastAPI):
 
     Base.metadata.create_all(bind=engine)
 
+    logger.info("Loading knowledge base...")
+
+    load_documents()
+
+    logger.info("knowledge base loaded.")
+
     yield
 
-    # Future cleanup code goes here
+
 
 app = FastAPI(
     lifespan=lifespan
@@ -47,4 +55,3 @@ app.include_router(health_router)
 @app.get("/")
 def home():
     return {"message": "AI Support Platform"}
-

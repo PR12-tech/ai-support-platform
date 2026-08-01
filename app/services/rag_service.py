@@ -16,6 +16,7 @@ from app.services.bm25_service import (
 )
 from app.services.query_rewriter import rewrite_query
 from app.services.multi_query import generate_queries
+from app.logger import logger
 
 DOCUMENT_CHUNKS = []
 
@@ -76,13 +77,6 @@ def answer_question(
 
     response = generate_content(prompt)
 
-    if response:
-        print("\nMODEL RESPONSE")
-
-        print(
-            f"Response words : {len(response.split())}"
-        )
-
     if response is None:
         return {
             "answer": "AI service temporarily unavailable.",
@@ -115,13 +109,6 @@ def find_relevant_document(question: str):
         f"Retrieved {len(chunks)} chunks before reranking."
     )
 
-    for i, chunk in enumerate(chunks, 1):
-        print(
-            f"{i}. {chunk['source_document']} "
-            f"| Score={chunk['score']:.3f} "
-            f"| Words={len(chunk['content'].split())}"
-        )
-
     chunks = rerank_chunks(
         question,
         chunks
@@ -130,23 +117,6 @@ def find_relevant_document(question: str):
     logger.debug(
         f"Top retrieved sources: {extract_sources(chunks)}"
     )
-
-    for i, chunk in enumerate(chunks, 1):
-        print(
-            f"{i}. {chunk['source_document']}"
-        )
-
-        print(
-            f"   Rerank : {chunk['rerank_score']:.3f}"
-        )
-
-        print(
-            f"   Words  : {len(chunk['content'].split())}"
-        )
-
-        print(
-            f"   Preview: {chunk['content'][:120]}..."
-        )
 
     if not chunks:
         return {
@@ -224,6 +194,8 @@ def load_documents():
 
     DOCUMENT_CHUNKS.clear()
 
+    index_exists = load_index()
+
     knowledge_base_path = Path("knowledge_base")
 
     documents = list(knowledge_base_path.rglob("*.md"))
@@ -245,31 +217,32 @@ def load_documents():
                 content
             )
 
-            print(f"{file_path.name:<50} -> {len(chunks)} chunks")
-
             for chunk in chunks:
 
-                embedding = embedding_model.encode(
-                    chunk
-                )
+                chunk_data = {
+                    "document": str(
+                        file_path.relative_to(
+                            knowledge_base_path
+                        )
+                    ),
+                    "content": chunk
+                }
+
+                if not index_exists:
+
+                    chunk_data["embedding"] = (
+                        embedding_model.encode(chunk)
+                    )
 
                 DOCUMENT_CHUNKS.append(
-                    {
-                        "document": str(
-                            file_path.relative_to(
-                                knowledge_base_path
-                            )
-                        ),
-                        "content": chunk,
-                        "embedding": embedding
-                    }
+                    chunk_data
                 )
 
-    embedding_dimension = len(
-        DOCUMENT_CHUNKS[0]["embedding"]
-    )
+    if not index_exists:
 
-    if not load_index():
+        embedding_dimension = len(
+            DOCUMENT_CHUNKS[0]["embedding"]
+        )
 
         create_index(
             embedding_dimension
@@ -456,7 +429,7 @@ def extract_sources(
 
     return sources
 
-load_documents()
+
 
 
 

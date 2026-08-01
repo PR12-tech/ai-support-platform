@@ -49,7 +49,7 @@ def observe(
         f"Observer raw response:\n{response}"
     )
 
-    decision = response.strip()
+    decision = response.strip().split()[0].upper()
 
     logger.info(
         f"Observer decision: {decision}"
