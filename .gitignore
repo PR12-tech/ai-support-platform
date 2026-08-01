@@ -2,9 +2,12 @@
 .venv/
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
 
 # Environment
 .env
+.env.docker
 
 # IDE
 .idea/
@@ -20,6 +23,7 @@ htmlcov/
 
 # Logs
 *.log
+*.pid
 
 # OS
 .DS_Store
