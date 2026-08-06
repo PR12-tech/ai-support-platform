@@ -121,7 +121,8 @@ def find_relevant_document(question: str):
     if not chunks:
         return {
             "knowledge": "No relevant information found in the knowledge base.",
-            "chunks": []
+            "chunks": [],
+            "sources": []
         }
 
     sources = extract_sources(
@@ -143,18 +144,31 @@ def suggest_reply(
         knowledge: str
 ):
     prompt = f"""
-        You are a professional customer support agent.
+    You are an experienced customer support agent replying to an existing customer support ticket.
 
-        Use the knowledge below to help the customer.
+    The customer has already described their issue in the ticket below.
 
-        Knowledge:
-        {knowledge}
+    Use the retrieved knowledge to write the reply.
 
-        Customer Conversation:
-        {conversation}
+    Instructions:
 
-        Write a helpful support response.
-        """
+    - Treat the customer's issue as already known.
+    - Do NOT ask the customer to repeat information already present in the ticket.
+    - Use only the retrieved knowledge that is relevant to the customer's issue.
+    - Ignore any retrieved information that is unrelated.
+    - If the knowledge does not fully answer the issue, clearly explain what can be confirmed and what requires further investigation.
+    - Write a natural, professional customer support reply.
+    - Do not mention internal policy names, document IDs, or knowledge base documents unless absolutely necessary.
+    - Keep the response concise and focused on resolving the customer's issue.
+
+    Retrieved Knowledge:
+
+    {knowledge}
+
+    Support Ticket:
+
+    {conversation}
+    """
 
     response = generate_content(prompt)
 

@@ -74,9 +74,17 @@ def generate_reply(
         Message.ticket_id == ticket_id
     ).all()
 
-    conversation = "\n".join(
-        [message.content for message in messages]
+    conversation = (
+        f"Title: {ticket.title}\n"
+        f"Description: {ticket.description}"
     )
+
+    if messages:
+        conversation += "\n\nConversation:\n"
+        conversation += "\n".join(
+            message.content
+            for message in messages
+        )
 
     knowledge = get_knowledge(
         conversation
@@ -89,7 +97,7 @@ def generate_reply(
 
     return {
         "ticket_id": ticket_id,
-        "retrieved_chunk": knowledge,
+        "retrieved_chunk": knowledge["knowledge"],
         "reply": reply
     }
 

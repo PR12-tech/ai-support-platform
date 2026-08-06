@@ -1,16 +1,14 @@
-import logging
+from app.logger import logger
 
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
-
-logger = logging.getLogger(__name__)
 
 
 def register_exception_handlers(app: FastAPI) -> None:
     @app.exception_handler(Exception)
     async def global_exception_handler(request: Request, exc: Exception):
         logger.exception(
-            "Unhandled exception occurred while processing %s %s",
+            "Unhandled exception occurred while processing %s %s from %s",
             request.method,
             request.url.path,
             request.client.host if request.client else "Unknown",
