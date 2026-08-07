@@ -55,6 +55,24 @@ def run_agent(
 
         state.selected_tool = tool_name
 
+        if tool_name == "DIRECT_RESPONSE":
+
+            answer = generate_response(
+                state.question,
+                state.context
+            )
+
+            add_message(
+                session_id=session_id,
+                role="assistant",
+                content=answer
+            )
+
+            return AgentResponse(
+                tools_used=state.tool_history,
+                answer=answer
+            )
+
         if tool_name == "NONE":
 
             if state.tool_history:
@@ -75,26 +93,26 @@ def run_agent(
                 answer=state.final_answer
             )
 
-        if tool_already_used(
-
-            state.tool_history,
-
-            tool_name
-
-        ):
-
-            logger.warning(
-                "%s was already used.",
-                tool_name
-            )
-
-            break
-
         arguments = preprocess_arguments(
             tool_name,
             arguments,
             state.context
         )
+
+        if tool_already_used(
+
+                state.tool_history,
+
+                tool_name,
+
+                arguments
+
+        ):
+            logger.warning(
+                "%s with identical arguments already used.",
+                tool_name
+            )
+            break
 
         result = execute_tool(
 

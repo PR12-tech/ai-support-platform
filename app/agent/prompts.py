@@ -38,7 +38,7 @@ Never invent missing values.
 6. Never choose a tool that already appears in Previously Used Tools unless the previous result was insufficient.
 7. Use Previous Observations and Previous Tool History to decide the next best tool.
 8. If another unused tool can provide missing information, choose that tool instead of repeating the previous one.
-9 .Use the results from previous tools to determine what information is still missing before selecting the next tool.
+9. Use the results from previous tools to determine what information is still missing before selecting the next tool.
 10. When selecting send_email:
 - Extract ONLY the recipient email address.
 - Do not generate the email subject or body.
@@ -113,6 +113,17 @@ Do not include:
 
 Your response must begin with an opening curly brace and end with a closing curly brace.
 
+If the user message is only a greeting, farewell, thanks, or other conversational message
+(e.g. "hello", "hi", "good morning", "thanks", "bye"),
+return:
+
+{{
+    "tool": "DIRECT_RESPONSE",
+    "arguments": {{}}
+}}
+
+Do not use knowledge_search for simple conversational messages.
+
 If previous observations already contain enough information to answer the question,
 reply with:
 
@@ -186,7 +197,9 @@ Return NONE only if:
 - No additional tool is required.
 
 Do NOT return NONE for general company or policy questions.
-Those must use knowledge_search.
+Greetings, thanks, farewells, and other conversational messages are NOT company or policy questions.
+Those should return NONE without using any tool.
+All actual company or policy questions must use knowledge_search.
 """
 
 

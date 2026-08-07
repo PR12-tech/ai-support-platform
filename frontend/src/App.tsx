@@ -26,8 +26,8 @@ function handleConversationSelect(conversation: string) {
 }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="flex min-h-screen flex-col">
+    <div className="h-screen bg-gray-100">
+      <div className="flex h-full flex-col">
       <Header />
       <MainLayout 
       conversations={conversations}

@@ -1,14 +1,14 @@
 def tool_already_used(
         tool_history: list,
-        tool_name: str
+        tool_name: str,
+        arguments: dict
 ):
 
-    used_tools = [
-        item["tool"]
+    return any(
+        item["tool"] == tool_name
+        and item["arguments"] == arguments
         for item in tool_history
-    ]
-
-    return tool_name in used_tools
+    )
 
 def add_tool_history(
         tool_history: list,

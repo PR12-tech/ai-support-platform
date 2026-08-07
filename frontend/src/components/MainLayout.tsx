@@ -17,7 +17,7 @@ function MainLayout ({
 }: MainLayoutProps) {
     
     return (
-        <main className="flex flex-1">
+        <main className="flex flex-1 overflow-hidden">
             <Sidebar 
             conversations={conversations}
             selectedConversation={selectedConversation} 

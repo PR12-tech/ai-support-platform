@@ -51,6 +51,16 @@ def observe(
 
     decision = response.strip().split()[0].upper()
 
+    if (
+            decision == "CONTINUE"
+            and tool_name == "knowledge_search"
+            and result.get("success")
+    ):
+        logger.info(
+            "Knowledge search completed successfully. Forcing FINISH."
+        )
+        return "FINISH"
+
     logger.info(
         f"Observer decision: {decision}"
     )
