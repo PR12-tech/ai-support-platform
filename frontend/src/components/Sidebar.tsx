@@ -1,8 +1,10 @@
+import type { Conversation } from "../types/conversation";
+
 type SidebarProps = {
-    conversations: string[];
-    selectedConversation: string;
+    conversations: Conversation[];
+    selectedConversation: Conversation;
     onNewChat: () => void;
-    onConversationSelect: (conversation: string) => void;
+    onConversationSelect: (conversation: Conversation) => void;
 };
 
 function Sidebar({ 
@@ -27,15 +29,15 @@ function Sidebar({
             <div className="space-y-2">
                 {conversations.map((conversation) => (
                     <div
-                    key={conversation}
+                    key={conversation.id}
                     onClick={() => onConversationSelect(conversation)}
                     className={
-                        conversation === selectedConversation
+                        conversation.id === selectedConversation.id
                         ? "cursor-pointer rounded-md bg-blue-100 p-2 font-medium text-blue-700"
                         : "cursor-pointer rounded-md p-2 hover:bg-gray-200"
                     }
                 >
-                    {conversation}
+                    {conversation.title}
                     </div>
                 ))}
             </div>

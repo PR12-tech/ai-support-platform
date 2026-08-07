@@ -1,12 +1,13 @@
 import Sidebar from "./Sidebar";
 import ChatWorkSpace from "./ChatWorkSpace";
+import type { Conversation } from "../types/conversation";
 
 
 type MainLayoutProps = {
-    conversations: string[];
-    selectedConversation: string;
+    conversations: Conversation[];
+    selectedConversation: Conversation;
     onNewChat: () => void;
-    onConversationSelect: (conversation: string) => void;
+    onConversationSelect: (conversation: Conversation) => void;
 };
 
 function MainLayout ({ 
@@ -24,7 +25,9 @@ function MainLayout ({
             onNewChat={onNewChat} 
             onConversationSelect={onConversationSelect} 
             />
-            <ChatWorkSpace />
+            <ChatWorkSpace
+            selectedConversation={selectedConversation} 
+            />
         </main>
     );
 }

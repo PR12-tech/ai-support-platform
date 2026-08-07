@@ -1,27 +1,60 @@
 import { useState } from "react";
 import Header from "./components/Header";
 import MainLayout from "./components/MainLayout";
+import type { Conversation } from "./types/conversation";
+
 
 function App() {
-  const [conversations, setConversations] = useState([
-    "Order Refund",
-    "Shipping Delay",
-    "Payment Failed",
-    "SQL Analytics",
+  const [conversations, setConversations] = useState<Conversation[]>([
+
+    {
+
+      id: "session-1",
+      title: "Order Refund"
+
+    },
+    {
+
+      id: "session-2",
+      title: "Shipping Delay"
+
+    },
+    {
+
+      id: "session-3",
+      title: "Payment Failed",
+
+    },
+    {
+
+      id: "session-4",
+      title: "SQL Analytics",
+      
+    },
 ]);
 
 const [selectedConversation, setSelectedConversation] = 
-  useState("Order Refund")
+  useState<Conversation>(conversations[0]);
 
 
 function handleNewChat() {
-  setConversations([
-    ...conversations,
-    "New Conversation",
+  
+  const newConversation: Conversation = {
+    id: crypto.randomUUID(),
+    title: "New Conversation",
+  };
+
+  setConversations((previous) => [
+    ...previous,
+    newConversation,
   ]);
+
+  setSelectedConversation(newConversation);
+
 }
 
-function handleConversationSelect(conversation: string) {
+
+function handleConversationSelect(conversation: Conversation) {
   setSelectedConversation(conversation)
 }
 

@@ -1,20 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EmptyChat from "./EmptyChat";
 import ChatInput from "./ChatInput";
 import MessageList from "./MessageList";
 import TypingIndicator from "./TypingIndicator";
-import { askQuestion } from "../services/ChatService";
+import { askQuestion, getHistory } from "../services/ChatService";
+import type { Conversation } from "../types/conversation";
+import type { Message } from "../types/message";
+import type { HistoryMessage } from "../types/api";
 
-function ChatWorkSpace() {
-
-    type Message = {
-        id: number;
-        role: "user" | "assistant";
-        content: string;
+type ChatWorkSpaceProps = {
+    selectedConversation: Conversation;
 };
+
+function ChatWorkSpace({
+    selectedConversation,
+}: ChatWorkSpaceProps) {
+
     const [isLoading, setIsLoading] = useState(false);
     const [messages, setMessages] = useState<Message[]>([]);
-    const sessionId = "demo-session";
+    const sessionId = selectedConversation.id;
 
     async function handleSendMessage(message: string) {
 
@@ -65,11 +69,43 @@ function ChatWorkSpace() {
         }
     }
 
+    async function loadHistory() {
+
+        try {
+
+            const response = await getHistory(sessionId);
+
+            setMessages(
+                response.history.map(
+                    (
+                        message: HistoryMessage,
+                        index: number
+                    ) => ({
+                        id: index,
+                        role: message.role,
+                        content: message.content,
+                    })
+                )
+            );
+        } catch (error) {
+
+            console.error(error);
+
+        }
+
+    }
+
+    useEffect(() => {
+
+            loadHistory();
+
+    }, [sessionId]);
+
     return (
         <section className="flex flex-1 flex-col bg-white">
             <header className="border-b px-6 py-4">
                 <h2 className="text-xl font-semibold">
-                    AI Customer Support Assistant
+                    {selectedConversation.title}
                 </h2>
             </header>
 
