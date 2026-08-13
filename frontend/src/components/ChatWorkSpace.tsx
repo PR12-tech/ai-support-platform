@@ -3,10 +3,13 @@ import EmptyChat from "./EmptyChat";
 import ChatInput from "./ChatInput";
 import MessageList from "./MessageList";
 import TypingIndicator from "./TypingIndicator";
+import { getErrorMessage } from "../services/errorHandler";
 import { askQuestion, getHistory } from "../services/ChatService";
 import type { Conversation } from "../types/conversation";
 import type { Message } from "../types/message";
 import type { HistoryMessage } from "../types/api";
+
+
 
 type ChatWorkSpaceProps = {
     selectedConversation: Conversation;
@@ -18,6 +21,7 @@ function ChatWorkSpace({
 
     const [isLoading, setIsLoading] = useState(false);
     const [messages, setMessages] = useState<Message[]>([]);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const sessionId = selectedConversation.id;
 
     async function handleSendMessage(message: string) {
@@ -58,7 +62,7 @@ function ChatWorkSpace({
                 {
                     id: Date.now() + 1,
                     role: "assistant",
-                    content: "Unable to reach the backend.",
+                    content: getErrorMessage(error),
                 },
             ]);
 
@@ -91,13 +95,17 @@ function ChatWorkSpace({
 
             console.error(error);
 
+            setErrorMessage(
+                getErrorMessage(error)
+            );
+
         }
 
     }
 
     useEffect(() => {
 
-            loadHistory();
+        loadHistory();
 
     }, [sessionId]);
 
@@ -111,16 +119,24 @@ function ChatWorkSpace({
 
 
             <main className="flex flex-1 flex-col overflow-hidden">
+
+                {errorMessage && (
+                    <div className="mx-6 mt-4 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                        {errorMessage}
+                    </div>
+                )}
+
+
                 {messages.length === 0 ? (
-                <EmptyChat />
-            ) : (
+                    <EmptyChat />
+                ) : (
 
-                <div className="flex flex-1 flex-col overflow-hidden">
-                    
-                    <MessageList messages={messages} />
+                    <div className="flex flex-1 flex-col overflow-hidden">
 
-                    {isLoading && <TypingIndicator />}
-                    
+                        <MessageList messages={messages} />
+
+                        {isLoading && <TypingIndicator />}
+
                     </div>
                 )}
             </main>
@@ -128,8 +144,8 @@ function ChatWorkSpace({
 
             <footer className="border-t p-4">
                 <ChatInput
-                onSendMessage={handleSendMessage}
-                isLoading={isLoading}
+                    onSendMessage={handleSendMessage}
+                    isLoading={isLoading}
                 />
             </footer>
         </section>
