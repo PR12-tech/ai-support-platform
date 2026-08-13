@@ -5,13 +5,38 @@ from app.database.db import Base
 class Ticket(Base):
     __tablename__ = "tickets"
 
-    id = Column(Integer, primary_key=True, index = True)
+    id = Column(Integer,
+                primary_key=True,
+                index = True
+    )
 
-    title = Column(String, nullable= False)
+    ticket_id = Column(
+        String,
+        unique=True,
+        nullable=False
+    )
 
-    description = Column(String, nullable=False)
+    title = Column(String,
+                   nullable= False
+    )
 
-    status = Column(String, default = "OPEN")
+    description = Column(String,
+                         nullable=False
+    )
+
+    status = Column(String,
+                    default = "OPEN"
+    )
+
+    priority = Column(
+        String,
+        nullable=False
+    )
+
+    assigned_to = Column(
+        String,
+        nullable=False
+    )
 
     owner_id = Column(
         Integer,

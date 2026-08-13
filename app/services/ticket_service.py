@@ -1,7 +1,7 @@
 from sqlalchemy import select
 
 from app.database.db import SessionLocal
-from app.models.support_ticket import SupportTicket
+from app.models.ticket import Ticket
 
 
 def lookup_ticket(
@@ -14,8 +14,8 @@ def lookup_ticket(
 
         ticket = db.execute(
 
-            select(SupportTicket).where(
-                SupportTicket.ticket_id == ticket_id
+            select(Ticket).where(
+                Ticket.ticket_id == ticket_id
             )
 
         ).scalar_one_or_none()
@@ -30,7 +30,7 @@ def lookup_ticket(
 
                     "ticket_id": ticket.ticket_id,
 
-                    "customer": ticket.customer,
+                    "owner_id": ticket.owner_id,
 
                     "status": ticket.status,
 

@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import datetime
 
 class QuestionRequest(BaseModel):
     session_id: str
@@ -27,3 +28,11 @@ class ConversationHistoryResponse(BaseModel):
 class ClearHistoryResponse(BaseModel):
     message: str
     session_id: str
+
+class ConversationResponse(BaseModel):
+    session_id: str
+    title: str
+    created_at: datetime
+
+class ConversationListResponse(BaseModel):
+    conversations: list[ConversationResponse]

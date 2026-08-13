@@ -13,17 +13,22 @@ from app.schemas.rag import (
     QuestionRequest,
     AskResponse,
     SuggestReplyResponse,
+    ConversationResponse,
     ConversationHistoryResponse,
     ClearHistoryResponse,
+    ConversationListResponse,
 )
 
 from app.services.rag_service import (
     suggest_reply,
     get_knowledge
 )
+
 from app.services.memory_service import (
     get_history,
-    clear_history
+    clear_history,
+    get_conversations,
+    create_conversation,
 )
 
 router = APIRouter()
@@ -101,6 +106,17 @@ def generate_reply(
         "reply": reply
     }
 
+@router.post(
+        "/conversations",
+        response_model=ConversationResponse
+)
+
+def create_new_conversation():
+
+    conversation = create_conversation()
+
+    return conversation
+
 @router.get(
     "/history/{session_id}",
     response_model=ConversationHistoryResponse
@@ -135,4 +151,16 @@ def delete_conversation_history(
     return {
         "message": "Conversation history cleared.",
         "session_id": session_id
+    }
+
+@router.get(
+    "/conversations",
+    response_model=ConversationListResponse
+)
+def list_conversations():
+
+    conversations = get_conversations()
+
+    return {
+        "conversations": conversations
     }

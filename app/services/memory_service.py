@@ -1,8 +1,24 @@
 from sqlalchemy.orm import Session
+from uuid import uuid4
 
 from app.database.db import SessionLocal
 from app.models.conversations import Conversation
-from app.models.conversation_message import ConversationMessage
+from app.models.messages import Message
+
+def generate_conversation_title(content: str) -> str:
+
+    words = content.strip().split()
+
+    if not words:
+        return "New Conversation"
+
+    title = " ".join(words[:7])
+
+    if len(title) > 50:
+        title = title[:50].rsplit(" ", 1)[0]
+
+    return title
+
 
 def add_message(
         session_id: str,
@@ -23,7 +39,8 @@ def add_message(
         if not conversation:
 
             conversation = Conversation(
-                session_id=session_id
+                session_id=session_id,
+                title="New Conversation"
             )
 
             db.add(
@@ -37,8 +54,17 @@ def add_message(
             )
 
 
-        message = ConversationMessage(
-            role=role,
+        if (
+            role == "user"
+            and conversation.title == "New Conversation"
+        ):
+            conversation.title = generate_conversation_title(
+                content
+            )
+
+
+        message = Message(
+            sender=role,
             content=content,
             conversation_id=conversation.id
         )
@@ -48,6 +74,38 @@ def add_message(
         )
 
         db.commit()
+
+    finally:
+
+        db.close()
+
+
+def create_conversation():
+
+    db: Session = SessionLocal()
+
+    try:
+
+        conversation = Conversation(
+            session_id=str(uuid4()),
+            title="New Conversation"
+        )
+
+        db.add(
+            conversation
+        )
+
+        db.commit()
+
+        db.refresh(
+            conversation
+        )
+
+        return {
+            "session_id": conversation.session_id,
+            "title": conversation.title,
+            "created_at": conversation.created_at
+        }
 
     finally:
 
@@ -73,16 +131,16 @@ def get_history(
             return []
 
         messages = db.query(
-            ConversationMessage
+            Message
         ).filter(
-            ConversationMessage.conversation_id == conversation.id
+            Message.conversation_id == conversation.id
         ).order_by(
-            ConversationMessage.created_at
+            Message.created_at
         ).all()
 
         return [
             {
-                "role": message.role,
+                "role": message.sender,
                 "content": message.content,
                 "created_at": message.created_at
             }
@@ -113,9 +171,15 @@ def clear_history(
             return None
 
         db.query(
-            ConversationMessage
+            Message
         ).filter(
-            ConversationMessage.conversation_id == conversation.id
+            Message.conversation_id == conversation.id
+        ).delete()
+
+        db.query(
+            Message
+        ).filter(
+            Message.conversation_id == conversation.id
         ).delete()
 
         db.delete(
@@ -123,6 +187,32 @@ def clear_history(
         )
 
         db.commit()
+
+    finally:
+
+        db.close()
+
+
+def get_conversations():
+
+    db: Session = SessionLocal()
+
+    try:
+
+        conversations = db.query(
+            Conversation
+        ) .order_by(
+            Conversation.created_at.desc()
+        ).all()
+
+        return [
+            {
+                "session_id": conversation.session_id,
+                "title": conversation.title,
+                "created_at": conversation.created_at
+            }
+            for conversation in conversations
+        ]
 
     finally:
 

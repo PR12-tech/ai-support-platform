@@ -11,8 +11,7 @@ from app.models.ticket import Ticket
 from app.models.messages import Message
 from app.models.conversations import Conversation
 from app.models.order import Order
-from app.models.support_ticket import SupportTicket
-from app.models.conversation_message import ConversationMessage
+
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
