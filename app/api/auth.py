@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from app.models.user import User
@@ -10,7 +11,6 @@ from app.auth.dependencies import get_current_user
 from fastapi.security import OAuth2PasswordRequestForm
 from app.schemas.user import (
     UserCreate,
-    UserLogin,
     RegisterResponse,
     LoginResponse,
     UserResponse,
@@ -63,7 +63,7 @@ def login(
 ):
 
     db_user = db.query(User).filter(
-        User.email == form_data.username
+        or_(User.email == form_data.username, User.username == form_data.username)
     ).first()
 
     if not db_user:

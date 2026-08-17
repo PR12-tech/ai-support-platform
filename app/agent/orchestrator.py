@@ -18,7 +18,8 @@ MAX_ITERATIONS = 5
 
 def run_agent(
         question: str,
-        session_id: str
+        session_id: str,
+        user_id: int
 ):
 
     state = AgentState(
@@ -26,7 +27,8 @@ def run_agent(
     )
 
     state.conversation_history = get_history(
-        session_id
+        session_id=session_id,
+        user_id=user_id
     )
 
     add_message(
@@ -35,7 +37,9 @@ def run_agent(
 
         role="user",
 
-        content=question
+        content=question,
+        
+        user_id=user_id
     )
 
     while state.iteration < MAX_ITERATIONS:
@@ -65,7 +69,8 @@ def run_agent(
             add_message(
                 session_id=session_id,
                 role="assistant",
-                content=answer
+                content=answer,
+                user_id=user_id
             )
 
             return AgentResponse(
@@ -85,7 +90,8 @@ def run_agent(
             add_message(
                 session_id=session_id,
                 role="assistant",
-                content=state.final_answer
+                content=state.final_answer,
+                user_id=user_id
             )
 
             return AgentResponse(
@@ -195,7 +201,9 @@ def run_agent(
 
         role="assistant",
 
-        content=state.final_answer
+        content=state.final_answer,
+        
+        user_id=user_id
     )
 
     return AgentResponse(

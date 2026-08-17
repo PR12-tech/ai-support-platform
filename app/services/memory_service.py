@@ -23,7 +23,8 @@ def generate_conversation_title(content: str) -> str:
 def add_message(
         session_id: str,
         role: str,
-        content: str
+        content: str,
+        user_id: int
 ):
 
     db: Session = SessionLocal()
@@ -33,26 +34,13 @@ def add_message(
         conversation = db.query(
             Conversation
         ).filter(
-            Conversation.session_id == session_id
+            Conversation.session_id == session_id,
+            Conversation.user_id == user_id
         ).first()
 
         if not conversation:
 
-            conversation = Conversation(
-                session_id=session_id,
-                title="New Conversation"
-            )
-
-            db.add(
-                conversation
-            )
-
-            db.commit()
-
-            db.refresh(
-                conversation
-            )
-
+            return None
 
         if (
             role == "user"
@@ -74,13 +62,15 @@ def add_message(
         )
 
         db.commit()
+        
+        return True
 
     finally:
 
         db.close()
 
 
-def create_conversation():
+def create_conversation(user_id: int):
 
     db: Session = SessionLocal()
 
@@ -88,7 +78,8 @@ def create_conversation():
 
         conversation = Conversation(
             session_id=str(uuid4()),
-            title="New Conversation"
+            title="New Conversation",
+            user_id=user_id
         )
 
         db.add(
@@ -113,7 +104,8 @@ def create_conversation():
 
 
 def get_history(
-        session_id: str
+        session_id: str,
+        user_id: int
 ):
 
     db: Session = SessionLocal()
@@ -123,7 +115,8 @@ def get_history(
         conversation = db.query(
             Conversation
         ).filter(
-            Conversation.session_id == session_id
+            Conversation.session_id == session_id,
+            Conversation.user_id == user_id
         ).first()
 
         if not conversation:
@@ -153,7 +146,8 @@ def get_history(
 
 
 def clear_history(
-        session_id: str
+        session_id: str,
+        user_id: int
 ):
 
     db: Session = SessionLocal()
@@ -163,23 +157,17 @@ def clear_history(
         conversation = db.query(
             Conversation
         ).filter(
-            Conversation.session_id == session_id
+            Conversation.session_id == session_id,
+            Conversation.user_id == user_id
         ).first()
 
         if not conversation:
-
             return None
 
         db.query(
             Message
         ).filter(
-            Message.conversation_id == conversation.id
-        ).delete()
-
-        db.query(
-            Message
-        ).filter(
-            Message.conversation_id == conversation.id
+            Message.conversation_id == conversation.id,
         ).delete()
 
         db.delete(
@@ -187,13 +175,15 @@ def clear_history(
         )
 
         db.commit()
+        
+        return True
 
     finally:
 
         db.close()
 
 
-def get_conversations():
+def get_conversations(user_id: int):
 
     db: Session = SessionLocal()
 
@@ -201,7 +191,9 @@ def get_conversations():
 
         conversations = db.query(
             Conversation
-        ) .order_by(
+        ).filter(
+            Conversation.user_id == user_id
+        ).order_by(
             Conversation.created_at.desc()
         ).all()
 

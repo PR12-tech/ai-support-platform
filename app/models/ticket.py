@@ -30,12 +30,14 @@ class Ticket(Base):
 
     priority = Column(
         String,
-        nullable=False
+        nullable=True,
+        default="Low"
     )
 
     assigned_to = Column(
         String,
-        nullable=False
+        nullable=True,
+        default="Unassigned"
     )
 
     owner_id = Column(

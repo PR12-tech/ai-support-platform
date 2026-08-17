@@ -133,6 +133,7 @@ reply with:
 }}
 
 Do NOT call the same tool again if it has already been used successfully unless new information is required.
+Do NOT select a tool if it has already failed (returned success: False or an unsupported query result) in Previous Tool History or Previous Observations. If a tool fails, treat its information as permanently unavailable and do not attempt to call it again with similar arguments. Instead, proceed to other unused tools (such as knowledge_search) if they are needed to answer the rest of the question. Only return NONE if all parts of the question have been addressed or no other tools can help.
 
 Example 1:
 
@@ -252,18 +253,18 @@ Rules:
 - Another available tool can provide the missing information.
 - The current tool result is insufficient to generate the final answer.
 5. Never request a tool that has already been used successfully unless its previous result was incomplete.
+6. Never request or expect a tool that has already failed (success: False) or returned an unsupported query result to be retried. If a tool fails, consider its information permanently unavailable. Only return CONTINUE if a different, unused tool can provide other missing information.
+7. Do not continue simply because another tool exists. Continue only when it is necessary to answer the user's question.
 
-6. Do not continue simply because another tool exists. Continue only when it is necessary to answer the user's question.
-
-7.Never assume the result of a tool call.
+8.Never assume the result of a tool call.
 Base every decision only on
 Conversation History,
 Current Context,
 and Previous Observations.
 Do not infer tool results that were not returned.
 
-8. Once the collected tool results are sufficient to generate the final response, always reply FINISH.
-9. If the last executed tool completed successfully and its result, together with Current Context, is sufficient to answer the user's question, always reply FINISH.
+9. Once the collected tool results are sufficient to generate the final response, always reply FINISH.
+10. If the last executed tool completed successfully and its result, together with Current Context, is sufficient to answer the user's question, always reply FINISH.
 
 Example:
 

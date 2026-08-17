@@ -4,14 +4,42 @@ import MainLayout from "./components/MainLayout";
 import type { Conversation } from "./types/conversation";
 import { getConversations, createConversation, deleteHistory } from "./services/ChatService";
 import { getErrorMessage } from "./services/errorHandler";
-
+import Login from "./components/Login";
 
 function App() {
+
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    Boolean(localStorage.getItem("access_token"))
+  );
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoadingConversations, setIsLoadingConversations] = useState(true);
   const [isCreatingConversation, setIsCreatingConversation] = useState(false);
   const [deletingConversationId, setDeletingConversationId] = useState<string | null>(null);
+  
+  function handleLoginSuccess() {
+        setIsAuthenticated(true);
+    }
+
+  function handleApiError(error: any) {
+    console.error(error);
+    if (error.response?.status === 401) {
+      localStorage.removeItem("access_token");
+      setIsAuthenticated(false);
+      setErrorMessage("Session expired. Please log in again.");
+    } else {
+      setErrorMessage(getErrorMessage(error));
+    }
+  }
+
+  const [selectedConversation, setSelectedConversation] =
+    useState<Conversation | null>(null);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      loadConversations();
+    }
+  }, [isAuthenticated]);
 
   async function loadConversations() {
 
@@ -37,13 +65,7 @@ function App() {
       }
 
     } catch (error) {
-
-      console.error(error);
-
-      setErrorMessage(
-        getErrorMessage(error)
-      );
-
+      handleApiError(error);
     } finally {
 
       setIsLoadingConversations(false);
@@ -52,14 +74,13 @@ function App() {
 
   }
 
-  useEffect(() => {
-
-    loadConversations();
-
-  }, []);
-
-  const [selectedConversation, setSelectedConversation] =
-    useState<Conversation | null>(null);
+  if (!isAuthenticated) {
+      return (
+          <Login
+              onLoginSuccess={handleLoginSuccess}
+          />
+      );
+  }
 
 
   async function handleNewChat() {
@@ -87,12 +108,7 @@ function App() {
       setSelectedConversation(newConversation);
 
     } catch (error) {
-
-      console.error(error);
-
-      setErrorMessage(
-        getErrorMessage(error)
-      );
+      handleApiError(error);
     } finally {
 
       setIsCreatingConversation(false);
@@ -153,13 +169,7 @@ function App() {
       }
 
     } catch (error) {
-
-      console.error(error);
-
-      setErrorMessage(
-        getErrorMessage(error)
-      );
-
+      handleApiError(error);
     } finally {
 
       setDeletingConversationId(null);
@@ -187,18 +197,15 @@ function App() {
             </p>
           </div>
         ) : (
-
-          selectedConversation && (
-            <MainLayout
-              conversations={conversations}
-              selectedConversation={selectedConversation}
-              onNewChat={handleNewChat}
-              onConversationSelect={handleConversationSelect}
-              onConversationDelete={handleConversationDelete}
-              isCreatingConversation={isCreatingConversation}
-              deletingConversationId={deletingConversationId}
-            />
-          )
+          <MainLayout
+            conversations={conversations}
+            selectedConversation={selectedConversation}
+            onNewChat={handleNewChat}
+            onConversationSelect={handleConversationSelect}
+            onConversationDelete={handleConversationDelete}
+            isCreatingConversation={isCreatingConversation}
+            deletingConversationId={deletingConversationId}
+          />
         )}
       </div>
     </div>

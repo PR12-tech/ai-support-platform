@@ -9,11 +9,29 @@ def build_query(
     QUERY_PATTERNS = [
 
         (
+            ["each status"],
+            """
+            SELECT status, COUNT(*) AS count
+            FROM orders
+            GROUP BY status;
+            """
+        ),
+
+        (
+            ["by status"],
+            """
+            SELECT status, COUNT(*) AS count
+            FROM orders
+            GROUP BY status;
+            """
+        ),
+
+        (
             ["how many", "shipped"],
             """
             SELECT COUNT(*) AS total
             FROM orders
-            WHERE status='Shipped';
+            WHERE LOWER(status)='shipped';
             """
         ),
 
@@ -22,7 +40,7 @@ def build_query(
             """
             SELECT *
             FROM orders
-            WHERE status='Shipped';
+            WHERE LOWER(status)='shipped';
             """
         ),
 
@@ -31,7 +49,7 @@ def build_query(
             """
             SELECT *
             FROM orders
-            WHERE status='Cancelled';
+            WHERE LOWER(status)='cancelled';
             """
         ),
 
@@ -39,8 +57,8 @@ def build_query(
             ["high priority"],
             """
             SELECT *
-            FROM support_tickets
-            WHERE priority='High';
+            FROM tickets
+            WHERE LOWER(priority)='high';
             """
         ),
 
@@ -48,8 +66,8 @@ def build_query(
             ["open tickets"],
             """
             SELECT *
-            FROM support_tickets
-            WHERE status='Open';
+            FROM tickets
+            WHERE LOWER(status)='open';
             """
         )
 

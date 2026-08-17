@@ -39,12 +39,14 @@ router = APIRouter()
 )
 
 def ask_question(
-        request: QuestionRequest
+        request: QuestionRequest,
+        current_user: User = Depends(get_current_user)
 ):
 
     agent_response = run_agent(
         session_id=request.session_id,
-        question=request.question
+        question=request.question,
+        user_id=current_user.id
     )
 
     return {
@@ -111,9 +113,13 @@ def generate_reply(
         response_model=ConversationResponse
 )
 
-def create_new_conversation():
+def create_new_conversation(
+    current_user: User = Depends(get_current_user)
+):
 
-    conversation = create_conversation()
+    conversation = create_conversation(
+        user_id=current_user.id
+    )
 
     return conversation
 
@@ -123,11 +129,13 @@ def create_new_conversation():
 )
 
 def get_conversation_history(
-        session_id: str
+        session_id: str,
+        current_user: User = Depends(get_current_user)
 ):
 
     history = get_history(
-        session_id
+        session_id=session_id,
+        user_id=current_user.id
     )
 
     return{
@@ -141,12 +149,20 @@ def get_conversation_history(
 )
 
 def delete_conversation_history(
-        session_id: str
+        session_id: str,
+        current_user: User = Depends(get_current_user)
 ):
 
-    clear_history(
-        session_id
+    result = clear_history(
+        session_id=session_id,
+        user_id=current_user.id
     )
+    
+    if result is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Conversation not found.                       "
+        )
 
     return {
         "message": "Conversation history cleared.",
@@ -157,9 +173,13 @@ def delete_conversation_history(
     "/conversations",
     response_model=ConversationListResponse
 )
-def list_conversations():
+def list_conversations(
+    current_user: User = Depends(get_current_user)
+):
 
-    conversations = get_conversations()
+    conversations = get_conversations(
+        user_id=current_user.id
+    )
 
     return {
         "conversations": conversations

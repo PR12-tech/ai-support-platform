@@ -14,6 +14,22 @@ from app.agent.utils import (
 )
 
 
+def sanitize_for_planner(val):
+    if isinstance(val, dict):
+        new_dict = {}
+        for k, v in val.items():
+            if k == "knowledge" and isinstance(v, str) and len(v) > 150:
+                new_dict[k] = v[:150] + "... [truncated for planner]"
+            elif k == "chunks" and isinstance(v, list):
+                new_dict[k] = f"<list of {len(v)} chunks>"
+            else:
+                new_dict[k] = sanitize_for_planner(v)
+        return new_dict
+    elif isinstance(val, list):
+        return [sanitize_for_planner(x) for x in val]
+    return val
+
+
 def choose_tool(
         question: str,
         observations: list,
@@ -29,6 +45,10 @@ def choose_tool(
         for message in conversation_history
     )
 
+    sanitized_observations = sanitize_for_planner(observations)
+    sanitized_tool_history = sanitize_for_planner(tool_history)
+    sanitized_context = sanitize_for_planner(context)
+
     prompt = TOOL_SELECTION_PROMPT.format(
 
         tools=list_tools(),
@@ -37,11 +57,11 @@ def choose_tool(
 
         question=question,
 
-        observations=observations,
+        observations=sanitized_observations,
 
-        tool_history=tool_history,
+        tool_history=sanitized_tool_history,
 
-        context=context
+        context=sanitized_context
 
     )
 

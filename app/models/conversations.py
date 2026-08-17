@@ -2,7 +2,8 @@ from sqlalchemy import (
     Column,
     Integer,
     String,
-    DateTime
+    DateTime,
+    ForeignKey,
 )
 
 from sqlalchemy.sql import func
@@ -17,6 +18,12 @@ class Conversation(Base):
         Integer,
         primary_key=True,
         index=True
+    )
+    
+    user_id = Column(
+        Integer,
+        ForeignKey("users.id"),
+        nullable=False
     )
 
     session_id = Column(

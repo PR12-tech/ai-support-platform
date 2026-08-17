@@ -212,9 +212,9 @@ def load_documents():
 
     knowledge_base_path = Path("knowledge_base")
 
-    documents = list(knowledge_base_path.rglob("*.md"))
+    documents = sorted(list(knowledge_base_path.rglob("*.md")))
     documents.extend(
-        knowledge_base_path.rglob("*.txt")
+        sorted(list(knowledge_base_path.rglob("*.txt")))
     )
 
     for file_path in documents:
@@ -242,17 +242,21 @@ def load_documents():
                     "content": chunk
                 }
 
-                if not index_exists:
-
-                    chunk_data["embedding"] = (
-                        embedding_model.encode(chunk)
-                    )
-
                 DOCUMENT_CHUNKS.append(
                     chunk_data
                 )
 
+    # Check if index is out of sync with knowledge base
+    from app.services.vector_store import index as faiss_index
+    if index_exists and faiss_index is not None:
+        if faiss_index.ntotal != len(DOCUMENT_CHUNKS):
+            logger.info("Index size mismatch with knowledge base. Rebuilding vector index...")
+            index_exists = False
+
     if not index_exists:
+        logger.info("Generating embeddings for vector index...")
+        for chunk in DOCUMENT_CHUNKS:
+            chunk["embedding"] = embedding_model.encode(chunk["content"])
 
         embedding_dimension = len(
             DOCUMENT_CHUNKS[0]["embedding"]
@@ -324,22 +328,18 @@ def retrieve_chunks(question):
     )
 
     bm25_chunks = []
+    chunk_lookup = {chunk["content"]: chunk for chunk in DOCUMENT_CHUNKS}
 
     for content, score in bm25_results:
-
-        for chunk in DOCUMENT_CHUNKS:
-
-            if chunk["content"] == content:
-
-                bm25_chunks.append(
-                    {
-                        "content": chunk["content"],
-                        "source_document": chunk["document"],
-                        "score": float(score)
-                    }
-                )
-
-                break
+        chunk = chunk_lookup.get(content)
+        if chunk:
+            bm25_chunks.append(
+                {
+                    "content": chunk["content"],
+                    "source_document": chunk["document"],
+                    "score": float(score)
+                }
+            )
 
     all_chunks = (
         faiss_chunks

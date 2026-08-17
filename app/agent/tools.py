@@ -34,6 +34,10 @@ class KnowledgeSearchTool(BaseTool):
             question
         )
 
+        if isinstance(knowledge, dict) and "chunks" in knowledge:
+            knowledge = knowledge.copy()
+            knowledge.pop("chunks", None)
+
         return {
             "success": knowledge is not None,
             "type": "knowledge",
