@@ -20,6 +20,26 @@ def generate_conversation_title(content: str) -> str:
     return title
 
 
+def is_greeting_only(content: str) -> bool:
+
+    normalized = content.strip().lower()
+
+    for char in [".", ",", "?", "!", ";", ":", "-", "_"]:
+        normalized = normalized.replace(char, "")
+
+    normalized = " ".join(normalized.split())
+
+    greetings = {
+        "hello", "hi", "hey",
+        "good morning", "good afternoon", "good evening",
+        "hi there", "hello there", "hey there", "greetings",
+        "goodmorning", "goodafternoon", "goodevening",
+        "yo", "howdy", "sup"
+    }
+
+    return normalized in greetings
+
+
 def add_message(
         session_id: str,
         role: str,
@@ -45,6 +65,7 @@ def add_message(
         if (
             role == "user"
             and conversation.title == "New Conversation"
+            and not is_greeting_only(content)
         ):
             conversation.title = generate_conversation_title(
                 content

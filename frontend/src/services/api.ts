@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const api = axios.create({
-    baseURL: "http://localhost:8000",
+    baseURL: import.meta.env.VITE_API_URL,
     timeout: 30000,
     headers: {
         "Content-Type": "application/json",
@@ -22,6 +22,16 @@ api.interceptors.request.use(
 
         return config;
     }
-)
+);
+
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401) {
+            localStorage.removeItem("access_token");
+        }
+        return Promise.reject(error);
+    }
+);
 
 export default api;

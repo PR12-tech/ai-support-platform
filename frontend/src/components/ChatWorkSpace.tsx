@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import EmptyChat from "./EmptyChat";
 import ChatInput from "./ChatInput";
 import MessageList from "./MessageList";
@@ -9,23 +9,17 @@ import type { Conversation } from "../types/conversation";
 import type { Message } from "../types/message";
 import type { HistoryMessage } from "../types/api";
 
-
-
 type ChatWorkSpaceProps = {
     selectedConversation: Conversation;
 };
 
-function ChatWorkSpace({
-    selectedConversation,
-}: ChatWorkSpaceProps) {
-
+function ChatWorkSpace({ selectedConversation }: ChatWorkSpaceProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [messages, setMessages] = useState<Message[]>([]);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const sessionId = selectedConversation.id;
 
     async function handleSendMessage(message: string) {
-
         setMessages((previousMessages) => [
             ...previousMessages,
             {
@@ -38,7 +32,6 @@ function ChatWorkSpace({
         setIsLoading(true);
 
         try {
-
             const response = await askQuestion({
                 session_id: sessionId,
                 question: message,
@@ -52,11 +45,8 @@ function ChatWorkSpace({
                     content: response.answer,
                 },
             ]);
-
         } catch (error) {
-
             console.error(error);
-
             setMessages((previousMessages) => [
                 ...previousMessages,
                 {
@@ -65,91 +55,91 @@ function ChatWorkSpace({
                     content: getErrorMessage(error),
                 },
             ]);
-
         } finally {
-
             setIsLoading(false);
-
         }
     }
 
-    async function loadHistory() {
-
+    const loadHistory = useCallback(async () => {
         try {
-
+            setErrorMessage(null);
             const response = await getHistory(sessionId);
 
             setMessages(
-                response.history.map(
-                    (
-                        message: HistoryMessage,
-                        index: number
-                    ) => ({
-                        id: index,
-                        role: message.role,
-                        content: message.content,
-                    })
-                )
+                response.history.map((message: HistoryMessage, index: number) => ({
+                    id: index,
+                    role: message.role,
+                    content: message.content,
+                }))
             );
         } catch (error) {
-
             console.error(error);
-
-            setErrorMessage(
-                getErrorMessage(error)
-            );
-
+            setErrorMessage(getErrorMessage(error));
         }
-
-    }
-
-    useEffect(() => {
-
-        loadHistory();
-
     }, [sessionId]);
 
+    useEffect(() => {
+        loadHistory();
+    }, [loadHistory]);
+
     return (
-        <section className="flex flex-1 flex-col bg-white">
-            <header className="border-b px-6 py-4">
-                <h2 className="text-xl font-semibold">
-                    {selectedConversation.title}
-                </h2>
+        <section className="flex flex-1 flex-col bg-slate-50 min-w-0">
+            {/* Conversation Header */}
+            <header className="flex h-16 items-center justify-between border-b border-slate-200 bg-white px-6 shadow-sm">
+                <div className="flex items-center gap-3 overflow-hidden">
+                    {/* Active Chat Dot Indicator */}
+                    <span className="relative flex h-2.5 w-2.5 shrink-0">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+                        <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500"></span>
+                    </span>
+                    
+                    <h2 className="overflow-hidden text-ellipsis whitespace-nowrap text-base font-bold text-slate-800">
+                        {selectedConversation.title}
+                    </h2>
+                </div>
             </header>
 
-
-            <main className="flex flex-1 flex-col overflow-hidden">
-
+            {/* Chat Messages */}
+            <main className="flex flex-1 flex-col overflow-hidden relative">
                 {errorMessage && (
-                    <div className="mx-6 mt-4 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700">
-                        {errorMessage}
+                    <div className="mx-6 mt-4 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+                        <div className="flex justify-between items-center">
+                            <div className="flex gap-2">
+                                <span>⚠️</span>
+                                <span>{errorMessage}</span>
+                            </div>
+                            <button 
+                                onClick={() => setErrorMessage(null)}
+                                className="text-red-500 hover:text-red-700 font-bold"
+                            >
+                                ✕
+                            </button>
+                        </div>
                     </div>
                 )}
 
-
                 {messages.length === 0 ? (
-                    <EmptyChat />
+                    <EmptyChat onSelectPrompt={handleSendMessage} />
                 ) : (
-
-                    <div className="flex flex-1 flex-col overflow-hidden">
-
+                    <div className="flex flex-1 flex-col overflow-hidden bg-slate-50">
                         <MessageList messages={messages} />
-
-                        {isLoading && <TypingIndicator />}
-
+                        {isLoading && (
+                            <div className="px-6 py-2">
+                                <TypingIndicator />
+                            </div>
+                        )}
                     </div>
                 )}
             </main>
 
-
-            <footer className="border-t p-4">
-                <ChatInput
-                    onSendMessage={handleSendMessage}
-                    isLoading={isLoading}
-                />
+            {/* Input Bar */}
+            <footer className="border-t border-slate-200 bg-white p-4 shadow-sm">
+                <div className="mx-auto max-w-4xl">
+                    <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
+                </div>
             </footer>
         </section>
     );
 }
 
-export default ChatWorkSpace
+export default ChatWorkSpace;

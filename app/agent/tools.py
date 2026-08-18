@@ -1,7 +1,6 @@
 from app.services.rag_service import get_knowledge
 from app.agent.base import BaseTool
 from app.services.order_service import lookup_order
-from app.services.sql_service import execute_sql
 from app.services.ticket_service import lookup_ticket
 from app.services.email_service import send_email
 
@@ -67,9 +66,11 @@ class OrderLookupTool(BaseTool):
     ):
 
         order_id = kwargs["order_id"]
+        user_id = kwargs.get("user_id")
 
         service_result = lookup_order(
-            order_id
+            order_id,
+            user_id
         )
 
         return {
@@ -101,9 +102,11 @@ class TicketLookupTool(BaseTool):
     ):
 
         ticket_id = kwargs["ticket_id"]
+        user_id = kwargs.get("user_id")
 
         service_result = lookup_ticket(
-            ticket_id
+            ticket_id,
+            user_id
         )
 
         return {
@@ -147,41 +150,3 @@ class EmailTool(BaseTool):
             "type": "email",
             "data": service_result
         }
-
-class SQLTool(BaseTool):
-
-    @property
-    def name(self):
-
-        return "sql_search"
-
-    @property
-    def description(self):
-
-        return (
-
-            "Use ONLY for analytical questions involving "
-            "orders or support tickets.\n"
-
-            "Examples:\n"
-
-            "- How many shipped orders are there?\n"
-            "- Show cancelled orders.\n"
-            "- List high priority tickets.\n"
-            "- Show open tickets.\n\n"
-
-            "Do NOT use when the user provides a specific "
-            "order ID or ticket ID."
-
-        )
-
-    def execute(
-            self,
-            **kwargs
-    ):
-
-        question = kwargs["question"]
-
-        return execute_sql(
-            question
-        )

@@ -18,3 +18,9 @@ export type ConversationResponse = {
 export type ConversationListResponse = {
     conversations: ConversationResponse[];
 };
+
+export type UserResponse = {
+    id: number;
+    username: string;
+    email: string;
+};

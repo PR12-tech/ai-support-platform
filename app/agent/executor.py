@@ -5,6 +5,7 @@ from app.logger import logger
 
 def execute_tool(
         tool_name: str,
+        user_id: int = None,
         **kwargs
 ):
 
@@ -25,6 +26,7 @@ def execute_tool(
     try:
 
         result = tool["tool"].execute(
+            user_id=user_id,
             **kwargs
         )
 

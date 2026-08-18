@@ -1,4 +1,15 @@
 import api from "./api";
+import type { UserResponse } from "../types/api";
+
+export type RegisterRequest = {
+    username: string;
+    email: string;
+    password: string;
+}
+
+export type RegisterResponse = {
+    message: string;
+}
 
 export type LoginRequest = {
     username: string;
@@ -12,7 +23,7 @@ export type LoginResponse = {
 
 export async function login(
     request: LoginRequest
-) : Promise<LoginResponse> {
+): Promise<LoginResponse> {
 
     const formData = new URLSearchParams();
 
@@ -43,4 +54,22 @@ export async function login(
 
     return response.data;
 
+}
+
+export async function register(
+    request: RegisterRequest
+): Promise<RegisterResponse> {
+
+    const response = await api.post<RegisterResponse>(
+        "/register",
+        request
+    );
+
+    return response.data;
+
+}
+
+export async function getCurrentUser(): Promise<UserResponse> {
+    const response = await api.get<UserResponse>("/me");
+    return response.data;
 }

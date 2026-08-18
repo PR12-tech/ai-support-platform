@@ -124,6 +124,8 @@ def run_agent(
 
             tool_name,
 
+            user_id=user_id,
+
             **arguments
         )
 

@@ -5,7 +5,8 @@ from app.models.ticket import Ticket
 
 
 def lookup_ticket(
-        ticket_id: str
+        ticket_id: str,
+        user_id: int
 ):
 
     db = SessionLocal()
@@ -15,7 +16,8 @@ def lookup_ticket(
         ticket = db.execute(
 
             select(Ticket).where(
-                Ticket.ticket_id == ticket_id
+                Ticket.ticket_id == ticket_id,
+                Ticket.owner_id == user_id
             )
 
         ).scalar_one_or_none()

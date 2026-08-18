@@ -12,9 +12,7 @@ def update_context(
 
         "knowledge_search": "knowledge",
 
-        "send_email": "email",
-
-        "sql_search": "sql"
+        "send_email": "email"
 
     }
 

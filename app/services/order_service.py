@@ -1,17 +1,34 @@
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from app.database.db import SessionLocal
 from app.models.order import Order
+from app.models.user import User
 
 
-def lookup_order(order_id):
+def lookup_order(order_id, user_id):
 
     db: Session = SessionLocal()
 
     try:
+        user = (
+            db.query(User)
+            .filter(User.id == user_id)
+            .first()
+        )
+
+        if not user:
+            return {
+                "success": False,
+                "message": "Order not found."
+            }
+
         order = (
             db.query(Order)
-            .filter(Order.order_id == order_id)
+            .filter(
+                Order.order_id == order_id,
+                func.lower(Order.customer) == func.lower(user.username)
+            )
             .first()
         )
 
