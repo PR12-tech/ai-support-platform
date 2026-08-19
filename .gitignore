@@ -13,9 +13,6 @@ __pycache__/
 .idea/
 .vscode/
 
-# Vector database
-vector.index
-
 # Testing
 .pytest_cache/
 .coverage
