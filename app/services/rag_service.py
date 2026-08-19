@@ -1,8 +1,8 @@
 from app.services.ai_service import generate_content
 from pathlib import Path
-from app.services.embedding_service import model as embedding_model
+from app.services.embedding_service import get_embedding_model
 from app.services.memory_service import get_history, add_message
-from app.services.reranker_service import model as reranker_model
+from app.services.reranker_service import get_reranker_model
 from app.services.vector_store import (
     create_index,
     add_embedding,
@@ -256,7 +256,7 @@ def load_documents():
     if not index_exists:
         logger.info("Generating embeddings for vector index...")
         for chunk in DOCUMENT_CHUNKS:
-            chunk["embedding"] = embedding_model.encode(chunk["content"])
+            chunk["embedding"] = get_embedding_model().encode(chunk["content"])
 
         embedding_dimension = len(
             DOCUMENT_CHUNKS[0]["embedding"]
@@ -289,7 +289,7 @@ def load_documents():
 
 def retrieve_chunks(question):
 
-    question_embedding = embedding_model.encode(
+    question_embedding = get_embedding_model().encode(
         question
     )
 
@@ -409,7 +409,7 @@ def rerank_chunks(
         for chunk in chunks
     ]
 
-    scores = reranker_model.predict(
+    scores = get_reranker_model().predict(
         pairs
     )
 
