@@ -128,22 +128,31 @@ def get_history(
         session_id: str,
         user_id: int
 ):
+    import time
+    from app.logger import logger
 
+    t_total_start = time.perf_counter()
+
+    t_session_start = time.perf_counter()
     db: Session = SessionLocal()
+    t_session_end = time.perf_counter()
 
     try:
-
+        t_conv_start = time.perf_counter()
         conversation = db.query(
             Conversation
         ).filter(
             Conversation.session_id == session_id,
             Conversation.user_id == user_id
         ).first()
+        t_conv_end = time.perf_counter()
 
         if not conversation:
-
+            t_total_elapsed = (time.perf_counter() - t_total_start) * 1000.0
+            logger.info(f"HISTORY_TIMING total={t_total_elapsed:.2f}ms")
             return []
 
+        t_msg_start = time.perf_counter()
         messages = db.query(
             Message
         ).filter(
@@ -151,8 +160,10 @@ def get_history(
         ).order_by(
             Message.created_at
         ).all()
+        t_msg_end = time.perf_counter()
 
-        return [
+        t_build_start = time.perf_counter()
+        result = [
             {
                 "role": message.sender,
                 "content": message.content,
@@ -160,6 +171,24 @@ def get_history(
             }
             for message in messages
         ]
+        t_build_end = time.perf_counter()
+
+        elapsed_session = (t_session_end - t_session_start) * 1000.0
+        elapsed_conv = (t_conv_end - t_conv_start) * 1000.0
+        elapsed_msg = (t_msg_end - t_msg_start) * 1000.0
+        elapsed_build = (t_build_end - t_build_start) * 1000.0
+        elapsed_total = (time.perf_counter() - t_total_start) * 1000.0
+
+        logger.info(
+            f"HISTORY_DB session_acquire={elapsed_session:.2f}ms "
+            f"conversation_query={elapsed_conv:.2f}ms "
+            f"message_query={elapsed_msg:.2f}ms "
+            f"response_build={elapsed_build:.2f}ms "
+            f"total={elapsed_total:.2f}ms"
+        )
+        logger.info(f"HISTORY_TIMING total={elapsed_total:.2f}ms")
+
+        return result
 
     finally:
 

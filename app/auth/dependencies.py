@@ -15,6 +15,10 @@ def get_current_user(
         token: str = Depends(oauth2_scheme),
         db: Session = Depends(get_db)
 ):
+    import time
+    from app.logger import logger
+
+    t_start = time.perf_counter()
 
     credentials_exception = HTTPException(
         status_code = 401,
@@ -43,5 +47,8 @@ def get_current_user(
 
     if user is None:
         raise credentials_exception
+
+    elapsed = (time.perf_counter() - t_start) * 1000.0
+    logger.info(f"AUTH_TIMING total={elapsed:.2f}ms")
 
     return user

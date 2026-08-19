@@ -132,11 +132,18 @@ def get_conversation_history(
         session_id: str,
         current_user: User = Depends(get_current_user)
 ):
+    import time
+    from app.logger import logger
+
+    t_start = time.perf_counter()
 
     history = get_history(
         session_id=session_id,
         user_id=current_user.id
     )
+
+    elapsed = (time.perf_counter() - t_start) * 1000.0
+    logger.info(f"HISTORY_ROUTE_TIMING total={elapsed:.2f}ms")
 
     return{
         "session_id": session_id,
