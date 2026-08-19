@@ -86,6 +86,7 @@ function App() {
 
   function handleLoginSuccess() {
     setIsAuthenticated(true);
+    setErrorMessage(null);
   }
 
   function handleLogout() {

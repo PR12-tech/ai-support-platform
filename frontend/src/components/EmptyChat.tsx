@@ -22,7 +22,7 @@ function EmptyChat({ onSelectPrompt }: EmptyChatProps) {
     ];
 
     return (
-        <div className="flex flex-1 flex-col items-center justify-center bg-slate-50 px-8 py-16 text-center">
+        <div className="flex flex-1 flex-col items-center justify-center bg-slate-50 px-8 py-10 text-center">
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-100 text-3xl shadow-inner">
                 🤖
             </div>
