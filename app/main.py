@@ -11,6 +11,7 @@ from app.core.exception_handlers import register_exception_handlers
 from app.api.health import router as health_router
 from app.logger import logger
 from app.services.rag_service import load_documents
+from app.core.config import settings
 
 
 @asynccontextmanager
@@ -32,7 +33,7 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5173",
+        settings.FRONTEND_URL,
     ],
     allow_credentials=True,
     allow_methods=["*"],
