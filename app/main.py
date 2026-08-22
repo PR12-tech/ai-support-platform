@@ -11,11 +11,18 @@ from app.core.exception_handlers import register_exception_handlers
 from app.api.health import router as health_router
 from app.logger import logger
 from app.services.rag_service import load_documents
+from app.services.embedding_service import get_embedding_model
+from app.services.reranker_service import get_reranker_model
 from app.core.config import settings
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+
+    logger.info("Initializing embedding and reranker models...")
+    get_embedding_model()
+    get_reranker_model()
+    logger.info("Models initialized.")
 
     logger.info("Loading knowledge base...")
 
